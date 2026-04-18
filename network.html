@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyncUp — Your Trusted Network</title>
+    <meta name="description" content="Connect with verified professionals in your ecosystem.">
+    <script>
+        (function () { try { var t = localStorage.getItem('su-theme'); document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light'); } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); } })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════
+           CSS — SyncUp (Nexus-inspired Shared CSS)
+           ═══════════════════════════════════════════════════════ */
+        :root {
+            color-scheme: light;
+            --bg: #f5f0ff;
+            --bg2: #ece4ff;
+            --surface: rgba(255, 255, 255, .88);
+            --surface-s: #fff;
+            --surface-f: #f0eafc;
+            --line: rgba(88, 28, 235, .11);
+            --line-s: rgba(88, 28, 235, .22);
+            --text: #1a0e33;
+            --muted: #6b5e82;
+            --faint: #9b90b0;
+            --accent: #7C3AED;
+            --accent-s: #5B21B6;
+            --accent-f: rgba(124, 58, 237, .12);
+            --orange: #F97316;
+            --orange-f: rgba(249, 115, 22, .1);
+            --green: #10B981;
+            --green-f: rgba(16, 185, 129, .12);
+            --danger: #EF4444;
+            --danger-f: rgba(239, 68, 68, .1);
+            --amber: #D97706;
+            --amber-f: rgba(217, 119, 6, .12);
+            --shadow: 0 22px 70px rgba(60, 20, 140, .1);
+            --shadow-f: 0 14px 40px rgba(60, 20, 140, .06);
+            --header-bg: rgba(245, 240, 255, .86);
+            --focus: rgba(124, 58, 237, .28);
+            --radius: 8px;
+        }
+
+        html[data-theme="dark"] {
+            color-scheme: dark;
+            --bg: #0a0514;
+            --bg2: #110920;
+            --surface: rgba(22, 12, 44, .9);
+            --surface-s: #160c2c;
+            --surface-f: #1e1238;
+            --line: rgba(200, 180, 255, .11);
+            --line-s: rgba(200, 180, 255, .22);
+            --text: #f3eeff;
+            --muted: #b0a4c8;
+            --faint: #7a6e94;
+            --accent: #A78BFA;
+            --accent-s: #C4B5FD;
+            --accent-f: rgba(167, 139, 250, .14);
+            --orange: #FB923C;
+            --orange-f: rgba(251, 146, 60, .12);
+            --green: #34D399;
+            --green-f: rgba(52, 211, 153, .14);
+            --danger: #F87171;
+            --danger-f: rgba(248, 113, 113, .12);
+            --amber: #FBBF24;
+            --amber-f: rgba(251, 191, 36, .14);
+            --shadow: 0 24px 70px rgba(0, 0, 0, .38);
+            --shadow-f: 0 14px 40px rgba(0, 0, 0, .24);
+            --header-bg: rgba(10, 5, 20, .88);
+            --focus: rgba(167, 139, 250, .32);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(var(--line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--line) 1px, transparent 1px),
+                linear-gradient(180deg, var(--bg), var(--bg2));
+            background-size: 72px 72px, 72px 72px, auto;
+            color: var(--text);
+            transition: background .2s, color .2s;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            color: inherit;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            border-radius: inherit;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin: 0;
+        }
+
+        .wrap {
+            width: min(1200px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        /* Layout Grid */
+        .page-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 24px;
+            padding: 32px 0 64px;
+            align-items: start;
+        }
+
+        /* ── Header ── */
+        .hdr {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            border-bottom: 1px solid var(--line);
+            background: var(--header-bg);
+            backdrop-filter: blur(18px);
+        }
+
+        .hdr-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            min-height: 78px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius);
+            background: var(--text);
+            color: var(--bg);
+            font-size: .92rem;
+            font-weight: 900;
+        }
+
+        .hdr-nav {
+            display: flex;
+            gap: 22px;
+            font-weight: 700;
+            font-size: .92rem;
+            color: var(--text);
+        }
+
+        .hdr-nav a {
+            position: relative;
+            color: var(--muted);
+        }
+
+        .hdr-nav a.active {
+            color: var(--text);
+        }
+
+        .hdr-nav a::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: -8px;
+            left: 0;
+            height: 2px;
+            border-radius: 2px;
+            background: var(--accent);
+            opacity: 0;
+            transform: scaleX(.5);
+            transition: opacity .2s, transform .2s;
+        }
+
+        .hdr-nav a.active::after,
+        .hdr-nav a:hover::after {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        .hdr-acts {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn,
+        .theme-tog {
+            border-radius: var(--radius);
+            padding: 0 16px;
+            min-height: 42px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid transparent;
+            transition: transform .18s, background .18s, box-shadow .18s;
+        }
+
+        .btn-p {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-p:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--accent-f);
+        }
+
+        .theme-tog {
+            background: var(--surface);
+            border-color: var(--line);
+            color: var(--text);
+            padding: 0 12px;
+        }
+
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-f);
+            padding: 24px;
+            backdrop-filter: blur(12px);
+        }
+
+        /* Badges */
+        .verified-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            background: var(--accent-f);
+            color: var(--accent-s);
+            border-radius: 4px;
+            font-size: .7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .investor-tag {
+            background: var(--amber-f);
+            color: var(--amber);
+        }
+
+        /* Left Nav */
+        .side-nav {
+            display: grid;
+            gap: 8px;
+            margin-top: 24px;
+        }
+
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            font-weight: 700;
+            color: var(--muted);
+            transition: background .2s, color .2s;
+        }
+
+        .side-nav a.active {
+            background: var(--surface-f);
+            color: var(--accent);
+        }
+
+        .side-nav a:hover:not(.active) {
+            background: var(--surface-f);
+            color: var(--text);
+        }
+
+        /* Network Feed */
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .feed-header h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 99px;
+            border: 1px solid var(--line);
+            font-weight: 700;
+            font-size: .85rem;
+            color: var(--muted);
+            background: var(--surface);
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: var(--text);
+            color: var(--bg);
+            border-color: transparent;
+        }
+
+        .connection-card {
+            display: flex;
+            gap: 16px;
+            padding: 18px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--surface);
+            transition: transform .2s;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .connection-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 3px solid var(--surface-s);
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-f);
+        }
+
+        .connection-info h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .connection-info p {
+            font-size: .9rem;
+            color: var(--muted);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .action-btns {
+            margin-left: auto;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--line);
+            padding: 8px 14px;
+            border-radius: var(--radius);
+            font-weight: 700;
+            font-size: .85rem;
+            background: var(--surface-s);
+            transition: background .2s;
+        }
+
+        .btn-outline:hover {
+            background: var(--surface-f);
+        }
+
+        /* Right Sidebar */
+        .insight-card {
+            margin-bottom: 16px;
+        }
+
+        .insight-card h3 {
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .insight-item {
+            display: flex;
+            gap: 10px;
+            font-size: .85rem;
+            color: var(--muted);
+            align-items: start;
+            margin-bottom: 12px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .insight-item b {
+            color: var(--text);
+            font-weight: 800;
+        }
+
+        .insight-item span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media(max-width: 980px) {
+            .page-layout {
+                grid-template-columns: 240px 1fr;
+            }
+
+            .hidden-md {
+                display: none;
+            }
+        }
+
+        @media(max-width: 768px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .side-nav {
+                display: flex;
+                overflow-x: auto;
+                margin-bottom: 16px;
+                margin-top: 0;
+            }
+
+            .side-nav a {
+                white-space: nowrap;
+            }
+
+            .connection-card {
+                flex-wrap: wrap;
+            }
+
+            .action-btns {
+                margin-left: 0;
+                margin-top: 12px;
+                width: 100%;
+            }
+
+            .btn-outline {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="hdr">
+        <div class="wrap hdr-row">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">SU</span>
+                <span style="display:grid;gap:2px"><strong>SyncUp.</strong><small>Verified professional</small></span>
+            </a>
+            <nav class="hdr-nav">
+                <a href="feed.html">Feed</a>
+                <a href="network.html" class="active">Network</a>
+                <a href="#events">Events</a>
+            </nav>
+            <div class="hdr-acts">
+                <button class="theme-tog" id="themeToggle" type="button">☼ / ☾</button>
+                <div
+                    style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white; display: grid; place-items: center; font-weight: 900;">
+                    U</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="wrap page-layout">
+
+        <!-- Left Sidebar -->
+        <aside>
+            <div class="panel" style="text-align: center; padding: 32px 24px;">
+                <div class="avatar" style="width: 84px; height: 84px; margin: 0 auto 16px;">
+                    <img src="https://ui-avatars.com/api/?name=Alex+Rivera&background=7C3AED&color=fff&size=200"
+                        alt="avatar">
+                </div>
+                <h2 style="font-size: 1.2rem; font-weight: 900; margin-bottom: 4px;">Alex Rivera</h2>
+                <div class="verified-tag" style="margin-bottom: 12px;">Verified Human</div>
+                <p style="font-size: .85rem; color: var(--muted); font-weight: 600;">Founder @ Synapse AI</p>
+                <div
+                    style="display: flex; justify-content: space-around; margin-top: 24px; border-top: 1px solid var(--line); padding-top: 16px;">
+                    <div><strong style="display:block; font-size: 1.2rem;">412</strong><span
+                            style="font-size:.7rem; color:var(--muted); font-weight: 700; text-transform: uppercase;">Connections</span>
+                    </div>
+                    <div><strong style="display:block; font-size: 1.2rem;">12.4k</strong><span
+                            style="font-size:.7rem; color:var(--muted); font-weight: 700; text-transform: uppercase;">Reach</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="side-nav">
+                <a href="#" class="active">💼 My Network</a>
+                <a href="#">🤝 Pending Invites (3)</a>
+                <a href="#">💰 Investors Match</a>
+                <a href="#">🚀 Talent Pool</a>
+                <a href="#">🏢 Saved Companies</a>
+            </nav>
+        </aside>
+
+        <!-- Center Feed -->
+        <section>
+            <!-- Grow Your Network Hero Banner -->
+            <div class="panel"
+                style="background: linear-gradient(135deg, var(--accent-s), var(--accent)); color: white; margin-bottom: 24px; position: relative; overflow: hidden; border: none;">
+                <div style="position: relative; z-index: 2; display: flex; flex-direction: column; gap: 16px;">
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <span
+                            style="background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 99px; font-size: .75rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;">Growth
+                            Engine</span>
+                    </div>
+                    <h1
+                        style="font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 900; line-height: 1.1; letter-spacing: -.02em;">
+                        Connect with professionals<br>&amp; grow your network</h1>
+                    <p style="opacity: 0.9; max-width: 440px; line-height: 1.6; font-size: .95rem; margin-bottom: 8px;">
+                        SyncUp's biometric mesh ensures you're meeting real industry leaders. Invite peers to unlock
+                        Deal Room access.</p>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <button class="btn"
+                            style="background: white; color: var(--accent); border-radius: var(--radius); box-shadow: 0 4px 14px rgba(0,0,0,0.15);">Discover
+                            Peers</button>
+                        <div
+                            style="display: flex; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); border-radius: var(--radius); overflow: hidden;">
+                            <span
+                                style="padding: 0 14px; display: flex; align-items: center; font-family: monospace; font-weight: 800;">syncup.link/alex24</span>
+                            <button class="btn"
+                                style="background: rgba(255,255,255,0.15); border-radius: 0;">Copy</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Decorative background elements -->
+                <div
+                    style="position: absolute; right: -60px; top: -60px; width: 250px; height: 250px; border-radius: 50%; background: var(--orange); opacity: 0.15; filter: blur(50px);">
+                </div>
+                <div
+                    style="position: absolute; right: 80px; bottom: -80px; width: 180px; height: 180px; border-radius: 50%; background: var(--bg); opacity: 0.2; filter: blur(40px);">
+                </div>
+            </div>
+
+            <div class="feed-header">
+                <h2>Your Trust Network</h2>
+                <button class="btn btn-p">+ Search</button>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active">All Contacts</button>
+                <button class="filter-btn">Founders</button>
+                <button class="filter-btn">Investors</button>
+                <button class="filter-btn">Hiring</button>
+            </div>
+
+            <!-- Connection 1 -->
+            <article class="connection-card">
+                <div class="avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+                        alt="Avatar">
+                </div>
+                <div class="connection-info">
+                    <h3>David Chen <span class="verified-tag">Verified</span></h3>
+                    <p>Partner at Greenfield Ventures <br> <span style="font-size: 0.8rem; opacity: 0.8;">📍 San
+                            Francisco, CA &middot; Shared 4 mutuals</span></p>
+                </div>
+                <div class="action-btns">
+                    <button class="btn-outline"
+                        style="border-color: var(--accent); color: var(--accent);">Message</button>
+                    <button class="btn-outline">View Intro</button>
+                </div>
+            </article>
+
+            <!-- Connection 2 -->
+            <article class="connection-card">
+                <div class="avatar">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+                        alt="Avatar">
+                </div>
+                <div class="connection-info">
+                    <h3>Sarah Miller <span class="verified-tag">Verified</span> <span class="verified-tag investor-tag"
+                            style="background:var(--amber-f); color:var(--amber);">Angel</span></h3>
+                    <p>Ex-VP Product at Stripe &middot; Angel Investor <br> <span
+                            style="font-size: 0.8rem; opacity: 0.8;">📍 New York, NY &middot; Intro from Maya</span></p>
+                </div>
+                <div class="action-btns">
+                    <button class="btn-outline">Message</button>
+                </div>
+            </article>
+
+            <!-- Connection 3 -->
+            <article class="connection-card" style="opacity: 0.6; border-style: dashed;">
+                <div class="avatar" style="filter: grayscale(1);">
+                    <img src="https://ui-avatars.com/api/?name=Guest+User&background=cbd5e1&color=fff&size=150"
+                        alt="Avatar">
+                </div>
+                <div class="connection-info">
+                    <h3>James W. <span
+                            style="font-size: 0.7rem; background: var(--surface-f); padding: 2px 6px; border-radius: 4px; font-weight:700; color: var(--muted);">Unverified</span>
+                    </h3>
+                    <p>Software Engineer <br> <span style="font-size: 0.8rem; color: var(--orange);">⚠️ Identity not
+                            established via camera check</span></p>
+                </div>
+                <div class="action-btns">
+                    <button class="btn-outline" style="background:var(--surface);">Request Verification</button>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- Right Sidebar -->
+        <aside class="hidden-md">
+            <div class="panel insight-card">
+                <h3>Network Insights</h3>
+                <div class="insight-item"><span></span>
+                    <div><b>72%</b> of your network is verified. Verified users are 4x more likely to respond to
+                        connection requests.</div>
+                </div>
+                <div class="insight-item"><span style="background: var(--amber);"></span>
+                    <div>You have strong ties in <b>Fintech</b> and <b>SaaS</b>. Consider connecting with <a href="#"
+                            style="color:var(--accent);">David Chen</a> for biotech intro.</div>
+                </div>
+            </div>
+
+            <div class="panel insight-card">
+                <h3>Recommended Intros</h3>
+
+                <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: center; cursor: pointer;">
+                    <div class="avatar" style="width: 42px; height: 42px; border-width: 2px;"><img
+                            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80">
+                    </div>
+                    <div>
+                        <div style="font-weight: 800; font-size: .9rem;">Elena Rodriguez</div>
+                        <div style="font-size: .75rem; color: var(--muted); font-weight: 600;">CTO @ CloudScale</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: center; cursor: pointer;">
+                    <div class="avatar" style="width: 42px; height: 42px; border-width: 2px;"><img
+                            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80">
+                    </div>
+                    <div>
+                        <div style="font-weight: 800; font-size: .9rem;">Michael Chang</div>
+                        <div style="font-size: .75rem; color: var(--muted); font-weight: 600;">Partner @ YC</div>
+                    </div>
+                </div>
+
+                <button class="btn-outline"
+                    style="width: 100%; border:none; color: var(--accent); background: var(--accent-f);">View all
+                    suggestions</button>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const h = document.documentElement;
+            const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            h.setAttribute('data-theme', n);
+            try { localStorage.setItem('su-theme', n); } catch (e) { }
+        });
+    </script>
+</body>
+
+</html>
