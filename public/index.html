@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="light">
 
 
@@ -1795,22 +1795,22 @@
                 const tick = n => { const p = Math.min((n - s) / d, 1); c.textContent = fmtMetric(Math.round(t * (1 - Math.pow(1 - p, 3)); if (p < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick);
             };
             const o = new IntersectionObserver(es => { es.forEach(e => { if (!e.isIntersecting || e.target.dataset.counted) return; e.target.dataset.counted = '1'; run(e.target); }); }, { threshold: .45 });
-            cs.forEach(c => o.observe(c);
+            cs.forEach(c => o.observe(c));
         }
 
         /* Reveal */
         function revealOnScroll() {
             const items = [...document.querySelectorAll('.reveal')]; if (!items.length) return;
             const o = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); o.unobserve(e.target); } }); }, { threshold: .18 });
-            items.forEach(i => o.observe(i);
+            items.forEach(i => o.observe(i));
         }
 
         /* Auth */
         const modal = document.getElementById('authModal');
         function openAuth() { modal?.classList.remove('hidden'); document.body.classList.add('modal-open'); resetAuth(); }
         function closeAuth() { camStop(); modal?.classList.add('hidden'); document.body.classList.remove('modal-open'); }
-        document.querySelectorAll('[data-open-auth]').forEach(b => b.addEventListener('click', openAuth);
-        document.querySelectorAll('[data-close-auth]').forEach(b => b.addEventListener('click', closeAuth);
+        document.querySelectorAll('[data-open-auth]').forEach(b => b.addEventListener('click', openAuth));
+        document.querySelectorAll('[data-close-auth]').forEach(b => b.addEventListener('click', closeAuth));
 
         function goStep(s) { [1, 2, 3].forEach(n => { document.getElementById('step' + n)?.classList.toggle('active', n === s); const d = document.getElementById('dot' + n); if (d) { d.classList.toggle('done', n < s); d.classList.toggle('active', n === s); } }); }
         function resetAuth() { camStop(); resetLive(); goStep(1); }
@@ -1834,8 +1834,8 @@
         const signupModal = document.getElementById('signupModal');
         function openSignup() { signupModal?.classList.remove('hidden'); document.body.classList.add('modal-open'); }
         function closeSignup() { signupModal?.classList.add('hidden'); document.body.classList.remove('modal-open'); }
-        document.querySelectorAll('[data-open-signup]').forEach(b => b.addEventListener('click', openSignup);
-        document.querySelectorAll('[data-close-signup]').forEach(b => b.addEventListener('click', closeSignup);
+        document.querySelectorAll('[data-open-signup]').forEach(b => b.addEventListener('click', openSignup));
+        document.querySelectorAll('[data-close-signup]').forEach(b => b.addEventListener('click', closeSignup));
 
         document.getElementById('switchToSignIn')?.addEventListener('click', (e) => {
             e.preventDefault(); closeSignup(); openAuth();
@@ -1858,7 +1858,7 @@
         }
 
         function setLiveScore(v) {
-            v = Math.max(0, Math.min(100, Math.round(v));
+            v = Math.max(0, Math.min(100, Math.round(v)));
             const s = document.getElementById('liveScore'), b = document.getElementById('liveBar');
             if (s) s.textContent = v + '%'; if (b) b.style.width = v + '%';
         }
@@ -1878,7 +1878,7 @@
 
         function camStop() {
             if (_raf) { cancelAnimationFrame(_raf); _raf = null; }
-            if (_s) { _s.getTracks().forEach(t => t.stop(); _s = null; } _prev = null;
+            if (_s) { _s.getTracks().forEach(t => t.stop()); _s = null; } _prev = null;
             const sh = document.getElementById('camShell'); if (sh) sh.classList.remove('cam-on', 'scanning');
             const sb = document.getElementById('startCam'), st = document.getElementById('stopCam');
             if (sb) { sb.disabled = false; sb.textContent = 'Start camera'; } if (st) st.disabled = true;
@@ -1963,14 +1963,14 @@
         });
         document.querySelectorAll('[data-close-coupon]').forEach(b => b.addEventListener('click', () => {
             couponModal?.classList.add('hidden'); document.body.classList.remove('modal-open');
-        });
+        }));
         /* Credit System */
         const CREDIT_KEY = 'S-credits';
         function getCredits() { return parseFloat(localStorage.getItem(CREDIT_KEY) || '0'); }
         function addCredits(amount) {
             const next = getCredits() + amount;
-            localStorage.setItem(CREDIT_KEY, next.toFixed(2);
-            sessionStorage.setItem('S-pending-credit', amount.toFixed(2);
+            localStorage.setItem(CREDIT_KEY, next.toFixed(2));
+            sessionStorage.setItem('S-pending-credit', amount.toFixed(2));
             return next;
         }
 
@@ -2085,7 +2085,7 @@
             const company = document.getElementById('authCompany')?.value.trim();
             const role = document.getElementById('authRole')?.value;
             if (!name || !email) return;
-            localStorage.setItem('pendingProfile', JSON.stringify({ name, email, dob, company, role });
+            localStorage.setItem('pendingProfile', JSON.stringify({ name, email, dob, company, role }));
         });
     </script>
 </body>
