@@ -1,472 +1,724 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyncUp | Professional Networking Platform</title>
-    <meta name="description" content="Build a Trusted Professional Ecosystem. Face-verified connections, real opportunities.">
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>SyncUp | Trusted Professional Network</title>
+    <meta name="description" content="Build a trusted professional ecosystem with camera-based liveness verification.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- MediaPipe Face Mesh for real landmark-based liveness -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
     <style>
-        /* ============================================
-           CSS VARIABLES
-           ============================================ */
         :root {
-            --bg-base: #030712;
-            --bg-surface: rgba(17, 24, 39, 0.6);
-            --brand-primary: #3b82f6;
-            --brand-secondary: #8b5cf6;
-            --brand-accent: #10b981;
-            --glass-bg: rgba(17, 24, 39, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-main: #f9fafb;
-            --text-muted: #9ca3af;
-            --text-dim: #6b7280;
-            --input-bg: rgba(255, 255, 255, 0.03);
-            --input-border: rgba(255, 255, 255, 0.1);
-            --danger: #ef4444;
-            --success: #10b981;
+            --bg: #FAFAF8;
+            --bg-card: #FFFFFF;
+            --bg-subtle: #F4F2EE;
+            --purple: #7C3AED;
+            --purple-light: #EDE9FE;
+            --purple-mid: #A78BFA;
+            --purple-dark: #5B21B6;
+            --orange: #F97316;
+            --orange-light: #FFF7ED;
+            --orange-mid: #FB923C;
+            --text: #1A1A1A;
+            --text-secondary: #6B7280;
+            --text-tertiary: #9CA3AF;
+            --border: #E5E5E0;
+            --border-light: #F0EEEA;
+            --success: #10B981;
+            --danger: #EF4444;
+            --radius: 14px;
+            --radius-sm: 10px;
+            --radius-xs: 8px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
+            --shadow-purple: 0 4px 20px rgba(124, 58, 237, 0.15);
         }
 
-        /* ============================================
-           RESET & BASE
-           ============================================ */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         html {
             scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-base);
-            color: var(--text-main);
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-            overflow-y: auto;
-            position: relative;
             -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
         }
 
         ::selection {
-            background: rgba(139, 92, 246, 0.35);
-            color: #e2d9fc;
+            background: var(--purple-light);
+            color: var(--purple-dark);
         }
 
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(100,116,139,0.4); border-radius: 99px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(139,92,246,0.5); }
-
-        a { text-decoration: none; color: inherit; }
-
-        /* ============================================
-           AMBIENT BACKGROUND
-           ============================================ */
-        .ambient-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: 0;
-            pointer-events: none;
+        ::-webkit-scrollbar {
+            width: 6px;
         }
 
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.4;
-            animation: orb-drift 20s infinite alternate ease-in-out;
-        }
-        .orb-1 { width: 50vw; height: 50vw; background: rgba(59,130,246,0.25); top: -20%; left: -10%; }
-        .orb-2 { width: 40vw; height: 40vw; background: rgba(139,92,246,0.2); bottom: -10%; right: -10%; animation-delay: -5s; }
-        .orb-3 { width: 30vw; height: 30vw; background: rgba(16,185,129,0.15); top: 40%; left: 40%; animation-delay: -10s; }
-
-        @keyframes orb-drift {
-            0%   { transform: translate(0, 0) scale(1); }
-            50%  { transform: translate(5%, 10%) scale(1.1); }
-            100% { transform: translate(-5%, -5%) scale(0.9); }
+        ::-webkit-scrollbar-track {
+            background: transparent;
         }
 
-        /* ============================================
-           UTILITY CLASSES
-           ============================================ */
-        .container { max-width: 1140px; margin: 0 auto; padding: 0 2rem; }
-        .text-gradient { background: linear-gradient(to right, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .text-gradient-2 { background: linear-gradient(135deg, #a78bfa, #818cf8, #6ee7b7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        .hidden { display: none !important; }
-
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            overflow: hidden;
+        ::-webkit-scrollbar-thumb {
+            background: #D4D4D4;
+            border-radius: 99px;
         }
 
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--purple-mid);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* === BUTTONS === */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.6rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
+            gap: 8px;
+            padding: 11px 24px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             border: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             outline: none;
+            letter-spacing: -0.01em;
         }
-        .btn:active { transform: scale(0.97); }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            background: var(--purple);
             color: white;
-            box-shadow: 0 4px 16px rgba(59,130,246,0.35);
+            box-shadow: var(--shadow-purple);
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(59,130,246,0.5); }
+
+        .btn-primary:hover {
+            background: var(--purple-dark);
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.25);
+            transform: translateY(-1px);
+        }
 
         .btn-secondary {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: var(--text-main);
-        }
-        .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
-
-        .btn-outline {
             background: transparent;
-            border: 1px solid rgba(139,92,246,0.4);
-            color: #a78bfa;
+            color: var(--text);
+            border: 1.5px solid var(--border);
         }
-        .btn-outline:hover { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.7); }
+
+        .btn-secondary:hover {
+            border-color: var(--purple-mid);
+            color: var(--purple);
+            background: var(--purple-light);
+        }
 
         .btn-ghost {
             background: transparent;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             border: none;
-            padding: 0.5rem;
+            padding: 8px;
         }
-        .btn-ghost:hover { color: var(--text-main); }
 
+        .btn-ghost:hover {
+            color: var(--purple);
+        }
+
+        .btn-orange {
+            background: var(--orange);
+            color: white;
+            box-shadow: 0 4px 16px rgba(249, 115, 22, 0.2);
+        }
+
+        .btn-orange:hover {
+            background: #EA580C;
+            transform: translateY(-1px);
+        }
+
+        /* === INPUTS === */
         .input-field {
             width: 100%;
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            border-radius: 12px;
-            padding: 0.8rem 1rem 0.8rem 2.75rem;
-            color: var(--text-main);
+            background: var(--bg);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px 12px 42px;
+            color: var(--text);
             font-family: inherit;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
             outline: none;
         }
-        .input-field::placeholder { color: var(--text-dim); }
-        .input-field:focus { border-color: rgba(59,130,246,0.5); background: rgba(255,255,255,0.05); box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
 
-        .input-group { margin-bottom: 1.25rem; position: relative; }
-        .input-group label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 500; color: #d1d5db; }
-        .input-wrapper { position: relative; display: flex; align-items: center; }
-        .input-icon { position: absolute; left: 0.85rem; color: #6b7280; pointer-events: none; z-index: 2; transition: color 0.3s; }
-        .input-field:focus ~ .input-icon,
-        .input-wrapper:focus-within .input-icon { color: var(--brand-primary); }
+        .input-field::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .input-field:hover {
+            border-color: #D1D1CD;
+        }
+
+        .input-field:focus {
+            border-color: var(--purple);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.08);
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.825rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+
+        .input-wrapper:focus-within .input-icon {
+            color: var(--purple);
+        }
 
         .error-msg {
             display: none;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            background: rgba(239,68,68,0.1);
-            border: 1px solid rgba(239,68,68,0.25);
-            border-radius: 12px;
-            color: #fca5a5;
-            font-size: 0.85rem;
+            gap: 8px;
+            padding: 12px 14px;
+            background: #FEF2F2;
+            border: 1px solid #FEE2E2;
+            border-radius: var(--radius-xs);
+            color: var(--danger);
+            font-size: 0.825rem;
             margin-bottom: 1rem;
         }
-        .error-msg.show { display: flex; }
 
-        .success-msg {
+        .error-msg.show {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            background: rgba(16,185,129,0.1);
-            border: 1px solid rgba(16,185,129,0.25);
-            border-radius: 12px;
-            color: #6ee7b7;
-            font-size: 0.85rem;
         }
 
+        /* === BADGE === */
         .badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.4rem;
-            padding: 0.4rem 0.85rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            color: #d1d5db;
+            gap: 5px;
+            padding: 4px 12px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
         }
-        .badge i { color: var(--brand-accent); }
 
-        /* ============================================
-           PAGE: ALL PAGES (VIEWS)
-           ============================================ */
+        /* === PAGES === */
         .page {
             min-height: 100vh;
             position: relative;
-            z-index: 10;
         }
 
-        /* ============================================
-           HEADER / NAV
-           ============================================ */
+        /* === HEADER === */
         .site-header {
             position: fixed;
-            top: 0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
-            padding: 1rem 0;
+            padding: 16px 0;
         }
-        .site-header .nav-inner {
+
+        .nav-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.75rem 1.5rem;
-            border-radius: 16px;
-            background: rgba(3,7,18,0.85);
+            padding: 10px 20px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow);
         }
-        .logo-container { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
-        .logo-icon {
-            width: 36px; height: 36px;
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            color: white;
-            box-shadow: 0 6px 14px rgba(59,130,246,0.3);
-        }
-        .logo-text {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.25rem; font-weight: 800;
-            letter-spacing: -0.04em;
-        }
-        .nav-actions { display: flex; gap: 0.5rem; align-items: center; }
 
-        /* ============================================
-           PAGE: LANDING / HOME
-           ============================================ */
-        #page-landing {
+        .logo {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
         }
 
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--purple), var(--orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .logo-name {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        /* === LANDING HERO === */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 8rem 2rem 4rem;
+            padding: 7rem 1.5rem 4rem;
             position: relative;
+            overflow: hidden;
         }
 
-        .hero-badge {
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        .hero-tag {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.45rem 1.2rem;
-            background: rgba(59,130,246,0.1);
-            border: 1px solid rgba(59,130,246,0.25);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #93c5fd;
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.6s ease both;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--purple-light);
+            border: 1px solid #DDD6FE;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--purple);
+            margin-bottom: 1.5rem;
         }
 
         .hero h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 800;
-            line-height: 1.08;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.03em;
-            animation: fadeInUp 0.6s 0.1s ease both;
+            font-size: clamp(2.5rem, 5vw, 3.75rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.035em;
+            color: var(--text);
+            margin-bottom: 1.25rem;
+        }
+
+        .hero h1 .accent-purple {
+            color: var(--purple);
+        }
+
+        .hero h1 .accent-orange {
+            color: var(--orange);
         }
 
         .hero p {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            color: var(--text-muted);
-            max-width: 560px;
-            margin: 0 auto 2.5rem;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 480px;
+            margin-bottom: 2rem;
             line-height: 1.7;
-            animation: fadeInUp 0.6s 0.2s ease both;
         }
 
         .hero-actions {
             display: flex;
-            gap: 0.75rem;
-            justify-content: center;
+            gap: 10px;
             flex-wrap: wrap;
-            animation: fadeInUp 0.6s 0.3s ease both;
+            margin-bottom: 2.5rem;
         }
 
         .trust-row {
             display: flex;
             gap: 1.5rem;
-            justify-content: center;
             flex-wrap: wrap;
-            margin-top: 3rem;
-            animation: fadeInUp 0.6s 0.4s ease both;
         }
-        .trust-row span { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--text-dim); }
-        .trust-row i { color: var(--brand-secondary); width: 14px; height: 14px; }
 
-        /* Stats */
-        .stats-section {
-            padding: 4rem 2rem;
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
         }
+
+        .trust-item i {
+            color: var(--purple-mid);
+        }
+
+        /* Hero visual */
+        .hero-visual {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            aspect-ratio: 4/3;
+        }
+
+        .hero-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-visual-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(249, 115, 22, 0.06));
+        }
+
+        .hero-visual-badge {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-xs);
+            border: 1px solid var(--border);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-visual-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success);
+            display: inline-block;
+            margin-right: 4px;
+            animation: pulse-dot 2s infinite;
+        }
+
+        /* Decorative blobs */
+        .blob-purple {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.08), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .blob-orange {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.06), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* === STATS === */
+        .stats-section {
+            padding: 3rem 1.5rem;
+        }
+
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1.5rem;
-            padding: 2.5rem;
-            border-radius: 20px;
-            background: rgba(17,24,39,0.5);
-            border: 1px solid rgba(255,255,255,0.05);
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
-        .stat-item { text-align: center; }
-        .stat-value { font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800; }
-        .stat-label { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem; }
 
-        /* Features */
-        .features-section { padding: 5rem 2rem; }
-        .section-header { text-align: center; margin-bottom: 3rem; }
-        .section-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--brand-secondary); margin-bottom: 0.75rem; }
-        .section-header h2 { font-family: 'Outfit', sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; line-height: 1.2; }
-        .section-header p { color: var(--text-muted); max-width: 500px; margin: 0.75rem auto 0; font-size: 1rem; }
+        .stat-item {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--purple);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* === FEATURES === */
+        .features-section {
+            padding: 5rem 1.5rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            padding: 4px 12px;
+            background: var(--orange-light);
+            border: 1px solid #FED7AA;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            color: var(--text);
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0.75rem auto 0;
+        }
 
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.25rem;
+            gap: 1rem;
         }
-        .feature-card {
-            padding: 2rem;
-            border-radius: 16px;
-            background: rgba(17,24,39,0.5);
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: all 0.3s ease;
-            cursor: default;
-        }
-        .feature-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(139,92,246,0.25);
-            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
-        }
-        .feature-icon {
-            width: 48px; height: 48px;
-            border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 1.25rem;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-        }
-        .feature-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .feature-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
 
-        /* Steps */
-        .steps-section { padding: 5rem 2rem; }
+        .feature-card {
+            padding: 1.75rem;
+            border-radius: var(--radius);
+            background: white;
+            border: 1px solid var(--border);
+            transition: all 0.25s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--purple-mid);
+            box-shadow: var(--shadow-purple);
+        }
+
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* === STEPS === */
+        .steps-section {
+            padding: 5rem 1.5rem;
+        }
+
         .steps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
         }
+
         .step-card {
             text-align: center;
             padding: 2rem 1.5rem;
-            border-radius: 16px;
-            background: rgba(17,24,39,0.5);
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: all 0.3s ease;
+            border-radius: var(--radius);
+            background: white;
+            border: 1px solid var(--border);
+            transition: all 0.25s ease;
         }
-        .step-card:hover { transform: translateY(-2px); border-color: rgba(59,130,246,0.2); }
-        .step-number {
-            width: 44px; height: 44px;
-            border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
+
+        .step-card:hover {
+            border-color: var(--orange-mid);
+            box-shadow: 0 6px 24px rgba(249, 115, 22, 0.1);
+        }
+
+        .step-num {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin: 0 auto 1rem;
-            font-weight: 700; font-size: 0.85rem;
+            font-weight: 800;
+            font-size: 0.85rem;
             color: white;
         }
-        .step-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
-        .step-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
 
-        /* CTA */
-        .cta-section { padding: 5rem 2rem; }
+        .step-card h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .step-card p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* === CTA === */
+        .cta-section {
+            padding: 5rem 1.5rem;
+        }
+
         .cta-box {
             text-align: center;
             padding: 3.5rem 2rem;
-            border-radius: 24px;
-            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.08));
-            border: 1px solid rgba(139,92,246,0.2);
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--purple-light), var(--orange-light));
+            border: 1px solid #E5DEFF;
             position: relative;
             overflow: hidden;
         }
-        .cta-box::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: 50%; transform: translateX(-50%);
-            width: 300px; height: 200px;
-            background: radial-gradient(ellipse, rgba(59,130,246,0.25), transparent 70%);
-            pointer-events: none;
-        }
-        .cta-box h2 { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; position: relative; }
-        .cta-box p { color: var(--text-muted); margin-bottom: 2rem; position: relative; }
 
-        /* Footer */
+        .cta-box h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-box p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* === FOOTER === */
         .site-footer {
-            padding: 2.5rem 2rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 2rem 1.5rem;
+            border-top: 1px solid var(--border);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
         }
-        .site-footer p { font-size: 0.8rem; color: var(--text-dim); }
-        .footer-links { display: flex; gap: 1.5rem; }
-        .footer-links a { font-size: 0.8rem; color: var(--text-dim); transition: color 0.2s; }
-        .footer-links a:hover { color: var(--text-main); }
 
-        /* ============================================
-           PAGE: LOGIN
-           ============================================ */
+        .site-footer p {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--purple);
+        }
+
+        /* === LOGIN === */
         #page-login {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            background: var(--bg);
         }
 
         .login-panel {
             display: flex;
             width: 100%;
-            max-width: 1050px;
-            min-height: 580px;
-            border-radius: 28px;
+            max-width: 960px;
+            min-height: 540px;
+            border-radius: 20px;
             overflow: hidden;
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
-            animation: fadeInUp 0.7s ease both;
+            background: white;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            animation: fadeUp 0.6s ease both;
         }
 
         .login-brand {
@@ -475,895 +727,1037 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            background: linear-gradient(135deg, var(--purple), #9333EA);
+            color: white;
             position: relative;
-            border-right: 1px solid var(--glass-border);
-            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+            overflow: hidden;
         }
+
         .login-brand::after {
             content: '';
-            position: absolute; inset: 0;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=');
-            z-index: -1; opacity: 0.5;
+            position: absolute;
+            bottom: -40px;
+            right: -40px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(249, 115, 22, 0.2);
+            filter: blur(60px);
         }
+
         .login-brand h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2.75rem; font-weight: 700;
-            line-height: 1.1; margin-bottom: 1rem;
-            margin-top: 3rem;
+            font-size: 2.25rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-top: 2rem;
+            letter-spacing: -0.02em;
         }
-        .login-brand p { font-size: 1rem; color: var(--text-muted); line-height: 1.6; max-width: 380px; }
-        .login-brand .badge-list { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
-        .login-brand .brand-footer { font-size: 0.75rem; color: var(--text-dim); }
+
+        .login-brand p {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            line-height: 1.6;
+            max-width: 340px;
+            margin-top: 0.75rem;
+        }
+
+        .login-brand .brand-footer {
+            font-size: 0.7rem;
+            opacity: 0.5;
+        }
 
         .login-form-section {
-            width: 440px;
+            width: 420px;
             padding: 3rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-        .login-form-section h2 { font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 600; margin-bottom: 0.35rem; }
-        .login-form-section .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
-        .login-form-section .subtitle a { color: var(--brand-primary); font-weight: 500; }
-        .login-form-section .subtitle a:hover { text-decoration: underline; }
 
-        /* Role selector */
+        .login-form-section h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            letter-spacing: -0.02em;
+        }
+
+        .login-form-section .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .login-form-section .subtitle a {
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        .login-form-section .subtitle a:hover {
+            text-decoration: underline;
+        }
+
         .role-selector {
             display: flex;
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            border-radius: 12px;
-            padding: 0.2rem;
-            margin-bottom: 1.75rem;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 3px;
+            margin-bottom: 1.5rem;
             position: relative;
         }
+
         .role-btn {
             flex: 1;
-            padding: 0.6rem 0;
+            padding: 8px 0;
             text-align: center;
-            font-weight: 500; font-size: 0.825rem;
-            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: var(--radius-xs);
             transition: color 0.3s;
-            position: relative; z-index: 2;
+            position: relative;
+            z-index: 2;
         }
-        .role-btn.active { color: var(--text-main); }
+
+        .role-btn.active {
+            color: var(--purple);
+        }
+
         .role-indicator {
             position: absolute;
-            top: 0.2rem; bottom: 0.2rem;
-            width: calc(33.333% - 0.15rem);
-            background: rgba(255,255,255,0.08);
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            top: 3px;
+            bottom: 3px;
+            width: calc(33.333% - 2px);
+            background: white;
+            border-radius: var(--radius-xs);
+            box-shadow: var(--shadow-sm);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 1;
         }
 
         .forgot-link {
-            display: block; text-align: right;
-            font-size: 0.8rem; color: var(--brand-primary);
-            margin-top: 0.3rem; transition: color 0.2s;
+            display: block;
+            text-align: right;
+            font-size: 0.78rem;
+            color: var(--purple);
+            margin-top: 4px;
+            font-weight: 500;
         }
-        .forgot-link:hover { color: #60a5fa; text-decoration: underline; }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
 
         .divider-line {
-            display: flex; align-items: center; margin: 1.5rem 0;
-            color: var(--text-dim); font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
         }
-        .divider-line::before, .divider-line::after { content: ''; flex: 1; border-bottom: 1px solid var(--input-border); }
-        .divider-line span { padding: 0 1rem; }
+
+        .divider-line::before,
+        .divider-line::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .divider-line span {
+            padding: 0 1rem;
+        }
 
         .signup-prompt {
-            text-align: center; margin-top: 1.5rem;
-            font-size: 0.85rem; color: var(--text-muted);
+            text-align: center;
+            margin-top: 1.25rem;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
         }
-        .signup-prompt a { color: white; font-weight: 500; }
-        .signup-prompt a:hover { color: var(--brand-primary); }
 
-        /* ============================================
-           PAGE: FACE VERIFY
-           ============================================ */
+        .signup-prompt a {
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        /* === FACE VERIFY === */
         #page-face-verify {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            background: var(--bg);
         }
 
-        .face-verify-card {
+        .face-card {
             width: 100%;
-            max-width: 520px;
+            max-width: 540px;
             padding: 2.5rem;
+            border-radius: 20px;
+            background: white;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
             text-align: center;
+            animation: fadeUp 0.6s ease both;
         }
 
         .face-icon-circle {
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 1.5rem;
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
         }
 
         .instructions-list {
             text-align: left;
-            margin: 1.5rem 0 2rem;
+            margin: 1.5rem 0 1.75rem;
+            display: grid;
+            gap: 8px;
         }
-        .instructions-list .instruction {
+
+        .instruction {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.5rem 0;
-            font-size: 0.9rem;
-            color: #d1d5db;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: var(--radius-xs);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            font-size: 0.85rem;
+            color: var(--text);
         }
-        .instructions-list .instruction span.emoji { font-size: 1.25rem; flex-shrink: 0; }
+
+        .instruction-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--purple-light);
+            color: var(--purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+        }
 
         .video-container {
             position: relative;
             width: 100%;
             aspect-ratio: 4/3;
-            border-radius: 16px;
+            border-radius: var(--radius);
             overflow: hidden;
-            background: #0f172a;
-            border: 2px solid rgba(255,255,255,0.08);
+            background: #F9FAFB;
+            border: 2px solid var(--border);
             margin-bottom: 1rem;
         }
+
         .video-container video {
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             transform: scaleX(-1);
         }
+
         .video-container canvas {
             position: absolute;
             inset: 0;
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             transform: scaleX(-1);
         }
+
         .face-guide {
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             pointer-events: none;
         }
-        .face-guide .guide-oval {
+
+        .guide-oval {
             width: 55%;
             aspect-ratio: 3/4;
-            border: 2px dashed rgba(139,92,246,0.5);
+            border: 2.5px dashed var(--purple-mid);
             border-radius: 50%;
+            opacity: 0.6;
         }
 
         .status-bar {
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            background: rgba(17,24,39,0.7);
-            border: 1px solid rgba(255,255,255,0.06);
+            padding: 10px 14px;
+            border-radius: var(--radius-xs);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
             margin-bottom: 1rem;
-            font-size: 0.85rem;
-            color: #d1d5db;
+            font-size: 0.825rem;
+            color: var(--text-secondary);
             font-weight: 500;
         }
 
         .checks-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 0.6rem;
-        }
-        .check-item {
-            display: flex; flex-direction: column;
-            align-items: center; gap: 0.4rem;
-            padding: 0.75rem 0.5rem;
-            border-radius: 12px;
-            background: rgba(30,41,59,0.6);
-            border: 1px solid rgba(255,255,255,0.06);
-            transition: all 0.3s ease;
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: var(--text-muted);
-        }
-        .check-item.done {
-            background: rgba(16,185,129,0.1);
-            border-color: rgba(16,185,129,0.3);
-            color: #6ee7b7;
+            gap: 8px;
         }
 
-        /* ============================================
-           PAGE: DASHBOARD / FEED
-           ============================================ */
+        .check-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 12px 8px;
+            border-radius: var(--radius-xs);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            transition: all 0.3s ease;
+        }
+
+        .check-item.done {
+            background: #F0FDF4;
+            border-color: #BBF7D0;
+            color: var(--success);
+        }
+
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid var(--border);
+            border-top-color: var(--purple);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        /* === DASHBOARD === */
         #page-dashboard {
             padding-top: 5rem;
+            background: var(--bg);
         }
+
         .dash-header {
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            padding: 2rem 0;
         }
+
         .dash-header h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.75rem; font-weight: 700;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
+
+        .dash-header .accent {
+            color: var(--purple);
+        }
+
         .dash-grid {
             display: grid;
-            grid-template-columns: 280px 1fr 280px;
-            gap: 1.5rem;
-            padding: 0 2rem 3rem;
+            grid-template-columns: 260px 1fr 260px;
+            gap: 1.25rem;
+            padding-bottom: 3rem;
         }
 
         .profile-card {
             padding: 1.5rem;
-            border-radius: 16px;
-            background: rgba(17,24,39,0.6);
-            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius);
+            background: white;
+            border: 1px solid var(--border);
         }
-        .profile-card .avatar {
-            width: 56px; height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 1.25rem;
-            margin-bottom: 0.75rem; color: white;
-        }
-        .profile-card .name { font-weight: 600; font-size: 0.95rem; }
-        .profile-card .headline { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
-        .profile-stats {
-            display: flex; gap: 1.5rem;
-            margin-top: 1rem; padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.06);
-        }
-        .profile-stats div { text-align: center; flex: 1; }
-        .profile-stats .val { font-weight: 700; font-size: 1rem; }
-        .profile-stats .lbl { font-size: 0.7rem; color: var(--text-dim); margin-top: 0.15rem; }
 
-        .feed-area { min-width: 0; }
+        .avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--purple), var(--orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .profile-card .name {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .profile-card .headline {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .profile-stats div {
+            text-align: center;
+            flex: 1;
+        }
+
+        .profile-stats .val {
+            font-weight: 800;
+            font-size: 1rem;
+            color: var(--purple);
+        }
+
+        .profile-stats .lbl {
+            font-size: 0.68rem;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+
         .create-post-bar {
-            padding: 1.25rem;
-            border-radius: 16px;
-            background: rgba(17,24,39,0.6);
-            border: 1px solid rgba(255,255,255,0.06);
-            display: flex; align-items: center; gap: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1rem;
+            border-radius: var(--radius);
+            background: white;
+            border: 1px solid var(--border);
             margin-bottom: 1rem;
             cursor: pointer;
             transition: border-color 0.2s;
         }
-        .create-post-bar:hover { border-color: rgba(255,255,255,0.12); }
-        .create-post-bar .post-avatar {
-            width: 36px; height: 36px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 600; font-size: 0.8rem; color: white; flex-shrink: 0;
+
+        .create-post-bar:hover {
+            border-color: var(--purple-mid);
         }
-        .create-post-bar .post-input {
+
+        .post-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--purple), var(--orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .post-input-bar {
             flex: 1;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 50px;
-            padding: 0.6rem 1rem;
-            font-size: 0.85rem;
-            color: var(--text-dim);
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-light);
+            border-radius: 100px;
+            padding: 9px 16px;
+            font-size: 0.82rem;
+            color: var(--text-tertiary);
         }
 
         .post-card {
             padding: 1.25rem;
-            border-radius: 16px;
-            background: rgba(17,24,39,0.6);
-            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius);
+            background: white;
+            border: 1px solid var(--border);
             margin-bottom: 1rem;
         }
-        .post-author { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem; }
+
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
         .post-author .av {
-            width: 36px; height: 36px; border-radius: 50%;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 600; font-size: 0.75rem; color: white; flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: white;
+            flex-shrink: 0;
         }
-        .post-author .meta .author-name { font-weight: 600; font-size: 0.85rem; }
-        .post-author .meta .author-info { font-size: 0.7rem; color: var(--text-dim); }
-        .post-content { font-size: 0.9rem; line-height: 1.65; color: #d1d5db; margin-bottom: 0.75rem; }
-        .post-actions { display: flex; gap: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; }
+
+        .post-author .author-name {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .post-author .author-info {
+            font-size: 0.72rem;
+            color: var(--text-tertiary);
+        }
+
+        .post-content {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 10px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 4px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 10px;
+        }
+
         .post-action-btn {
-            display: flex; align-items: center; gap: 0.35rem;
-            padding: 0.4rem 0.8rem;
-            border-radius: 8px;
-            font-size: 0.775rem;
-            color: var(--text-dim);
-            background: none; border: none;
-            cursor: pointer; transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: var(--radius-xs);
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            background: none;
+            border: none;
+            cursor: pointer;
             font-family: inherit;
+            font-weight: 500;
+            transition: all 0.15s;
         }
-        .post-action-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+
+        .post-action-btn:hover {
+            color: var(--purple);
+            background: var(--purple-light);
+        }
 
         .sidebar-widget {
             padding: 1.25rem;
-            border-radius: 16px;
-            background: rgba(17,24,39,0.6);
-            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius);
+            background: white;
+            border: 1px solid var(--border);
             margin-bottom: 1rem;
         }
-        .sidebar-widget h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem; }
-        .sidebar-widget .widget-item {
-            display: flex; align-items: center; gap: 0.5rem;
-            padding: 0.5rem 0;
-        }
-        .sidebar-widget .widget-item .wi-av {
-            width: 32px; height: 32px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 600; font-size: 0.7rem; color: white; flex-shrink: 0;
-        }
-        .sidebar-widget .widget-item .wi-name { font-size: 0.8rem; font-weight: 500; }
-        .sidebar-widget .widget-item .wi-sub { font-size: 0.7rem; color: var(--text-dim); }
 
-        /* ============================================
-           ANIMATIONS
-           ============================================ */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
+        .sidebar-widget h3 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text);
         }
+
+        .widget-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 0;
+        }
+
+        .wi-av {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.65rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .wi-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .wi-sub {
+            font-size: 0.7rem;
+            color: var(--text-tertiary);
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .spinner {
-            width: 40px; height: 40px;
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top-color: var(--brand-primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 1rem;
+            to {
+                transform: rotate(360deg);
+            }
         }
 
-        /* ============================================
-           RESPONSIVE
-           ============================================ */
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        /* === RESPONSIVE === */
         @media (max-width: 900px) {
-            .login-panel { flex-direction: column; max-width: 480px; }
-            .login-brand { border-right: none; border-bottom: 1px solid var(--glass-border); padding: 2rem; }
-            .login-brand h1 { font-size: 2rem; margin-top: 1rem; }
-            .login-form-section { width: 100%; padding: 2rem; }
-            .dash-grid { grid-template-columns: 1fr; }
-            .dash-grid aside { display: none; }
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                max-height: 320px;
+            }
+
+            .login-panel {
+                flex-direction: column;
+                max-width: 480px;
+            }
+
+            .login-brand {
+                padding: 2rem;
+            }
+
+            .login-brand h1 {
+                font-size: 1.75rem;
+                margin-top: 1rem;
+            }
+
+            .login-form-section {
+                width: 100%;
+                padding: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dash-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dash-grid aside {
+                display: none;
+            }
         }
 
-        /* ============================================
-           MODERN MINIMAL REDESIGN OVERRIDES
-           ============================================ */
+        /* === Grok-inspired dark minimal pass === */
         :root {
             color-scheme: dark;
-            --bg-base: #050505;
-            --bg-surface: rgba(15, 16, 14, 0.78);
-            --brand-primary: #d8ff67;
-            --brand-secondary: #69f6cf;
-            --brand-accent: #d8ff67;
-            --glass-bg: rgba(13, 14, 12, 0.76);
-            --glass-border: rgba(247, 247, 242, 0.12);
-            --text-main: #f7f7f2;
-            --text-muted: #b8bbb4;
-            --text-dim: #7c8178;
-            --input-bg: rgba(247, 247, 242, 0.055);
-            --input-border: rgba(247, 247, 242, 0.12);
-            --danger: #ff6b6b;
+            --bg: #050505;
+            --bg-card: rgba(13, 14, 12, 0.78);
+            --bg-subtle: rgba(247, 247, 242, 0.055);
+            --purple: #d8ff67;
+            --purple-light: rgba(216, 255, 103, 0.08);
+            --purple-mid: #d8ff67;
+            --purple-dark: #b7ef4f;
+            --orange: #69f6cf;
+            --orange-light: rgba(105, 246, 207, 0.08);
+            --orange-mid: #69f6cf;
+            --text: #f7f7f2;
+            --text-secondary: #b8bbb4;
+            --text-tertiary: #7c8178;
+            --border: rgba(247, 247, 242, 0.12);
+            --border-light: rgba(247, 247, 242, 0.08);
             --success: #d8ff67;
+            --danger: #ff6b6b;
+            --radius: 8px;
+            --radius-sm: 8px;
+            --radius-xs: 6px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.32);
+            --shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
+            --shadow-lg: 0 30px 90px rgba(0, 0, 0, 0.44);
+            --shadow-purple: 0 16px 42px rgba(216, 255, 103, 0.12);
         }
 
-        * { letter-spacing: 0 !important; }
+        * {
+            letter-spacing: 0 !important;
+        }
 
         body {
-            font-family: 'Geist', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Geist', Inter, -apple-system, system-ui, sans-serif;
             background:
-                linear-gradient(115deg, rgba(216,255,103,0.08), transparent 34%),
-                linear-gradient(250deg, rgba(105,246,207,0.075), transparent 32%),
+                linear-gradient(115deg, rgba(216, 255, 103, 0.08), transparent 34%),
+                linear-gradient(250deg, rgba(105, 246, 207, 0.07), transparent 32%),
                 #050505;
-            color: var(--text-main);
+            color: var(--text);
         }
 
-        body::selection {
-            background: rgba(216,255,103,0.32);
-            color: #050505;
-        }
-
-        .ambient-bg {
-            overflow: hidden;
-            background-image:
-                linear-gradient(rgba(247,247,242,0.055) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(247,247,242,0.055) 1px, transparent 1px);
-            background-size: 72px 72px;
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.88), transparent 78%);
-            animation: grid-drift 18s linear infinite;
-        }
-
-        .ambient-bg::after {
+        body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             inset: 0;
-            background: linear-gradient(100deg, transparent 0 42%, rgba(216,255,103,0.12) 49%, transparent 58% 100%);
-            transform: translateX(-100%);
-            animation: ambient-sweep 9s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(247, 247, 242, 0.055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(247, 247, 242, 0.055) 1px, transparent 1px);
+            background-size: 72px 72px;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 78%);
+            animation: gridDrift 18s linear infinite;
         }
 
-        .orb { display: none; }
-
-        .container { max-width: 1180px; }
-
-        .text-gradient,
-        .text-gradient-2 {
-            background: linear-gradient(to right, #f7f7f2, #d8ff67 48%, #69f6cf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .page,
+        .site-header {
+            position: relative;
+            z-index: 1;
         }
 
-        .glass-card,
-        .login-panel,
+        .blob-purple,
+        .blob-orange {
+            display: none !important;
+        }
+
+        .nav-inner,
         .stats-grid,
         .feature-card,
         .step-card,
         .cta-box,
-        .profile-card,
-        .create-post-bar,
-        .post-card,
-        .sidebar-widget,
-        .nav-inner,
-        .video-container,
-        .status-bar,
-        .check-item,
-        .input-field,
-        .error-msg,
-        .success-msg,
-        .role-selector,
-        .role-btn,
-        .role-indicator,
-        .badge,
-        .btn {
-            border-radius: 8px !important;
-        }
-
-        .site-header { padding-top: 1.25rem; }
-
-        .site-header .nav-inner {
-            background: rgba(5, 5, 5, 0.78);
-            border: 1px solid rgba(247,247,242,0.12);
-            box-shadow: 0 18px 54px rgba(0,0,0,0.38);
-        }
-
-        .logo-icon {
-            background: linear-gradient(145deg, rgba(247,247,242,0.18), rgba(247,247,242,0.04)) !important;
-            border: 1px solid rgba(247,247,242,0.2);
-            color: var(--brand-primary);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 32px rgba(0,0,0,0.38);
-        }
-
-        .logo-text,
-        h1,
-        h2,
-        h3,
-        .stat-value {
-            font-family: 'Geist', Inter, ui-sans-serif, system-ui, sans-serif !important;
-        }
-
-        .btn {
-            min-height: 44px;
-            transform: translateY(0);
-        }
-
-        .btn-primary {
-            background: var(--text-main) !important;
-            color: #070806 !important;
-            box-shadow: 0 12px 34px rgba(247,247,242,0.12) !important;
-        }
-
-        .btn-primary:hover {
-            background: var(--brand-primary) !important;
-            box-shadow: 0 16px 42px rgba(216,255,103,0.18) !important;
-        }
-
-        .btn-secondary,
-        .btn-outline {
-            background: rgba(247,247,242,0.055) !important;
-            border: 1px solid rgba(247,247,242,0.14) !important;
-            color: var(--text-main) !important;
-        }
-
-        .btn-secondary:hover,
-        .btn-outline:hover {
-            background: rgba(105,246,207,0.12) !important;
-            border-color: rgba(105,246,207,0.35) !important;
-        }
-
-        .hero {
-            min-height: 96vh;
-            text-align: left;
-            padding-top: 8.5rem;
-            padding-bottom: 2rem;
-        }
-
-        .hero > div {
-            width: min(1180px, 100%);
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(340px, 0.86fr);
-            align-items: center;
-            gap: 3rem;
-        }
-
-        .hero-copy { min-width: 0; }
-
-        .hero-badge {
-            background: rgba(216,255,103,0.08);
-            border-color: rgba(216,255,103,0.28);
-            color: var(--brand-primary);
-            border-radius: 8px;
-        }
-
-        .hero h1 {
-            max-width: 720px;
-            font-size: 68px;
-            line-height: 0.96;
-            font-weight: 800;
-        }
-
-        .hero p {
-            max-width: 610px;
-            margin-left: 0;
-            margin-right: 0;
-            font-size: 18px;
-        }
-
-        .hero-actions,
-        .trust-row {
-            justify-content: flex-start;
-        }
-
-        .trust-row i,
-        .badge i,
-        .forgot-link,
-        .login-form-section .subtitle a,
-        .footer-links a:hover {
-            color: var(--brand-primary) !important;
-        }
-
-        .hero-visual {
-            position: relative;
-            min-height: 470px;
-            border: 1px solid rgba(247,247,242,0.12);
-            border-radius: 8px;
-            overflow: hidden;
-            background: #090a08;
-            box-shadow: 0 30px 90px rgba(0,0,0,0.42);
-            isolation: isolate;
-        }
-
-        .hero-visual img {
-            width: 100%;
-            height: 100%;
-            min-height: 470px;
-            display: block;
-            object-fit: cover;
-            filter: grayscale(1) contrast(1.18) brightness(0.62);
-            opacity: 0.68;
-            transform: scale(1.02);
-            animation: image-breathe 14s ease-in-out infinite alternate;
-        }
-
-        .hero-visual::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            background:
-                linear-gradient(90deg, rgba(5,5,5,0.58), transparent 58%),
-                repeating-linear-gradient(0deg, rgba(247,247,242,0.035) 0 1px, transparent 1px 5px);
-            pointer-events: none;
-        }
-
-        .hero-visual::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 2;
-            background: linear-gradient(90deg, transparent, rgba(216,255,103,0.22), transparent);
-            transform: translateX(-100%);
-            animation: signal-sweep 4.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-            pointer-events: none;
-        }
-
-        .signal-caption {
-            position: absolute;
-            left: 18px;
-            right: 18px;
-            bottom: 18px;
-            z-index: 3;
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 10px 12px;
-            border: 1px solid rgba(216,255,103,0.28);
-            border-radius: 6px;
-            background: rgba(5,5,5,0.66);
-            color: var(--brand-primary);
-            font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-            font-size: 11px;
-        }
-
-        .stats-grid,
-        .feature-card,
-        .step-card,
+        .login-panel,
+        .face-card,
         .profile-card,
         .create-post-bar,
         .post-card,
         .sidebar-widget {
-            background: rgba(13,14,12,0.72) !important;
-            border: 1px solid rgba(247,247,242,0.1) !important;
-            box-shadow: 0 18px 52px rgba(0,0,0,0.24);
+            background: rgba(13, 14, 12, 0.78) !important;
+            border: 1px solid var(--border) !important;
+            box-shadow: var(--shadow) !important;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
         }
 
-        .feature-card:hover,
-        .step-card:hover {
-            border-color: rgba(216,255,103,0.28) !important;
-            box-shadow: 0 20px 54px rgba(0,0,0,0.36);
-        }
-
+        .btn,
+        .badge,
+        .input-field,
+        .role-selector,
+        .role-btn,
+        .role-indicator,
+        .hero-tag,
+        .hero-visual,
+        .hero-visual-badge,
         .feature-icon,
-        .step-number,
+        .step-num,
+        .video-container,
+        .status-bar,
+        .check-item,
+        .face-icon-circle,
+        .instruction {
+            border-radius: 8px !important;
+        }
+
+        .logo-mark,
+        .feature-icon,
+        .step-num,
         .avatar,
         .post-avatar,
         .post-author .av,
-        .sidebar-widget .widget-item .wi-av,
-        .profile-card .avatar,
-        .create-post-bar .post-avatar {
+        .wi-av {
             background: linear-gradient(145deg, #f7f7f2, #d8ff67) !important;
             color: #070806 !important;
         }
 
-        .section-label,
-        .stat-value {
-            color: var(--brand-primary) !important;
+        .logo-mark i,
+        .feature-icon i,
+        .face-icon-circle i {
+            color: #070806 !important;
         }
 
-        .cta-box {
+        .logo-name,
+        .accent-purple,
+        .accent-orange,
+        .stat-value,
+        .accent,
+        .section-tag,
+        .forgot-link,
+        .signup-prompt a {
+            color: var(--purple) !important;
+        }
+
+        .btn-primary,
+        .btn-orange {
+            background: var(--text) !important;
+            color: #070806 !important;
+            box-shadow: 0 14px 40px rgba(247, 247, 242, 0.12) !important;
+        }
+
+        .btn-primary:hover,
+        .btn-orange:hover {
+            background: var(--purple) !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary,
+        .btn-ghost {
+            background: rgba(247, 247, 242, 0.055) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text) !important;
+        }
+
+        .hero {
+            min-height: 96vh;
+            padding-top: 8rem;
+        }
+
+        .hero h1,
+        .section-header h2 {
+            font-family: 'Geist', Inter, sans-serif;
+            letter-spacing: 0 !important;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            line-height: 0.98;
+            max-width: 680px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+        }
+
+        .hero-tag,
+        .section-tag {
+            background: rgba(216, 255, 103, 0.08) !important;
+            border-color: rgba(216, 255, 103, 0.28) !important;
+        }
+
+        .hero-visual {
+            background: #090a08;
+            overflow: hidden;
+            min-height: 440px;
+        }
+
+        .hero-visual img {
+            filter: grayscale(1) contrast(1.2) brightness(0.62);
+            opacity: 0.72;
+            transform: scale(1.02);
+            animation: imageBreathe 14s ease-in-out infinite alternate;
+        }
+
+        .hero-visual-overlay {
             background:
-                linear-gradient(135deg, rgba(216,255,103,0.08), rgba(105,246,207,0.055)),
-                rgba(13,14,12,0.74) !important;
-            border-color: rgba(247,247,242,0.12) !important;
+                linear-gradient(90deg, rgba(5, 5, 5, 0.55), transparent 58%),
+                repeating-linear-gradient(0deg, rgba(247, 247, 242, 0.035) 0 1px, transparent 1px 5px);
         }
 
-        .cta-box::before { display: none; }
-
-        .login-panel {
-            max-width: 1120px;
-            background: rgba(13,14,12,0.78);
-            border-color: rgba(247,247,242,0.12);
+        .hero-visual-badge {
+            background: rgba(5, 5, 5, 0.72);
+            border: 1px solid rgba(216, 255, 103, 0.28);
+            color: var(--purple);
+            font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
         }
 
         .login-brand {
-            background: linear-gradient(145deg, rgba(247,247,242,0.06), rgba(247,247,242,0.01));
+            background: rgba(13, 14, 12, 0.92) !important;
         }
 
-        .login-brand::after {
-            background-image:
-                linear-gradient(rgba(247,247,242,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(247,247,242,0.05) 1px, transparent 1px);
-            background-size: 28px 28px;
-            opacity: 0.42;
-        }
-
-        .role-indicator {
-            background: rgba(247,247,242,0.12);
+        .input-field {
+            background: rgba(247, 247, 242, 0.055);
+            border-color: var(--border);
+            color: var(--text);
         }
 
         .input-field:focus {
-            border-color: rgba(216,255,103,0.5);
-            background: rgba(247,247,242,0.08);
-            box-shadow: 0 0 0 4px rgba(216,255,103,0.08);
+            border-color: rgba(216, 255, 103, 0.5);
+            box-shadow: 0 0 0 4px rgba(216, 255, 103, 0.08);
         }
 
-        .input-wrapper:focus-within .input-icon { color: var(--brand-primary); }
-
-        #page-face-verify {
-            padding-top: 5rem;
-            background:
-                linear-gradient(115deg, rgba(216,255,103,0.06), transparent 34%),
-                linear-gradient(250deg, rgba(105,246,207,0.06), transparent 32%);
-        }
-
-        .face-verify-card {
-            max-width: 620px;
-            background: rgba(13,14,12,0.8);
-            border: 1px solid rgba(247,247,242,0.12);
-            box-shadow: 0 30px 90px rgba(0,0,0,0.42);
-        }
-
-        .face-icon-circle {
-            border-radius: 8px !important;
-            background: rgba(216,255,103,0.08) !important;
-            border-color: rgba(216,255,103,0.28) !important;
-        }
-
-        .face-icon-circle i { color: var(--brand-primary) !important; }
-
-        .instructions-list {
-            display: grid;
-            gap: 0.65rem;
-        }
-
-        .instructions-list .instruction {
-            padding: 0.75rem 0.85rem;
-            border: 1px solid rgba(247,247,242,0.1);
-            border-radius: 8px;
-            background: rgba(247,247,242,0.04);
-        }
-
-        .instructions-list .instruction span.emoji {
-            color: var(--brand-primary);
-            font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-            font-size: 0.72rem;
-            text-transform: uppercase;
+        .role-indicator {
+            background: rgba(247, 247, 242, 0.12) !important;
         }
 
         .video-container {
-            border: 1px solid rgba(247,247,242,0.12);
             background: #050505;
-            box-shadow: inset 0 0 0 1px rgba(216,255,103,0.08);
+            border-color: var(--border);
         }
 
-        .video-container::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, transparent, rgba(105,246,207,0.13), transparent);
-            transform: translateY(-100%);
-            animation: camera-scan 2.2s linear infinite;
-            pointer-events: none;
-        }
-
-        .face-guide .guide-oval {
-            border-color: rgba(216,255,103,0.56);
-            border-radius: 8px;
-        }
-
-        .status-bar {
-            background: rgba(5,5,5,0.58);
-            border-color: rgba(247,247,242,0.12);
-        }
-
-        .check-item {
-            background: rgba(247,247,242,0.045);
-            border-color: rgba(247,247,242,0.1);
+        .guide-oval {
+            border-color: rgba(216, 255, 103, 0.56) !important;
+            border-radius: 8px !important;
         }
 
         .check-item.done {
-            background: rgba(216,255,103,0.075);
-            border-color: rgba(216,255,103,0.34);
-            color: var(--brand-primary);
+            background: rgba(216, 255, 103, 0.08) !important;
+            border-color: rgba(216, 255, 103, 0.34) !important;
+            color: var(--purple) !important;
         }
 
-        .post-content { color: var(--text-muted); }
-
-        @keyframes grid-drift {
-            from { background-position: 0 0; }
-            to { background-position: 72px 72px; }
+        .post-content,
+        .author-info,
+        .wi-sub,
+        .headline,
+        .stat-label {
+            color: var(--text-secondary) !important;
         }
 
-        @keyframes ambient-sweep {
-            0% { transform: translateX(-100%); opacity: 0; }
-            16% { opacity: 1; }
-            54% { opacity: 1; }
-            100% { transform: translateX(100%); opacity: 0; }
-        }
-
-        @keyframes image-breathe {
-            from { transform: scale(1.02); }
-            to { transform: scale(1.08); }
-        }
-
-        @keyframes signal-sweep {
-            0% { transform: translateX(-100%); opacity: 0; }
-            18% { opacity: 1; }
-            62% { opacity: 1; }
-            100% { transform: translateX(100%); opacity: 0; }
-        }
-
-        @keyframes camera-scan {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(520%); }
-        }
-
-        @media (max-width: 980px) {
-            .hero > div {
-                grid-template-columns: 1fr;
+        @keyframes gridDrift {
+            from {
+                background-position: 0 0;
             }
 
-            .hero h1 {
-                font-size: 52px;
+            to {
+                background-position: 72px 72px;
+            }
+        }
+
+        @keyframes imageBreathe {
+            from {
+                transform: scale(1.02);
             }
 
-            .hero-visual,
-            .hero-visual img {
-                min-height: 320px;
+            to {
+                transform: scale(1.08);
             }
         }
 
         @media (max-width: 640px) {
+            .site-header {
+                position: relative;
+            }
+
+            .nav-actions {
+                display: none;
+            }
+
             .hero {
-                padding-left: 1rem;
-                padding-right: 1rem;
+                min-height: auto;
+                padding: 3rem 1rem;
+            }
+
+            .hero-grid {
+                display: block;
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .hero-grid>div:first-child {
+                width: 100%;
+                max-width: 280px;
             }
 
             .hero h1 {
-                font-size: 40px;
+                font-size: 27px;
                 line-height: 1;
+                max-width: 280px;
+                overflow-wrap: break-word;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .hero p,
+            .hero-actions,
+            .trust-row,
+            .hero-visual {
+                width: 100%;
+                max-width: 280px;
             }
 
             .hero p {
-                font-size: 16px;
+                overflow-wrap: break-word;
             }
 
-            .signal-caption {
+            .hero-actions .btn {
+                width: 100%;
+            }
+
+            .trust-row {
+                gap: 0.75rem;
+            }
+
+            .hero-visual {
+                margin-top: 2rem;
+                min-height: 280px;
+            }
+
+            .hero-visual-badge {
+                align-items: flex-start;
                 flex-direction: column;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: 1ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 1ms !important;
-                scroll-behavior: auto !important;
             }
         }
     </style>
 </head>
+
 <body>
 
-    <!-- Ambient Background (always present) -->
-    <div class="ambient-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-
-    <!-- ================================================
-         PAGE: LANDING
-         ================================================ -->
+    <!-- ====== LANDING ====== -->
     <div id="page-landing" class="page">
 
-        <!-- Header -->
         <header class="site-header">
             <div class="container">
                 <div class="nav-inner">
-                    <div class="logo-container" onclick="showPage('landing')">
-                        <div class="logo-icon"><i data-lucide="hexagon" stroke-width="2.5"></i></div>
-                        <div class="logo-text text-gradient-2">SyncUp</div>
+                    <div class="logo" onclick="showPage('landing')">
+                        <div class="logo-mark"><i data-lucide="zap" style="width:16px;height:16px;"></i></div>
+                        <div class="logo-name">SyncUp</div>
                     </div>
                     <div class="nav-actions">
-                        <button class="btn btn-secondary" onclick="showPage('login')" id="nav-signin">Sign In</button>
-                        <button class="btn btn-primary" onclick="showPage('login')" id="nav-join">Join Now</button>
+                        <button class="btn btn-secondary" onclick="showPage('login')">Sign In</button>
+                        <button class="btn btn-primary" onclick="showPage('login')">Join Free</button>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Hero -->
         <section class="hero">
-            <div>
-                <div class="hero-copy">
-                <div class="hero-badge">
-                    <i data-lucide="shield-check" style="width:14px;height:14px;"></i>
-                    Live human access
+            <!-- Decorative blobs -->
+            <div class="blob-purple" style="top: -100px; right: -100px;"></div>
+            <div class="blob-orange" style="bottom: 0; left: -80px;"></div>
+
+            <div class="hero-grid">
+                <div>
+                    <div class="hero-tag">
+                        <i data-lucide="shield-check" style="width:13px;height:13px;"></i>
+                        Live human verification
+                    </div>
+                    <h1>Build a <span class="accent-purple">trusted</span> professional <span
+                            class="accent-orange">network</span></h1>
+                    <p>Every profile starts with camera liveness — real presence, real connections, zero fakes.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="showPage('login')">
+                            Start Verification <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
+                        </button>
+                        <button class="btn btn-secondary"
+                            onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+                            <i data-lucide="scan-face" style="width:15px;height:15px;"></i> How it works
+                        </button>
+                    </div>
+                    <div class="trust-row">
+                        <div class="trust-item"><i data-lucide="shield" style="width:14px;height:14px;"></i>
+                            Face-verified</div>
+                        <div class="trust-item"><i data-lucide="activity" style="width:14px;height:14px;"></i> Liveness
+                            checks</div>
+                        <div class="trust-item"><i data-lucide="building-2" style="width:14px;height:14px;"></i>
+                            Professionals only</div>
+                    </div>
                 </div>
-                <h1>Build a <span class="text-gradient">trusted</span><br>professional network</h1>
-                <p>SyncUp starts every profile with camera liveness, active presence, and a fraud-resistant trust trail, so every connection begins with a real person.</p>
-                <div class="hero-actions">
-                    <button class="btn btn-primary" onclick="showPage('login')" id="hero-join">
-                        Start verification <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
-                    </button>
-                    <button class="btn btn-secondary" onclick="document.getElementById('features-section').scrollIntoView({behavior:'smooth'})" id="hero-learn">
-                        <i data-lucide="scan-face" style="width:16px;height:16px;"></i> See trust flow
-                    </button>
-                </div>
-                <div class="trust-row">
-                    <span><i data-lucide="shield"></i> Face-verified only</span>
-                    <span><i data-lucide="activity"></i> Liveness checks</span>
-                    <span><i data-lucide="building-2"></i> Professionals and businesses</span>
+
+                <div class="hero-visual">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"
+                        alt="Monochrome circuit detail with encrypted signal lighting">
+                    <div class="hero-visual-overlay"></div>
+                    <div class="hero-visual-badge">
+                        <span><span class="dot"></span> ON-DEVICE LIVENESS</span>
+                        <span>CAMERA API READY</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1372,51 +1766,55 @@
         <section class="stats-section container">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-value text-gradient-2" data-target="42891">0</div>
+                    <div class="stat-value" data-target="42891">0</div>
                     <div class="stat-label">Active Users</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value text-gradient-2" data-target="1245">0</div>
+                    <div class="stat-value" data-target="1245">0</div>
                     <div class="stat-label">Live Events</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value text-gradient-2" data-target="8234">0</div>
+                    <div class="stat-value" data-target="8234">0</div>
                     <div class="stat-label">Listings</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value text-gradient-2" data-target="18920">0</div>
+                    <div class="stat-value" data-target="18920">0</div>
                     <div class="stat-label">Reviews</div>
                 </div>
             </div>
         </section>
 
         <!-- Features -->
-        <section class="features-section container" id="features-section">
+        <section class="features-section container" id="features">
             <div class="section-header">
-                <div class="section-label">Why SyncUp</div>
+                <div class="section-tag">Why SyncUp</div>
                 <h2>Everything you need to<br>thrive professionally</h2>
-                <p>From networking to business opportunities, SyncUp connects India's most ambitious professionals.</p>
+                <p>From networking to opportunities, SyncUp connects India's most ambitious professionals.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);"><i data-lucide="users" style="width:22px;height:22px; color: white;"></i></div>
+                    <div class="feature-icon" style="background: var(--purple-light);"><i data-lucide="users"
+                            style="width:20px;height:20px;color:var(--purple);"></i></div>
                     <h3>Connect</h3>
-                    <p>Network with verified professionals across industries. Build meaningful relationships that last.</p>
+                    <p>Network with verified professionals. Build meaningful, lasting relationships.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);"><i data-lucide="trending-up" style="width:22px;height:22px; color: white;"></i></div>
+                    <div class="feature-icon" style="background: var(--orange-light);"><i data-lucide="trending-up"
+                            style="width:20px;height:20px;color:var(--orange);"></i></div>
                     <h3>Grow</h3>
-                    <p>Access exclusive opportunities, mentorship, and resources to accelerate your professional journey.</p>
+                    <p>Access exclusive opportunities and mentorship to accelerate your journey.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #10b981, #14b8a6);"><i data-lucide="handshake" style="width:22px;height:22px; color: white;"></i></div>
+                    <div class="feature-icon" style="background: #F0FDF4;"><i data-lucide="handshake"
+                            style="width:20px;height:20px;color:#10B981;"></i></div>
                     <h3>Collaborate</h3>
-                    <p>Find partners, co-founders, and collaborators for your next big project or venture.</p>
+                    <p>Find partners and co-founders for your next big venture.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(135deg, #f43f5e, #ec4899);"><i data-lucide="megaphone" style="width:22px;height:22px; color: white;"></i></div>
+                    <div class="feature-icon" style="background: #FEF2F2;"><i data-lucide="megaphone"
+                            style="width:20px;height:20px;color:#EF4444;"></i></div>
                     <h3>Promote</h3>
-                    <p>Reach thousands of verified professionals with precision-targeted campaigns.</p>
+                    <p>Reach thousands of verified professionals with targeted campaigns.</p>
                 </div>
             </div>
         </section>
@@ -1424,25 +1822,29 @@
         <!-- Steps -->
         <section class="steps-section container">
             <div class="section-header">
-                <div class="section-label">Get Started</div>
+                <div class="section-tag"
+                    style="background: var(--purple-light); border-color: #DDD6FE; color: var(--purple);">Get Started
+                </div>
                 <h2>Three steps to join</h2>
-                <p>Get up and running in minutes. No friction, just results.</p>
+                <p>Get up and running in minutes.</p>
             </div>
             <div class="steps-grid">
                 <div class="step-card">
-                    <div class="step-number" style="background: linear-gradient(135deg, #8b5cf6, #6366f1);">01</div>
+                    <div class="step-num"
+                        style="background: linear-gradient(135deg, var(--purple), var(--purple-dark));">01</div>
                     <h3>Register</h3>
-                    <p>Create your account with your professional email and select your role.</p>
+                    <p>Create your account with your professional email.</p>
                 </div>
                 <div class="step-card">
-                    <div class="step-number" style="background: linear-gradient(135deg, #6366f1, #3b82f6);">02</div>
+                    <div class="step-num"
+                        style="background: linear-gradient(135deg, var(--orange-mid), var(--orange));">02</div>
                     <h3>Verify</h3>
-                    <p>Complete face verification to prove you're a real professional.</p>
+                    <p>Complete camera liveness check to prove you're real.</p>
                 </div>
                 <div class="step-card">
-                    <div class="step-number" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">03</div>
+                    <div class="step-num" style="background: linear-gradient(135deg, var(--success), #059669);">03</div>
                     <h3>Connect</h3>
-                    <p>Start networking, find opportunities, and grow your career.</p>
+                    <p>Start networking and finding opportunities.</p>
                 </div>
             </div>
         </section>
@@ -1450,24 +1852,24 @@
         <!-- CTA -->
         <section class="cta-section container">
             <div class="cta-box">
-                <div class="logo-icon" style="margin: 0 auto 1.5rem; width: 52px; height: 52px; border-radius: 16px;">
-                    <i data-lucide="hexagon" style="width:24px;height:24px; color:white;"></i>
+                <div class="logo-mark" style="width:48px;height:48px;border-radius:14px;margin:0 auto 1.25rem;">
+                    <i data-lucide="zap" style="width:22px;height:22px;color:white;"></i>
                 </div>
-                <h2>Ready to build your network?</h2>
+                <h2>Ready to get verified?</h2>
                 <p>Join 42,000+ verified professionals already on SyncUp.</p>
-                <button class="btn btn-primary" onclick="showPage('login')" id="cta-join">
-                    Get Started Free <i data-lucide="chevron-right" style="width:16px;height:16px;"></i>
+                <button class="btn btn-primary" onclick="showPage('login')">
+                    Get Started Free <i data-lucide="chevron-right" style="width:15px;height:15px;"></i>
                 </button>
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="site-footer container">
-            <div class="logo-container" onclick="showPage('landing')">
-                <div class="logo-icon" style="width:28px;height:28px;border-radius:8px;"><i data-lucide="hexagon" style="width:14px;height:14px;color:white;"></i></div>
-                <span class="logo-text text-gradient-2" style="font-size:1rem;">SyncUp</span>
+            <div class="logo" onclick="showPage('landing')">
+                <div class="logo-mark" style="width:26px;height:26px;border-radius:7px;"><i data-lucide="zap"
+                        style="width:12px;height:12px;color:white;"></i></div>
+                <span class="logo-name" style="font-size:0.9rem;">SyncUp</span>
             </div>
-            <p>© 2025 SyncUp · For working professionals and businesses only.</p>
+            <p>&copy; 2025 SyncUp &middot; For professionals and businesses only.</p>
             <div class="footer-links">
                 <a href="#" onclick="event.preventDefault()">Events</a>
                 <a href="#" onclick="event.preventDefault()">Companies</a>
@@ -1476,34 +1878,38 @@
         </footer>
     </div>
 
-    <!-- ================================================
-         PAGE: LOGIN
-         ================================================ -->
+    <!-- ====== LOGIN ====== -->
     <div id="page-login" class="page hidden">
         <div class="login-panel">
-            <!-- Brand Side -->
             <div class="login-brand">
-                <div class="logo-container" onclick="showPage('landing')">
-                    <div class="logo-icon"><i data-lucide="hexagon" stroke-width="2.5"></i></div>
-                    <div class="logo-text text-gradient-2">SyncUp</div>
+                <div class="logo" onclick="showPage('landing')">
+                    <div class="logo-mark"
+                        style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.15);"><i
+                            data-lucide="zap" style="width:14px;height:14px;color:white;"></i></div>
+                    <div class="logo-name" style="color:white;">SyncUp</div>
                 </div>
-                <div>
-                    <h1>The True<br><span class="text-gradient">Professional</span><br>Ecosystem</h1>
-                    <p>Enter a verified-humans-only network. No bots, no fake profiles, just authentic business connections.</p>
-                    <div class="badge-list">
-                        <div class="badge"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> 100% Verified</div>
-                        <div class="badge"><i data-lucide="lock" style="width:14px;height:14px;"></i> Secured</div>
+                <div style="position:relative;z-index:1;">
+                    <h1>The Trusted<br>Professional<br>Ecosystem</h1>
+                    <p>Verified humans only. No bots, no fakes — just authentic connections.</p>
+                    <div style="display:flex;gap:8px;margin-top:1.5rem;">
+                        <div class="badge"
+                            style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.2);color:white;">
+                            <i data-lucide="shield-check" style="width:12px;height:12px;"></i> 100% Verified
+                        </div>
+                        <div class="badge"
+                            style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.2);color:white;">
+                            <i data-lucide="lock" style="width:12px;height:12px;"></i> Secured
+                        </div>
                     </div>
                 </div>
-                <p class="brand-footer">© 2025 SyncUp · Trusted by 42,000+ professionals</p>
+                <p class="brand-footer">&copy; 2025 SyncUp &middot; 42,000+ professionals</p>
             </div>
 
-            <!-- Form Side -->
             <div class="login-form-section">
                 <h2>Welcome back</h2>
-                <p class="subtitle">Log in to access your verified profile. <br>New here? <a href="#" onclick="event.preventDefault(); alert('Registration coming soon!')">Apply for Access</a></p>
+                <p class="subtitle">Sign in to your account. <a href="#"
+                        onclick="event.preventDefault();alert('Registration coming soon!')">Create Account</a></p>
 
-                <!-- Role -->
                 <div class="role-selector">
                     <div class="role-indicator" id="role-indicator"></div>
                     <div class="role-btn active" onclick="selectRole(0)">Member</div>
@@ -1511,9 +1917,8 @@
                     <div class="role-btn" onclick="selectRole(2)">Admin</div>
                 </div>
 
-                <!-- Error -->
                 <div class="error-msg" id="login-error">
-                    <i data-lucide="alert-circle" style="width:16px;height:16px; flex-shrink:0;"></i>
+                    <i data-lucide="alert-circle" style="width:14px;height:14px;flex-shrink:0;"></i>
                     <span id="login-error-text"></span>
                 </div>
 
@@ -1521,148 +1926,154 @@
                     <div class="input-group">
                         <label for="email">Work Email</label>
                         <div class="input-wrapper">
-                            <input type="email" id="email" class="input-field" placeholder="name@company.com" required>
-                            <i data-lucide="mail" style="width:16px;height:16px;" class="input-icon"></i>
+                            <input type="email" id="email" class="input-field" placeholder="you@company.com" required>
+                            <i data-lucide="mail" style="width:15px;height:15px;" class="input-icon"></i>
                         </div>
                     </div>
                     <div class="input-group">
                         <label for="password">Password</label>
                         <div class="input-wrapper">
-                            <input type="password" id="password" class="input-field" placeholder="••••••••" required>
-                            <i data-lucide="key-round" style="width:16px;height:16px;" class="input-icon"></i>
+                            <input type="password" id="password" class="input-field" placeholder="Enter password"
+                                required>
+                            <i data-lucide="key-round" style="width:15px;height:15px;" class="input-icon"></i>
                         </div>
-                        <a href="#" class="forgot-link" onclick="event.preventDefault(); alert('Password reset coming soon!')">Forgot password?</a>
+                        <a href="#" class="forgot-link" onclick="event.preventDefault();alert('Coming soon!')">Forgot
+                            password?</a>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;" id="login-submit">
-                        Sign In <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                    <button type="submit" class="btn btn-primary" style="width:100%;">
+                        Sign In <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
                     </button>
                 </form>
 
-                <div class="divider-line"><span>Secure Access</span></div>
+                <div class="divider-line"><span>or</span></div>
 
-                <button class="btn btn-secondary" style="width:100%;" onclick="showPage('face-verify')" id="btn-face-login">
-                    <i data-lucide="scan-face" style="width:18px;height:18px; color: var(--brand-accent);"></i>
+                <button class="btn btn-orange" style="width:100%;" onclick="showPage('face-verify')">
+                    <i data-lucide="scan-face" style="width:16px;height:16px;"></i>
                     Sign in with Face Verification
                 </button>
 
-                <p class="signup-prompt">Not verified yet? <a href="#" onclick="event.preventDefault(); showPage('face-verify')">Verify Now</a></p>
+                <p class="signup-prompt">Not verified? <a href="#"
+                        onclick="event.preventDefault();showPage('face-verify')">Verify Now</a></p>
             </div>
         </div>
     </div>
 
-    <!-- ================================================
-         PAGE: FACE VERIFICATION (with Camera Liveness)
-         ================================================ -->
+    <!-- ====== FACE VERIFY ====== -->
     <div id="page-face-verify" class="page hidden">
-        <div class="face-verify-card glass-card" style="margin: 0 auto;">
-
-            <!-- Back button -->
-            <div style="text-align: left; margin-bottom: 1.5rem;">
-                <button class="btn btn-ghost" onclick="stopCamera(); showPage('login')" id="face-back-btn">
-                    <i data-lucide="arrow-left" style="width:18px;height:18px;"></i> Back
-                </button>
+        <div class="face-card">
+            <div style="text-align:left;margin-bottom:1.25rem;">
+                <button class="btn btn-ghost" onclick="stopCamera();showPage('login')"><i data-lucide="arrow-left"
+                        style="width:16px;height:16px;"></i> Back</button>
             </div>
 
-            <!-- Step: Instructions -->
             <div id="face-step-instructions">
-                <div class="face-icon-circle" style="background: rgba(139,92,246,0.1); border: 2px solid rgba(139,92,246,0.3);">
-                    <i data-lucide="camera" style="width:36px;height:36px; color: #a78bfa;"></i>
+                <div class="face-icon-circle" style="background:var(--purple-light);border:2px solid #DDD6FE;">
+                    <i data-lucide="camera" style="width:32px;height:32px;color:var(--purple);"></i>
                 </div>
-                <h2 style="font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:0.5rem;">Face Verification</h2>
-                <p style="color: var(--text-muted); font-size:0.9rem; line-height:1.6; margin-bottom:0.5rem;">
-                    We verify you are a real human. Your face data is encrypted and never stored as a photo.
+                <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:6px;letter-spacing:-0.02em;">Liveness
+                    Verification</h2>
+                <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.6;">
+                    We check active presence using your camera. The verification looks for live texture, stable
+                    lighting, and a small prompted movement.
                 </p>
                 <div class="instructions-list">
-                    <div class="instruction"><span class="emoji">💡</span> Find a well-lit area — avoid backlighting</div>
-                    <div class="instruction"><span class="emoji">😊</span> Position your face fully in the frame</div>
-                    <div class="instruction"><span class="emoji">👁️</span> Blink naturally twice when prompted</div>
-                    <div class="instruction"><span class="emoji">🔄</span> Turn your head slightly when prompted</div>
+                    <div class="instruction">
+                        <div class="instruction-num">1</div> Find steady light — avoid backlighting
+                    </div>
+                    <div class="instruction">
+                        <div class="instruction-num">2</div> Keep your face inside the guide
+                    </div>
+                    <div class="instruction">
+                        <div class="instruction-num">3</div> Hold still for a clear texture read
+                    </div>
+                    <div class="instruction">
+                        <div class="instruction-num">4</div> Blink or turn slightly when prompted
+                    </div>
                 </div>
-                <button class="btn btn-primary" style="width:100%;" onclick="startFaceVerification()" id="face-start-btn">
-                    <i data-lucide="camera" style="width:18px;height:18px;"></i> Start Face Verification
+                <button class="btn btn-primary" style="width:100%;" onclick="startFaceVerification()">
+                    <i data-lucide="camera" style="width:16px;height:16px;"></i> Start Liveness Check
                 </button>
             </div>
 
-            <!-- Step: Loading -->
             <div id="face-step-loading" class="hidden">
                 <div class="spinner"></div>
-                <h2 style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:600; margin-bottom:0.4rem;">Initialising Camera</h2>
-                <p style="color: var(--text-muted); font-size:0.85rem;">Requesting camera access…</p>
+                <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:4px;">Starting camera</h2>
+                <p style="color:var(--text-secondary);font-size:0.82rem;">Requesting camera access...</p>
             </div>
 
-            <!-- Step: Detecting -->
             <div id="face-step-detecting" class="hidden">
-                <h2 style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:600; margin-bottom:0.25rem;">Verifying your identity</h2>
-                <p style="color: var(--text-muted); font-size:0.8rem; margin-bottom:1rem;">Look at the camera and follow prompts</p>
+                <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:4px;">Verifying liveness</h2>
+                <p style="color:var(--text-secondary);font-size:0.8rem;margin-bottom:1rem;">Look at the camera and
+                    follow prompts</p>
 
                 <div class="video-container">
                     <video id="face-video" autoplay playsinline muted></video>
                     <canvas id="face-canvas"></canvas>
-                    <div class="face-guide"><div class="guide-oval"></div></div>
+                    <div class="face-guide">
+                        <div class="guide-oval"></div>
+                    </div>
                 </div>
 
-                <div class="status-bar" id="face-status">Position your face in the frame…</div>
+                <div class="status-bar" id="face-status">Loading face detection model...</div>
+
+                <!-- Progress bar -->
+                <div
+                    style="height:4px;border-radius:4px;background:rgba(255,255,255,0.06);margin-bottom:1rem;overflow:hidden;">
+                    <div id="face-progress"
+                        style="height:100%;width:0%;border-radius:4px;background:var(--purple);transition:width 0.5s ease;">
+                    </div>
+                </div>
 
                 <div class="checks-grid">
-                    <div class="check-item" id="check-face">
-                        <i data-lucide="user" style="width:16px;height:16px;"></i>
-                        <span>Face Detected</span>
-                    </div>
-                    <div class="check-item" id="check-blink">
-                        <i data-lucide="eye" style="width:16px;height:16px;"></i>
-                        <span id="blink-label">Blinks 0/2</span>
-                    </div>
-                    <div class="check-item" id="check-move">
-                        <i data-lucide="move" style="width:16px;height:16px;"></i>
-                        <span>Movement</span>
-                    </div>
+                    <div class="check-item" id="check-face"><i data-lucide="user"
+                            style="width:14px;height:14px;"></i><span>Face Found</span></div>
+                    <div class="check-item" id="check-blink"><i data-lucide="eye"
+                            style="width:14px;height:14px;"></i><span id="blink-label">Blinks 0/2</span></div>
+                    <div class="check-item" id="check-move"><i data-lucide="move"
+                            style="width:14px;height:14px;"></i><span id="move-label">Head Turn</span></div>
                 </div>
             </div>
 
-            <!-- Step: Success -->
             <div id="face-step-success" class="hidden">
-                <div class="face-icon-circle" style="background: rgba(16,185,129,0.1); border: 2px solid rgba(16,185,129,0.3);">
-                    <i data-lucide="check-circle-2" style="width:40px;height:40px; color: #6ee7b7;"></i>
+                <div class="face-icon-circle" style="background:#F0FDF4;border:2px solid #BBF7D0;">
+                    <i data-lucide="check-circle-2" style="width:36px;height:36px;color:var(--success);"></i>
                 </div>
-                <h2 style="font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:0.5rem;">Identity Verified! 🎉</h2>
-                <p style="color: var(--text-muted); font-size:0.9rem; margin-bottom:2rem;">
-                    Your face has been successfully verified. Welcome to SyncUp's trusted network.
-                </p>
-                <button class="btn btn-primary" onclick="showPage('dashboard')" id="face-continue">
-                    Go to Dashboard <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
-                </button>
+                <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:6px;">Liveness Confirmed &#127881;</h2>
+                <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:2rem;">Your live session is
+                    verified. Welcome to SyncUp.</p>
+                <button class="btn btn-primary" onclick="showPage('dashboard')">Go to Dashboard <i
+                        data-lucide="arrow-right" style="width:15px;height:15px;"></i></button>
             </div>
 
-            <!-- Step: Error -->
             <div id="face-step-error" class="hidden">
-                <div class="face-icon-circle" style="background: rgba(239,68,68,0.1); border: 2px solid rgba(239,68,68,0.3);">
-                    <i data-lucide="alert-triangle" style="width:40px;height:40px; color: #f87171;"></i>
+                <div class="face-icon-circle" style="background:#FEF2F2;border:2px solid #FECACA;">
+                    <i data-lucide="alert-triangle" style="width:36px;height:36px;color:var(--danger);"></i>
                 </div>
-                <h2 style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:700; margin-bottom:0.5rem;">Verification Failed</h2>
-                <p style="color: #f87171; font-size:0.85rem; margin-bottom:1.5rem;" id="face-error-text">Camera access denied. Please allow camera access.</p>
-                <button class="btn btn-primary" onclick="resetFaceVerification()" id="face-retry">Try Again</button>
+                <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px;">Verification Failed</h2>
+                <p style="color:var(--danger);font-size:0.82rem;margin-bottom:1.5rem;" id="face-error-text">Camera
+                    access denied.</p>
+                <button class="btn btn-primary" onclick="resetFaceVerification()">Try Again</button>
             </div>
         </div>
     </div>
 
-    <!-- ================================================
-         PAGE: DASHBOARD (after login/verification)
-         ================================================ -->
+    <!-- ====== DASHBOARD ====== -->
     <div id="page-dashboard" class="page hidden">
-        <!-- Dashboard Header -->
         <header class="site-header">
             <div class="container">
                 <div class="nav-inner">
-                    <div class="logo-container" onclick="showPage('dashboard')">
-                        <div class="logo-icon"><i data-lucide="hexagon" stroke-width="2.5"></i></div>
-                        <div class="logo-text text-gradient-2">SyncUp</div>
+                    <div class="logo" onclick="showPage('dashboard')">
+                        <div class="logo-mark"><i data-lucide="zap" style="width:14px;height:14px;color:white;"></i>
+                        </div>
+                        <div class="logo-name">SyncUp</div>
                     </div>
                     <div class="nav-actions">
-                        <button class="btn btn-ghost" title="Search"><i data-lucide="search" style="width:18px;height:18px;"></i></button>
-                        <button class="btn btn-ghost" title="Notifications"><i data-lucide="bell" style="width:18px;height:18px;"></i></button>
-                        <button class="btn btn-secondary" onclick="handleLogout()" id="btn-logout">
-                            <i data-lucide="log-out" style="width:14px;height:14px;"></i> Logout
-                        </button>
+                        <button class="btn btn-ghost" title="Search"><i data-lucide="search"
+                                style="width:18px;height:18px;"></i></button>
+                        <button class="btn btn-ghost" title="Notifications"><i data-lucide="bell"
+                                style="width:18px;height:18px;"></i></button>
+                        <button class="btn btn-secondary" onclick="handleLogout()"><i data-lucide="log-out"
+                                style="width:14px;height:14px;"></i> Logout</button>
                     </div>
                 </div>
             </div>
@@ -1670,106 +2081,124 @@
 
         <div class="container">
             <div class="dash-header">
-                <h1>Welcome back, <span class="text-gradient" id="dash-username">User</span> 👋</h1>
+                <h1>Welcome back, <span class="accent" id="dash-username">User</span> &#128075;</h1>
             </div>
-
             <div class="dash-grid">
-                <!-- Left Sidebar -->
                 <aside>
                     <div class="profile-card">
                         <div class="avatar" id="dash-avatar">U</div>
                         <div class="name" id="dash-name">User Name</div>
-                        <div class="headline">Professional · SyncUp Member</div>
-                        <div style="margin-top:0.5rem;">
-                            <span class="badge" style="font-size:0.7rem; padding: 0.25rem 0.6rem;">
-                                <i data-lucide="check-circle-2" style="width:12px;height:12px; color:#10b981;"></i> Verified
+                        <div class="headline">Professional &middot; SyncUp Verified</div>
+                        <div style="margin-top:6px;">
+                            <span class="badge" style="font-size:0.68rem;padding:3px 8px;">
+                                <i data-lucide="check-circle-2"
+                                    style="width:11px;height:11px;color:var(--success);"></i> Verified
                             </span>
                         </div>
                         <div class="profile-stats">
-                            <div><div class="val">128</div><div class="lbl">Connections</div></div>
-                            <div><div class="val">47</div><div class="lbl">Followers</div></div>
+                            <div>
+                                <div class="val">128</div>
+                                <div class="lbl">Connections</div>
+                            </div>
+                            <div>
+                                <div class="val">47</div>
+                                <div class="lbl">Followers</div>
+                            </div>
                         </div>
                     </div>
                 </aside>
 
-                <!-- Feed -->
-                <div class="feed-area">
+                <div>
                     <div class="create-post-bar" onclick="alert('Post creation coming soon!')">
                         <div class="post-avatar" id="feed-avatar">U</div>
-                        <div class="post-input">Share something with your network…</div>
+                        <div class="post-input-bar">Share something with your network&hellip;</div>
                     </div>
 
                     <div class="post-card">
                         <div class="post-author">
-                            <div class="av">RM</div>
-                            <div class="meta">
-                                <div class="author-name">Rohan Mehta <span class="badge" style="font-size:0.6rem; padding:0.15rem 0.5rem; margin-left:0.3rem;"><i data-lucide="check-circle-2" style="width:10px;height:10px;color:#10b981;"></i> Verified</span></div>
-                                <div class="author-info">CTO at TechVentures · 2h ago</div>
+                            <div class="av" style="background:linear-gradient(135deg,var(--purple),#6366F1);">RM</div>
+                            <div>
+                                <div class="author-name">Rohan Mehta <span class="badge"
+                                        style="font-size:0.6rem;padding:2px 6px;margin-left:4px;"><i
+                                            data-lucide="check-circle-2"
+                                            style="width:9px;height:9px;color:var(--success);"></i> Verified</span>
+                                </div>
+                                <div class="author-info">CTO at TechVentures &middot; 2h ago</div>
                             </div>
                         </div>
-                        <div class="post-content">Excited to announce we just closed our Series A round of ₹2.5 Cr! 🚀 Couldn't have done it without the incredible SyncUp community connecting us with the right investors.</div>
+                        <div class="post-content">Excited to announce we just closed our Series A round of &#8377;2.5
+                            Cr! &#128640; Couldn't have done it without the SyncUp community!</div>
                         <div class="post-actions">
-                            <button class="post-action-btn" onclick="this.style.color='#60a5fa'"><i data-lucide="heart" style="width:14px;height:14px;"></i> 142</button>
-                            <button class="post-action-btn"><i data-lucide="message-circle" style="width:14px;height:14px;"></i> 23</button>
-                            <button class="post-action-btn"><i data-lucide="share-2" style="width:14px;height:14px;"></i> Share</button>
+                            <button class="post-action-btn" onclick="this.style.color='var(--purple)'"><i
+                                    data-lucide="heart" style="width:14px;height:14px;"></i> 142</button>
+                            <button class="post-action-btn"><i data-lucide="message-circle"
+                                    style="width:14px;height:14px;"></i> 23</button>
+                            <button class="post-action-btn"><i data-lucide="share-2"
+                                    style="width:14px;height:14px;"></i> Share</button>
                         </div>
                     </div>
 
                     <div class="post-card">
                         <div class="post-author">
-                            <div class="av" style="background: linear-gradient(135deg, #10b981, #06b6d4);">PS</div>
-                            <div class="meta">
+                            <div class="av" style="background:linear-gradient(135deg,var(--orange),#EA580C);">PS</div>
+                            <div>
                                 <div class="author-name">Priya Sharma</div>
-                                <div class="author-info">Product Lead · ex-Razorpay · 5h ago</div>
+                                <div class="author-info">Product Lead &middot; ex-Razorpay &middot; 5h ago</div>
                             </div>
                         </div>
-                        <div class="post-content">3 things I learned from talking to 50 enterprise customers this quarter:<br><br>1. Speed > Features. They want fast, not fancy.<br>2. Support response time is a deal-breaker.<br>3. Integrations win deals.</div>
+                        <div class="post-content">3 things I learned from 50 enterprise customers this
+                            quarter:<br><br>1. Speed &gt; Features<br>2. Support response is a deal-breaker<br>3.
+                            Integrations win deals</div>
                         <div class="post-actions">
-                            <button class="post-action-btn" onclick="this.style.color='#60a5fa'"><i data-lucide="heart" style="width:14px;height:14px;"></i> 89</button>
-                            <button class="post-action-btn"><i data-lucide="message-circle" style="width:14px;height:14px;"></i> 34</button>
-                            <button class="post-action-btn"><i data-lucide="share-2" style="width:14px;height:14px;"></i> Share</button>
+                            <button class="post-action-btn" onclick="this.style.color='var(--orange)'"><i
+                                    data-lucide="heart" style="width:14px;height:14px;"></i> 89</button>
+                            <button class="post-action-btn"><i data-lucide="message-circle"
+                                    style="width:14px;height:14px;"></i> 34</button>
+                            <button class="post-action-btn"><i data-lucide="share-2"
+                                    style="width:14px;height:14px;"></i> Share</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Sidebar -->
                 <aside>
                     <div class="sidebar-widget">
                         <h3>People you may know</h3>
                         <div class="widget-item">
-                            <div class="wi-av" style="background: linear-gradient(135deg, #8b5cf6, #6366f1);">AP</div>
+                            <div class="wi-av" style="background:linear-gradient(135deg,var(--purple),#6366F1);">AP
+                            </div>
                             <div>
                                 <div class="wi-name">Anjali Patel</div>
-                                <div class="wi-sub">Investor · Seed Stage</div>
+                                <div class="wi-sub">Investor &middot; Seed Stage</div>
                             </div>
                         </div>
                         <div class="widget-item">
-                            <div class="wi-av" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">VS</div>
+                            <div class="wi-av" style="background:linear-gradient(135deg,var(--orange),#EA580C);">VS
+                            </div>
                             <div>
                                 <div class="wi-name">Vikram Singh</div>
-                                <div class="wi-sub">Engineering Manager · Swiggy</div>
+                                <div class="wi-sub">Engineering Manager</div>
                             </div>
                         </div>
                         <div class="widget-item">
-                            <div class="wi-av" style="background: linear-gradient(135deg, #10b981, #14b8a6);">KR</div>
+                            <div class="wi-av" style="background:linear-gradient(135deg,var(--success),#059669);">KR
+                            </div>
                             <div>
                                 <div class="wi-name">Kavita Rao</div>
                                 <div class="wi-sub">Co-founder @ EduTech</div>
                             </div>
                         </div>
                     </div>
-
                     <div class="sidebar-widget">
-                        <h3>Trending Opportunities</h3>
+                        <h3>Trending</h3>
                         <div class="widget-item" style="cursor:pointer;">
                             <div>
-                                <div class="wi-name" style="color: #93c5fd;">Series A · ₹2.5 Cr</div>
+                                <div class="wi-name" style="color:var(--purple);">Series A &middot; &#8377;2.5 Cr</div>
                                 <div class="wi-sub">TechVentures</div>
                             </div>
                         </div>
                         <div class="widget-item" style="cursor:pointer;">
                             <div>
-                                <div class="wi-name" style="color: #93c5fd;">Partnership</div>
+                                <div class="wi-name" style="color:var(--orange);">Partnership</div>
                                 <div class="wi-sub">FinanceHub</div>
                             </div>
                         </div>
@@ -1780,100 +2209,65 @@
     </div>
 
 
-    <!-- ================================================
-         JAVASCRIPT
-         ================================================ -->
     <script>
-        // ── Initialize icons ─────────────────────────
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            animateStats();
-        });
+        document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); animateStats(); });
 
-        // ── Page Navigation (SPA) ────────────────────
-        function showPage(pageId) {
+        // ── Navigation ──
+        function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-            const target = document.getElementById('page-' + pageId);
-            if (target) {
-                target.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            // Re-init icons for dynamically shown content
-            setTimeout(() => lucide.createIcons(), 50);
+            const el = document.getElementById('page-' + id);
+            if (el) { el.classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            setTimeout(() => lucide.createIcons(), 60);
         }
 
-        // ── Role Selector ────────────────────────────
-        let currentRole = 0;
-        function selectRole(index) {
-            currentRole = index;
-            const buttons = document.querySelectorAll('.role-btn');
-            const indicator = document.getElementById('role-indicator');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            buttons[index].classList.add('active');
-            indicator.style.transform = `translateX(${index * 100}%)`;
+        // ── Role Selector ──
+        function selectRole(i) {
+            document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.role-btn')[i].classList.add('active');
+            document.getElementById('role-indicator').style.transform = `translateX(${i * 100}%)`;
         }
 
-        // ── Login Handler ────────────────────────────
+        // ── Login ──
         function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const errorEl = document.getElementById('login-error');
-            const errorText = document.getElementById('login-error-text');
+            const pw = document.getElementById('password').value;
+            const err = document.getElementById('login-error');
+            const errT = document.getElementById('login-error-text');
+            err.classList.remove('show');
 
-            errorEl.classList.remove('show');
+            if (!email || !pw) { errT.textContent = 'Please fill in all fields.'; err.classList.add('show'); return; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { errT.textContent = 'Enter a valid email.'; err.classList.add('show'); return; }
 
-            if (!email || !password) {
-                errorText.textContent = 'Please fill in all fields.';
-                errorEl.classList.add('show');
-                return;
-            }
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                errorText.textContent = 'Please enter a valid email address.';
-                errorEl.classList.add('show');
-                return;
-            }
-            if (password.length < 4) {
-                errorText.textContent = 'Password must be at least 4 characters.';
-                errorEl.classList.add('show');
-                return;
-            }
-
-            // Simulate successful login
             const name = email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
             const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-
-            sessionStorage.setItem('syncup_user', JSON.stringify({ name, email, initials }));
-
-            // Update dashboard
             document.getElementById('dash-username').textContent = name.split(' ')[0];
             document.getElementById('dash-name').textContent = name;
             document.getElementById('dash-avatar').textContent = initials;
             document.getElementById('feed-avatar').textContent = initials;
-
             showPage('dashboard');
         }
 
-        // ── Logout ───────────────────────────────────
-        function handleLogout() {
-            sessionStorage.removeItem('syncup_user');
-            showPage('landing');
-        }
+        function handleLogout() { showPage('landing'); }
 
-        // ── Stat Counter Animation ───────────────────
+        // ── Stats Counter ──
         function animateStats() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const el = entry.target;
-                        const target = parseInt(el.dataset.target);
-                        animateNumber(el, target, 2000);
-                        observer.unobserve(el);
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(en => {
+                    if (en.isIntersecting) {
+                        const el = en.target, target = +el.dataset.target;
+                        let start = null;
+                        (function step(ts) {
+                            if (!start) start = ts;
+                            const p = Math.min((ts - start) / 2000, 1);
+                            el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target).toLocaleString('en-IN') + (target > 1000 ? '+' : '');
+                            if (p < 1) requestAnimationFrame(step);
+                        })(performance.now());
+                        obs.unobserve(el);
                     }
                 });
             }, { threshold: 0.3 });
-
-            document.querySelectorAll('.stat-value[data-target]').forEach(el => observer.observe(el));
+            document.querySelectorAll('.stat-value[data-target]').forEach(el => obs.observe(el));
         }
 
         function animateNumber(el, target, duration) {
@@ -1889,42 +2283,33 @@
         }
 
         // ══════════════════════════════════════════════
-        // FACE VERIFICATION WITH CAMERA LIVENESS (API INTEGRATED)
+        // FACE VERIFICATION WITH CAMERA LIVENESS
         // ══════════════════════════════════════════════
         let faceStream = null;
-        let faceDetectionInterval = null;
-        let blinkCount = 0;
-        let movementDetected = false;
+        let faceMeshInstance = null;
+        let mpCamera = null;
         let faceDetected = false;
-        
-        // MediaPipe state
-        let faceLandmarker = null;
-        let lastVideoTime = -1;
-        let headInitialPose = null;
-        let hasJustBlinked = false;
+        let lastBrightness = [];
+        let positionHistory = [];
 
-        function showFaceStep(step) {
-            ['instructions', 'loading', 'detecting', 'success', 'error'].forEach(s => {
-                document.getElementById('face-step-' + s).classList.add('hidden');
-            });
-            document.getElementById('face-step-' + step).classList.remove('hidden');
-            setTimeout(() => lucide.createIcons(), 50);
+        function showFaceStep(s) {
+            ['instructions', 'loading', 'detecting', 'success', 'error'].forEach(n => document.getElementById('face-step-' + n).classList.add('hidden'));
+            document.getElementById('face-step-' + s).classList.remove('hidden');
+            setTimeout(() => lucide.createIcons(), 60);
         }
 
         function resetFaceVerification() {
             stopCamera();
-            blinkCount = 0;
-            movementDetected = false;
             faceDetected = false;
-            headInitialPose = null;
-            hasJustBlinked = false;
+            lastBrightness = [];
+            positionHistory = [];
             updateChecks();
             showFaceStep('instructions');
         }
 
         function stopCamera() {
             if (faceDetectionInterval) {
-                cancelAnimationFrame(faceDetectionInterval);
+                clearInterval(faceDetectionInterval);
                 faceDetectionInterval = null;
             }
             if (faceStream) {
@@ -1937,7 +2322,7 @@
             if (faceLandmarker) return;
             const vision = window.FilesetResolver ? window.FilesetResolver : await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3").then(m => m.FilesetResolver);
             const FaceLandmarker = await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3").then(m => m.FaceLandmarker);
-            
+
             const filesetResolver = await vision.forVisionTasks(
                 "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
             );
@@ -1956,142 +2341,192 @@
             showFaceStep('loading');
 
             try {
-                // Initialize MediaPipe API
-                updateStatus('Loading Camera API...');
-                await initCameraAPI();
-
                 faceStream = await navigator.mediaDevices.getUserMedia({
                     video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }
                 });
 
                 const video = document.getElementById('face-video');
-                const canvas = document.getElementById('face-canvas');
                 video.srcObject = faceStream;
-                await new Promise(resolve => {
-                    video.onloadedmetadata = () => { 
-                        video.play(); 
-                        canvas.width = video.videoWidth;
-                        canvas.height = video.videoHeight;
-                        resolve(); 
-                    }
-                });
+                await video.play();
 
                 showFaceStep('detecting');
                 setTimeout(() => lucide.createIcons(), 100);
 
-                // Start AI liveness api loop
+                // Start liveness detection loop
                 blinkCount = 0;
                 movementDetected = false;
                 faceDetected = false;
-                headInitialPose = null;
-                hasJustBlinked = false;
+                lastBrightness = [];
+                positionHistory = [];
                 updateStatus('Position your face in the oval guide…');
 
-                const loop = () => {
-                    if (video.currentTime !== lastVideoTime) {
-                        lastVideoTime = video.currentTime;
-                        detectLiveness(video);
-                    }
-                    if (faceDetectionInterval !== null) {
-                        faceDetectionInterval = requestAnimationFrame(loop);
-                    }
-                };
-                faceDetectionInterval = requestAnimationFrame(loop);
+                faceDetectionInterval = setInterval(() => detectLiveness(video), 250);
             } catch (err) {
-                console.error('Camera/API error:', err);
+                console.error('Camera error:', err);
                 document.getElementById('face-error-text').textContent =
-                    'API initialization or camera access failed. Please allow access.';
+                    'Camera access denied. Please allow camera access and try again.';
                 showFaceStep('error');
             }
         }
 
         function detectLiveness(video) {
-            if (!faceLandmarker) return;
-
             const canvas = document.getElementById('face-canvas');
             const ctx = canvas.getContext('2d');
-            
-            // Clear canvas overlay so native video shows natively without lag!
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            const startTimeMs = performance.now();
-            const results = faceLandmarker.detectForVideo(video, startTimeMs);
+            const w = canvas.width;
+            const h = canvas.height;
 
-            if (results.faceLandmarks && results.faceLandmarks.length > 0) {
-                if (!faceDetected) {
-                    faceDetected = true;
+            // ── 1. Detect face-like region via skin-color analysis ──
+            const faceX = Math.floor(w * 0.25);
+            const faceY = Math.floor(h * 0.15);
+            const faceW = Math.floor(w * 0.5);
+            const faceH = Math.floor(h * 0.7);
+
+            let imageData;
+            try {
+                imageData = ctx.getImageData(faceX, faceY, faceW, faceH);
+            } catch { return; }
+
+            const pixels = imageData.data;
+            let skinPixels = 0;
+            let totalPixels = (faceW * faceH);
+            let totalBrightness = 0;
+
+            // Sample every 4th pixel for performance
+            for (let i = 0; i < pixels.length; i += 16) {
+                const r = pixels[i];
+                const g = pixels[i + 1];
+                const b = pixels[i + 2];
+                const brightness = (r + g + b) / 3;
+                totalBrightness += brightness;
+
+                // Simple skin color detection (works for many skin tones in good lighting)
+                if (r > 60 && g > 40 && b > 20 &&
+                    r > g && r > b &&
+                    (r - g) > 10 && (r - b) > 10 &&
+                    Math.abs(r - g) < 130 &&
+                    brightness > 40 && brightness < 230) {
+                    skinPixels++;
+                }
+            }
+
+            const sampledTotal = Math.floor(totalPixels / 4);
+            const skinRatio = skinPixels / sampledTotal;
+            const avgBrightness = totalBrightness / sampledTotal;
+
+            // ── 2. Face presence (skin ratio > threshold) ──
+            const hasFace = skinRatio > 0.12;
+
+            if (hasFace && !faceDetected) {
+                faceDetected = true;
+                updateChecks();
+            }
+
+            if (!hasFace) {
+                updateStatus('⚠ No face detected. Move closer to the camera.');
+                // Draw warning rectangle
+                ctx.strokeStyle = '#f59e0b';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(faceX, faceY, faceW, faceH);
+                return;
+            }
+
+            // Draw green detection rectangle
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(faceX, faceY, faceW, faceH);
+
+            // ── 3. Blink detection via brightness fluctuation in eye region ──
+            const eyeY = Math.floor(h * 0.3);
+            const eyeH = Math.floor(h * 0.12);
+            let eyeData;
+            try {
+                eyeData = ctx.getImageData(faceX, eyeY, faceW, eyeH);
+            } catch { return; }
+
+            let eyeBrightness = 0;
+            const eyePixels = eyeData.data;
+            for (let i = 0; i < eyePixels.length; i += 16) {
+                eyeBrightness += (eyePixels[i] + eyePixels[i + 1] + eyePixels[i + 2]) / 3;
+            }
+            eyeBrightness /= Math.floor((faceW * eyeH) / 4);
+
+            lastBrightness.push(eyeBrightness);
+            if (lastBrightness.length > 20) lastBrightness.shift();
+
+            // Detect a blink = sudden dip then recovery in eye region brightness
+            if (lastBrightness.length >= 6) {
+                const recent = lastBrightness.slice(-6);
+                const avg = recent.reduce((a, b) => a + b) / recent.length;
+                const min = Math.min(...recent);
+                const dip = avg - min;
+
+                if (dip > 8 && blinkCount < 2) {
+                    blinkCount++;
+                    // Clear history to avoid double-counting
+                    lastBrightness = [];
                     updateChecks();
                 }
+            }
 
-                // Outline face box mapped accurately from native API bounds
-                const landmarks = results.faceLandmarks[0];
-                let minX = 1, minY = 1, maxX = 0, maxY = 0;
-                for (const landmark of landmarks) {
-                    minX = Math.min(minX, landmark.x); minY = Math.min(minY, landmark.y);
-                    maxX = Math.max(maxX, landmark.x); maxY = Math.max(maxY, landmark.y);
+            // ── 4. Head movement detection (pixel shift analysis) ──
+            // Take a center vertical strip and measure its weighted average position
+            const stripX = Math.floor(w * 0.45);
+            const stripW = Math.floor(w * 0.1);
+            let stripData;
+            try {
+                stripData = ctx.getImageData(stripX, faceY, stripW, faceH);
+            } catch { return; }
+
+            let weightedSum = 0;
+            let totalWeight = 0;
+            const sp = stripData.data;
+            for (let i = 0; i < sp.length; i += 16) {
+                const v = (sp[i] + sp[i + 1] + sp[i + 2]) / 3;
+                const row = Math.floor((i / 4) / stripW);
+                weightedSum += v * row;
+                totalWeight += v;
+            }
+            const centroid = totalWeight > 0 ? weightedSum / totalWeight : 0;
+
+            positionHistory.push(centroid);
+            if (positionHistory.length > 15) positionHistory.shift();
+
+            if (positionHistory.length >= 10 && !movementDetected) {
+                const first = positionHistory.slice(0, 3).reduce((a, b) => a + b) / 3;
+                const last = positionHistory.slice(-3).reduce((a, b) => a + b) / 3;
+                const shift = Math.abs(last - first);
+
+                if (shift > 3) {
+                    movementDetected = true;
+                    updateChecks();
                 }
-                const w = canvas.width, h = canvas.height;
-                ctx.strokeStyle = '#10b981';
-                ctx.lineWidth = 3;
-                ctx.lineJoin = 'round';
-                ctx.strokeRect(minX * w, minY * h, (maxX - minX) * w, (maxY - minY) * h);
+            }
 
-                // Check Blinks directly via AI blendshapes (Zero delay)
-                if (results.faceBlendshapes && results.faceBlendshapes.length > 0) {
-                    const blendshapes = results.faceBlendshapes[0].categories;
-                    const leftBlink = blendshapes.find(b => b.categoryName === "eyeBlinkLeft")?.score || 0;
-                    const rightBlink = blendshapes.find(b => b.categoryName === "eyeBlinkRight")?.score || 0;
-                    
-                    if (leftBlink > 0.4 && rightBlink > 0.4) {
-                        if (!hasJustBlinked && blinkCount < 2) {
-                            blinkCount++;
-                            hasJustBlinked = true;
-                            updateChecks();
-                        }
-                    } else if (leftBlink < 0.15 && rightBlink < 0.15) {
-                        // Reset blink debounce when eyes are open again
-                        hasJustBlinked = false;
-                    }
-                }
+            // ── 5. Status messages ──
+            if (blinkCount < 2 && !movementDetected) {
+                updateStatus('Face detected ✓ — Now blink naturally and move slightly.');
+            } else if (blinkCount < 2) {
+                updateStatus(`Blinks: ${blinkCount}/2 — Please blink naturally.`);
+            } else if (!movementDetected) {
+                updateStatus('Moving your head slightly left or right…');
+            }
 
-                // Check Movement directly via nose landmark shift (Zero delay)
-                const noseX = landmarks[1].x;
-                if (headInitialPose === null) {
-                    headInitialPose = noseX;
-                } else if (!movementDetected) {
-                    if (Math.abs(noseX - headInitialPose) > 0.04) {
-                        movementDetected = true;
-                        updateChecks();
-                    }
-                }
+            // ── 6. All checks pass → Success ──
+            if (faceDetected && blinkCount >= 2 && movementDetected) {
+                updateStatus('All checks passed! ✅');
+                clearInterval(faceDetectionInterval);
+                faceDetectionInterval = null;
 
-                // Status updates
-                if (blinkCount < 2 && !movementDetected) {
-                    updateStatus('Face detected ✓ — Blink naturally & move head slightly.');
-                } else if (blinkCount < 2) {
-                    updateStatus(`Blinks: ${blinkCount}/2 — Please blink naturally.`);
-                } else if (!movementDetected) {
-                    updateStatus('Moving your head slightly left or right…');
-                }
-
-                // All checks pass
-                if (faceDetected && blinkCount >= 2 && movementDetected) {
-                    updateStatus('All checks passed perfectly! ✅');
-                    cancelAnimationFrame(faceDetectionInterval);
-                    faceDetectionInterval = null;
-
-                    setTimeout(() => {
-                        stopCamera();
-                        showFaceStep('success');
-                        setTimeout(() => lucide.createIcons(), 100);
-                    }, 800);
-                }
-            } else {
-                updateStatus('⚠ No face detected. Look directly at camera.');
-                // Draw warning border
-                ctx.strokeStyle = '#f59e0b';
-                ctx.lineWidth = 3;
-                ctx.strokeRect(canvas.width * 0.25, canvas.height * 0.15, canvas.width * 0.5, canvas.height * 0.7);
+                // Brief delay then show success
+                setTimeout(() => {
+                    stopCamera();
+                    showFaceStep('success');
+                    setTimeout(() => lucide.createIcons(), 100);
+                }, 1200);
             }
         }
 
@@ -2112,6 +2547,6 @@
             blinkLabel.textContent = `Blinks ${blinkCount}/2`;
         }
     </script>
-
 </body>
+
 </html>
