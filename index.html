@@ -1429,6 +1429,9 @@
                     <a href="#trust">Trust</a>
                 </nav>
                 <div class="hdr-acts">
+                    <button class="btn btn-g" id="openCouponUi" type="button" style="color: var(--orange); font-weight: 800; font-size: 0.9rem; margin-right: 6px;">
+                        🎟️ Coupon
+                    </button>
                     <button class="theme-tog" id="themeToggle" type="button">
                         <span class="theme-track"><span class="theme-thumb"></span></span>
                         <span id="themeLabel">Light</span>
@@ -1636,6 +1639,24 @@
         </section>
     </div>
 
+    <!-- ═══ COUPON MODAL ═══ -->
+    <div id="couponModal" class="auth-modal hidden" role="dialog" aria-modal="true">
+        <div class="auth-scrim" data-close-coupon></div>
+        <section class="auth-panel" style="width: min(420px, 100%); text-align: center; padding: 34px 24px;">
+            <button class="icon-btn auth-close" type="button" data-close-coupon
+                style="width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);background:var(--surface);font-weight:900">&times;</button>
+            <p class="sec-kicker">Random Code</p>
+            <h2>Coupon Generator</h2>
+            <p class="auth-copy" style="margin-inline:auto; font-size: 0.9rem;">Generate a random coupon code. Its usage is yet to be revealed!</p>
+            
+            <div style="background: var(--surface-f); padding: 22px; border-radius: var(--radius); border: 2px dashed var(--line-s); margin: 24px 0;">
+                <strong id="couponCodeDisplay" style="font-size: 1.8rem; letter-spacing: 0.12em; color: var(--text);">????-????-????</strong>
+            </div>
+            
+            <button id="generateCouponBtn" class="btn btn-o btn-full btn-lg" type="button">Generate Coupon Code</button>
+        </section>
+    </div>
+
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script>
@@ -1811,6 +1832,25 @@
 
         /* ── Init ── */
         document.addEventListener('DOMContentLoaded', () => { animCounters(); revealOnScroll(); });
+
+        /* ── Coupon Logic ── */
+        const couponModal = document.getElementById('couponModal');
+        document.getElementById('openCouponUi')?.addEventListener('click', () => {
+            couponModal?.classList.remove('hidden'); document.body.classList.add('modal-open');
+        });
+        document.querySelectorAll('[data-close-coupon]').forEach(b => b.addEventListener('click', () => {
+            couponModal?.classList.add('hidden'); document.body.classList.remove('modal-open');
+        }));
+        document.getElementById('generateCouponBtn')?.addEventListener('click', () => {
+            const cs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let res = '';
+            for(let i=0; i<12; i++) {
+                if(i > 0 && i % 4 === 0) res += '-';
+                res += cs.charAt(Math.floor(Math.random() * cs.length));
+            }
+            document.getElementById('couponCodeDisplay').textContent = res;
+            showToast('Random coupon generated!');
+        });
     </script>
 </body>
 
