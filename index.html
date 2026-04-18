@@ -1889,15 +1889,19 @@
         }
 
         // ══════════════════════════════════════════════
-        // FACE VERIFICATION WITH CAMERA LIVENESS
+        // FACE VERIFICATION WITH CAMERA LIVENESS (API INTEGRATED)
         // ══════════════════════════════════════════════
         let faceStream = null;
         let faceDetectionInterval = null;
         let blinkCount = 0;
         let movementDetected = false;
         let faceDetected = false;
-        let lastBrightness = [];
-        let positionHistory = [];
+        
+        // MediaPipe state
+        let faceLandmarker = null;
+        let lastVideoTime = -1;
+        let headInitialPose = null;
+        let hasJustBlinked = false;
 
         function showFaceStep(step) {
             ['instructions', 'loading', 'detecting', 'success', 'error'].forEach(s => {
@@ -1912,8 +1916,8 @@
             blinkCount = 0;
             movementDetected = false;
             faceDetected = false;
-            lastBrightness = [];
-            positionHistory = [];
+            headInitialPose = null;
+            hasJustBlinked = false;
             updateChecks();
             showFaceStep('instructions');
         }
@@ -1929,202 +1933,165 @@
             }
         }
 
+        async function initCameraAPI() {
+            if (faceLandmarker) return;
+            const vision = window.FilesetResolver ? window.FilesetResolver : await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3").then(m => m.FilesetResolver);
+            const FaceLandmarker = await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3").then(m => m.FaceLandmarker);
+            
+            const filesetResolver = await vision.forVisionTasks(
+                "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
+            );
+            faceLandmarker = await FaceLandmarker.createFromOptions(filesetResolver, {
+                baseOptions: {
+                    modelAssetPath: "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+                    delegate: "GPU"
+                },
+                outputFaceBlendshapes: true,
+                runningMode: "VIDEO",
+                numFaces: 1
+            });
+        }
+
         async function startFaceVerification() {
             showFaceStep('loading');
 
             try {
+                // Initialize MediaPipe API
+                updateStatus('Loading Camera API...');
+                await initCameraAPI();
+
                 faceStream = await navigator.mediaDevices.getUserMedia({
                     video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }
                 });
 
                 const video = document.getElementById('face-video');
+                const canvas = document.getElementById('face-canvas');
                 video.srcObject = faceStream;
-                await video.play();
+                await new Promise(resolve => {
+                    video.onloadedmetadata = () => { 
+                        video.play(); 
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        resolve(); 
+                    }
+                });
 
                 showFaceStep('detecting');
                 setTimeout(() => lucide.createIcons(), 100);
 
-                // Start liveness detection loop
+                // Start AI liveness api loop
                 blinkCount = 0;
                 movementDetected = false;
                 faceDetected = false;
-                lastBrightness = [];
-                positionHistory = [];
+                headInitialPose = null;
+                hasJustBlinked = false;
                 updateStatus('Position your face in the oval guide…');
 
                 const loop = () => {
-                    detectLiveness(video);
+                    if (video.currentTime !== lastVideoTime) {
+                        lastVideoTime = video.currentTime;
+                        detectLiveness(video);
+                    }
                     if (faceDetectionInterval !== null) {
                         faceDetectionInterval = requestAnimationFrame(loop);
                     }
                 };
                 faceDetectionInterval = requestAnimationFrame(loop);
             } catch (err) {
-                console.error('Camera error:', err);
+                console.error('Camera/API error:', err);
                 document.getElementById('face-error-text').textContent =
-                    'Camera access denied. Please allow camera access and try again.';
+                    'API initialization or camera access failed. Please allow access.';
                 showFaceStep('error');
             }
         }
 
         function detectLiveness(video) {
+            if (!faceLandmarker) return;
+
             const canvas = document.getElementById('face-canvas');
             const ctx = canvas.getContext('2d');
-            canvas.width = video.videoWidth || 640;
-            canvas.height = video.videoHeight || 480;
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Clear canvas overlay so native video shows natively without lag!
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            const w = canvas.width;
-            const h = canvas.height;
+            const startTimeMs = performance.now();
+            const results = faceLandmarker.detectForVideo(video, startTimeMs);
 
-            // ── 1. Detect face-like region via skin-color analysis ──
-            const faceX = Math.floor(w * 0.25);
-            const faceY = Math.floor(h * 0.15);
-            const faceW = Math.floor(w * 0.5);
-            const faceH = Math.floor(h * 0.7);
-
-            let imageData;
-            try {
-                imageData = ctx.getImageData(faceX, faceY, faceW, faceH);
-            } catch { return; }
-
-            const pixels = imageData.data;
-            let skinPixels = 0;
-            let totalPixels = (faceW * faceH);
-            let totalBrightness = 0;
-
-            // Sample every 4th pixel for performance
-            for (let i = 0; i < pixels.length; i += 16) {
-                const r = pixels[i];
-                const g = pixels[i + 1];
-                const b = pixels[i + 2];
-                const brightness = (r + g + b) / 3;
-                totalBrightness += brightness;
-
-                // Simple skin color detection (works for many skin tones in good lighting)
-                if (r > 60 && g > 40 && b > 20 &&
-                    r > g && r > b &&
-                    (r - g) > 10 && (r - b) > 10 &&
-                    Math.abs(r - g) < 130 &&
-                    brightness > 40 && brightness < 230) {
-                    skinPixels++;
+            if (results.faceLandmarks && results.faceLandmarks.length > 0) {
+                if (!faceDetected) {
+                    faceDetected = true;
+                    updateChecks();
                 }
-            }
 
-            const sampledTotal = Math.floor(totalPixels / 4);
-            const skinRatio = skinPixels / sampledTotal;
-            const avgBrightness = totalBrightness / sampledTotal;
+                // Outline face box mapped accurately from native API bounds
+                const landmarks = results.faceLandmarks[0];
+                let minX = 1, minY = 1, maxX = 0, maxY = 0;
+                for (const landmark of landmarks) {
+                    minX = Math.min(minX, landmark.x); minY = Math.min(minY, landmark.y);
+                    maxX = Math.max(maxX, landmark.x); maxY = Math.max(maxY, landmark.y);
+                }
+                const w = canvas.width, h = canvas.height;
+                ctx.strokeStyle = '#10b981';
+                ctx.lineWidth = 3;
+                ctx.lineJoin = 'round';
+                ctx.strokeRect(minX * w, minY * h, (maxX - minX) * w, (maxY - minY) * h);
 
-            // ── 2. Face presence (skin ratio > threshold) ──
-            const hasFace = skinRatio > 0.12;
+                // Check Blinks directly via AI blendshapes (Zero delay)
+                if (results.faceBlendshapes && results.faceBlendshapes.length > 0) {
+                    const blendshapes = results.faceBlendshapes[0].categories;
+                    const leftBlink = blendshapes.find(b => b.categoryName === "eyeBlinkLeft")?.score || 0;
+                    const rightBlink = blendshapes.find(b => b.categoryName === "eyeBlinkRight")?.score || 0;
+                    
+                    if (leftBlink > 0.4 && rightBlink > 0.4) {
+                        if (!hasJustBlinked && blinkCount < 2) {
+                            blinkCount++;
+                            hasJustBlinked = true;
+                            updateChecks();
+                        }
+                    } else if (leftBlink < 0.15 && rightBlink < 0.15) {
+                        // Reset blink debounce when eyes are open again
+                        hasJustBlinked = false;
+                    }
+                }
 
-            if (hasFace && !faceDetected) {
-                faceDetected = true;
-                updateChecks();
-            }
+                // Check Movement directly via nose landmark shift (Zero delay)
+                const noseX = landmarks[1].x;
+                if (headInitialPose === null) {
+                    headInitialPose = noseX;
+                } else if (!movementDetected) {
+                    if (Math.abs(noseX - headInitialPose) > 0.04) {
+                        movementDetected = true;
+                        updateChecks();
+                    }
+                }
 
-            if (!hasFace) {
-                updateStatus('⚠ No face detected. Move closer to the camera.');
-                // Draw warning rectangle
+                // Status updates
+                if (blinkCount < 2 && !movementDetected) {
+                    updateStatus('Face detected ✓ — Blink naturally & move head slightly.');
+                } else if (blinkCount < 2) {
+                    updateStatus(`Blinks: ${blinkCount}/2 — Please blink naturally.`);
+                } else if (!movementDetected) {
+                    updateStatus('Moving your head slightly left or right…');
+                }
+
+                // All checks pass
+                if (faceDetected && blinkCount >= 2 && movementDetected) {
+                    updateStatus('All checks passed perfectly! ✅');
+                    cancelAnimationFrame(faceDetectionInterval);
+                    faceDetectionInterval = null;
+
+                    setTimeout(() => {
+                        stopCamera();
+                        showFaceStep('success');
+                        setTimeout(() => lucide.createIcons(), 100);
+                    }, 800);
+                }
+            } else {
+                updateStatus('⚠ No face detected. Look directly at camera.');
+                // Draw warning border
                 ctx.strokeStyle = '#f59e0b';
-                ctx.lineWidth = 2;
-                ctx.strokeRect(faceX, faceY, faceW, faceH);
-                return;
-            }
-
-            // Draw green detection rectangle
-            ctx.strokeStyle = '#10b981';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(faceX, faceY, faceW, faceH);
-
-            // ── 3. Blink detection via brightness fluctuation in eye region ──
-            const eyeY = Math.floor(h * 0.3);
-            const eyeH = Math.floor(h * 0.12);
-            let eyeData;
-            try {
-                eyeData = ctx.getImageData(faceX, eyeY, faceW, eyeH);
-            } catch { return; }
-
-            let eyeBrightness = 0;
-            const eyePixels = eyeData.data;
-            for (let i = 0; i < eyePixels.length; i += 16) {
-                eyeBrightness += (eyePixels[i] + eyePixels[i + 1] + eyePixels[i + 2]) / 3;
-            }
-            eyeBrightness /= Math.floor((faceW * eyeH) / 4);
-
-            lastBrightness.push(eyeBrightness);
-            if (lastBrightness.length > 40) lastBrightness.shift();
-
-            // Detect a blink = sudden dip then recovery in eye region brightness
-            if (lastBrightness.length >= 12) {
-                const recent = lastBrightness.slice(-12);
-                const avg = recent.reduce((a, b) => a + b) / recent.length;
-                const min = Math.min(...recent);
-                const dip = avg - min;
-
-                if (dip > 8 && blinkCount < 2) {
-                    blinkCount++;
-                    // Clear history to avoid double-counting
-                    lastBrightness = [];
-                    updateChecks();
-                }
-            }
-
-            // ── 4. Head movement detection (pixel shift analysis) ──
-            // Take a center vertical strip and measure its weighted average position
-            const stripX = Math.floor(w * 0.45);
-            const stripW = Math.floor(w * 0.1);
-            let stripData;
-            try {
-                stripData = ctx.getImageData(stripX, faceY, stripW, faceH);
-            } catch { return; }
-
-            let weightedSum = 0;
-            let totalWeight = 0;
-            const sp = stripData.data;
-            for (let i = 0; i < sp.length; i += 16) {
-                const v = (sp[i] + sp[i + 1] + sp[i + 2]) / 3;
-                const row = Math.floor((i / 4) / stripW);
-                weightedSum += v * row;
-                totalWeight += v;
-            }
-            const centroid = totalWeight > 0 ? weightedSum / totalWeight : 0;
-
-            positionHistory.push(centroid);
-            if (positionHistory.length > 30) positionHistory.shift();
-
-            if (positionHistory.length >= 20 && !movementDetected) {
-                const first = positionHistory.slice(0, 6).reduce((a, b) => a + b) / 6;
-                const last = positionHistory.slice(-6).reduce((a, b) => a + b) / 6;
-                const shift = Math.abs(last - first);
-
-                if (shift > 3) {
-                    movementDetected = true;
-                    updateChecks();
-                }
-            }
-
-            // ── 5. Status messages ──
-            if (blinkCount < 2 && !movementDetected) {
-                updateStatus('Face detected ✓ — Now blink naturally and move slightly.');
-            } else if (blinkCount < 2) {
-                updateStatus(`Blinks: ${blinkCount}/2 — Please blink naturally.`);
-            } else if (!movementDetected) {
-                updateStatus('Moving your head slightly left or right…');
-            }
-
-            // ── 6. All checks pass → Success ──
-            if (faceDetected && blinkCount >= 2 && movementDetected) {
-                updateStatus('All checks passed! ✅');
-                cancelAnimationFrame(faceDetectionInterval);
-                faceDetectionInterval = null;
-
-                // Brief delay then show success
-                setTimeout(() => {
-                    stopCamera();
-                    showFaceStep('success');
-                    setTimeout(() => lucide.createIcons(), 100);
-                }, 1200);
+                ctx.lineWidth = 3;
+                ctx.strokeRect(canvas.width * 0.25, canvas.height * 0.15, canvas.width * 0.5, canvas.height * 0.7);
             }
         }
 
