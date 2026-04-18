@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyncUp | Developer Portal</title>
-    <!-- Modern Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <title>SyncUp | Secure Login</title>
+    <!-- Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg-dark: #0f1115;
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --primary: #3b82f6;
-            --secondary: #8b5cf6;
-            --accent: #10b981;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-base: #030712;
+            --brand-primary: #3b82f6;
+            --brand-secondary: #8b5cf6;
+            --brand-accent: #10b981;
+            --glass-bg: rgba(17, 24, 39, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --input-bg: rgba(255, 255, 255, 0.03);
+            --input-border: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -26,286 +29,536 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-base);
             color: var(--text-main);
             min-height: 100vh;
-            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
             position: relative;
         }
 
-        /* Animated Glowing Mesh Background */
-        .bg-mesh {
-            position: fixed;
+        /* Animated Ambient Background */
+        .ambient-bg {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1;
-            background: 
-                radial-gradient(circle at 85% 10%, rgba(59, 130, 246, 0.12), transparent 40%),
-                radial-gradient(circle at 10% 90%, rgba(139, 92, 246, 0.12), transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05), transparent 50%);
-            animation: breathe 12s infinite alternate ease-in-out;
-        }
-
-        @keyframes breathe {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.05); opacity: 1; }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 5rem 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 4rem;
-        }
-
-        /* Hero Section */
-        header {
-            text-align: center;
-            animation: slideDown 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            background: rgba(59, 130, 246, 0.1);
-            color: #60a5fa;
-            font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-        }
-
-        h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.2rem;
-            background: linear-gradient(to right, #60a5fa, #c084fc, #34d399);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 5s linear infinite;
-            letter-spacing: -0.02em;
-        }
-
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
-
-        p.subtitle {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Section Headings */
-        .section-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: #e2e8f0;
-            border-bottom: 1px solid var(--card-border);
-            padding-bottom: 0.5rem;
-            display: inline-block;
-        }
-
-        /* Responsive Grid Interface */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            animation: fadeIn 1.2s ease-out 0.3s both;
-            margin-bottom: 3rem;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Deluxe Glassmorphism Cards */
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 2.5rem;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
+            z-index: 0;
             overflow: hidden;
-            cursor: pointer;
         }
 
-        .card::before {
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 50vw;
+            height: 50vw;
+            background: rgba(59, 130, 246, 0.3);
+            top: -20%;
+            left: -10%;
+        }
+
+        .orb-2 {
+            width: 40vw;
+            height: 40vw;
+            background: rgba(139, 92, 246, 0.25);
+            bottom: -10%;
+            right: -10%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 30vw;
+            height: 30vw;
+            background: rgba(16, 185, 129, 0.2);
+            top: 40%;
+            left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 10%) scale(1.1); }
+            100% { transform: translate(-5%, -5%) scale(0.9); }
+        }
+
+        /* Main Container */
+        .login-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1100px;
+            padding: 2rem;
+            display: flex;
+            gap: 2rem;
+            animation: reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Split Screen Layout */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: flex;
+            width: 100%;
+            min-height: 600px;
+        }
+
+        /* Brand / Info Section */
+        .brand-section {
+            flex: 1;
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%);
+            border-right: 1px solid var(--glass-border);
+        }
+
+        .brand-section::after {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=');
+            z-index: -1;
+            opacity: 0.5;
         }
 
-        .card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(96, 165, 250, 0.15);
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        .card-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 14px;
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
             color: white;
-            margin-bottom: 0.5rem;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
         }
 
-        .card h2 {
+        .logo-text {
             font-family: 'Outfit', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            background: linear-gradient(to right, #fff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .card p {
+        .brand-content {
+            margin-top: 4rem;
+        }
+
+        .brand-content h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .brand-content p {
+            font-size: 1.125rem;
             color: var(--text-muted);
             line-height: 1.6;
-            flex-grow: 1;
+            max-width: 400px;
         }
 
-        .card .btn-link {
-            margin-top: 1rem;
-            font-weight: 500;
-            color: #60a5fa;
+        .badge-list {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            transition: gap 0.3s ease, color 0.3s ease;
-        }
-
-        .card:hover .btn-link {
-            gap: 0.75rem;
-            color: #93c5fd;
-        }
-
-        /* Semantic Footer */
-        footer {
-            text-align: center;
-            padding-top: 3rem;
-            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
             font-size: 0.875rem;
-            border-top: 1px solid var(--card-border);
+            color: #d1d5db;
         }
 
+        .badge i {
+            color: var(--brand-accent);
+        }
+
+        /* Form Section */
+        .form-section {
+            width: 480px;
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Segmented Role Output */
+        .role-selector {
+            display: flex;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            padding: 0.25rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .role-btn.active {
+            color: var(--text-main);
+        }
+
+        .role-indicator {
+            position: absolute;
+            top: 0.25rem;
+            bottom: 0.25rem;
+            width: calc(33.333% - 0.25rem);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+        }
+
+        /* Input Fields */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #d1d5db;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            color: #6b7280;
+            pointer-events: none;
+            transition: color 0.3s;
+        }
+
+        .input-field {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .input-field:focus + .input-icon {
+            color: var(--brand-primary);
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            font-size: 0.875rem;
+            color: var(--brand-primary);
+            text-decoration: none;
+            margin-top: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            color: white;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+            margin-top: 1.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 2rem 0;
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--input-border);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+        }
+
+        /* Biometric Button */
+        .btn-biometric {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--input-border);
+            color: var(--text-main);
+        }
+
+        .btn-biometric:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-biometric i {
+            color: var(--brand-accent);
+        }
+
+        .signup-prompt {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .signup-prompt a {
+            color: white;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .signup-prompt a:hover {
+            color: var(--brand-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .glass-panel {
+                flex-direction: column;
+            }
+            .brand-section {
+                padding: 3rem 2rem;
+                border-right: none;
+                border-bottom: 1px solid var(--glass-border);
+                min-height: auto;
+            }
+            .form-section {
+                width: 100%;
+                padding: 3rem 2rem;
+            }
+            .brand-content h1 {
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="bg-mesh"></div>
 
-    <div class="container">
-        <header>
-            <div class="badge">Project Sphera Workspace</div>
-            <h1>SyncUp Developer Portal</h1>
-            <p class="subtitle">Your localized gateway to Project Sphera. Access core application files, critical documentation, and development instances directly here.</p>
-        </header>
-
-        <div>
-            <h3 class="section-title">Application Environments</h3>
-            <main class="grid">
-                <!-- Main Dev Server -->
-                <a href="http://localhost:3000" target="_blank" class="card">
-                    <div class="card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    </div>
-                    <h2>Web App (Localhost)</h2>
-                    <p>Open the running Next.js application frontend. Requires project to be running on port 3000.</p>
-                    <div class="btn-link">Open Port 3000 <span aria-hidden="true">&rarr;</span></div>
-                </a>
-
-                <!-- Supabase Backend -->
-                <a href="./supabase" class="card">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
-                    </div>
-                    <h2>Database (Supabase)</h2>
-                    <p>Navigate to proxy definitions, schemas, and supabase backend integration configurations.</p>
-                    <div class="btn-link">Browse Folder <span aria-hidden="true">&rarr;</span></div>
-                </a>
-            </main>
-            
-            <h3 class="section-title">Documentation Hub</h3>
-            <main class="grid">
-                <!-- README -->
-                <a href="./README.md" class="card">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-                    </div>
-                    <h2>README</h2>
-                    <p>Start here! The central manual covering setup, installation, and project requirements.</p>
-                    <div class="btn-link">Read Guide <span aria-hidden="true">&rarr;</span></div>
-                </a>
-
-                <!-- ARCHITECTURE -->
-                <a href="./ARCHITECTURE.md" class="card">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #ec4899, #be185d);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
-                    </div>
-                    <h2>Architecture Overview</h2>
-                    <p>Deep-dive into the core systems including escrow mechanics, facial anti-spoofing, and more.</p>
-                    <div class="btn-link">View Architecture <span aria-hidden="true">&rarr;</span></div>
-                </a>
-
-                <!-- ASSUMPTIONS -->
-                <a href="./ASSUMPTIONS.md" class="card">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #6366f1, #4338ca);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    </div>
-                    <h2>Engineering Assumptions</h2>
-                    <p>Review the specific scoping assumptions taken for completing the platform during the timeframe.</p>
-                    <div class="btn-link">Review Scope <span aria-hidden="true">&rarr;</span></div>
-                </a>
-
-                 <!-- TESTING -->
-                 <a href="./TESTING.md" class="card">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    </div>
-                    <h2>Testing Details</h2>
-                    <p>Check Playwright E2E and Vitest unit testing instructions ensuring reliability.</p>
-                    <div class="btn-link">View Testing <span aria-hidden="true">&rarr;</span></div>
-                </a>
-            </main>
-        </div>
-        
-        <footer>
-            <p>SyncUp Ecosystem Hackathon 2026. Made with precision.</p>
-        </footer>
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
     </div>
+
+    <div class="login-wrapper">
+        <div class="glass-panel">
+            
+            <!-- Branding Section -->
+            <div class="brand-section">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i data-lucide="hexagon" stroke-width="2.5"></i>
+                    </div>
+                    <div class="logo-text">SyncUp</div>
+                </div>
+
+                <div class="brand-content">
+                    <h1>The True <br><span class="text-gradient">Professional</span><br>Ecosystem</h1>
+                    <p>Enter a verified-humans-only network. No bots, no fake profiles, just authentic business connections and escrow-backed opportunities.</p>
+                    
+                    <div class="badge-list">
+                        <div class="badge">
+                            <i data-lucide="shield-check" size="16"></i> 100% Verified
+                        </div>
+                        <div class="badge">
+                            <i data-lucide="lock" size="16"></i> Escrow Secured
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Form Section -->
+            <div class="form-section">
+                <div class="form-header">
+                    <h2>Welcome back</h2>
+                    <p>Log in to access your verified profile.</p>
+                </div>
+
+                <div class="role-selector">
+                    <div class="role-indicator" id="role-indicator"></div>
+                    <div class="role-btn active" onclick="selectRole(0)">Member</div>
+                    <div class="role-btn" onclick="selectRole(1)">Recruiter</div>
+                    <div class="role-btn" onclick="selectRole(2)">Admin</div>
+                </div>
+
+                <form>
+                    <div class="input-group">
+                        <label for="email">Work Email</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" class="input-field" placeholder="name@company.com" required>
+                            <i data-lucide="mail" size="18" class="input-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" class="input-field" placeholder="••••••••" required>
+                            <i data-lucide="key-round" size="18" class="input-icon"></i>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Sign In <i data-lucide="arrow-right" size="18"></i>
+                    </button>
+                </form>
+
+                <div class="divider">
+                    <span>Secure Access</span>
+                </div>
+
+                <button class="btn btn-biometric">
+                    <i data-lucide="scan-face" size="20"></i> Sign in with Face Verification
+                </button>
+
+                <p class="signup-prompt">
+                    Not verified yet? <a href="#">Apply for Access</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Role Selector Logic
+        function selectRole(index) {
+            const buttons = document.querySelectorAll('.role-btn');
+            const indicator = document.getElementById('role-indicator');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            buttons[index].classList.add('active');
+            
+            indicator.style.transform = `translateX(${index * 100}%)`;
+        }
+    </script>
 </body>
 </html>
