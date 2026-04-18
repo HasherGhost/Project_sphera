@@ -234,7 +234,7 @@
                 <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 16px; font-weight: 500;">Enter your code below to instantly unlock escrow credits or surprise gift rewards.</p>
                 
                 <div style="display: flex; gap: 8px; align-items: center; max-width: 400px; background: var(--surface); padding: 8px; border-radius: 12px; border: 1px solid var(--line); box-shadow: var(--shadow-f);">
-                    <input id="couponInput" type="text" placeholder="e.g. SYNCUP2026" style="flex: 1; padding: 12px 14px; border: none; background: transparent; font-weight: 800; font-size: 1rem; color: var(--text); outline: none; text-transform: uppercase;" />
+                    <input id="couponInput" type="text" placeholder="e.g. SYNC2026" maxlength="8" style="flex: 1; padding: 12px 14px; border: none; background: transparent; font-weight: 800; font-size: 1rem; color: var(--text); outline: none; text-transform: uppercase;" />
                     <button id="redeemBtn" class="btn btn-p" type="button" style="min-height: 44px; padding: 0 24px;">Redeem</button>
                 </div>
             </div>
@@ -351,10 +351,32 @@
         }
 
         // Redeem logic (matches index.html)
+        const couponInput = document.getElementById('couponInput');
+        if (couponInput) {
+            couponInput.addEventListener('input', function() {
+                let val = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                let result = '';
+                let lCount = 0;
+                let nCount = 0;
+                for(let char of val) {
+                    if(/[A-Z]/.test(char)) {
+                        if(lCount < 4) { result += char; lCount++; }
+                    } else if(/[0-9]/.test(char)) {
+                        if(nCount < 4) { result += char; nCount++; }
+                    }
+                }
+                this.value = result;
+            });
+        }
+
         document.getElementById('redeemBtn')?.addEventListener('click', () => {
             const input = document.getElementById('couponInput')?.value.trim();
             if (!input) {
                 showToast('Please enter a coupon code first.');
+                return;
+            }
+            if (input.length !== 8) {
+                showToast('Coupon must be exactly 8 characters (4 letters, 4 numbers).');
                 return;
             }
             const rewardValue = Math.floor(Math.random() * 41) + 10;
