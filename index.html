@@ -1425,7 +1425,19 @@
                 </a>
                 <nav class="hdr-nav">
                     <a href="#network">Network</a>
-                    <a href="#opportunities">Opportunities</a>
+                    <div class="dropdown" style="position:relative;display:inline-block;">
+                        <a href="opportunity.html" style="display:flex;align-items:center;gap:4px;cursor:pointer;">Opportunities ▾</a>
+                        <div class="dropdown-content" style="display:none;position:absolute;background-color:var(--surface);min-width:230px;box-shadow:var(--shadow-f);border-radius:var(--radius);border:1px solid var(--line);padding:8px;z-index:40;top:100%;left:0;flex-direction:column;gap:4px;margin-top:10px;">
+                            <a href="opportunity.html" style="padding:10px 12px;border-radius:6px;font-size:0.88rem;color:var(--text);text-decoration:none;">Opportunities Hub</a>
+                            <a href="business_opportunities.html" style="padding:10px 12px;border-radius:6px;font-size:0.88rem;color:var(--text);text-decoration:none;">Business Opportunities</a>
+                            <a href="job_opportunities.html" style="padding:10px 12px;border-radius:6px;font-size:0.88rem;color:var(--text);text-decoration:none;">Job Opportunities</a>
+                        </div>
+                        <style>
+                            .dropdown:hover .dropdown-content { display: flex !important; }
+                            .dropdown-content a:hover { background-color: var(--surface-f); color: var(--accent) !important; }
+                            .dropdown-content a::after { display: none !important; }
+                        </style>
+                    </div>
                     <a href="#events" id="eventsNavBtn">Events</a>
                     <a href="#trust">Trust</a>
                 </nav>
