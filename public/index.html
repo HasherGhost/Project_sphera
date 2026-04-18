@@ -1690,7 +1690,7 @@
             <p class="auth-copy" style="text-align:center;">Sign in to your existing account.
             </p>
             <div class="field-grid">
-                <label class="field"><span>Username or Email</span><input id="signupEmail" type="email"
+                <label class="field"><span>Email Address</span><input id="signupEmail" type="email"
                         placeholder="john@example.com" autocomplete="email"></label>
                 <label class="field"><span>Password</span><input id="signupPassword" type="password"
                         placeholder="Create a password" autocomplete="new-password"></label>
@@ -1826,40 +1826,6 @@
 
         document.getElementById('switchToSignIn')?.addEventListener('click', (e) => {
             e.preventDefault(); closeSignup(); openAuth();
-        });
-
-        document.getElementById('signupSubmitBtn')?.addEventListener('click', async () => {
-            const email = document.getElementById('signupEmail')?.value.trim();
-            const pass = document.getElementById('signupPassword')?.value;
-            const confirm = document.getElementById('signupConfirm')?.value;
-            if (!email || !pass) { showToast('Please fill in email and password.'); return; }
-            if (pass !== confirm) { showToast('Passwords do not match.'); return; }
-            if (pass.length < 6) { showToast('Password must be at least 6 characters.'); return; }
-            try {
-                const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js");
-                const { getAuth, createUserWithEmailAndPassword } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js");
-                const { getFirestore, doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
-                const firebaseConfig = {
-                    apiKey: "AIzaSyBfF_Gfn_YaIHfHVCpaA6IdUjDVNlDQTjg",
-                    authDomain: "sphera-6778e.firebaseapp.com",
-                    projectId: "sphera-6778e",
-                    storageBucket: "sphera-6778e.firebasestorage.app",
-                    messagingSenderId: "851527615297",
-                    appId: "1:851527615297:web:9ea78e42c27b3585e5d7c0"
-                };
-                const app = initializeApp(firebaseConfig);
-                const auth = getAuth(app);
-                const db = getFirestore(app);
-                const cred = await createUserWithEmailAndPassword(auth, email, pass);
-                await setDoc(doc(db, 'users', cred.user.uid), {
-                    email: email,
-                    createdAt: new Date().toISOString()
-                });
-                showToast('Account created successfully! Redirecting...');
-                setTimeout(() => { window.location.href = 'feed.html'; }, 1200);
-            } catch (e) {
-                showToast(e.message);
-            }
         });
 
         /* ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚Â
@@ -2010,34 +1976,6 @@
     </script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBfF_Gfn_YaIHfHVCpaA6IdUjDVNlDQTjg",
-            authDomain: "sphera-6778e.firebaseapp.com",
-            projectId: "sphera-6778e",
-            storageBucket: "sphera-6778e.firebasestorage.app",
-            messagingSenderId: "851527615297",
-            appId: "1:851527615297:web:9ea78e42c27b3585e5d7c0"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        try {
-            await setDoc(doc(db, "test", "connection"), {
-                status: "Firebase is working!",
-                time: new Date().toISOString()
-            });
-            console.log("✅ Firebase connected successfully!");
-        } catch (e) {
-            console.error("❌ Firebase error:", e);
-        }
-    </script>
-
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -2054,28 +1992,42 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // SIGN UP
+        // SIGN UP / LOGIN (Combined)
         document.getElementById('signupSubmitBtn')?.addEventListener('click', async () => {
             const email = document.getElementById('signupEmail')?.value.trim();
             const pass = document.getElementById('signupPassword')?.value;
-            const confirm = document.getElementById('signupConfirm')?.value;
             if (!email || !pass) return;
-            if (pass !== confirm) return;
+            
             try {
-                const cred = await createUserWithEmailAndPassword(auth, email, pass);
-                await setDoc(doc(db, 'users', cred.user.uid), {
-                    email: email,
-                    createdAt: new Date().toISOString()
-                });
-                console.log('✅ Account created!');
+                await signInWithEmailAndPassword(auth, email, pass);
+                console.log('✅ Signed in!');
                 window.location.href = 'feed.html';
-            } catch (e) {
-                console.error('❌ Signup error:', e.message);
-                alert(e.message);
+            } catch (error) {
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                    try {
+                        const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                        await setDoc(doc(db, 'users', cred.user.uid), {
+                            email: email,
+                            createdAt: new Date().toISOString()
+                        });
+                        console.log('✅ Account created!');
+                        window.location.href = 'feed.html';
+                    } catch (createError) {
+                        if (createError.code === 'auth/email-already-in-use') {
+                            alert("Account exists, signing you in...");
+                        } else {
+                            alert(createError.message);
+                        }
+                    }
+                } else if (error.code === 'auth/wrong-password') {
+                    alert("Incorrect password");
+                } else {
+                    alert(error.message);
+                }
             }
         });
 
-        // SIGN IN
+        // SIGN IN (Auth Modal for existing users)
         document.getElementById('enterBtn')?.addEventListener('click', async () => {
             const email = document.getElementById('authEmail')?.value.trim();
             const pass = document.getElementById('authPassword')?.value;
@@ -2084,9 +2036,14 @@
                 await signInWithEmailAndPassword(auth, email, pass);
                 console.log('✅ Signed in!');
                 window.location.href = 'feed.html';
-            } catch (e) {
-                console.error('❌ Signin error:', e.message);
-                alert(e.message);
+            } catch (error) {
+                if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                    alert("Incorrect password");
+                } else if (error.code === 'auth/user-not-found') {
+                    alert("No account found with this email");
+                } else {
+                    alert(error.message);
+                }
             }
         });
 
