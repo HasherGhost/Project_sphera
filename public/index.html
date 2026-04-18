@@ -1669,7 +1669,7 @@
                 </div>
             </div>
 
-            <!-- Step 3 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â Sccess -->
+            <!-- Step 3 â€” Success -->
             <div id="step3" class="auth-step success-step">
                 <div class="success-mark">&#10003;</div>
                 <p class="sec-kicker">Step 3</p>
@@ -2010,34 +2010,6 @@
     </script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBfF_Gfn_YaIHfHVCpaA6IdUjDVNlDQTjg",
-            authDomain: "sphera-6778e.firebaseapp.com",
-            projectId: "sphera-6778e",
-            storageBucket: "sphera-6778e.firebasestorage.app",
-            messagingSenderId: "851527615297",
-            appId: "1:851527615297:web:9ea78e42c27b3585e5d7c0"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        try {
-            await setDoc(doc(db, "test", "connection"), {
-                status: "Firebase is working!",
-                time: new Date().toISOString()
-            });
-            console.log("✅ Firebase connected successfully!");
-        } catch (e) {
-            console.error("❌ Firebase error:", e);
-        }
-    </script>
-
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -2053,6 +2025,17 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+
+        // Test Connection
+        try {
+            await setDoc(doc(db, "test", "connection"), {
+                status: "Firebase is working!",
+                time: new Date().toISOString()
+            });
+            console.log("✅ Firebase connected successfully!");
+        } catch (e) {
+            console.error("❌ Firebase error:", e);
+        }
 
         // SIGN UP
         document.getElementById('signupSubmitBtn')?.addEventListener('click', async () => {
