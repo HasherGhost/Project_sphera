@@ -1426,7 +1426,6 @@
                 <nav class="hdr-nav">
                     <a href="#network">Network</a>
                     <a href="#opportunities">Opportunities</a>
-                    <a href="#events" id="eventsNavBtn">Events</a>
                     <a href="#trust">Trust</a>
                 </nav>
                 <div class="hdr-acts">
@@ -1543,17 +1542,6 @@
                 </div>
             </section>
 
-            <!-- ═══ EVENTS ═══ -->
-            <section id="events" class="sec reveal">
-                <div class="wrap">
-                    <div class="sec-hdr">
-                        <div>
-                            <p class="sec-kicker">Professional Events</p>
-                            <h2>Grow your network through verified events.</h2>
-                        </div>
-                        <p class="sec-copy">All events require verified identity. Attend with confidence — every participant is confirmed human and professional.</p>
-                    </div>
-                    <div class="feat-grid" style="grid-template-columns: repeat(3,1fr); gap: 16px;">
 
                         <article class="event-card" style="display:grid;gap:0;overflow:hidden;cursor:pointer;" onclick="openEventDetail('summit')">
                             <div style="height:140px;background:linear-gradient(135deg,#7C3AED,#5B21B6);display:grid;place-items:center;font-size:2.5rem;">🏛️</div>
@@ -1797,10 +1785,6 @@
         </section>
     </div>
 
-    <!-- ═══ EVENT DETAIL MODAL ═══ -->
-    <div id="eventModal" class="auth-modal hidden" role="dialog" aria-modal="true">
-        <div class="auth-scrim" id="eventScrim"></div>
-        <section class="auth-panel" style="width: min(540px, 100%); padding: 0; overflow: hidden;">
             <div id="eventModalBanner" style="height: 160px; display: grid; place-items: center; font-size: 3.5rem; position: relative;">
                 <button id="closeEventModal" type="button"
                     style="position:absolute;top:14px;right:14px;width:36px;height:36px;display:grid;place-items:center;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.3);background:rgba(0,0,0,0.28);color:#fff;font-weight:900;font-size:1.1rem;cursor:pointer;">&times;</button>
@@ -2030,8 +2014,6 @@
             document.getElementById('couponInput').value = '';
         });
 
-        /* ── Events ── */
-        const eventData = {
             summit:     { emoji:'🏛️', grad:'135deg,#7C3AED,#5B21B6', status:'● LIVE', statusColor:'var(--green)', title:'Global Founders Summit 2026', desc:'Connect with 500+ verified founders, VCs, and operators across tech, SaaS, and deep-tech verticals. Curated breakout sessions, live Q&A, and warm intros facilitated by SyncUp\'s verified matching engine.', date:'📅 May 14, 2026 · Remote', count:'430 attending', industry:'Tech · SaaS · Deep-Tech' },
             hiring:     { emoji:'💼', grad:'135deg,#F97316,#C2410C', status:'● SOON', statusColor:'var(--amber)', title:'SyncUp Hiring Fair — Tech Edition', desc:'Top-tier companies sourcing directly from verified professionals. No middlemen, no fake profiles. Every recruiter is domain-authenticated, every candidate is camera-verified.', date:'📅 Jun 3, 2026 · Hybrid', count:'212 registered', industry:'Engineering · Product · Design' },
             pitch:      { emoji:'🚀', grad:'135deg,#10B981,#065F46', status:'● UPCOMING', statusColor:'var(--muted)', title:'Verified Pitch Night — Series A & B', desc:'Present your startup to verified Series A/B investors in live camera-gated pitch sessions. 5-minute pitches, 3-minute Q&A. No fake audience — only verified capital allocators.', date:'📅 Jul 19, 2026 · Remote', count:'89 registered', industry:'Startups · VC · Investing' },
