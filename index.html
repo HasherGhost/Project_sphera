@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyncUp — Verified Professional Ecosystem</title>
+    <title>SyncUp Ã¢â‚¬â€ Verified Professional Ecosystem</title>
     <meta name="description"
         content="Camera-based liveness verification, trusted networking, hiring, and events in one workspace.">
     <script>
@@ -16,9 +16,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
-        /* ═══════════════════════════════════════════════════════
-   CSS — SyncUp  (Nexus-inspired grid + float aesthetic)
-   ═══════════════════════════════════════════════════════ */
+        /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+   CSS Ã¢â‚¬â€ SyncUp  (Nexus-inspired grid + float aesthetic)
+   Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
         :root {
             color-scheme: light;
             --bg: #f5f0ff;
@@ -92,11 +92,41 @@
             overflow-x: hidden;
             font-family: 'Inter', system-ui, sans-serif;
             background: linear-gradient(var(--line) 1px, transparent 1px),
-                linear-gradient(90deg, var(--line) 1px, transparent 1px),
-                linear-gradient(180deg, var(--bg), var(--bg2));
-            background-size: 72px 72px, 72px 72px, auto;
+                linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 72px 72px, 72px 72px;
+            background-attachment: fixed;
+            background-color: transparent;
             color: var(--text);
             transition: background .2s, color .2s
+        }
+
+        /* ── Video Background ── */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            opacity: 0.85;
+            z-index: -1;
+            backdrop-filter: blur(4px);
         }
 
         body.modal-open {
@@ -160,7 +190,7 @@
             margin: 0 auto
         }
 
-        /* ── Header ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Header Ã¢â€â‚¬Ã¢â€â‚¬ */
         .hdr {
             position: sticky;
             top: 0;
@@ -246,7 +276,7 @@
             align-items: center
         }
 
-        /* ── Buttons ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Buttons Ã¢â€â‚¬Ã¢â€â‚¬ */
         .btn,
         .theme-tog,
         .icon-btn,
@@ -356,7 +386,7 @@
             transform: translateX(20px)
         }
 
-        /* ── Hero ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Hero Ã¢â€â‚¬Ã¢â€â‚¬ */
         .hero {
             min-height: calc(100vh - 78px);
             display: grid;
@@ -471,7 +501,7 @@
             letter-spacing: 0
         }
 
-        /* ── Network Stage (hero right) ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Network Stage (hero right) Ã¢â€â‚¬Ã¢â€â‚¬ */
         .n-stage {
             position: relative;
             min-height: 620px;
@@ -680,7 +710,7 @@
             font-weight: 800
         }
 
-        /* ── Sections ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Sections Ã¢â€â‚¬Ã¢â€â‚¬ */
         .sec {
             padding: 84px 0
         }
@@ -783,7 +813,7 @@
             box-shadow: 0 0 0 6px var(--accent-f)
         }
 
-        /* ── Auth Modal ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Auth Modal Ã¢â€â‚¬Ã¢â€â‚¬ */
         .auth-modal {
             position: fixed;
             inset: 0;
@@ -1092,7 +1122,7 @@
         }
 
         .chk-item.pass span::after {
-            content: '✓';
+            content: 'Ã¢Å“â€œ';
             font-size: .7rem;
             font-weight: 900
         }
@@ -1162,7 +1192,7 @@
             animation: popIn .36s both
         }
 
-        /* ── Toast ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Toast Ã¢â€â‚¬Ã¢â€â‚¬ */
         .toast {
             position: fixed;
             right: 20px;
@@ -1187,7 +1217,7 @@
             transform: translateY(0)
         }
 
-        /* ── Reveal ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Reveal Ã¢â€â‚¬Ã¢â€â‚¬ */
         .reveal {
             opacity: 0;
             transform: translateY(18px)
@@ -1199,7 +1229,7 @@
             transition: opacity .55s, transform .55s
         }
 
-        /* ── Keyframes ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Keyframes Ã¢â€â‚¬Ã¢â€â‚¬ */
         @keyframes pulseRing {
             0% {
                 opacity: .8;
@@ -1314,7 +1344,7 @@
             }
         }
 
-        /* ── Responsive ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Responsive Ã¢â€â‚¬Ã¢â€â‚¬ */
         @media(max-width:1120px) {
 
             .hero-grid,
@@ -1413,9 +1443,16 @@
 </head>
 
 
-<body>
+<body class="landing-body">
+
+    <div class="video-bg">
+        <video autoplay muted loop playsinline>
+            <source src="4779866-hd_1920_1080_30fps.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="video-overlay"></div>
     <div class="page-shell">
-        <!-- ═══ HEADER ═══ -->
+        <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â HEADER Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
         <header class="hdr">
             <div class="wrap hdr-row">
                 <a class="brand" href="#home">
@@ -1426,6 +1463,7 @@
                 <nav class="hdr-nav">
                     <a href="#network">Network</a>
                     <a href="#opportunities">Opportunities</a>
+                    <a href="#events" id="eventsNavBtn">Events</a>
                     <a href="#trust">Trust</a>
                 </nav>
                 <div class="hdr-acts">
@@ -1444,7 +1482,7 @@
         </header>
 
         <main>
-            <!-- ═══ HERO ═══ -->
+            <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â HERO Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
             <section id="home" class="hero">
                 <div class="wrap hero-grid">
                     <div class="hero-copy reveal">
@@ -1518,7 +1556,7 @@
                 </div>
             </section>
 
-            <!-- ═══ OPPORTUNITIES ═══ -->
+            <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â OPPORTUNITIES Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
             <section id="opportunities" class="sec">
                 <div class="wrap">
                     <div class="sec-hdr reveal">
@@ -1545,8 +1583,8 @@
                     </div>
                 </div>
             </section>
-
             <!-- ═══ TRUST ═══ -->
+            <!-- Ã¢â€¢ Ã¢â€¢ Ã¢â€¢  TRUST Ã¢â€¢ Ã¢â€¢ Ã¢â€¢  -->
             <section id="trust" class="sec" style="padding-top:36px">
                 <div class="wrap trust-layout reveal">
                     <div>
@@ -1567,7 +1605,7 @@
         </main>
     </div>
 
-    <!-- ═══ AUTH MODAL ═══ -->
+    <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â AUTH MODAL Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
     <div id="authModal" class="auth-modal hidden" role="dialog" aria-modal="true">
         <div class="auth-scrim" data-close-auth></div>
         <section class="auth-panel">
@@ -1597,7 +1635,7 @@
                 <button id="continueBtn" class="btn btn-p btn-full" type="button">Continue to camera</button>
             </div>
 
-            <!-- Step 2 — Camera -->
+            <!-- Step 2 Ã¢â‚¬â€ Camera -->
             <div id="step2" class="auth-step">
                 <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
                     <div>
@@ -1639,7 +1677,7 @@
                 </div>
             </div>
 
-            <!-- Step 3 — Success -->
+            <!-- Step 3 Ã¢â‚¬â€ Success -->
             <div id="step3" class="auth-step success-step">
                 <div class="success-mark">&#10003;</div>
                 <p class="sec-kicker">Step 3</p>
@@ -1650,7 +1688,7 @@
         </section>
     </div>
 
-    <!-- ═══ COUPON MODAL ═══ -->
+    <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â COUPON MODAL Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
     <div id="couponModal" class="auth-modal hidden" role="dialog" aria-modal="true">
         <div class="auth-scrim" data-close-coupon></div>
         <section class="auth-panel" style="width: min(480px, 100%); text-align: left; padding: 34px 24px;">
@@ -1700,11 +1738,11 @@
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script>
-        /* ════════════════════════════════════════
-           SyncUp — JS  (theme, reveal, auth, camera)
-           ════════════════════════════════════════ */
+        /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+           SyncUp Ã¢â‚¬â€ JS  (theme, reveal, auth, camera)
+           Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 
-        /* ── Theme ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Theme Ã¢â€â‚¬Ã¢â€â‚¬ */
         const themeKey = 'su-theme';
         function applyTheme(t) {
             const d = t === 'dark'; document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
@@ -1715,10 +1753,10 @@
             applyTheme(n); try { localStorage.setItem(themeKey, n) } catch (e) { }
         });
 
-        /* ── Toast ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Toast Ã¢â€â‚¬Ã¢â€â‚¬ */
         let toastTimer; function showToast(m) { const t = document.getElementById('toast'); if (!t) return; t.textContent = m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
 
-        /* ── Counter ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Counter Ã¢â€â‚¬Ã¢â€â‚¬ */
         function fmtMetric(v) { return v >= 1000 ? `${(v / 1000).toFixed(v >= 10000 ? 0 : 1)}K+` : `${v}+` }
         function animCounters() {
             const cs = [...document.querySelectorAll('[data-count]')]; if (!cs.length) return;
@@ -1730,14 +1768,14 @@
             cs.forEach(c => o.observe(c));
         }
 
-        /* ── Reveal ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Reveal Ã¢â€â‚¬Ã¢â€â‚¬ */
         function revealOnScroll() {
             const items = [...document.querySelectorAll('.reveal')]; if (!items.length) return;
             const o = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); o.unobserve(e.target); } }); }, { threshold: .18 });
             items.forEach(i => o.observe(i));
         }
 
-        /* ── Auth ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Auth Ã¢â€â‚¬Ã¢â€â‚¬ */
         const modal = document.getElementById('authModal');
         function openAuth() { modal?.classList.remove('hidden'); document.body.classList.add('modal-open'); resetAuth(); }
         function closeAuth() { camStop(); modal?.classList.add('hidden'); document.body.classList.remove('modal-open'); }
@@ -1757,10 +1795,10 @@
             window.location.href = 'feed.html';
         });
 
-        /* ════════════════════════════════════════
-           Camera Liveness — getUserMedia + RAF
+        /* Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â
+           Camera Liveness Ã¢â‚¬â€ getUserMedia + RAF
            60fps render, 5fps throttled analysis
-           ════════════════════════════════════════ */
+           Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
         let _s = null, _raf = null, _prev = null, _t0 = 0;
         let S = { face: false, blinks: 0, moved: false, done: false };
         let _ey = [], _ma = 0, _sc = 0;
@@ -1849,7 +1887,7 @@
 
             const face = skinR > .08 && avgB > 30 && avgB < 240; S.face = face;
             if (face) _sc = Math.min(_sc + 1, SN + 5); else _sc = Math.max(_sc - 2, 0);
-            if (!face) { if (st) st.textContent = 'No face detected — look at the camera.'; updChecks(); return; }
+            if (!face) { if (st) st.textContent = 'No face detected Ã¢â‚¬â€ look at the camera.'; updChecks(); return; }
             if (_sc < SN) { if (st) st.textContent = `Face found. Hold still... (${_sc}/${SN})`; updChecks(); return; }
 
             if (S.blinks < BN) {
@@ -1865,14 +1903,14 @@
                 if (st) st.textContent = 'Turn your head slowly left then right.'; updChecks(); return;
             }
 
-            S.done = true; if (st) st.textContent = 'All checks passed! Liveness confirmed ✓'; setLiveScore(100); updChecks();
-            setTimeout(() => { camStop(); goStep(3); showToast('Liveness verified — identity confirmed.'); }, 1200);
+            S.done = true; if (st) st.textContent = 'All checks passed! Liveness confirmed Ã¢Å“â€œ'; setLiveScore(100); updChecks();
+            setTimeout(() => { camStop(); goStep(3); showToast('Liveness verified Ã¢â‚¬â€ identity confirmed.'); }, 1200);
         }
 
-        /* ── Init ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Init Ã¢â€â‚¬Ã¢â€â‚¬ */
         document.addEventListener('DOMContentLoaded', () => { animCounters(); revealOnScroll(); });
 
-        /* ── Coupon Logic ── */
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Coupon Logic Ã¢â€â‚¬Ã¢â€â‚¬ */
         const couponModal = document.getElementById('couponModal');
         document.getElementById('openCouponUi')?.addEventListener('click', () => {
             couponModal?.classList.remove('hidden'); document.body.classList.add('modal-open');
@@ -1880,13 +1918,14 @@
         document.querySelectorAll('[data-close-coupon]').forEach(b => b.addEventListener('click', () => {
             couponModal?.classList.add('hidden'); document.body.classList.remove('modal-open');
         }));
+        /* Ã¢â€â‚¬Ã¢â€â‚¬ Redeem Ã¢â€â‚¬Ã¢â€â‚¬ */
         document.getElementById('redeemBtn')?.addEventListener('click', () => {
             const input = document.getElementById('couponInput')?.value.trim();
             if (!input) {
                 showToast('Please enter a coupon code first.');
                 return;
             }
-            const rewardValue = Math.floor(Math.random() * 41) + 10; // Random $10 to $50
+            const rewardValue = Math.floor(Math.random() * 41) + 10;
             showToast(`Redeemed successfully! You won a $${rewardValue} item reward!`);
             document.getElementById('couponInput').value = '';
         });
