@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyncUp — Rewards & Milestones</title>
+    <meta name="description" content="Redeem coupons, unlock ecosystem milestones, and track your trusted growth.">
+    <script>
+        (function () { try { var t = localStorage.getItem('su-theme'); document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light'); } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); } })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════
+           CSS — SyncUp (Nexus-inspired Shared CSS)
+           ═══════════════════════════════════════════════════════ */
+        :root {
+            color-scheme: light;
+            --bg: #f5f0ff;
+            --bg2: #ece4ff;
+            --surface: rgba(255, 255, 255, .88);
+            --surface-s: #fff;
+            --surface-f: #f0eafc;
+            --line: rgba(88, 28, 235, .11);
+            --line-s: rgba(88, 28, 235, .22);
+            --text: #1a0e33;
+            --muted: #6b5e82;
+            --faint: #9b90b0;
+            --accent: #7C3AED;
+            --accent-s: #5B21B6;
+            --accent-f: rgba(124, 58, 237, .12);
+            --orange: #F97316;
+            --orange-f: rgba(249, 115, 22, .1);
+            --green: #10B981;
+            --green-f: rgba(16, 185, 129, .12);
+            --danger: #EF4444;
+            --danger-f: rgba(239, 68, 68, .1);
+            --amber: #D97706;
+            --amber-f: rgba(217, 119, 6, .12);
+            --shadow: 0 22px 70px rgba(60, 20, 140, .1);
+            --shadow-f: 0 14px 40px rgba(60, 20, 140, .06);
+            --header-bg: rgba(245, 240, 255, .86);
+            --focus: rgba(124, 58, 237, .28);
+            --radius: 8px;
+        }
+
+        html[data-theme="dark"] {
+            color-scheme: dark;
+            --bg: #0a0514;
+            --bg2: #110920;
+            --surface: rgba(22, 12, 44, .9);
+            --surface-s: #160c2c;
+            --surface-f: #1e1238;
+            --line: rgba(200, 180, 255, .11);
+            --line-s: rgba(200, 180, 255, .22);
+            --text: #f3eeff;
+            --muted: #b0a4c8;
+            --faint: #7a6e94;
+            --accent: #A78BFA;
+            --accent-s: #C4B5FD;
+            --accent-f: rgba(167, 139, 250, .14);
+            --orange: #FB923C;
+            --orange-f: rgba(251, 146, 60, .12);
+            --green: #34D399;
+            --green-f: rgba(52, 211, 153, .14);
+            --danger: #F87171;
+            --danger-f: rgba(248, 113, 113, .12);
+            --amber: #FBBF24;
+            --amber-f: rgba(251, 191, 36, .14);
+            --shadow: 0 24px 70px rgba(0, 0, 0, .38);
+            --shadow-f: 0 14px 40px rgba(0, 0, 0, .24);
+            --header-bg: rgba(10, 5, 20, .88);
+            --focus: rgba(167, 139, 250, .32);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; min-height: 100vh; overflow-x: hidden;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(var(--line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--line) 1px, transparent 1px),
+                linear-gradient(180deg, var(--bg), var(--bg2));
+            background-size: 72px 72px, 72px 72px, auto;
+            color: var(--text);
+            transition: background .2s, color .2s;
+        }
+
+        button, input { font: inherit; }
+        button { color: inherit; border: none; background: none; cursor: pointer; }
+        a { color: inherit; text-decoration: none; }
+        img { display: block; max-width: 100%; border-radius: inherit; }
+        h1, h2, h3, p { margin: 0; }
+
+        .wrap { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
+        
+        .page-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr 300px;
+            gap: 24px;
+            padding: 32px 0 64px;
+            align-items: start;
+        }
+
+        /* ── Header ── */
+        .hdr {
+            position: sticky; top: 0; z-index: 30; border-bottom: 1px solid var(--line);
+            background: var(--header-bg); backdrop-filter: blur(18px);
+        }
+        .hdr-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 78px; }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand-mark {
+            display: grid; place-items: center; width: 42px; height: 42px;
+            border-radius: var(--radius); background: var(--text); color: var(--bg);
+            font-size: .92rem; font-weight: 900;
+        }
+        .hdr-nav { display: flex; gap: 22px; font-weight: 700; font-size: .92rem; color: var(--text); }
+        .hdr-nav a { position: relative; color: var(--muted); }
+        .hdr-nav a.active { color: var(--text); }
+        .hdr-nav a::after {
+            content: ''; position: absolute; right: 0; bottom: -8px; left: 0; height: 2px;
+            border-radius: 2px; background: var(--accent); opacity: 0; transform: scaleX(.5);
+            transition: opacity .2s, transform .2s;
+        }
+        .hdr-nav a.active::after, .hdr-nav a:hover::after { opacity: 1; transform: scaleX(1); }
+        .hdr-acts { display: flex; gap: 10px; align-items: center; }
+
+        .btn, .theme-tog {
+            border-radius: var(--radius); padding: 0 16px; min-height: 42px;
+            font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent;
+            transition: transform .18s, background .18s, box-shadow .18s, color .18s;
+        }
+        .btn-p { background: var(--accent); color: white; }
+        .btn-p:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--accent-f); }
+        
+        .btn-o { background: var(--orange); color: white; }
+        .btn-o:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--orange-f); }
+
+        .theme-tog {
+            background: var(--surface); border-color: var(--line);
+            color: var(--text); padding: 0 12px;
+        }
+
+        .panel {
+            background: var(--surface); border: 1px solid var(--line);
+            border-radius: var(--radius); box-shadow: var(--shadow-f);
+            padding: 24px; backdrop-filter: blur(12px);
+        }
+
+        /* ── Nav ── */
+        .side-nav { display: grid; gap: 8px; margin-bottom: 24px; }
+        .side-nav a {
+            display: flex; align-items: center; justify-content: space-between; padding: 12px 16px;
+            border-radius: var(--radius); font-weight: 700; color: var(--muted);
+            transition: background .2s, color .2s;
+        }
+        .side-nav a.active { background: var(--accent-f); color: var(--accent); }
+        .side-nav a:hover:not(.active) { background: var(--surface-f); color: var(--text); }
+        .count-pill { background: var(--orange); color: white; padding: 2px 8px; border-radius: 99px; font-size: .75rem; font-weight: 900; }
+
+        /* ── Milestones ── */
+        .milestone-card {
+            padding: 20px; border-radius: var(--radius); border: 1px solid var(--line-s);
+            background: var(--surface-s); margin-bottom: 16px; position: relative; overflow: hidden;
+        }
+        .milestone-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .milestone-header h3 { font-size: 1.1rem; font-weight: 900; }
+        .milestone-badge { font-size: 0.75rem; background: var(--accent-f); color: var(--accent); padding: 4px 8px; border-radius: 4px; font-weight: 900; letter-spacing: .05em; }
+        
+        .progress-bar-bg { width: 100%; height: 8px; background: var(--line); border-radius: 4px; margin-top: 12px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 1s ease-in-out; }
+
+        /* ── Toast ── */
+        .toast {
+            position: fixed; right: 20px; bottom: 20px; background: var(--text); color: var(--bg);
+            padding: 14px 20px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px;
+            box-shadow: var(--shadow); z-index: 1000; opacity: 0; transform: translateY(18px); transition: opacity .4s, transform .4s; pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+        @media(max-width: 980px) { .page-layout { grid-template-columns: 240px 1fr; } .hidden-md { display: none; } }
+        @media(max-width: 768px) { .page-layout { grid-template-columns: 1fr; padding-top: 16px; } .side-nav { display: flex; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; } .side-nav a { flex-shrink: 0; } }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="hdr">
+        <div class="wrap hdr-row">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">SU</span>
+                <span style="display:grid;gap:2px"><strong>SyncUp.</strong><small>Verified professional</small></span>
+            </a>
+            <nav class="hdr-nav">
+                <a href="feed.html">Feed</a>
+                <a href="network.html">Network</a>
+                <a href="event.html">Events</a>
+                <a href="reward.html" class="active">Rewards</a>
+            </nav>
+            <div class="hdr-acts">
+                 <button class="theme-tog" id="themeToggle" type="button">☼ / ☾</button>
+                 <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white; display: grid; place-items: center; font-weight: 900;">U</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="wrap page-layout">
+        
+        <!-- Left Sidebar -->
+        <aside>
+            <nav class="side-nav">
+                <a href="#" class="active"><span>🎁 My Rewards</span></a>
+                <a href="#"><span>🏆 Leaderboard</span></a>
+                <a href="#"><span>🤝 Referrals</span> <span class="count-pill">3</span></a>
+                <a href="#"><span>💳 Wallet Balance</span></a>
+            </nav>
+        </aside>
+
+        <!-- Center Feed -->
+        <section>
+            <!-- Hero Banner -->
+            <div class="panel" style="background: linear-gradient(135deg, var(--orange), #ef4444); color: white; margin-bottom: 24px; position: relative; overflow: hidden; border: none;">
+                <div style="position: relative; z-index: 2; display: flex; flex-direction: column; gap: 12px;">
+                    <h1 style="font-size: clamp(1.6rem, 2.5vw, 2rem); font-weight: 900; line-height: 1.1; letter-spacing: -.02em;">Redeem Coupons &amp; Unlock Milestones</h1>
+                    <p style="opacity: 0.95; max-width: 440px; line-height: 1.6; font-size: .95rem; margin-bottom: 4px; font-weight: 500;">Grow the ecosystem, bring in verified professionals, and get rewarded with premium items, platform credits, and exclusive networking access.</p>
+                </div>
+                <!-- Decorative background elements -->
+                <div style="position: absolute; right: -40px; top: -40px; width: 220px; height: 220px; border-radius: 50%; background: var(--amber); opacity: 0.3; filter: blur(40px);"></div>
+            </div>
+
+            <!-- Coupon Redeem -->
+            <div class="panel" style="margin-bottom: 32px; background: var(--surface-f); border: 2px dashed var(--accent-f);">
+                <h2 style="font-size: 1.25rem; font-weight: 900; margin-bottom: 8px;">🎉 Got a Coupon Code?</h2>
+                <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 16px; font-weight: 500;">Enter your code below to instantly unlock escrow credits or surprise gift rewards.</p>
+                
+                <div style="display: flex; gap: 8px; align-items: center; max-width: 400px; background: var(--surface); padding: 8px; border-radius: 12px; border: 1px solid var(--line); box-shadow: var(--shadow-f);">
+                    <input id="couponInput" type="text" placeholder="e.g. SYNCUP2026" style="flex: 1; padding: 12px 14px; border: none; background: transparent; font-weight: 800; font-size: 1rem; color: var(--text); outline: none; text-transform: uppercase;" />
+                    <button id="redeemBtn" class="btn btn-p" type="button" style="min-height: 44px; padding: 0 24px;">Redeem</button>
+                </div>
+            </div>
+
+            <!-- Milestones Section -->
+            <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end;">
+                <div>
+                    <h2 style="font-size: 1.4rem; font-weight: 900;">Milestone Goals</h2>
+                    <p style="color: var(--muted); font-size: 0.9rem; font-weight: 500; margin-top: 4px;">Exclusive rewards locked behind ecosystem growth.</p>
+                </div>
+                <div style="font-weight: 800; color: var(--accent); font-size: 0.9rem;">Current: 42 Joins</div>
+            </div>
+
+            <!-- Milestone 1 -->
+            <div class="milestone-card">
+                <div class="milestone-header">
+                    <h3>100 Verified Joins</h3>
+                    <span class="milestone-badge">LOCKED</span>
+                </div>
+                <p style="color: var(--muted); font-size: 0.9rem; font-weight: 500;">Unlock a standard Gift Reward (e.g. Swag, $50 Escrow Credit).</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 42%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.8rem; font-weight: 700; color: var(--faint);">
+                    <span>42 / 100</span>
+                    <span>58 remaining</span>
+                </div>
+            </div>
+
+            <!-- Milestone 2 -->
+            <div class="milestone-card" style="opacity: 0.7;">
+                <div class="milestone-header">
+                    <h3>500 Verified Joins</h3>
+                    <span class="milestone-badge" style="background: var(--surface-f); color: var(--muted);">LOCKED</span>
+                </div>
+                <p style="color: var(--muted); font-size: 0.9rem; font-weight: 500;">Unlock a Bigger Gift Reward (e.g. Premium Hardware, Event VIP Pass).</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 8.4%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.8rem; font-weight: 700; color: var(--faint);">
+                    <span>42 / 500</span>
+                </div>
+            </div>
+
+            <!-- Milestone 3 -->
+            <div class="milestone-card" style="opacity: 0.5;">
+                <div class="milestone-header">
+                    <h3 style="background: linear-gradient(90deg, var(--orange), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">First 1,000 Verified Leaderboard</h3>
+                    <span class="milestone-badge" style="background: var(--surface-f); color: var(--muted);">LOCKED</span> //
+                </div>
+                <p style="color: var(--muted); font-size: 0.9rem; font-weight: 500;">Eligible for 3 Mega Gifts (Latest flagship smartphones or equivalent).</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 4.2%; background: var(--orange);"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.8rem; font-weight: 700; color: var(--faint);">
+                    <span>42 / 1,000</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Right Sidebar -->
+        <aside class="hidden-md">
+            <!-- Active Balances -->
+            <div class="panel" style="margin-bottom: 24px; text-align: center; padding: 32px 24px;">
+                 <h3 style="font-size: .85rem; color: var(--muted); text-transform: uppercase; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px;">Escrow Credits</h3>
+                 <div style="font-size: 2.8rem; font-weight: 900; color: var(--text); line-height: 1;">$140</div>
+                 <p style="font-size: .8rem; color: var(--green); font-weight: 700; margin-top: 8px;">+ $20 from last referral</p>
+                 <button class="btn btn-outline" style="width: 100%; border: 1px solid var(--line); margin-top: 20px; font-weight: 800; background: var(--surface-f);">Withdraw to Wallet</button>
+            </div>
+
+            <!-- Recent Winners Activity feed -->
+             <div class="panel">
+                <h3 style="font-size: 1.05rem; font-weight: 900; margin-bottom: 16px;">Recent Ecosystem Winners</h3>
+                
+                <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: center;">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--amber-f); color: var(--amber); display: grid; place-items: center; font-weight: 900; font-size: .8rem;">EL</div>
+                    <div>
+                        <div style="font-weight: 800; font-size: .85rem;">Elena Rodriguez</div>
+                        <div style="font-size: .75rem; color: var(--muted); font-weight: 600;">Redeemed $50 Coupon</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: center;">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-f); color: var(--accent); display: grid; place-items: center; font-weight: 900; font-size: .8rem;">DC</div>
+                    <div>
+                        <div style="font-weight: 800; font-size: .85rem;">David Chen</div>
+                        <div style="font-size: .75rem; color: var(--orange); font-weight: 700;">Unlocked 100-Join Milestone!</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" role="status" aria-live="polite">
+        <span style="font-size: 1.2rem;">🎁</span>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script>
+        // Theme logic
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const h = document.documentElement;
+            const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            h.setAttribute('data-theme', n);
+            try { localStorage.setItem('su-theme', n); } catch(e){}
+        });
+
+        // Toast logic
+        let toastTimer;
+        function showToast(m) {
+            const t = document.getElementById('toast');
+            const msgNode = document.getElementById('toastMsg');
+            if (!t || !msgNode) return;
+            msgNode.textContent = m;
+            t.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+        }
+
+        // Redeem logic (matches index.html)
+        document.getElementById('redeemBtn')?.addEventListener('click', () => {
+            const input = document.getElementById('couponInput')?.value.trim();
+            if (!input) {
+                showToast('Please enter a coupon code first.');
+                return;
+            }
+            const rewardValue = Math.floor(Math.random() * 41) + 10;
+            showToast(`Redeemed successfully! You won a $${rewardValue} item reward!`);
+            document.getElementById('couponInput').value = '';
+        });
+    </script>
+</body>
+</html>
