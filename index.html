@@ -1456,7 +1456,7 @@
                             camera liveness checks and verified profile signals.</p>
                         <div class="hero-actions">
                             <button class="btn btn-p btn-lg" type="button" data-open-auth>Start verification</button>
-                            <a class="btn btn-s btn-lg" href="#network">Explore dashboard</a>
+                            <a class="btn btn-s btn-lg" href="feed.html">Explore dashboard</a>
                         </div>
                         <div style="margin-top: 18px; padding: 14px; border-radius: var(--radius); background: var(--surface-f); border: 1px solid var(--accent-f); display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-weight: 700; font-size: 0.9rem;">
                             <span>🎉 Got a coupon? Unlock benefits &rarr;</span>
@@ -1741,8 +1741,7 @@
         });
 
         document.getElementById('enterBtn')?.addEventListener('click', () => {
-            closeAuth(); showToast('Welcome to SyncUp — your identity is verified.');
-            document.querySelector('#home .hero-copy h1').scrollIntoView({ behavior: 'smooth' });
+            window.location.href = 'feed.html';
         });
 
         /* ════════════════════════════════════════
