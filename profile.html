@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sphera | Profile</title>
+    <meta name="description" content="Your verified professional identity on the Sphera ecosystem.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #09090b;
+            --bg-glass: rgba(24, 24, 27, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --surface: #18181b;
+            --radius: 16px;
+            --accent: #8b5cf6;
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --bg-glass: rgba(255, 255, 255, 0.8);
+            --border: rgba(0, 0, 0, 0.08);
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.3);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --surface: #ffffff;
+            --accent: #7c3aed;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: transparent;
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            opacity: 0.8;
+            z-index: -1;
+            backdrop-filter: blur(8px);
+            transition: background 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 64px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: -1px;
+            cursor: pointer;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        /* Profile Layout */
+        .profile-container {
+            max-width: 900px;
+            margin: 80px auto 40px;
+            padding: 0 20px;
+        }
+
+        .profile-header-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .profile-banner {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            background: var(--primary-glow);
+        }
+
+        .profile-pfp-wrapper {
+            position: relative;
+            margin-top: -80px;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .profile-pfp {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 5px solid var(--bg);
+            background: var(--surface);
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-info {
+            padding: 24px;
+        }
+
+        .profile-name-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .verified-badge {
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 14px;
+            gap: 4px;
+        }
+
+        .profile-headline {
+            font-size: 18px;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .profile-meta {
+            color: var(--text-muted);
+            font-size: 14px;
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sections */
+        .glass-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--text-main);
+        }
+
+        .experience-item,
+        .education-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .experience-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+        }
+
+        .item-details h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .item-details p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .item-description {
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-main);
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+
+<body>
+    <div class="video-bg">
+        <video autoplay muted loop playsinline>
+            <source src="4779866-hd_1920_1080_30fps.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="video-overlay"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="window.location.href='feed.html'">SPHERA</div>
+            <div class="header-actions">
+                <div class="icon-btn" onclick="toggleTheme()" title="Toggle theme">
+                    <svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </div>
+                <!-- Back to Feed -->
+                <button class="btn btn-secondary" onclick="window.location.href='feed.html'">Home</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="profile-container">
+        <!-- Profile Header Section -->
+        <div class="profile-header-card">
+            <img src="profile_banner_abstract_1776542766317.png" alt="Banner" class="profile-banner">
+            <div class="profile-pfp-wrapper">
+                <img src="public/avatars/ned-ramirez.png" alt="Sarah Jenkins" class="profile-pfp">
+                <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                    <button class="btn btn-primary">Open to Help</button>
+                    <button class="btn btn-secondary">Add profile section</button>
+                </div>
+            </div>
+            <div class="profile-info">
+                <div class="profile-name-row">
+                    <h1 class="profile-name">Sarah Jenkins</h1>
+                    <div class="verified-badge">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color: var(--primary);">
+                            <path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4-3.9-3.8 5.4-.8L12 2z"/>
+                        </svg>
+                        Liveness Verified
+                    </div>
+                </div>
+                <p class="profile-headline">Managing Director @ Sphere Ventures | Angel Investor | Building the future of verified social networks</p>
+                <div class="profile-meta">
+                    <span>San Francisco, California</span>
+                    <span>•</span>
+                    <span style="color: var(--primary); font-weight: 700; cursor: pointer;">1,248 connections</span>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn btn-primary" style="background: var(--primary);">Enhance Trust Score</button>
+                    <button class="btn btn-secondary">Contact Info</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="glass-card">
+            <h2 class="section-title">About</h2>
+            <p class="item-description">
+                Experienced venture capitalist and entrepreneur with a demonstrated history of working in the technology and financial services industry. Skilled in Business Strategy, Strategic Partnerships, Venture Capital, and Ecosystem Building. Strong professional with a passion for decentralization and verified identity systems.
+            </p>
+        </div>
+
+        <!-- Experience Section -->
+        <div class="glass-card">
+            <h2 class="section-title">Experience</h2>
+            
+            <div class="experience-item">
+                <div class="experience-logo">🚀</div>
+                <div class="item-details">
+                    <h4>Managing Director</h4>
+                    <p>Sphere Ventures • Full-time</p>
+                    <p>Jan 2021 - Present • 3 yrs 4 mos</p>
+                    <p class="item-description">Leading early-stage investments in trust infrastructure and verified biometric ecosystems. Managing a portfolio of 25+ high-growth startups.</p>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-logo">🏢</div>
+                <div class="item-details">
+                    <h4>Partner</h4>
+                    <p>Nexus Global Capital • Full-time</p>
+                    <p>Mar 2017 - Dec 2020 • 3 yrs 10 mos</p>
+                    <p class="item-description">Scaled the fintech division and oversaw $500M+ in assets under management.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="glass-card">
+            <h2 class="section-title">Education</h2>
+            <div class="education-item">
+                <div class="experience-logo">🎓</div>
+                <div class="item-details">
+                    <h4>Stanford University Graduate School of Business</h4>
+                    <p>Master of Business Administration (MBA)</p>
+                    <p>2014 - 2016</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="glass-card">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <span class="skill-tag">Venture Capital</span>
+                <span class="skill-tag">Strategic Partnerships</span>
+                <span class="skill-tag">Liveness Verification</span>
+                <span class="skill-tag">Fintech</span>
+                <span class="skill-tag">Blockchain</span>
+                <span class="skill-tag">Product Strategy</span>
+                <span class="skill-tag">Public Speaking</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Credits logic for profile (keeping it consistent)
+        const CREDIT_KEY = 'su-credits';
+        function getCredits() {
+            return parseFloat(localStorage.getItem(CREDIT_KEY) || '0');
+        }
+        function updateCreditsDisplay() {
+            const el = document.getElementById('creditsDisplay');
+            if (el) el.textContent = getCredits().toFixed(2);
+        }
+        document.addEventListener('DOMContentLoaded', updateCreditsDisplay);
+    </script>
+</body>
+
+</html>
