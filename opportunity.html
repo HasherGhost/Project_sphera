@@ -11,38 +11,72 @@
         :root {
             --bg: #f5f0ff;
             --bg2: #ece4ff;
-            --surface: rgba(255, 255, 255, .88);
-            --surface-s: #fff;
+            --surface: rgba(255, 255, 255, .55);
+            --surface-s: rgba(255, 255, 255, .45);
+            --surface-f: rgba(255, 255, 255, .35);
             --text: #1a0e33;
-            --muted: #6b5e82;
+            --muted: #5a5068;
             --accent: #7C3AED;
             --accent-s: #5B21B6;
-            --radius: 8px;
-            --line: rgba(88, 28, 235, .11);
-            --header-bg: rgba(245, 240, 255, .86);
-            --shadow-f: 0 14px 40px rgba(60, 20, 140, .06);
+            --radius: 12px;
+            --line: rgba(255, 255, 255, .5);
+            --header-bg: rgba(255, 255, 255, .45);
+            --shadow-f: 0 4px 16px rgba(0, 0, 0, .03);
+            --glass-blur: blur(20px);
+            --overlay-op: 0.45;
+            --overlay-blur: blur(2px);
         }
 
         html[data-theme="dark"] {
             --bg: #0a0514;
             --bg2: #110920;
-            --surface: rgba(22, 12, 44, .9);
-            --surface-s: #160c2c;
+            --surface: rgba(255, 255, 255, .08);
+            --surface-s: rgba(255, 255, 255, .06);
+            --surface-f: rgba(255, 255, 255, .04);
             --text: #f3eeff;
             --muted: #b0a4c8;
             --accent: #A78BFA;
             --accent-s: #C4B5FD;
-            --line: rgba(200, 180, 255, .11);
-            --header-bg: rgba(10, 5, 20, .88);
+            --line: rgba(255, 255, 255, .12);
+            --header-bg: rgba(255, 255, 255, .06);
+            --overlay-op: 0.85;
+            --overlay-blur: blur(8px);
         }
 
         body {
             margin: 0;
             font-family: 'Inter', system-ui, sans-serif;
-            background: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px), linear-gradient(180deg, var(--bg), var(--bg2));
-            background-size: 72px 72px, 72px 72px, auto;
+            background-color: transparent;
             color: var(--text);
             min-height: 100vh;
+        }
+
+        /* ── Video Background ── */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            opacity: var(--overlay-op);
+            z-index: -1;
+            backdrop-filter: var(--overlay-blur);
+            transition: background 0.3s ease, opacity 0.3s ease, backdrop-filter 0.3s ease;
         }
 
         .wrap {
@@ -56,7 +90,8 @@
             z-index: 30;
             border-bottom: 1px solid var(--line);
             background: var(--header-bg);
-            backdrop-filter: blur(18px);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
         }
 
         .hdr-row {
@@ -119,11 +154,13 @@
             text-align: center;
             text-decoration: none;
             color: inherit;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
         }
 
         .option-card:hover {
@@ -173,11 +210,37 @@
             background: var(--accent);
             color: white;
         }
+
+        .theme-tog {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 42px;
+            padding: 0 14px;
+            border-radius: var(--radius);
+            background: var(--surface);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--line);
+            color: var(--text);
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform .18s, background .18s;
+        }
+        .theme-tog:hover {
+            transform: translateY(-1px);
+        }
     </style>
-    <script src="theme.js"></script>
+
 </head>
 
 <body>
+    <div class="video-bg">
+        <video autoplay muted loop playsinline>
+            <source src="assets/abstract-honeycomb.1920x1080.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="video-overlay"></div>
     <header class="hdr">
         <div class="wrap hdr-row">
             <a class="brand" href="index.html">
@@ -214,6 +277,7 @@
                     </style>
                 </div>
             </nav>
+            <button class="theme-tog" id="themeToggle" type="button">☼ / ☾</button>
         </div>
     </header>
 
@@ -238,6 +302,8 @@
             </a>
         </div>
     </main>
+
+    <script src="theme.js"></script>
 </body>
 
 </html>
