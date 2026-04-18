@@ -570,6 +570,38 @@
             background: var(--text-muted);
         }
 
+        /* --- Credits Pill --- */
+        .credits-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(139,92,246,0.18));
+            border: 1px solid rgba(139,92,246,0.4);
+            border-radius: 99px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: default;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .credits-pill:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+        }
+
+        .credits-amount {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
     </style>
 </head>
 <body>
@@ -588,16 +620,26 @@
                 <input type="text" placeholder="Explore opportunities and connections...">
             </div>
             <div class="header-actions">
-                <div class="icon-btn" onclick="toggleTheme()">
+                <!-- 🌙 Theme toggle -->
+                <div class="icon-btn" onclick="toggleTheme()" title="Toggle theme">
                     <svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </div>
-                <div class="icon-btn">
+                <!-- 🔔 Notifications -->
+                <div class="icon-btn" title="Notifications">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                     <div class="notification-dot"></div>
                 </div>
-                <div class="icon-btn">
+                <!-- ✉️ Messages -->
+                <div class="icon-btn" title="Messages">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </div>
+                <!-- 💳 Credits -->
+                <div class="credits-pill" id="creditsPill" title="Your redeemed credits">
+                    <span>💳</span>
+                    <span id="creditsDisplay" class="credits-amount">0</span>
+                    <span style="font-weight: 600; font-size: 12px; color: var(--text-muted);">Credits</span>
+                </div>
+                <!-- 👤 Profile -->
                 <img src="assets/profile.png" alt="Me" style="width: 32px; height: 32px; border-radius: 8px; cursor:pointer;">
             </div>
         </div>
@@ -791,12 +833,56 @@
     </div>
 
     <script>
+        /* ── Credit System ── */
+        const CREDIT_KEY = 'su-credits';
+
+        function getCredits() {
+            return parseFloat(localStorage.getItem(CREDIT_KEY) || '0');
+        }
+
+        function updateCreditsDisplay() {
+            const el = document.getElementById('creditsDisplay');
+            if (el) el.textContent = getCredits().toFixed(2);
+        }
+
+        // Animate credit increment when arriving from index.html redeem
+        function animateCredits(from, to) {
+            const el = document.getElementById('creditsDisplay');
+            if (!el) return;
+            const start = performance.now();
+            const duration = 900;
+            const step = (now) => {
+                const p = Math.min((now - start) / duration, 1);
+                const current = from + (to - from) * (1 - Math.pow(1 - p, 3));
+                el.textContent = current.toFixed(2);
+                if (p < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+        }
+
+        // On load: check if a pending credit was passed from index.html via sessionStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const pending = sessionStorage.getItem('su-pending-credit');
+            const prev = getCredits();
+            if (pending) {
+                const added = parseFloat(pending);
+                const next = prev + added;
+                localStorage.setItem(CREDIT_KEY, next.toFixed(2));
+                sessionStorage.removeItem('su-pending-credit');
+                updateCreditsDisplay();
+                setTimeout(() => animateCredits(prev, next), 300);
+            } else {
+                updateCreditsDisplay();
+            }
+        });
+
+        /* ── Theme ── */
         function toggleTheme() {
             const html = document.documentElement;
             const currentTheme = html.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             html.setAttribute('data-theme', newTheme);
-            
+
             const icon = document.getElementById('theme-icon');
             if (newTheme === 'dark') {
                 icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
