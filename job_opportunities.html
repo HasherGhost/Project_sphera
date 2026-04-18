@@ -12,12 +12,68 @@
             --orange: #F97316; --green: #10B981;
             --radius: 8px; --line: rgba(88, 28, 235, .11); --header-bg: rgba(245, 240, 255, .86);
             --shadow-f: 0 14px 40px rgba(60, 20, 140, .06);
+            --modal-bg: rgba(255, 255, 255, 0.95);
         }
         html[data-theme="dark"] {
             --bg: #0a0514; --bg2: #110920; --surface: rgba(22, 12, 44, .9); --surface-s: #160c2c;
             --text: #f3eeff; --muted: #b0a4c8; --accent: #A78BFA;
             --line: rgba(200, 180, 255, .11); --header-bg: rgba(10, 5, 20, .88);
+            --modal-bg: rgba(10, 5, 20, 0.95);
         }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            padding-left: 48px;
+            border-radius: 99px;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+        }
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+        }
+
+        /* --- Application Modal --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal {
+            background: var(--modal-bg); border: 1px solid var(--line);
+            width: min(500px, 90%); padding: 32px; border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4); text-align: left;
+            transform: translateY(20px); transition: transform 0.3s;
+        }
+        .modal-overlay.active .modal { transform: translateY(0); }
+        .modal-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; color: var(--text); }
+        .verification-badge {
+            background: var(--line); border-radius: 8px; padding: 12px; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 0.9rem;
+        }
+        .success-checkmark { font-size: 2rem; color: var(--green); margin-bottom: 10px; display: block; text-align: center; }
+        
+        [data-category] { transition: all 0.3s ease; }
+        .hidden { display: none !important; }
+
         body {
             margin: 0; font-family: 'Inter', system-ui, sans-serif;
             background: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px), linear-gradient(180deg, var(--bg), var(--bg2));
@@ -95,18 +151,23 @@
             <h1>Find Your Next <span style="color: var(--accent);">Role</span></h1>
             <p>Skip the resume black hole. Apply directly to verified hiring managers and recruiters from top-tier companies.</p>
             
-            <div class="filters">
-                <button class="filter-btn active">All</button>
-                <button class="filter-btn">Engineering</button>
-                <button class="filter-btn">Product</button>
-                <button class="filter-btn">Design</button>
-                <button class="filter-btn">Marketing</button>
-                <button class="filter-btn">Remote Only</button>
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="jobSearch" class="search-input" placeholder="Search for titles, companies, or keywords...">
+            </div>
+
+            <div class="filters" id="categoryFilters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="Engineering">Engineering</button>
+                <button class="filter-btn" data-filter="Product">Product</button>
+                <button class="filter-btn" data-filter="Design">Design</button>
+                <button class="filter-btn" data-filter="Marketing">Marketing</button>
+                <button class="filter-btn" data-filter="Sales">Sales</button>
+                <button class="filter-btn" data-filter="Remote">Remote Only</button>
             </div>
         </section>
 
-        <div class="feat-grid">
-            <article class="feat-card">
+             <article class="feat-card" data-category="Engineering Remote">
                 <div class="tags">
                     <span class="tag">Engineering</span>
                     <span class="tag">Remote</span>
@@ -115,10 +176,10 @@
                 <p class="desc">Threadbase is looking for an expert in React and Next.js to build the future of verified communications.</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 0.8rem; font-weight: 700; color: var(--muted);">$140k - $180k</span>
-                    <a href="#" class="btn">Apply via SyncUp</a>
+                    <button class="btn btn-apply" data-job="Senior Frontend Engineer">Apply via SyncUp</button>
                 </div>
             </article>
-            <article class="feat-card">
+            <article class="feat-card" data-category="Product Hybrid">
                 <div class="tags">
                     <span class="tag">Product</span>
                     <span class="tag">Hybrid (NYC)</span>
@@ -127,10 +188,10 @@
                 <p class="desc">Lead the identity verification roadmap at a fast-growing series B startup. Requires 5+ years experience.</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 0.8rem; font-weight: 700; color: var(--muted);">$180k - $220k</span>
-                    <a href="#" class="btn">Apply via SyncUp</a>
+                    <button class="btn btn-apply" data-job="Director of Product Management">Apply via SyncUp</button>
                 </div>
             </article>
-            <article class="feat-card">
+            <article class="feat-card" data-category="Design Remote">
                 <div class="tags">
                     <span class="tag">Design</span>
                     <span class="tag">Remote</span>
@@ -139,10 +200,10 @@
                 <p class="desc">Shape the user experience of enterprise cybersecurity tools. Strong portfolio and systems thinking required.</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 0.8rem; font-weight: 700; color: var(--muted);">$120k - $160k</span>
-                    <a href="#" class="btn">Apply via SyncUp</a>
+                    <button class="btn btn-apply" data-job="Lead UI/UX Designer">Apply via SyncUp</button>
                 </div>
             </article>
-            <article class="feat-card">
+            <article class="feat-card" data-category="Engineering Remote Office">
                 <div class="tags">
                     <span class="tag">Engineering</span>
                     <span class="tag">San Francisco</span>
@@ -151,10 +212,10 @@
                 <p class="desc">Join our AI trust lab. Work on computer vision models for liveness detection and fraud prevention.</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 0.8rem; font-weight: 700; color: var(--muted);">$160k - $210k</span>
-                    <a href="#" class="btn">Apply via SyncUp</a>
+                    <button class="btn btn-apply" data-job="Machine Learning Engineer">Apply via SyncUp</button>
                 </div>
             </article>
-            <article class="feat-card">
+            <article class="feat-card" data-category="Marketing Remote">
                 <div class="tags">
                     <span class="tag">Marketing</span>
                     <span class="tag">Remote</span>
@@ -163,10 +224,10 @@
                 <p class="desc">Scale our verified professional network. Expertise in B2B SaaS growth loops and enterprise GTM.</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 0.8rem; font-weight: 700; color: var(--muted);">$150k - $190k</span>
-                    <a href="#" class="btn">Apply via SyncUp</a>
+                    <button class="btn btn-apply" data-job="Head of Growth Marketing">Apply via SyncUp</button>
                 </div>
             </article>
-            <article class="feat-card">
+            <article class="feat-card" data-category="Sales Hybrid">
                 <div class="tags">
                     <span class="tag">Sales</span>
                     <span class="tag">Hybrid (London)</span>
@@ -175,10 +236,37 @@
                 <p class="desc">Sell identity solutions to Fortune 500 banks and fintechs. Proven track record in complex sales cycles.</p>
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span style="font-size: 0.8rem; font-weight: 700; color: var(--muted);">$100k Base + Comm</span>
-                    <a href="#" class="btn">Apply via SyncUp</a>
+                    <button class="btn btn-apply" data-job="Enterprise Account Executive">Apply via SyncUp</button>
                 </div>
             </article>
         </div>
     </main>
+
+    <!-- Application Modal -->
+    <div class="modal-overlay" id="applyModal">
+        <div class="modal">
+            <div id="modalStep1">
+                <h2 class="modal-title" id="modalJobTitle">Apply for Position</h2>
+                <div class="verification-badge">
+                    <span>✨</span>
+                    <div>
+                        <div>Identity Verified</div>
+                        <small style="color:var(--muted); font-weight:400;">Sarah Jenkins (Biometric Check Passed)</small>
+                    </div>
+                </div>
+                <p class="desc">Your verified SyncUp profile (Managing Director @ Sphere Ventures) will be shared with the hiring manager.</p>
+                <div style="display: grid; gap: 12px; margin-top: 24px;">
+                    <button class="btn" id="confirmApply">Submit Verified Application</button>
+                    <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                </div>
+            </div>
+            <div id="modalStep2" class="hidden">
+                <span class="success-checkmark">✅</span>
+                <h2 class="modal-title" style="text-align: center;">Application Sent!</h2>
+                <p class="desc" style="text-align: center;">The hiring manager has been notified. They'll see your verified status and professional signals immediately.</p>
+                <button class="btn btn-full" style="width: 100%; margin-top: 20px;" onclick="closeModal()">Done</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
