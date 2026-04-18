@@ -2,7 +2,7 @@ const themeKey = 'su-theme';
 
 function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    try { localStorage.setItem(themeKey, theme); } catch (e) {}
+    try { localStorage.setItem(themeKey, theme); } catch (e) { }
     updateThemeUI(theme);
 }
 
@@ -23,24 +23,24 @@ function updateThemeUI(theme) {
 }
 
 // This function is globally accessible for elements with onclick="toggleTheme()"
-window.toggleTheme = function() {
+window.toggleTheme = function () {
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     applyTheme(newTheme);
 };
 
 // Immediately apply theme to avoid Flash Of Unstyled Content (FOUC)
-(function() {
+(function () {
     try {
         const savedTheme = localStorage.getItem(themeKey) || 'dark';
         document.documentElement.setAttribute('data-theme', savedTheme);
-    } catch(e) {}
+    } catch (e) { }
 })();
 
 // Update UI icons when DOM loads and attach listeners
 document.addEventListener('DOMContentLoaded', () => {
     let savedTheme = 'dark';
-    try { savedTheme = localStorage.getItem(themeKey) || 'dark'; } catch(e) {}
+    try { savedTheme = localStorage.getItem(themeKey) || 'dark'; } catch (e) { }
     updateThemeUI(savedTheme);
 
     const themeToggleBtn = document.getElementById('themeToggle');
