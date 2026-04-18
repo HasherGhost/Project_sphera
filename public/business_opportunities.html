@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Opportunities — SyncUp</title>
-    <meta name="description" content="Discover verified business opportunities on SyncUp. Connect with investors, partners, and enterprise clients in a trusted professional ecosystem.">
+    <title>Business Opportunities — Sphera</title>
+    <meta name="description" content="Discover verified business opportunities on Sphera. Connect with investors, partners, and enterprise clients in a trusted professional ecosystem.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* ── Design Tokens ── */
         :root {
-            --bg: #f5f0ff; --bg2: #ece4ff; --surface: rgba(255, 255, 255, .88); --surface-s: #fff;
+            --bg: #f5f0ff; --bg2: #ece4ff; --Srface: rgba(255, 255, 255, .88); --Srface-s: #fff;
             --text: #1a0e33; --muted: #6b5e82; --accent: #7C3AED; --accent-s: #5B21B6;
             --orange: #F97316; --green: #10B981; --red: #EF4444; --blue: #3B82F6;
             --radius: 8px; --line: rgba(88, 28, 235, .11); --header-bg: rgba(245, 240, 255, .86);
             --shadow-f: 0 14px 40px rgba(60, 20, 140, .06);
-            --surface-f: rgba(124, 58, 237, .08);
+            --Srface-f: rgba(124, 58, 237, .08);
             --modal-bg: rgba(0,0,0,.45);
         }
         html[data-theme="dark"] {
-            --bg: #0a0514; --bg2: #110920; --surface: rgba(22, 12, 44, .9); --surface-s: #160c2c;
+            --bg: #0a0514; --bg2: #110920; --Srface: rgba(22, 12, 44, .9); --Srface-s: #160c2c;
             --text: #f3eeff; --muted: #b0a4c8; --accent: #A78BFA;
             --line: rgba(200, 180, 255, .11); --header-bg: rgba(10, 5, 20, .88);
-            --surface-f: rgba(167, 139, 250, .12);
+            --Srface-f: rgba(167, 139, 250, .12);
             --modal-bg: rgba(0,0,0,.7);
         }
 
@@ -45,7 +45,7 @@
         .nav-link:hover { color: var(--accent); }
         .dropdown { position: relative; display: inline-block; }
         .dropdown-content {
-            display: none; position: absolute; background: var(--surface-s); min-width: 230px;
+            display: none; position: absolute; background: var(--Srface-s); min-width: 230px;
             box-shadow: var(--shadow-f); border-radius: var(--radius); border: 1px solid var(--line);
             padding: 8px; z-index: 40; top: 100%; left: 0; flex-direction: column; gap: 4px; margin-top: 12px;
             backdrop-filter: blur(18px);
@@ -55,10 +55,10 @@
             padding: 10px 12px; border-radius: 6px; font-size: 0.88rem; color: var(--text);
             text-decoration: none; transition: background .2s, color .2s;
         }
-        .dropdown-content a:hover { background: var(--surface-f); color: var(--accent) !important; }
+        .dropdown-content a:hover { background: var(--Srface-f); color: var(--accent) !important; }
         .theme-tog {
             display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 14px;
-            border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line);
+            border-radius: var(--radius); background: var(--Srface); border: 1px solid var(--line);
             color: var(--text); font-weight: 800; cursor: pointer; transition: transform .18s, background .18s;
             backdrop-filter: blur(18px); font-size: 0.9rem;
         }
@@ -72,7 +72,7 @@
         /* ── Search ── */
         .search-bar {
             display: flex; align-items: center; gap: 12px; max-width: 520px; margin: 0 auto 24px;
-            background: var(--surface); border: 1px solid var(--line); border-radius: 40px;
+            background: var(--Srface); border: 1px solid var(--line); border-radius: 40px;
             padding: 6px 8px 6px 20px; transition: border-color .2s;
         }
         .search-bar:focus-within { border-color: var(--accent); }
@@ -90,7 +90,7 @@
         /* ── Stats Row ── */
         .stats-row { display: flex; gap: 24px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
         .stat-pill {
-            display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line);
+            display: flex; align-items: center; gap: 8px; background: var(--Srface); border: 1px solid var(--line);
             border-radius: 20px; padding: 8px 16px; font-size: 0.85rem; font-weight: 600;
             cursor: pointer; transition: all .25s; font-family: inherit; color: var(--text);
         }
@@ -106,7 +106,7 @@
         /* ── Filters ── */
         .filters { display: flex; gap: 12px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
         .filter-btn {
-            padding: 8px 18px; border-radius: 20px; border: 1px solid var(--line); background: var(--surface);
+            padding: 8px 18px; border-radius: 20px; border: 1px solid var(--line); background: var(--Srface);
             color: var(--text); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all .2s;
             font-family: inherit;
         }
@@ -115,7 +115,7 @@
         /* ── Cards Grid ── */
         .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; padding-bottom: 80px; }
         .feat-card {
-            background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+            background: var(--Srface); border: 1px solid var(--line); border-radius: 14px;
             padding: 28px; box-shadow: var(--shadow-f); transition: transform .25s, border-color .25s, opacity .3s;
             position: relative; overflow: hidden;
         }
@@ -143,7 +143,7 @@
         .card-tags { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
         .tag {
             font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 4px;
-            background: var(--surface-f); color: var(--accent); text-transform: uppercase; letter-spacing: .5px;
+            background: var(--Srface-f); color: var(--accent); text-transform: uppercase; letter-spacing: .5px;
         }
 
         h3 { font-size: 1.3rem; margin: 0 0 8px; color: var(--text); }
@@ -173,9 +173,9 @@
         .btn-outline {
             background: transparent; color: var(--text); border: 1px solid var(--line);
         }
-        .btn-outline:hover { background: var(--surface-f); }
+        .btn-outline:hover { background: var(--Srface-f); }
         .btn-ghost { background: transparent; color: var(--muted); padding: 8px 12px; }
-        .btn-ghost:hover { color: var(--accent); background: var(--surface-f); }
+        .btn-ghost:hover { color: var(--accent); background: var(--Srface-f); }
 
         /* ── Empty State ── */
         .empty-state {
@@ -195,7 +195,7 @@
         }
         .modal-overlay.open { opacity: 1; visibility: visible; }
         .modal-box {
-            background: var(--surface-s); border: 1px solid var(--line); border-radius: 16px;
+            background: var(--Srface-s); border: 1px solid var(--line); border-radius: 16px;
             width: min(640px, 100%); max-height: 85vh; overflow-y: auto; padding: 0;
             transform: translateY(20px) scale(.97); transition: transform .3s;
             box-shadow: 0 32px 80px rgba(0,0,0,.2);
@@ -207,14 +207,14 @@
         }
         .modal-header .icon { font-size: 3rem; }
         .modal-close {
-            background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+            background: var(--Srface); border: 1px solid var(--line); border-radius: 8px;
             width: 40px; height: 40px; cursor: pointer; display: grid; place-items: center;
             font-size: 1.2rem; color: var(--muted); transition: all .2s;
         }
         .modal-close:hover { background: var(--red); color: #fff; border-color: var(--red); }
         .modal-body { padding: 20px 28px 28px; }
         .modal-body h2 { margin: 0 0 6px; font-size: 1.6rem; }
-        .modal-body .modal-subtitle { color: var(--muted); margin-bottom: 20px; font-size: 0.95rem; }
+        .modal-body .modal-Sbtitle { color: var(--muted); margin-bottom: 20px; font-size: 0.95rem; }
 
         .detail-section { margin-bottom: 24px; }
         .detail-section h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin: 0 0 10px; }
@@ -225,7 +225,7 @@
             display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;
         }
         .info-item {
-            background: var(--surface-f); border-radius: 10px; padding: 14px 16px;
+            background: var(--Srface-f); border-radius: 10px; padding: 14px 16px;
         }
         .info-item .info-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-bottom: 4px; }
         .info-item .info-value { font-size: 1rem; font-weight: 700; color: var(--text); }
@@ -237,7 +237,7 @@
         .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
         .form-group input, .form-group textarea, .form-group select {
             width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px;
-            background: var(--surface); color: var(--text); font-family: inherit; font-size: 0.9rem;
+            background: var(--Srface); color: var(--text); font-family: inherit; font-size: 0.9rem;
             transition: border-color .2s; outline: none;
         }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
@@ -293,8 +293,8 @@
     <header class="hdr">
         <div class="wrap hdr-row">
             <a class="brand" href="index.html">
-                <span class="brand-mark">SU</span>
-                <span><strong>SyncUp.</strong><br><small>Verified professional ecosystem</small></span>
+                <span class="brand-mark">S</span>
+                <span><strong>Sphera.</strong><br><small>Verified professional ecosystem</small></span>
             </a>
             <nav class="nav-group">
                 <a href="index.html" class="nav-link">Home</a>
@@ -391,10 +391,10 @@
                 <div class="card-tags">
                     <span class="tag">B2B</span>
                     <span class="tag">Logistics</span>
-                    <span class="tag">Supply Chain</span>
+                    <span class="tag">Spply Chain</span>
                 </div>
                 <h3>B2B Lead Generation Pool</h3>
-                <p class="desc">Access a verified pool of decision-makers in the logistics and supply chain sector. High-intent buyers only.</p>
+                <p class="desc">Access a verified pool of decision-makers in the logistics and Spply chain sector. High-intent buyers only.</p>
                 <div class="card-footer">
                     <span class="status-badge closing">Closing Soon</span>
                     <button class="btn" onclick="openModal('b2b-leads')">Join Pool</button>
@@ -462,7 +462,7 @@
             <div class="empty-state" id="emptyState">
                 <div class="empty-icon">🔎</div>
                 <h3>No opportunities found</h3>
-                <p>Try adjusting your search or filter criteria to see more results.</p>
+                <p>Try adjusting your search or filter criteria to see more reSlts.</p>
                 <button class="btn" onclick="resetFilters()">Clear All Filters</button>
             </div>
         </div>
@@ -478,7 +478,7 @@
             <div class="modal-body">
                 <div class="card-tags" id="modalTags"></div>
                 <h2 id="modalTitle"></h2>
-                <p class="modal-subtitle" id="modalSubtitle"></p>
+                <p class="modal-Sbtitle" id="modalSbtitle"></p>
 
                 <div class="info-grid" id="modalInfoGrid"></div>
 
@@ -507,7 +507,7 @@
 
                 <!-- Application Form -->
                 <div class="apply-form" id="applyForm">
-                    <h4 style="margin: 0 0 16px; font-size: 1.1rem;">Submit Your Application</h4>
+                    <h4 style="margin: 0 0 16px; font-size: 1.1rem;">Sbmit Your Application</h4>
                     <div class="form-group">
                         <label for="appName">Full Name *</label>
                         <input type="text" id="appName" placeholder="e.g. Sarah Jenkins" required>
@@ -541,7 +541,7 @@
                         <input type="url" id="appUrl" placeholder="https://…">
                     </div>
                     <div class="form-actions">
-                        <button class="btn" type="button" onclick="submitApplication()">Submit Application</button>
+                        <button class="btn" type="button" onclick="SbmitApplication()">Sbmit Application</button>
                         <button class="btn btn-ghost" type="button" onclick="toggleApplyForm()">Cancel</button>
                     </div>
                 </div>
@@ -562,7 +562,7 @@
     const opportunities = {
         'seed-funding': {
             icon: '🚀', title: 'Seed Funding Pitch',
-            subtitle: 'Pitch live to verified angel investors via face-authenticated video.',
+            Sbtitle: 'Pitch live to verified angel investors via face-authenticated video.',
             tags: ['Funding', 'SaaS', 'DeepTech'],
             info: [
                 { label: 'Funding Range', value: '$100K – $500K' },
@@ -570,9 +570,9 @@
                 { label: 'Investors', value: '12 Verified Angels' },
                 { label: 'Deadline', value: 'Rolling Basis' }
             ],
-            overview: 'This exclusive pitch event connects early-stage founders directly with a syndicate of 12 verified angel investors. Unlike traditional pitch platforms, SyncUp requires live camera authentication—ensuring every participant is a real, verified professional. Investors in this syndicate have a combined portfolio value of $84M and specialize in SaaS, AI/ML, and DeepTech verticals.',
+            overview: 'This exclusive pitch event connects early-stage founders directly with a syndicate of 12 verified angel investors. Unlike traditional pitch platforms, Sphera requires live camera authentication—enSring every participant is a real, verified professional. Investors in this syndicate have a combined portfolio value of $84M and specialize in SaaS, AI/ML, and DeepTech verticals.',
             requirements: [
-                'SyncUp-verified founder profile with face authentication',
+                'Sphera-verified founder profile with face authentication',
                 'Pre-revenue to $500K ARR stage',
                 'Working product or functional prototype',
                 'Prepared 10-minute pitch deck',
@@ -581,14 +581,14 @@
             benefits: [
                 'Direct intros to 12 verified investors—no gatekeepers',
                 'Structured feedback from each investor within 7 days',
-                'Priority listing in SyncUp\'s Investor Matching database',
+                'Priority listing in Sphera\'s Investor Matching database',
                 'Access to follow-up networking events'
             ],
             btnLabel: 'Apply to Pitch'
         },
         'enterprise-partnerships': {
             icon: '🤝', title: 'Enterprise Partnerships',
-            subtitle: 'Become a verified technology vendor for Fortune 500 enterprise programs.',
+            Sbtitle: 'Become a verified technology vendor for Fortune 500 enterprise programs.',
             tags: ['Partnerships', 'Enterprise', 'API'],
             info: [
                 { label: 'Contract Value', value: '$50K – $2M/yr' },
@@ -596,10 +596,10 @@
                 { label: 'Sectors', value: 'FinTech, HealthTech, AI' },
                 { label: 'Response Time', value: '5 Business Days' }
             ],
-            overview: 'Eight Fortune 500 enterprises have partnered with SyncUp to source innovative technology vendors through our verified ecosystem. These companies are actively looking for API integration partners, AI tooling providers, and cybersecurity solutions. All vendor selections go through SyncUp\'s trust verification—eliminating weeks of procurement due diligence.',
+            overview: 'Eight Fortune 500 enterprises have partnered with Sphera to source innovative technology vendors through our verified ecosystem. These companies are actively looking for API integration partners, AI tooling providers, and cybersecurity solutions. All vendor selections go through Sphera\'s trust verification—eliminating weeks of procurement due diligence.',
             requirements: [
                 'Registered company with verifiable credentials',
-                'SyncUp Trust Score of 80+ (or complete verification)',
+                'Sphera Trust Score of 80+ (or complete verification)',
                 'Proven enterprise-grade SLA track record',
                 'SOC 2 compliance or equivalent security certification',
                 'Ability to provide sandbox/demo environment within 14 days'
@@ -608,65 +608,65 @@
                 'Skip traditional RFP queues—direct executive introductions',
                 'Pre-vetted status accelerates procurement by 60%',
                 'Multi-year contract potential ($50K–$2M annually)',
-                'Featured placement in SyncUp\'s Enterprise Solutions directory'
+                'Featured placement in Sphera\'s Enterprise Solutions directory'
             ],
             btnLabel: 'View & Apply'
         },
         'b2b-leads': {
             icon: '📊', title: 'B2B Lead Generation Pool',
-            subtitle: 'Get matched with high-intent decision-makers in logistics and supply chain.',
-            tags: ['B2B', 'Logistics', 'Supply Chain'],
+            Sbtitle: 'Get matched with high-intent decision-makers in logistics and Spply chain.',
+            tags: ['B2B', 'Logistics', 'Spply Chain'],
             info: [
                 { label: 'Pool Size', value: '340+ Verified Leads' },
                 { label: 'Avg. Deal Size', value: '$75K' },
-                { label: 'Sector', value: 'Logistics & Supply Chain' },
+                { label: 'Sector', value: 'Logistics & Spply Chain' },
                 { label: 'Closes In', value: '12 Days' }
             ],
-            overview: 'This curated lead pool contains 340+ verified decision-makers (Director level and above) across the logistics and supply chain industry. Each contact has been identity-verified through SyncUp and has expressed active buying intent for technology solutions. The pool is closing soon to maintain exclusivity—only 25 vendor spots remain.',
+            overview: 'This curated lead pool contains 340+ verified decision-makers (Director level and above) across the logistics and Spply chain industry. Each contact has been identity-verified through Sphera and has expressed active buying intent for technology solutions. The pool is closing soon to maintain exclusivity—only 25 vendor spots remain.',
             requirements: [
-                'Solution relevant to logistics, warehousing, or supply chain management',
-                'Verified company profile on SyncUp',
+                'Solution relevant to logistics, warehousing, or Spply chain management',
+                'Verified company profile on Sphera',
                 'Minimum 2 customer case studies or references',
                 'Sales team capacity to handle 15+ qualified leads per month',
-                'Commitment to SyncUp\'s ethical outreach standards'
+                'Commitment to Sphera\'s ethical outreach standards'
             ],
             benefits: [
                 'Warm introductions to 340+ pre-qualified decision-makers',
                 'Average deal size of $75K with 22% close rate in pool',
-                'SyncUp-facilitated initial introductions (no cold outreach)',
+                'Sphera-facilitated initial introductions (no cold outreach)',
                 'Exclusive access—limited to 25 vendors total'
             ],
             btnLabel: 'Join Pool'
         },
         'cofounder-match': {
             icon: '🏢', title: 'Co-Founder Matching',
-            subtitle: 'Find your perfect complement—verified technical or business co-founders.',
+            Sbtitle: 'Find your perfect complement—verified technical or business co-founders.',
             tags: ['Talent', 'Co-Founder', 'Startup'],
             info: [
                 { label: 'Active Seekers', value: '1,200+ Profiles' },
                 { label: 'Avg. Match Time', value: '18 Days' },
-                { label: 'Success Rate', value: '34% form teams' },
+                { label: 'Sccess Rate', value: '34% form teams' },
                 { label: 'Availability', value: 'Always Open' }
             ],
-            overview: 'Finding the right co-founder is the most critical decision in a startup\'s journey. SyncUp\'s Co-Founder Matching uses verified identity, skills assessment, and compatibility algorithms to pair founders with complementary skill sets. Every participant has undergone face authentication, background verification, and skills validation—so you can skip the trust-building phase and focus on building together.',
+            overview: 'Finding the right co-founder is the most critical decision in a startup\'s journey. Sphera\'s Co-Founder Matching uses verified identity, skills assessment, and compatibility algorithms to pair founders with complementary skill sets. Every participant has undergone face authentication, background verification, and skills validation—so you can skip the trust-building phase and focus on building together.',
             requirements: [
-                'Completed SyncUp profile with verified identity',
+                'Completed Sphera profile with verified identity',
                 'Clear description of your startup idea or domain expertise',
                 'Defined role you\'re seeking (Technical, Business, Design, etc.)',
                 'Availability for at least 3 verified video conversations',
-                'Willingness to sign mutual NDA through SyncUp\'s legal templates'
+                'Willingness to sign mutual NDA through Sphera\'s legal templates'
             ],
             benefits: [
                 'Algorithm-matched candidates based on skills, values, and goals',
                 'All candidates are fully verified—no catfishing or fakes',
                 'Built-in NDA and equity discussion frameworks',
-                'Ongoing mentorship pairing from successful SyncUp founders'
+                'Ongoing mentorship pairing from Sccessful Sphera founders'
             ],
             btnLabel: 'Start Matching'
         },
         'series-a': {
             icon: '💰', title: 'Series A Syndicate',
-            subtitle: 'A verified-only investment event for startups with proven traction.',
+            Sbtitle: 'A verified-only investment event for startups with proven traction.',
             tags: ['Funding', 'Series A', 'VC'],
             info: [
                 { label: 'Round Size', value: '$2M – $15M' },
@@ -674,10 +674,10 @@
                 { label: 'Event Date', value: 'May 22, 2026' },
                 { label: 'Spots Left', value: '8 of 20' }
             ],
-            overview: 'Six top-tier VC firms—including partners from Sequoia Scout, Andreessen Horowitz, and Lightspeed—are co-hosting a verified-only Series A matching event through SyncUp. This is not a demo day. It\'s a structured, high-touch event where each selected startup receives 30 minutes of private, face-authenticated time with each investor. Only 20 startups will be selected.',
+            overview: 'Six top-tier VC firms—including partners from Sequoia Scout, Andreessen Horowitz, and Lightspeed—are co-hosting a verified-only Series A matching event through Sphera. This is not a demo day. It\'s a structured, high-touch event where each selected startup receives 30 minutes of private, face-authenticated time with each investor. Only 20 startups will be selected.',
             requirements: [
                 '$1M+ ARR or clear path to $1M within 6 months',
-                'SyncUp-verified founding team (all founders verified)',
+                'Sphera-verified founding team (all founders verified)',
                 'Completed data room with financials, cap table, and pitch deck',
                 'Available May 22, 2026 for the full-day event (virtual)',
                 'Post-seed or bridge round previously raised'
@@ -686,13 +686,13 @@
                 '30-minute private sessions with each of 6 VC partners',
                 'Term sheet potential within 2 weeks of event',
                 'Access to shared due diligence—one process for all firms',
-                'Featured in SyncUp\'s annual "Verified Startups to Watch" report'
+                'Featured in Sphera\'s annual "Verified Startups to Watch" report'
             ],
             btnLabel: 'Register Intent'
         },
         'gov-grants': {
             icon: '📈', title: 'Government Grants Board',
-            subtitle: 'Browse verified, curated government grants and non-dilutive funding.',
+            Sbtitle: 'Browse verified, curated government grants and non-dilutive funding.',
             tags: ['Grants', 'Non-Dilutive', 'Government'],
             info: [
                 { label: 'Grants Listed', value: '47 Active' },
@@ -700,17 +700,17 @@
                 { label: 'Regions', value: 'USA, EU, India' },
                 { label: 'Updated', value: 'Weekly' }
             ],
-            overview: 'SyncUp curates and verifies government grants from across the US, EU, and India specifically relevant to technology companies. Every grant listing has been validated for authenticity, current availability, and eligibility criteria. Our team updates the board weekly and removes expired or fraudulent listings—so you can focus on applying, not researching.',
+            overview: 'Sphera curates and verifies government grants from across the US, EU, and India specifically relevant to technology companies. Every grant listing has been validated for authenticity, current availability, and eligibility criteria. Our team updates the board weekly and removes expired or fraudulent listings—so you can focus on applying, not researching.',
             requirements: [
                 'Registered technology company (any stage)',
-                'SyncUp-verified company profile',
+                'Sphera-verified company profile',
                 'Operations in eligible region (USA, EU, or India)',
-                'Willingness to share grant outcome data with SyncUp (anonymized)'
+                'Willingness to share grant outcome data with Sphera (anonymized)'
             ],
             benefits: [
                 'Pre-verified grants—no scams, no expired listings',
                 'Eligibility auto-matching based on your company profile',
-                'Application tracking dashboard within SyncUp',
+                'Application tracking dashboard within Sphera',
                 'Grant writing tips and template library included'
             ],
             btnLabel: 'Browse Grants'
@@ -724,7 +724,7 @@
     let currentStatusFilter = 'all';
     let currentSearch = '';
     let currentModalId = null;
-    const savedBookmarks = new Set(JSON.parse(localStorage.getItem('su-biz-bookmarks') || '[]'));
+    const savedBookmarks = new Set(JSON.parse(localStorage.getItem('S-biz-bookmarks') || '[]'));
 
     /* ═══════════════════
        INIT
@@ -887,7 +887,7 @@
             btn.textContent = '♥';
             showToast('💜', 'Saved to your opportunities list');
         }
-        localStorage.setItem('su-biz-bookmarks', JSON.stringify([...savedBookmarks]));
+        localStorage.setItem('S-biz-bookmarks', JSON.stringify([...savedBookmarks]));
     }
 
     function bookmarkFromModal() {
@@ -914,7 +914,7 @@
 
         document.getElementById('modalIcon').textContent = data.icon;
         document.getElementById('modalTitle').textContent = data.title;
-        document.getElementById('modalSubtitle').textContent = data.subtitle;
+        document.getElementById('modalSbtitle').textContent = data.Sbtitle;
 
         // Tags
         const tagsEl = document.getElementById('modalTags');
@@ -977,7 +977,7 @@
         }
     }
 
-    function submitApplication() {
+    function SbmitApplication() {
         const name = document.getElementById('appName').value.trim();
         const email = document.getElementById('appEmail').value.trim();
         const company = document.getElementById('appCompany').value.trim();
@@ -993,10 +993,10 @@
             return;
         }
 
-        // Simulate submission
+        // Simulate Sbmission
         const btn = document.querySelector('.apply-form .btn');
         const originalText = btn.textContent;
-        btn.textContent = 'Submitting…';
+        btn.textContent = 'Sbmitting…';
         btn.style.opacity = '0.6';
         btn.style.pointerEvents = 'none';
 
@@ -1014,7 +1014,7 @@
             document.getElementById('appUrl').value = '';
 
             document.getElementById('applyForm').classList.remove('visible');
-            showToast('✅', `Application submitted for "${opportunities[currentModalId]?.title}". We'll contact you within 48 hours.`);
+            showToast('✅', `Application Sbmitted for "${opportunities[currentModalId]?.title}". We'll contact you within 48 hours.`);
         }, 1500);
     }
 
@@ -1024,7 +1024,7 @@
     function shareOpportunity() {
         if (!currentModalId) return;
         const data = opportunities[currentModalId];
-        const shareText = `Check out this opportunity on SyncUp: ${data.title} — ${data.subtitle}`;
+        const shareText = `Check out this opportunity on Sphera: ${data.title} — ${data.Sbtitle}`;
 
         if (navigator.share) {
             navigator.share({ title: data.title, text: shareText, url: window.location.href })

@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <header className="border-b border-white/10 bg-gray-950/50 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="font-title font-bold text-xl text-white">SyncUp</span>
+              <span className="font-title font-bold text-xl text-white">Sphera</span>
               <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold border border-emerald-500/20">Verified</span>
             </div>
             <nav className="hidden md:flex gap-6 font-medium text-sm text-gray-300">

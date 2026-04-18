@@ -6,7 +6,7 @@ export default function VerificationPage() {
       
       <div className="text-center">
         <h1 className="text-3xl font-title font-bold text-white mb-2">Identity Verification</h1>
-        <p className="text-gray-400">SyncUp ensures absolute authenticity across the platform. Verify your identity or claim your business.</p>
+        <p className="text-gray-400">Sphera ensures absolute authenticity across the platform. Verify your identity or claim your business.</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">

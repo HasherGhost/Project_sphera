@@ -14,15 +14,15 @@
         :root {
             --bg: #09090b;
             --bg-soft: rgba(9, 9, 11, 0.76);
-            --surface: rgba(24, 24, 27, 0.74);
-            --surface-strong: rgba(32, 32, 36, 0.9);
+            --Srface: rgba(24, 24, 27, 0.74);
+            --Srface-strong: rgba(32, 32, 36, 0.9);
             --border: rgba(255, 255, 255, 0.1);
             --border-strong: rgba(255, 255, 255, 0.16);
             --primary: #3b82f6;
             --primary-soft: rgba(59, 130, 246, 0.14);
             --accent: #8b5cf6;
             --accent-soft: rgba(139, 92, 246, 0.14);
-            --success: #10b981;
+            --Sccess: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
             --text-main: #f4f4f5;
@@ -37,8 +37,8 @@
         [data-theme="light"] {
             --bg: #f8fafc;
             --bg-soft: rgba(248, 250, 252, 0.82);
-            --surface: rgba(255, 255, 255, 0.84);
-            --surface-strong: rgba(255, 255, 255, 0.96);
+            --Srface: rgba(255, 255, 255, 0.84);
+            --Srface-strong: rgba(255, 255, 255, 0.96);
             --border: rgba(15, 23, 42, 0.08);
             --border-strong: rgba(15, 23, 42, 0.12);
             --primary: #2563eb;
@@ -151,7 +151,7 @@
             gap: 10px;
             padding: 10px 14px;
             color: var(--text-faint);
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--border);
             border-radius: 999px;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -189,7 +189,7 @@
             width: 38px;
             height: 38px;
             color: var(--text-muted);
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--border);
             border-radius: 999px;
             cursor: pointer;
@@ -200,7 +200,7 @@
         .profile-button:hover {
             color: var(--text-main);
             border-color: var(--border-strong);
-            background: var(--surface-strong);
+            background: var(--Srface-strong);
         }
 
         .profile-button img {
@@ -263,7 +263,7 @@
         }
 
         .card {
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-soft);
@@ -308,7 +308,7 @@
             align-items: center;
             gap: 6px;
             padding: 6px 9px;
-            color: var(--success);
+            color: var(--Sccess);
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.2);
             border-radius: 999px;
@@ -319,7 +319,7 @@
         .pulse {
             width: 6px;
             height: 6px;
-            background: var(--success);
+            background: var(--Sccess);
             border-radius: 999px;
             box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.14);
         }
@@ -436,7 +436,7 @@
             content: "";
             width: 8px;
             height: 8px;
-            background: var(--success);
+            background: var(--Sccess);
             border-radius: 999px;
         }
 
@@ -541,7 +541,7 @@
         .filter-btn {
             padding: 8px 13px;
             color: var(--text-muted);
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--border);
             border-radius: 999px;
             cursor: pointer;
@@ -569,7 +569,7 @@
             gap: 14px;
             align-items: center;
             padding: 16px;
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             transition: background 0.2s ease, border-color 0.2s ease;
@@ -582,7 +582,7 @@
 
         .connection-card:hover {
             border-color: var(--border-strong);
-            background: var(--surface-strong);
+            background: var(--Srface-strong);
         }
 
         .connection-card.is-muted {
@@ -688,7 +688,7 @@
         }
 
         .badge-green {
-            color: var(--success);
+            color: var(--Sccess);
             background: rgba(16, 185, 129, 0.14);
         }
 
@@ -731,7 +731,7 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .btn-subtle {
+        .btn-Sbtle {
             color: var(--primary);
             background: var(--primary-soft);
         }
@@ -744,7 +744,7 @@
         }
 
         .btn.is-done {
-            color: var(--success);
+            color: var(--Sccess);
             background: rgba(16, 185, 129, 0.12);
         }
 
@@ -844,7 +844,7 @@
             max-width: min(360px, calc(100% - 40px));
             padding: 12px 14px;
             color: var(--text-main);
-            background: var(--surface-strong);
+            background: var(--Srface-strong);
             border: 1px solid var(--border-strong);
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-soft);
@@ -952,7 +952,7 @@
             grid-template-columns: 56px minmax(0, 1fr);
             gap: 14px;
             padding: 18px;
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             transition: background 0.2s ease, border-color 0.2s ease, opacity 0.4s ease, transform 0.4s ease;
@@ -960,7 +960,7 @@
 
         .invite-request-card:hover {
             border-color: var(--border-strong);
-            background: var(--surface-strong);
+            background: var(--Srface-strong);
         }
 
         .invite-request-card.is-accepted {
@@ -1035,7 +1035,7 @@
         }
 
         .invite-status.accepted {
-            color: var(--success);
+            color: var(--Sccess);
             background: rgba(16, 185, 129, 0.12);
         }
 
@@ -1175,7 +1175,7 @@
                     <h1>Find the right people without the noise.</h1>
                     <p>Sphera keeps your professional graph focused on verified humans, warm intros, and signals that
                         help you decide who to meet next.</p>
-                    <div class="metric-row" aria-label="Network summary">
+                    <div class="metric-row" aria-label="Network Smmary">
                         <div class="metric">
                             <strong>72%</strong>
                             <span>Verified graph</span>
@@ -1192,8 +1192,8 @@
                 </div>
                 <div class="invite-card">
                     <span>Personal invite</span>
-                    <code>syncup.link/sarah24</code>
-                    <button class="btn btn-subtle" data-action="copy-invite">Copy link</button>
+                    <code>Sphera.link/sarah24</code>
+                    <button class="btn btn-Sbtle" data-action="copy-invite">Copy link</button>
                 </div>
             </section>
 
@@ -1225,7 +1225,7 @@
                                     shared mutuals</span></p>
                         </div>
                         <div class="c-actions">
-                            <button class="btn btn-subtle" data-action="message">Message</button>
+                            <button class="btn btn-Sbtle" data-action="message">Message</button>
                             <button class="btn btn-ghost" data-action="intro">Intro</button>
                         </div>
                     </article>
@@ -1241,7 +1241,7 @@
                                     &middot; Intro from Neha</span></p>
                         </div>
                         <div class="c-actions">
-                            <button class="btn btn-subtle" data-action="message">Message</button>
+                            <button class="btn btn-Sbtle" data-action="message">Message</button>
                             <button class="btn btn-ghost" data-action="profile">Profile</button>
                         </div>
                     </article>
@@ -1257,7 +1257,7 @@
                                     &middot; 7 shared mutuals</span></p>
                         </div>
                         <div class="c-actions">
-                            <button class="btn btn-subtle" data-action="message">Message</button>
+                            <button class="btn btn-Sbtle" data-action="message">Message</button>
                             <button class="btn btn-ghost" data-action="profile">Profile</button>
                         </div>
                     </article>
@@ -1311,7 +1311,7 @@
                         <div>Strong ties in <b>Fintech</b> and <b>SaaS</b>. Priya can help with biotech intros.</div>
                     </div>
                     <div class="insight-item">
-                        <span class="insight-dot" style="background:var(--success);"></span>
+                        <span class="insight-dot" style="background:var(--Sccess);"></span>
                         <div>Profile views are up <b>38%</b> after your latest trust signal.</div>
                     </div>
                 </div>
@@ -1344,8 +1344,8 @@
                             <p>Lead Engineer @ Nexus Labs</p>
                         </div>
                     </div>
-                    <button class="btn btn-ghost" style="width:100%;" data-action="view-suggestions">View
-                        suggestions</button>
+                    <button class="btn btn-ghost" style="width:100%;" data-action="view-Sggestions">View
+                        Sggestions</button>
                 </div>
             </section>
         </aside>
@@ -1354,7 +1354,7 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
-        const CREDIT_KEY = 'su-credits';
+        const CREDIT_KEY = 'S-credits';
         let currentFilter = 'all';
         let currentSearch = '';
         let currentView = 'network'; // 'network' or 'invites'
@@ -1568,7 +1568,7 @@
             showToast.timeoutId = setTimeout(() => toast.classList.remove('show'), 2200);
         }
 
-        function copyText(text, successMessage) {
+        function copyText(text, SccessMessage) {
             const fallback = () => {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
@@ -1576,10 +1576,10 @@
                 textarea.select();
                 document.execCommand('copy');
                 textarea.remove();
-                showToast(successMessage);
+                showToast(SccessMessage);
             };
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => showToast(successMessage)).catch(fallback);
+                navigator.clipboard.writeText(text).then(() => showToast(SccessMessage)).catch(fallback);
             } else {
                 fallback();
             }
@@ -1623,7 +1623,7 @@
             }[char]));
         }
 
-        function ensurePanel(card, type, html) {
+        function enSrePanel(card, type, html) {
             const existing = card.querySelector(`.connection-panel[data-panel="${type}"]`);
             closeOtherPanels(card);
             if (existing) {
@@ -1641,11 +1641,11 @@
 
         function openMessage(card) {
             const name = card.dataset.name || 'this contact';
-            const panel = ensurePanel(card, 'message', `
+            const panel = enSrePanel(card, 'message', `
         <strong>Message ${escapeHTML(name)}</strong>
         <div class="message-form">
           <input class="message-input" type="text" placeholder="Write a short message...">
-          <button class="btn btn-subtle" data-action="send-message">Send</button>
+          <button class="btn btn-Sbtle" data-action="send-message">Send</button>
         </div>
       `);
             if (panel) panel.querySelector('.message-input')?.focus();
@@ -1666,7 +1666,7 @@
         }
 
         function openProfile(card) {
-            ensurePanel(card, 'profile', `
+            enSrePanel(card, 'profile', `
         <strong>${escapeHTML(card.dataset.name || 'Profile')}</strong>
         <div>${escapeHTML(card.dataset.role || '')}</div>
         <div>${escapeHTML(card.dataset.location || '')} · ${escapeHTML(card.dataset.mutuals || '')}</div>
@@ -1695,7 +1695,7 @@
             }
         }
 
-        function viewSuggestedPerson(person) {
+        function viewSggestedPerson(person) {
             const search = document.getElementById('networkSearch');
             if (search) search.value = person;
             currentSearch = person.toLowerCase();
@@ -1723,7 +1723,7 @@
             }
             if (action === 'messages') showToast('Messages panel opened.');
             if (action === 'copy-invite') {
-                copyText('syncup.link/sarah24', 'Invite link copied.');
+                copyText('Sphera.link/sarah24', 'Invite link copied.');
                 target.textContent = 'Copied';
                 setTimeout(() => { target.textContent = 'Copy link'; }, 1800);
             }
@@ -1733,15 +1733,15 @@
             if (action === 'profile' && card) openProfile(card);
             if (action === 'intro' && card) copyIntro(card);
             if (action === 'request-verify') requestVerify(target);
-            if (action === 'mini-profile') viewSuggestedPerson(target.dataset.person || '');
-            if (action === 'view-suggestions') {
+            if (action === 'mini-profile') viewSggestedPerson(target.dataset.person || '');
+            if (action === 'view-Sggestions') {
                 currentFilter = 'all';
                 currentSearch = '';
                 setActiveFilter('all');
                 const search = document.getElementById('networkSearch');
                 if (search) search.value = '';
                 applyNetworkFilters();
-                showToast('All suggestions are visible.');
+                showToast('All Sggestions are visible.');
             }
         }
 

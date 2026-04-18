@@ -2,7 +2,7 @@
 
 Sphera is a verified-humans-only platform designed to eliminate fake profiles, bots, and fraud in the professional world. We combine high-integrity networking with business opportunities, escrow-backed events, and an AI-powered verification engine.
 
-Previously known as *SyncUp*, Sphera has evolved into a minimalist, premium ecosystem where every interaction is backed by verified identity.
+Sphera has evolved into a minimalist, premium ecosystem where every interaction is backed by verified identity.
 
 ## 🚀 Core Value Proposition
 

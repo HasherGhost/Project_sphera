@@ -14,15 +14,15 @@
         :root {
             --bg: #09090b;
             --bg-soft: rgba(9, 9, 11, 0.76);
-            --surface: rgba(24, 24, 27, 0.74);
-            --surface-strong: rgba(32, 32, 36, 0.9);
+            --Srface: rgba(24, 24, 27, 0.74);
+            --Srface-strong: rgba(32, 32, 36, 0.9);
             --border: rgba(255, 255, 255, 0.1);
             --border-strong: rgba(255, 255, 255, 0.16);
             --primary: #3b82f6;
             --primary-soft: rgba(59, 130, 246, 0.14);
             --accent: #8b5cf6;
             --accent-soft: rgba(139, 92, 246, 0.14);
-            --success: #10b981;
+            --Sccess: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
             --text-main: #f4f4f5;
@@ -37,8 +37,8 @@
         [data-theme="light"] {
             --bg: #f8fafc;
             --bg-soft: rgba(248, 250, 252, 0.82);
-            --surface: rgba(255, 255, 255, 0.84);
-            --surface-strong: rgba(255, 255, 255, 0.96);
+            --Srface: rgba(255, 255, 255, 0.84);
+            --Srface-strong: rgba(255, 255, 255, 0.96);
             --border: rgba(15, 23, 42, 0.08);
             --border-strong: rgba(15, 23, 42, 0.12);
             --primary: #2563eb;
@@ -156,7 +156,7 @@
             gap: 10px;
             padding: 10px 14px;
             color: var(--text-faint);
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--border);
             border-radius: 999px;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -194,7 +194,7 @@
             width: 38px;
             height: 38px;
             color: var(--text-muted);
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--border);
             border-radius: 999px;
             cursor: pointer;
@@ -205,7 +205,7 @@
         .profile-button:hover {
             color: var(--text-main);
             border-color: var(--border-strong);
-            background: var(--surface-strong);
+            background: var(--Srface-strong);
         }
 
         .profile-button img {
@@ -268,7 +268,7 @@
         }
 
         .card {
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--border);
             border-radius: var(--radius-lg);
             box-shadow: var(--shadow-soft);
@@ -313,7 +313,7 @@
             align-items: center;
             gap: 6px;
             padding: 6px 9px;
-            color: var(--success);
+            color: var(--Sccess);
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.2);
             border-radius: 999px;
@@ -324,7 +324,7 @@
         .pulse {
             width: 6px;
             height: 6px;
-            background: var(--success);
+            background: var(--Sccess);
             border-radius: 999px;
             box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.14);
         }
@@ -425,7 +425,7 @@
             content: "";
             width: 8px;
             height: 8px;
-            background: var(--success);
+            background: var(--Sccess);
             border-radius: 999px;
         }
 
@@ -555,7 +555,7 @@
         .tab-btn {
             padding: 8px 13px;
             color: var(--text-muted);
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--border);
             border-radius: 999px;
             cursor: pointer;
@@ -666,7 +666,7 @@
         }
 
         .post-action.is-trusted {
-            color: var(--success);
+            color: var(--Sccess);
             background: rgba(16, 185, 129, 0.12);
         }
 
@@ -738,7 +738,7 @@
         }
 
         .badge-green {
-            color: var(--success);
+            color: var(--Sccess);
             background: rgba(16, 185, 129, 0.14);
         }
 
@@ -777,7 +777,7 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .btn-subtle {
+        .btn-Sbtle {
             color: var(--primary);
             background: var(--primary-soft);
         }
@@ -790,7 +790,7 @@
         }
 
         .btn.is-connected {
-            color: var(--success);
+            color: var(--Sccess);
             background: rgba(16, 185, 129, 0.12);
         }
 
@@ -812,7 +812,7 @@
             text-transform: uppercase;
         }
 
-        .suggestion-list,
+        .Sggestion-list,
         .trend-list,
         .signal-list {
             display: grid;
@@ -820,7 +820,7 @@
             list-style: none;
         }
 
-        .suggestion-item {
+        .Sggestion-item {
             display: grid;
             grid-template-columns: 40px minmax(0, 1fr) auto;
             gap: 10px;
@@ -831,7 +831,7 @@
             transition: background 0.2s ease, border-color 0.2s ease;
         }
 
-        .suggestion-item:hover {
+        .Sggestion-item:hover {
             background: rgba(255, 255, 255, 0.04);
             border-color: var(--border);
         }
@@ -844,7 +844,7 @@
             border-radius: 12px;
         }
 
-        .suggestion-info h3 {
+        .Sggestion-info h3 {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -852,7 +852,7 @@
             font-weight: 800;
         }
 
-        .suggestion-info p {
+        .Sggestion-info p {
             overflow: hidden;
             margin-top: 2px;
             color: var(--text-muted);
@@ -921,7 +921,7 @@
         .media-modal {
             width: min(440px, 100%);
             padding: 24px;
-            background: var(--surface-strong);
+            background: var(--Srface-strong);
             border: 1px solid var(--border-strong);
             border-radius: var(--radius-lg);
             box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
@@ -940,7 +940,7 @@
             text-align: center;
         }
 
-        .modal-subtitle {
+        .modal-Sbtitle {
             margin: 8px 0 20px;
             color: var(--text-muted);
             font-size: 14px;
@@ -1005,7 +1005,7 @@
             max-width: min(360px, calc(100% - 40px));
             padding: 12px 14px;
             color: var(--text-main);
-            background: var(--surface-strong);
+            background: var(--Srface-strong);
             border: 1px solid var(--border-strong);
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-soft);
@@ -1078,7 +1078,7 @@
 
             .feed-metrics,
             .post-header,
-            .suggestion-item {
+            .Sggestion-item {
                 grid-template-columns: 1fr;
             }
 
@@ -1232,7 +1232,7 @@
                 <p>A focused feed for hiring, referrals, events, and trusted market notes. Every profile is tied to a
                     verified
                     human signal.</p>
-                <div class="feed-metrics" aria-label="Feed summary">
+                <div class="feed-metrics" aria-label="Feed Smmary">
                     <div class="metric">
                         <strong>36</strong>
                         <span>New signals</span>
@@ -1392,25 +1392,25 @@
         <aside class="right-sidebar stack" aria-label="Feed sidebar">
             <section class="card pad">
                 <div class="sidebar-title">
-                    Suggested connections
+                    Sggested connections
                     <span class="sidebar-note">2</span>
                 </div>
-                <ul class="suggestion-list">
-                    <li class="suggestion-item">
+                <ul class="Sggestion-list">
+                    <li class="Sggestion-item">
                         <img src="public/avatars/arjun-mehta.png" alt="Arjun Mehta" class="mini-avatar">
-                        <div class="suggestion-info">
+                        <div class="Sggestion-info">
                             <h3>Arjun Mehta</h3>
                             <p>Product Lead @ Orbit</p>
                         </div>
-                        <button class="btn btn-subtle" data-action="connect">Connect</button>
+                        <button class="btn btn-Sbtle" data-action="connect">Connect</button>
                     </li>
-                    <li class="suggestion-item">
+                    <li class="Sggestion-item">
                         <img src="public/avatars/ishita-rao.png" alt="Ishita Rao" class="mini-avatar">
-                        <div class="suggestion-info">
+                        <div class="Sggestion-info">
                             <h3>Ishita Rao</h3>
                             <p>Partner @ Altair Ventures</p>
                         </div>
-                        <button class="btn btn-subtle" data-action="connect">Connect</button>
+                        <button class="btn btn-Sbtle" data-action="connect">Connect</button>
                     </li>
                 </ul>
             </section>
@@ -1426,9 +1426,9 @@
                         <div class="trend-title">Series A startup seeking CTO <span class="trend-arrow">→</span></div>
                         <div class="trend-count">14 referrals</div>
                     </div>
-                    <div class="trend-item" data-trend="identity-summit" onclick="openTrendModal('identity-summit')">
+                    <div class="trend-item" data-trend="identity-Smmit" onclick="openTrendModal('identity-Smmit')">
                         <div class="trend-tag">Identity</div>
-                        <div class="trend-title">Bengaluru Trust Summit <span class="trend-arrow">→</span></div>
+                        <div class="trend-title">Bengaluru Trust Smmit <span class="trend-arrow">→</span></div>
                         <div class="trend-count">248 professionals going</div>
                     </div>
                     <div class="trend-item" data-trend="ux-designer" onclick="openTrendModal('ux-designer')">
@@ -1463,7 +1463,7 @@
             aria-labelledby="mediaModalTitle">
             <div id="typeSelection">
                 <h3 class="modal-title" id="mediaModalTitle">Select media type</h3>
-                <p class="modal-subtitle">Choose what you want to attach to this update.</p>
+                <p class="modal-Sbtitle">Choose what you want to attach to this update.</p>
                 <div class="modal-options">
                     <button class="option-btn" onclick="selectMediaType('photos')">
                         <div class="option-icon">IMG</div>
@@ -1484,7 +1484,7 @@
 
             <div id="sourceSelection" style="display: none;">
                 <h3 class="modal-title" id="sourceTitle">Select source</h3>
-                <p class="modal-subtitle">Where is your media stored?</p>
+                <p class="modal-Sbtitle">Where is your media stored?</p>
                 <div class="modal-options">
                     <button class="option-btn" onclick="selectMediaSource('google')">
                         <div class="option-icon">WEB</div>
@@ -1531,12 +1531,12 @@
             'cto-role': {
                 tag: 'Fintech',
                 title: 'Series A Startup Seeking CTO',
-                subtitle: 'NovaPay · Remote-first · Co-founder level',
+                Sbtitle: 'NovaPay · Remote-first · Co-founder level',
                 info: [
                     { label: 'Company', value: 'NovaPay' },
                     { label: 'Stage', value: 'Series A ($8M)' },
                     { label: 'Equity', value: '2–4% co-founder' },
-                    { label: 'Referrals', value: '14 on SyncUp' }
+                    { label: 'Referrals', value: '14 on Sphera' }
                 ],
                 overview: 'NovaPay is a verified fintech startup building next-gen payment infrastructure for emerging markets. They\'ve raised $8M in Series A from Tier-1 VCs and are looking for a CTO to lead their 12-person engineering team. The ideal candidate has deep experience in distributed systems, payment processing, and regulatory compliance. This is a co-founder-level opportunity with significant equity and full technical ownership.',
                 highlights: [
@@ -1550,31 +1550,31 @@
                     '10+ years of engineering experience, 5+ in leadership',
                     'Experience with payment systems, PCI-DSS compliance',
                     'Proven ability to scale teams from 10 to 50+ engineers',
-                    'SyncUp-verified identity required for final round'
+                    'Sphera-verified identity required for final round'
                 ],
                 primaryAction: { label: 'Refer someone', action: 'refer' },
                 secondaryAction: { label: 'View on Jobs', href: 'job_opportunities.html' }
             },
-            'identity-summit': {
+            'identity-Smmit': {
                 tag: 'Identity',
-                title: 'Bengaluru Trust Summit 2026',
-                subtitle: 'June 14–15 · Bengaluru · Hybrid',
+                title: 'Bengaluru Trust Smmit 2026',
+                Sbtitle: 'June 14–15 · Bengaluru · Hybrid',
                 info: [
                     { label: 'Date', value: 'June 14–15, 2026' },
                     { label: 'Location', value: 'SF + Virtual' },
                     { label: 'Attendees', value: '248 registered' },
                     { label: 'Speakers', value: '18 keynotes' }
                 ],
-                overview: 'The Bengaluru Trust Summit is the premier conference for professionals working in digital identity, trust, and verification. This year\'s event brings together 248+ verified professionals from companies like Razorpay, Aadhaar Bridge, Zerodha, and Sphera for two days of keynotes, workshops, and networking. Topics include biometric authentication, zero-knowledge proofs, decentralized identity, and the future of trust in professional networks.',
+                overview: 'The Bengaluru Trust Smmit is the premier conference for professionals working in digital identity, trust, and verification. This year\'s event brings together 248+ verified professionals from companies like Razorpay, Aadhaar Bridge, Zerodha, and Sphera for two days of keynotes, workshops, and networking. Topics include biometric authentication, zero-knowledge proofs, decentralized identity, and the future of trust in professional networks.',
                 highlights: [
                     '18 keynote speakers from leading identity companies',
                     'Hands-on workshops on face-auth, liveness detection, and ZK-proofs',
                     'Verified networking sessions — every attendee is identity-confirmed',
                     'Hybrid format: attend in SF or stream all sessions virtually',
-                    'Early-bird pricing available through SyncUp ($299 vs $499)'
+                    'Early-bird pricing available through Sphera ($299 vs $499)'
                 ],
                 requirements: [
-                    'SyncUp-verified professional profile',
+                    'Sphera-verified professional profile',
                     'Interest in identity, security, or trust technologies',
                     'Early-bird registration closes May 20, 2026'
                 ],
@@ -1584,26 +1584,26 @@
             'ux-designer': {
                 tag: 'Careers',
                 title: 'Hiring: Senior UX Designer',
-                subtitle: '8 openings across 5 verified companies',
+                Sbtitle: '8 openings across 5 verified companies',
                 info: [
                     { label: 'Openings', value: '8 positions' },
                     { label: 'Salary Range', value: '$110K–$170K' },
                     { label: 'Companies', value: '5 verified' },
                     { label: 'Work Type', value: 'Remote & Hybrid' }
                 ],
-                overview: 'Five SyncUp-verified companies are actively hiring Senior UX Designers across a range of industries including cybersecurity, fintech, healthtech, and developer tools. All positions offer competitive salaries ($110K–$170K), remote or hybrid flexibility, and the chance to shape products used by millions. Applications through SyncUp get priority review — hiring managers see your verified profile and trust score upfront.',
+                overview: 'Five Sphera-verified companies are actively hiring Senior UX Designers across a range of industries including cybersecurity, fintech, healthtech, and developer tools. All positions offer competitive salaries ($110K–$170K), remote or hybrid flexibility, and the chance to shape products used by millions. Applications through Sphera get priority review — hiring managers see your verified profile and trust score upfront.',
                 highlights: [
-                    'CyberShield — Lead Designer for threat visualization dashboards',
+                    'CyberShield — Lead Designer for threat viSalization dashboards',
                     'NovaPay — UX Designer for payment flows in emerging markets',
                     'HealthBridge — Senior Designer for patient identity platform',
                     'DevFlow — Product Designer for developer collaboration tools',
-                    'SyncUp — Staff Designer for verification and trust experiences'
+                    'Sphera — Staff Designer for verification and trust experiences'
                 ],
                 requirements: [
                     '5+ years of UX/UI design experience',
                     'Strong portfolio with enterprise or B2B SaaS work',
                     'Proficiency in Figma and design systems',
-                    'SyncUp-verified profile for priority application review'
+                    'Sphera-verified profile for priority application review'
                 ],
                 primaryAction: { label: 'Browse all roles', action: 'browse' },
                 secondaryAction: { label: 'View Jobs', href: 'job_opportunities.html' }
@@ -1620,7 +1620,7 @@
           <button class="btn btn-ghost" onclick="closeTrendModal()" style="min-height:32px;padding:6px 10px;font-size:16px;">✕</button>
         </div>
         <h3 id="trendModalTitle">${data.title}</h3>
-        <p class="trend-modal-subtitle">${data.subtitle}</p>
+        <p class="trend-modal-Sbtitle">${data.Sbtitle}</p>
         <div class="trend-info-grid">
           ${data.info.map(i => `<div class="trend-info-cell"><span class="cell-label">${i.label}</span><span class="cell-value">${i.value}</span></div>`).join('')}
         </div>
@@ -1663,7 +1663,7 @@
                 closeTrendModal();
                 const composer = document.getElementById('composerInput');
                 if (composer) {
-                    composer.value = `🚀 Referral: ${data.title} — ${data.subtitle}. Know someone who\'d be a great fit? Tag them below.`;
+                    composer.value = `🚀 Referral: ${data.title} — ${data.Sbtitle}. Know someone who\'d be a great fit? Tag them below.`;
                     composer.focus();
                     showToast('Referral draft added to composer.');
                 }
@@ -1675,7 +1675,7 @@
             }
         }
 
-        const CREDIT_KEY = 'su-credits';
+        const CREDIT_KEY = 'S-credits';
         const FEED_POSTS_KEY = 'sphera-feed-posts';
         let currentFilter = 'all';
         let currentSearch = '';
@@ -1725,7 +1725,7 @@
         function inferCategory(text) {
             const lower = text.toLowerCase();
             if (/(hiring|job|role|opening|candidate|engineer|designer)/.test(lower)) return 'hiring';
-            if (/(event|summit|meetup|webinar|conference|registered)/.test(lower)) return 'event';
+            if (/(event|Smmit|meetup|webinar|conference|registered)/.test(lower)) return 'event';
             return 'insight';
         }
 
@@ -1863,7 +1863,7 @@
             showToast(trusted ? 'Trust added.' : 'Trust removed.');
         }
 
-        function ensureCommentPanel(post) {
+        function enSreCommentPanel(post) {
             let panel = post.querySelector('.comment-panel');
             if (panel) return panel;
             panel = document.createElement('div');
@@ -1872,7 +1872,7 @@
         <div class="comment-row">No comments yet. Start the thread.</div>
         <div class="comment-form">
           <input class="comment-input" type="text" placeholder="Write a comment...">
-          <button class="btn btn-subtle" data-action="add-comment">Send</button>
+          <button class="btn btn-Sbtle" data-action="add-comment">Send</button>
         </div>
       `;
             post.appendChild(panel);
@@ -1883,7 +1883,7 @@
             const post = button.closest('.post');
             if (!post) return;
             const existingPanel = post.querySelector('.comment-panel');
-            const panel = ensureCommentPanel(post);
+            const panel = enSreCommentPanel(post);
             if (existingPanel) {
                 panel.hidden = !panel.hidden;
             } else {
@@ -1921,7 +1921,7 @@
             showToast('Comment added.');
         }
 
-        function copyText(text, successMessage) {
+        function copyText(text, SccessMessage) {
             const fallback = () => {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
@@ -1929,10 +1929,10 @@
                 textarea.select();
                 document.execCommand('copy');
                 textarea.remove();
-                showToast(successMessage);
+                showToast(SccessMessage);
             };
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => showToast(successMessage)).catch(fallback);
+                navigator.clipboard.writeText(text).then(() => showToast(SccessMessage)).catch(fallback);
             } else {
                 fallback();
             }
@@ -1997,13 +1997,13 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             loadStoredPosts();
-            const pending = sessionStorage.getItem('su-pending-credit');
+            const pending = sessionStorage.getItem('S-pending-credit');
             const prev = getCredits();
             if (pending) {
                 const added = parseFloat(pending);
                 const next = prev + added;
                 localStorage.setItem(CREDIT_KEY, next.toFixed(2));
-                sessionStorage.removeItem('su-pending-credit');
+                sessionStorage.removeItem('S-pending-credit');
                 updateCreditsDisplay();
                 setTimeout(() => animateCredits(prev, next), 300);
             } else {

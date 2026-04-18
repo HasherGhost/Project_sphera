@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyncUp — Events & Webinars</title>
+    <title>Sphera — Events & Webinars</title>
     <meta name="description" content="Discover, participate, and host professional events, webinars, and meetups.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,15 +12,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* ═══════════════════════════════════════════════════════
-           CSS — SyncUp (Nexus-inspired Shared CSS)
+           CSS — Sphera (Nexus-inspired Shared CSS)
            ═══════════════════════════════════════════════════════ */
         :root {
             color-scheme: light;
             --bg: #f5f0ff;
             --bg2: #ece4ff;
-            --surface: rgba(255, 255, 255, .55);
-            --surface-s: rgba(255, 255, 255, .45);
-            --surface-f: rgba(255, 255, 255, .35);
+            --Srface: rgba(255, 255, 255, .55);
+            --Srface-s: rgba(255, 255, 255, .45);
+            --Srface-f: rgba(255, 255, 255, .35);
             --line: rgba(255, 255, 255, .5);
             --line-s: rgba(255, 255, 255, .6);
             --text: #1a0e33;
@@ -51,9 +51,9 @@
             color-scheme: dark;
             --bg: #0a0514;
             --bg2: #110920;
-            --surface: rgba(255, 255, 255, .08);
-            --surface-s: rgba(255, 255, 255, .06);
-            --surface-f: rgba(255, 255, 255, .04);
+            --Srface: rgba(255, 255, 255, .08);
+            --Srface-s: rgba(255, 255, 255, .06);
+            --Srface-f: rgba(255, 255, 255, .04);
             --line: rgba(255, 255, 255, .12);
             --line-s: rgba(255, 255, 255, .18);
             --text: #f3eeff;
@@ -168,12 +168,12 @@
         .btn-o:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--orange-f); }
 
         .theme-tog {
-            background: var(--surface); border-color: var(--line);
+            background: var(--Srface); border-color: var(--line);
             color: var(--text); padding: 0 12px;
         }
 
         .panel {
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--line);
             border-radius: var(--radius);
             box-shadow: var(--shadow-f);
@@ -189,8 +189,8 @@
             border-radius: var(--radius); font-weight: 700; color: var(--muted);
             transition: background .2s, color .2s;
         }
-        .side-nav a.active { background: var(--surface-f); color: var(--accent); }
-        .side-nav a:hover:not(.active) { background: var(--surface-f); color: var(--text); }
+        .side-nav a.active { background: var(--Srface-f); color: var(--accent); }
+        .side-nav a:hover:not(.active) { background: var(--Srface-f); color: var(--text); }
         .count-pill { background: var(--line-s); color: var(--text); padding: 2px 8px; border-radius: 99px; font-size: .75rem; font-weight: 800; }
 
         /* ── Event Feed ── */
@@ -200,7 +200,7 @@
         .filters { display: flex; gap: 10px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 4px; }
         .filter-btn {
             padding: 8px 16px; border-radius: 99px; border: 1px solid var(--line);
-            font-weight: 700; font-size: .85rem; color: var(--muted); background: var(--surface);
+            font-weight: 700; font-size: .85rem; color: var(--muted); background: var(--Srface);
             cursor: pointer; white-space: nowrap; transition: color .2s, background .2s;
         }
         .filter-btn.active { background: var(--text); color: var(--bg); border-color: transparent; }
@@ -209,7 +209,7 @@
         /* ── Event Cards ── */
         .event-card {
             display: flex; flex-direction: column; border: 1px solid var(--line);
-            border-radius: var(--radius); background: var(--surface); transition: transform .2s, box-shadow .2s;
+            border-radius: var(--radius); background: var(--Srface); transition: transform .2s, box-shadow .2s;
             margin-bottom: 20px; overflow: hidden;
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
@@ -217,7 +217,7 @@
         .event-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--accent-f); }
         
         .event-banner {
-            width: 100%; height: 160px; background-color: var(--surface-f);
+            width: 100%; height: 160px; background-color: var(--Srface-f);
             position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
         .event-banner img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
@@ -236,11 +236,11 @@
         .event-meta span { display: flex; align-items: center; gap: 6px; }
         
         .event-actions { display: flex; gap: 10px; align-items: center; padding-top: 16px; border-top: 1px dashed var(--line); }
-        .btn-outline { border: 1px solid var(--line); padding: 8px 14px; border-radius: var(--radius); font-weight: 700; font-size: .85rem; background: var(--surface-s); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); transition: background .2s, border .2s; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-outline:hover { background: var(--surface-f); border-color: var(--accent); color: var(--accent);}
+        .btn-outline { border: 1px solid var(--line); padding: 8px 14px; border-radius: var(--radius); font-weight: 700; font-size: .85rem; background: var(--Srface-s); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); transition: background .2s, border .2s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-outline:hover { background: var(--Srface-f); border-color: var(--accent); color: var(--accent);}
         
         .like-btn {
-            background: var(--surface-f); border: 1px solid var(--line); border-radius: var(--radius);
+            background: var(--Srface-f); border: 1px solid var(--line); border-radius: var(--radius);
             width: 40px; height: 40px; display: grid; place-items: center; font-size: 1.1rem;
             transition: transform .2s, background .2s; margin-left: auto; cursor: pointer; color: var(--muted);
         }
@@ -249,7 +249,7 @@
         .like-btn.liked:hover { transform: scale(1.1); }
 
         .attendee-stack { display: flex; align-items: center; }
-        .attendee-stack img { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--surface); margin-left: -10px; }
+        .attendee-stack img { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--Srface); margin-left: -10px; }
         .attendee-stack img:first-child { margin-left: 0; }
         .attendee-stack .count { font-size: .75rem; font-weight: 800; color: var(--muted); margin-left: 6px; }
 
@@ -259,7 +259,7 @@
         
         .mini-event { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; cursor: pointer; }
         .mini-event-date { 
-            background: var(--surface-f); border: 1px solid var(--line); border-radius: 8px; 
+            background: var(--Srface-f); border: 1px solid var(--line); border-radius: 8px; 
             padding: 6px; text-align: center; min-width: 48px; border-bottom-width: 3px; border-bottom-color: var(--accent);
         }
         .mini-event-date strong { display: block; font-size: 1.1rem; font-weight: 900; line-height: 1; color: var(--text); }
@@ -281,7 +281,7 @@
             width: 100%;
             padding: 0 14px;
             color: var(--text);
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--line);
             border-radius: var(--radius);
             outline: none;
@@ -323,7 +323,7 @@
             min-height: 42px;
             padding: 10px 12px;
             color: var(--text);
-            background: var(--surface-s);
+            background: var(--Srface-s);
             border: 1px solid var(--line);
             border-radius: var(--radius);
             outline: none;
@@ -338,7 +338,7 @@
         .event-note {
             padding: 12px;
             color: var(--muted);
-            background: var(--surface-f);
+            background: var(--Srface-f);
             border: 1px solid var(--line);
             border-radius: var(--radius);
             font-size: .86rem;
@@ -368,7 +368,7 @@
             max-width: min(360px, calc(100% - 40px));
             padding: 12px 14px;
             color: var(--text);
-            background: var(--surface);
+            background: var(--Srface);
             border: 1px solid var(--line-s);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
@@ -413,8 +413,8 @@
     <header class="hdr">
         <div class="wrap hdr-row">
             <a class="brand" href="index.html">
-                <span class="brand-mark">SU</span>
-                <span style="display:grid;gap:2px"><strong>SyncUp.</strong><small>Verified professional</small></span>
+                <span class="brand-mark">S</span>
+                <span style="display:grid;gap:2px"><strong>Sphera.</strong><small>Verified professional</small></span>
             </a>
             <nav class="hdr-nav">
                 <a href="feed.html">Feed</a>
@@ -440,9 +440,9 @@
                 <a href="#" data-view="past"><span>Past Webinars</span></a>
             </nav>
 
-            <div class="panel" style="padding: 20px; background: linear-gradient(135deg, var(--surface-s), var(--surface-f));">
+            <div class="panel" style="padding: 20px; background: linear-gradient(135deg, var(--Srface-s), var(--Srface-f));">
                 <h3 style="font-size: 1rem; font-weight: 900; margin-bottom: 8px;">Host an Event</h3>
-                <p style="font-size: .85rem; color: var(--muted); margin-bottom: 16px; line-height: 1.5;">Tap into the trusted professional ecosystem. SyncUp validates attendee identity automatically.</p>
+                <p style="font-size: .85rem; color: var(--muted); margin-bottom: 16px; line-height: 1.5;">Tap into the trusted professional ecosystem. Sphera validates attendee identity automatically.</p>
                 <button class="btn btn-p" style="width: 100%;" data-action="toggle-create">Create Event</button>
             </div>
         </aside>
@@ -497,7 +497,7 @@
                         <textarea id="eventDescription" placeholder="Describe who should attend and what they will get from it." required></textarea>
                     </label>
                     <div class="full" style="display:flex;gap:10px;flex-wrap:wrap;">
-                        <button class="btn btn-p" type="submit">Publish Event</button>
+                        <button class="btn btn-p" type="Sbmit">Publish Event</button>
                         <button class="btn btn-outline" type="button" data-action="toggle-create">Cancel</button>
                     </div>
                 </form>
@@ -550,7 +550,7 @@
                     <p>Join Arjun Mehta (CTO @ CloudScale) as he walks through the exact architecture used to scale infrastructure across 5 regions seamlessly.</p>
                     
                     <div class="event-meta">
-                        <span>💻 Online (Zoom via SyncUp)</span>
+                        <span>💻 Online (Zoom via Sphera)</span>
                         <span>🎟️ Free</span>
                         <div class="attendee-stack" style="margin-left: auto;">
                             <img src="public/avatars/arjun-mehta.png" alt="Arjun Mehta">
@@ -605,7 +605,7 @@
                 <div class="event-body">
                     <div class="event-date">Tuesday, October 31 • 7:30 PM IST</div>
                     <h3>Founder Revenue Dinner: Mumbai</h3>
-                    <p>A small, verified dinner for founders and operators discussing pricing, retention, and the subtle art of scaling without shipping chaos.</p>
+                    <p>A small, verified dinner for founders and operators discussing pricing, retention, and the Sbtle art of scaling without shipping chaos.</p>
 
                     <div class="event-meta">
                         <span>📍 Mumbai, MH</span>
@@ -638,7 +638,7 @@
                     <p>Learn how Indian product teams are using verified workflows, faster feedback loops, and practical automation to keep product velocity high.</p>
 
                     <div class="event-meta">
-                        <span>💻 Online (Zoom via SyncUp)</span>
+                        <span>💻 Online (Zoom via Sphera)</span>
                         <span>🎟️ Free</span>
                         <div class="attendee-stack" style="margin-left: auto;">
                             <img src="public/avatars/neha-verma.png" alt="Neha Verma">
@@ -715,23 +715,23 @@
                     </div>
                 </div>
 
-                <div class="mini-event" data-action="mini-event" data-query="India Open Source Security Summit">
+                <div class="mini-event" data-action="mini-event" data-query="India Open Source Security Smmit">
                     <div class="mini-event-date" style="border-bottom-color: var(--green);">
                         <strong>05</strong>
                         <span>Nov</span>
                     </div>
                     <div class="mini-event-info">
-                        <h4>India Open Source Security Summit</h4>
+                        <h4>India Open Source Security Smmit</h4>
                         <p>Virtual Meetup</p>
                     </div>
                 </div>
 
-                <button class="btn-outline" style="width: 100%; justify-content: center; margin-top: 8px;" data-action="explore-suggestions">Explore All Suggestions</button>
+                <button class="btn-outline" style="width: 100%; justify-content: center; margin-top: 8px;" data-action="explore-Sggestions">Explore All Sggestions</button>
             </div>
             
             <div class="panel insight-card" style="background: var(--accent-f); border-color: var(--accent);">
                 <h3 style="color: var(--accent-s);">Event Escrow Protection</h3>
-                <p style="font-size: .85rem; color: var(--muted); line-height: 1.5; margin-bottom: 12px;">SyncUp uses smart escrow for paid events. If the event is cancelled or fails Liveness tests, your ticket is auto-refunded.</p>
+                <p style="font-size: .85rem; color: var(--muted); line-height: 1.5; margin-bottom: 12px;">Sphera uses smart escrow for paid events. If the event is cancelled or fails Liveness tests, your ticket is auto-refunded.</p>
                 <a href="#" data-action="escrow-info" style="font-size: .85rem; font-weight: 800; color: var(--accent);">Learn about Escrow -></a>
             </div>
         </aside>
@@ -791,7 +791,7 @@
             }[char]));
         }
 
-        function copyText(text, successMessage) {
+        function copyText(text, SccessMessage) {
             const fallback = () => {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
@@ -799,10 +799,10 @@
                 textarea.select();
                 document.execCommand('copy');
                 textarea.remove();
-                showToast(successMessage);
+                showToast(SccessMessage);
             };
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => showToast(successMessage)).catch(fallback);
+                navigator.clipboard.writeText(text).then(() => showToast(SccessMessage)).catch(fallback);
             } else {
                 fallback();
             }
@@ -948,7 +948,7 @@
             if (!card) return;
             const title = card.dataset.title || card.querySelector('h3')?.textContent || 'this event';
             const date = card.querySelector('.event-date')?.textContent.trim() || '';
-            copyText(`Join me at ${title} on SyncUp. ${date}`, 'Event share text copied.');
+            copyText(`Join me at ${title} on Sphera. ${date}`, 'Event share text copied.');
         }
 
         function eventCardTemplate(event) {
@@ -1068,10 +1068,10 @@
                     setActiveView('explore');
                     setActiveFilter('all');
                     const matches = applyEventFilters();
-                    if (!matches) showInfo(`<strong>${escapeHTML(query)}</strong><br>This suggested event is not in your main list yet. We copied a reminder so you can search for it later.`);
-                    if (!matches) copyText(query, 'Suggested event title copied.');
+                    if (!matches) showInfo(`<strong>${escapeHTML(query)}</strong><br>This Sggested event is not in your main list yet. We copied a reminder so you can search for it later.`);
+                    if (!matches) copyText(query, 'Sggested event title copied.');
                 }
-                if (action === 'explore-suggestions') {
+                if (action === 'explore-Sggestions') {
                     resetExploreView();
                     showToast('Showing all upcoming events.');
                 }
@@ -1108,7 +1108,7 @@
             applyEventFilters();
         });
 
-        document.getElementById('createEventForm')?.addEventListener('submit', createEvent);
+        document.getElementById('createEventForm')?.addEventListener('Sbmit', createEvent);
         document.addEventListener('click', handleClick);
     </script>
 </body>
