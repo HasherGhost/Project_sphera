@@ -1,6 +1,35 @@
 import { ReactNode } from 'react';
+import { createClient } from '@/lib/supabase/server';
+import { redirect } from 'next/navigation';
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect('/login');
+  }
+
+  // Fetch user profile
+  const { data: profile } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', user.id)
+    .single();
+
+  // Fetch posts with author info
+  const { data: posts } = await supabase
+    .from('posts')
+    .select(`
+      *,
+      author:users (
+        full_name,
+        headline,
+        photo_url
+      )
+    `)
+    .order('created_at', { ascending: false });
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 animate-in fade-in slide-in-from-bottom-6 duration-1000">
       
@@ -10,21 +39,23 @@ export default function DashboardPage() {
           <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-blue-600/40 to-purple-600/40 opacity-50 z-0"></div>
           <div className="relative z-10 flex flex-col items-center mt-8">
             <div className="w-24 h-24 rounded-2xl bg-gray-800 border-2 border-white/20 shadow-xl overflow-hidden mb-4">
-              <img src="https://i.pravatar.cc/150?img=11" alt="Profile" className="w-full h-full object-cover" />
+              <img src={profile?.photo_url || "https://i.pravatar.cc/150?img=11"} alt="Profile" className="w-full h-full object-cover" />
             </div>
-            <h2 className="font-title font-semibold text-xl text-white">Alex Morgan</h2>
-            <p className="text-gray-400 text-sm">Founder @ TechVentures</p>
-            <div className="mt-4 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-xs font-semibold flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span> Verified Human
-            </div>
+            <h2 className="font-title font-semibold text-xl text-white">{profile?.full_name || 'Anonymous User'}</h2>
+            <p className="text-gray-400 text-sm">{profile?.headline || 'Member'}</p>
+            {profile?.verified_at && (
+              <div className="mt-4 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-xs font-semibold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span> Verified Human
+              </div>
+            )}
           </div>
           <div className="mt-6 pt-6 border-t border-white/10 flex justify-between text-sm">
             <span className="text-gray-400">Network Connections</span>
-            <span className="text-white font-medium">1,204</span>
+            <span className="text-white font-medium">--</span>
           </div>
           <div className="mt-3 flex justify-between text-sm">
             <span className="text-gray-400">Profile Views</span>
-            <span className="text-white font-medium">843</span>
+            <span className="text-white font-medium">--</span>
           </div>
         </div>
       </div>
@@ -33,7 +64,7 @@ export default function DashboardPage() {
       <div className="lg:col-span-2 space-y-6">
         <div className="glass-panel p-4 rounded-3xl flex items-center gap-4">
           <div className="w-10 h-10 rounded-full bg-gray-800 overflow-hidden flex-shrink-0">
-            <img src="https://i.pravatar.cc/150?img=11" alt="User" />
+            <img src={profile?.photo_url || "https://i.pravatar.cc/150?img=11"} alt="User" />
           </div>
           <input 
             type="text" 
@@ -45,27 +76,37 @@ export default function DashboardPage() {
           </button>
         </div>
 
-        {/* Feed Item */}
-        <div className="glass-panel p-6 rounded-3xl space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-gray-700 overflow-hidden">
-                <img src="https://i.pravatar.cc/150?img=47" alt="User" />
+        {/* Feed Items */}
+        {posts?.map((post: any) => (
+          <div key={post.id} className="glass-panel p-6 rounded-3xl space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gray-700 overflow-hidden">
+                  <img src={post.author?.photo_url || "https://i.pravatar.cc/150?img=47"} alt="User" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white text-sm">{post.author?.full_name || 'Unknown'}</h3>
+                  <p className="text-gray-400 text-xs">{post.author?.headline || 'Member'}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-white text-sm">Sarah Jenkins</h3>
-                <p className="text-gray-400 text-xs">Investor | Verified Partner</p>
-              </div>
+              <button className="text-gray-400 hover:text-white transition">•••</button>
             </div>
-            <button className="text-gray-400 hover:text-white transition">•••</button>
+            <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-wrap">
+              {post.content}
+            </p>
+            {post.image_url && (
+              <div className="rounded-xl overflow-hidden bg-gray-900 border border-white/5 flex items-center justify-center mt-4">
+                <img src={post.image_url} alt="Post Attachment" className="max-w-full h-auto" />
+              </div>
+            )}
+            <div className="flex items-center gap-4 pt-4 border-t border-white/10 mt-4 text-gray-400 text-sm">
+               <span>❤️ {post.likes_count || 0} Likes</span>
+            </div>
           </div>
-          <p className="text-sm text-gray-300 leading-relaxed">
-            We are actively looking to fund early-stage startups building in the decentralized identity space. If you are a founder addressing real compliance and fraud issues, let's connect directly. #Escrow #FinTech
-          </p>
-          <div className="h-48 rounded-xl bg-gradient-to-tr from-gray-800 to-gray-900 border border-white/5 flex items-center justify-center">
-            <span className="text-gray-500 text-sm">Rich Media Placeholder</span>
-          </div>
-        </div>
+        ))}
+        {(!posts || posts.length === 0) && (
+          <div className="text-center text-gray-500 py-10">No posts available.</div>
+        )}
       </div>
 
       {/* Right Sidebar - Suggestions / AI */}
