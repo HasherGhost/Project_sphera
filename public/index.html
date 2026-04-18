@@ -1792,7 +1792,7 @@
             const cs = [...document.querySelectorAll('[data-count]')]; if (!cs.length) return;
             const run = c => {
                 const t = +c.dataset.count, s = performance.now(), d = 1250;
-                const tick = n => { const p = Math.min((n - s) / d, 1); c.textContent = fmtMetric(Math.round(t * (1 - Math.pow(1 - p, 3)); if (p < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick);
+                const tick = n => { const p = Math.min((n - s) / d, 1); c.textContent = fmtMetric(Math.round(t * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick);
             };
             const o = new IntersectionObserver(es => { es.forEach(e => { if (!e.isIntersecting || e.target.dataset.counted) return; e.target.dataset.counted = '1'; run(e.target); }); }, { threshold: .45 });
             cs.forEach(c => o.observe(c));
