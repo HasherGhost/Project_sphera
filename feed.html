@@ -728,6 +728,15 @@
       border-radius: var(--radius-md);
       background: rgba(255, 255, 255, 0.03);
     }
+    .trend-item {
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .trend-item:hover {
+      background: var(--primary-soft);
+      border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
+    }
     .trend-tag {
       color: var(--primary);
       font-size: 11px;
@@ -747,6 +756,112 @@
       color: var(--text-muted);
       font-size: 12px;
       line-height: 1.5;
+    }
+    .trend-arrow {
+      display: inline-block;
+      margin-left: 4px;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      font-size: 11px;
+    }
+    .trend-item:hover .trend-arrow {
+      opacity: 1;
+      transform: translateX(3px);
+    }
+
+    /* Trend detail modal */
+    .trend-modal-body { padding: 24px; }
+    .trend-modal-body .trend-modal-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .trend-modal-body h3 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+    .trend-modal-body .trend-modal-subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .trend-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .trend-info-cell {
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .trend-info-cell .cell-label {
+      display: block;
+      color: var(--text-faint);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .trend-info-cell .cell-value {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .trend-detail-section { margin-bottom: 18px; }
+    .trend-detail-section h4 {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 8px;
+    }
+    .trend-detail-section p {
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .trend-detail-section ul {
+      list-style: none;
+      padding: 0;
+    }
+    .trend-detail-section ul li {
+      position: relative;
+      padding-left: 16px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .trend-detail-section ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    .trend-modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
     }
     .signal-item strong {
       display: block;
@@ -1128,19 +1243,19 @@
           <span class="sidebar-note">Live</span>
         </div>
         <div class="trend-list">
-          <div class="trend-item">
+          <div class="trend-item" data-trend="cto-role" onclick="openTrendModal('cto-role')">
             <div class="trend-tag">Fintech</div>
-            <div class="trend-title">Series A startup seeking CTO</div>
+            <div class="trend-title">Series A startup seeking CTO <span class="trend-arrow">→</span></div>
             <div class="trend-count">14 referrals</div>
           </div>
-          <div class="trend-item">
+          <div class="trend-item" data-trend="identity-summit" onclick="openTrendModal('identity-summit')">
             <div class="trend-tag">Identity</div>
-            <div class="trend-title">Verified Identity Summit</div>
+            <div class="trend-title">Verified Identity Summit <span class="trend-arrow">→</span></div>
             <div class="trend-count">248 professionals going</div>
           </div>
-          <div class="trend-item">
+          <div class="trend-item" data-trend="ux-designer" onclick="openTrendModal('ux-designer')">
             <div class="trend-tag">Careers</div>
-            <div class="trend-title">Hiring: Senior UX Designer</div>
+            <div class="trend-title">Hiring: Senior UX Designer <span class="trend-arrow">→</span></div>
             <div class="trend-count">8 new openings</div>
           </div>
         </div>
@@ -1217,9 +1332,169 @@
     <input type="file" id="localVideoInput" accept="video/*">
   </div>
 
+  <!-- Trend Detail Modal -->
+  <div class="modal-backdrop" id="trendModalBackdrop" role="presentation">
+    <div class="media-modal" id="trendModalContent" role="dialog" aria-modal="true" aria-labelledby="trendModalTitle" style="width: min(520px, 100%); max-height: 85vh; overflow-y: auto;">
+      <div class="trend-modal-body" id="trendModalBody">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
+    /* ═══════════════════════════════════════
+       TRENDING OPPORTUNITIES DATA & MODAL
+       ═══════════════════════════════════════ */
+    const trendData = {
+      'cto-role': {
+        tag: 'Fintech',
+        title: 'Series A Startup Seeking CTO',
+        subtitle: 'NovaPay · Remote-first · Co-founder level',
+        info: [
+          { label: 'Company', value: 'NovaPay' },
+          { label: 'Stage', value: 'Series A ($8M)' },
+          { label: 'Equity', value: '2–4% co-founder' },
+          { label: 'Referrals', value: '14 on SyncUp' }
+        ],
+        overview: 'NovaPay is a verified fintech startup building next-gen payment infrastructure for emerging markets. They\'ve raised $8M in Series A from Tier-1 VCs and are looking for a CTO to lead their 12-person engineering team. The ideal candidate has deep experience in distributed systems, payment processing, and regulatory compliance. This is a co-founder-level opportunity with significant equity and full technical ownership.',
+        highlights: [
+          '2–4% equity stake with co-founder title',
+          'Fully remote team across 6 countries',
+          '$8M Series A from Sequoia Scout and Y Combinator',
+          'Product already processing $2M monthly volume',
+          'Direct report to CEO — full technical autonomy'
+        ],
+        requirements: [
+          '10+ years of engineering experience, 5+ in leadership',
+          'Experience with payment systems, PCI-DSS compliance',
+          'Proven ability to scale teams from 10 to 50+ engineers',
+          'SyncUp-verified identity required for final round'
+        ],
+        primaryAction: { label: 'Refer someone', action: 'refer' },
+        secondaryAction: { label: 'View on Jobs', href: 'job_opportunities.html' }
+      },
+      'identity-summit': {
+        tag: 'Identity',
+        title: 'Verified Identity Summit 2026',
+        subtitle: 'June 14–15 · San Francisco · Hybrid',
+        info: [
+          { label: 'Date', value: 'June 14–15, 2026' },
+          { label: 'Location', value: 'SF + Virtual' },
+          { label: 'Attendees', value: '248 registered' },
+          { label: 'Speakers', value: '18 keynotes' }
+        ],
+        overview: 'The Verified Identity Summit is the premier conference for professionals working in digital identity, trust, and verification. This year\'s event brings together 248+ verified professionals from companies like Okta, Auth0, Stripe, and SyncUp for two days of keynotes, workshops, and networking. Topics include biometric authentication, zero-knowledge proofs, decentralized identity, and the future of trust in professional networks.',
+        highlights: [
+          '18 keynote speakers from leading identity companies',
+          'Hands-on workshops on face-auth, liveness detection, and ZK-proofs',
+          'Verified networking sessions — every attendee is identity-confirmed',
+          'Hybrid format: attend in SF or stream all sessions virtually',
+          'Early-bird pricing available through SyncUp ($299 vs $499)'
+        ],
+        requirements: [
+          'SyncUp-verified professional profile',
+          'Interest in identity, security, or trust technologies',
+          'Early-bird registration closes May 20, 2026'
+        ],
+        primaryAction: { label: 'Register interest', action: 'register' },
+        secondaryAction: { label: 'View Events', href: 'event.html' }
+      },
+      'ux-designer': {
+        tag: 'Careers',
+        title: 'Hiring: Senior UX Designer',
+        subtitle: '8 openings across 5 verified companies',
+        info: [
+          { label: 'Openings', value: '8 positions' },
+          { label: 'Salary Range', value: '$110K–$170K' },
+          { label: 'Companies', value: '5 verified' },
+          { label: 'Work Type', value: 'Remote & Hybrid' }
+        ],
+        overview: 'Five SyncUp-verified companies are actively hiring Senior UX Designers across a range of industries including cybersecurity, fintech, healthtech, and developer tools. All positions offer competitive salaries ($110K–$170K), remote or hybrid flexibility, and the chance to shape products used by millions. Applications through SyncUp get priority review — hiring managers see your verified profile and trust score upfront.',
+        highlights: [
+          'CyberShield — Lead Designer for threat visualization dashboards',
+          'NovaPay — UX Designer for payment flows in emerging markets',
+          'HealthBridge — Senior Designer for patient identity platform',
+          'DevFlow — Product Designer for developer collaboration tools',
+          'SyncUp — Staff Designer for verification and trust experiences'
+        ],
+        requirements: [
+          '5+ years of UX/UI design experience',
+          'Strong portfolio with enterprise or B2B SaaS work',
+          'Proficiency in Figma and design systems',
+          'SyncUp-verified profile for priority application review'
+        ],
+        primaryAction: { label: 'Browse all roles', action: 'browse' },
+        secondaryAction: { label: 'View Jobs', href: 'job_opportunities.html' }
+      }
+    };
+
+    function openTrendModal(id) {
+      const data = trendData[id];
+      if (!data) return;
+      const body = document.getElementById('trendModalBody');
+      body.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+          <div class="trend-modal-tag">${data.tag}</div>
+          <button class="btn btn-ghost" onclick="closeTrendModal()" style="min-height:32px;padding:6px 10px;font-size:16px;">✕</button>
+        </div>
+        <h3 id="trendModalTitle">${data.title}</h3>
+        <p class="trend-modal-subtitle">${data.subtitle}</p>
+        <div class="trend-info-grid">
+          ${data.info.map(i => `<div class="trend-info-cell"><span class="cell-label">${i.label}</span><span class="cell-value">${i.value}</span></div>`).join('')}
+        </div>
+        <div class="trend-detail-section">
+          <h4>Overview</h4>
+          <p>${data.overview}</p>
+        </div>
+        <div class="trend-detail-section">
+          <h4>Highlights</h4>
+          <ul>${data.highlights.map(h => `<li>${h}</li>`).join('')}</ul>
+        </div>
+        <div class="trend-detail-section">
+          <h4>Requirements</h4>
+          <ul>${data.requirements.map(r => `<li>${r}</li>`).join('')}</ul>
+        </div>
+        <div class="trend-modal-actions">
+          <button class="btn btn-primary" onclick="handleTrendAction('${id}')">${data.primaryAction.label}</button>
+          <a href="${data.secondaryAction.href}" class="btn btn-ghost">${data.secondaryAction.label}</a>
+        </div>
+      `;
+      document.getElementById('trendModalBackdrop').classList.add('show');
+    }
+
+    function closeTrendModal() {
+      document.getElementById('trendModalBackdrop').classList.remove('show');
+    }
+
+    document.getElementById('trendModalBackdrop')?.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('trendModalBackdrop')) closeTrendModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('trendModalBackdrop')?.classList.contains('show')) closeTrendModal();
+    });
+
+    function handleTrendAction(id) {
+      const data = trendData[id];
+      if (!data) return;
+      const label = data.primaryAction.label;
+      if (data.primaryAction.action === 'refer') {
+        closeTrendModal();
+        const composer = document.getElementById('composerInput');
+        if (composer) {
+          composer.value = `🚀 Referral: ${data.title} — ${data.subtitle}. Know someone who\'d be a great fit? Tag them below.`;
+          composer.focus();
+          showToast('Referral draft added to composer.');
+        }
+      } else if (data.primaryAction.action === 'register') {
+        closeTrendModal();
+        showToast('✅ Registration interest recorded for ' + data.title);
+      } else if (data.primaryAction.action === 'browse') {
+        window.location.href = 'job_opportunities.html';
+      }
+    }
+
     const CREDIT_KEY = 'su-credits';
     const FEED_POSTS_KEY = 'sphera-feed-posts';
     let currentFilter = 'all';
