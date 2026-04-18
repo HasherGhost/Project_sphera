@@ -8,9 +8,6 @@
     <title>SyncUp Ã¢â‚¬â€ Verified Professional Ecosystem</title>
     <meta name="description"
         content="Camera-based liveness verification, trusted networking, hiring, and events in one workspace.">
-    <script>
-        (function () { try { var t = localStorage.getItem('su-theme'); document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light'); } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); } })();
-    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
@@ -1440,6 +1437,7 @@
             }
         }
     </style>
+    <script src="theme.js"></script>
 </head>
 
 
@@ -1507,9 +1505,8 @@
                     <div class="n-stage reveal">
                         <div class="stage-grid"></div>
                         <article class="stage-card prof-card">
-                            <div class="prof-media"><img
-                                    src="/avatars/ned-ramirez.png"
-                                    alt="Verified founder" class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
+                            <div class="prof-media"><img src="/avatars/ned-ramirez.png" alt="Verified founder"
+                                    class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
                             <div>
                                 <div class="prof-name">Maya Raman</div>
                                 <div class="prof-role">Founder at Threadbase</div>
@@ -1531,12 +1528,10 @@
                             <div class="feed-dots"><span></span><span></span><span></span></div>
                         </article>
                         <article class="stage-card orbit-card">
-                            <div class="orbit-img"><img
-                                    src="/avatars/marsellus-coolidge.png"
-                                    alt="Engineer" class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
-                            <div class="orbit-img"><img
-                                    src="/avatars/mozart.png"
-                                    alt="Investor" class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
+                            <div class="orbit-img"><img src="/avatars/marsellus-coolidge.png" alt="Engineer"
+                                    class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
+                            <div class="orbit-img"><img src="/avatars/mozart.png" alt="Investor"
+                                    class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
                             <div class="orbit-copy">Warm intros are moving</div>
                         </article>
                     </div>
@@ -1730,15 +1725,7 @@
            Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â */
 
         /* Ã¢â€â‚¬Ã¢â€â‚¬ Theme Ã¢â€â‚¬Ã¢â€â‚¬ */
-        const themeKey = 'su-theme';
-        function applyTheme(t) {
-            const d = t === 'dark'; document.documentElement.setAttribute('data-theme', d ? 'dark' : 'light');
-            const l = document.getElementById('themeLabel'); if (l) l.textContent = d ? 'Dark' : 'Light';
-        }
-        document.getElementById('themeToggle')?.addEventListener('click', () => {
-            const n = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            applyTheme(n); try { localStorage.setItem(themeKey, n) } catch (e) { }
-        });
+
 
         /* Ã¢â€â‚¬Ã¢â€â‚¬ Toast Ã¢â€â‚¬Ã¢â€â‚¬ */
         let toastTimer; function showToast(m) { const t = document.getElementById('toast'); if (!t) return; t.textContent = m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }

@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SyncUp — Rewards & Milestones</title>
     <meta name="description" content="Redeem coupons, unlock ecosystem milestones, and track your trusted growth.">
-    <script>
-        (function () { try { var t = localStorage.getItem('su-theme'); document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light'); } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); } })();
-    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -182,6 +180,7 @@
         @media(max-width: 980px) { .page-layout { grid-template-columns: 240px 1fr; } .hidden-md { display: none; } }
         @media(max-width: 768px) { .page-layout { grid-template-columns: 1fr; padding-top: 16px; } .side-nav { display: flex; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; } .side-nav a { flex-shrink: 0; } }
     </style>
+    <script src="theme.js"></script>
 </head>
 
 <body>
@@ -337,13 +336,7 @@
     </div>
 
     <script>
-        // Theme logic
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            const h = document.documentElement;
-            const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            h.setAttribute('data-theme', n);
-            try { localStorage.setItem('su-theme', n); } catch(e){}
-        });
+
 
         // Toast logic
         let toastTimer;
