@@ -933,6 +933,122 @@
                 justify-content: flex-start;
             }
         }
+
+        /* ═══ Invite Request Cards ═══ */
+        .invite-section {
+            display: none;
+        }
+
+        .invite-section.is-visible {
+            display: block;
+        }
+
+        .network-section.is-hidden {
+            display: none;
+        }
+
+        .invite-request-card {
+            display: grid;
+            grid-template-columns: 56px minmax(0, 1fr);
+            gap: 14px;
+            padding: 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            transition: background 0.2s ease, border-color 0.2s ease, opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .invite-request-card:hover {
+            border-color: var(--border-strong);
+            background: var(--surface-strong);
+        }
+
+        .invite-request-card.is-accepted {
+            border-color: rgba(16, 185, 129, 0.35);
+            background: rgba(16, 185, 129, 0.06);
+        }
+
+        .invite-request-card.is-declined {
+            opacity: 0.4;
+            transform: scale(0.98);
+            pointer-events: none;
+        }
+
+        .invite-request-card .c-avatar {
+            width: 56px;
+            height: 56px;
+        }
+
+        .invite-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .invite-meta .meta-detail {
+            color: var(--text-faint);
+            font-size: 12px;
+        }
+
+        .invite-meta .meta-detail::before {
+            content: '·';
+            margin-right: 6px;
+        }
+
+        .invite-meta .meta-detail:first-child::before {
+            display: none;
+        }
+
+        .invite-message {
+            margin-top: 10px;
+            padding: 10px 12px;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            line-height: 1.55;
+            font-style: italic;
+        }
+
+        .invite-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .invite-actions .btn {
+            gap: 6px;
+        }
+
+        .invite-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .invite-status.accepted {
+            color: var(--success);
+            background: rgba(16, 185, 129, 0.12);
+        }
+
+        .invite-status.declined {
+            color: var(--text-faint);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .invite-time {
+            color: var(--text-faint);
+            font-size: 11px;
+            font-weight: 700;
+        }
     </style>
     <script src="theme.js"></script>
 </head>
@@ -984,7 +1100,7 @@
                     <span>Credits</span>
                 </div>
                 <a class="profile-button" href="#profile" aria-label="Open profile">
-                    <img src="public/avatars/aarav-mehta.png" alt="Aarav Mehta">
+                    <img src="public/avatars/maggot.png" alt="Sarah Jenkins">
                 </a>
             </div>
         </div>
@@ -993,9 +1109,9 @@
     <div class="container">
         <aside class="left-sidebar stack" aria-label="Network navigation">
             <section class="card pad profile-card" id="profile">
-                <img src="public/avatars/aarav-mehta.png" alt="Aarav Mehta" class="profile-avatar">
-                <h2 class="profile-name">Aarav Mehta</h2>
-                <p class="profile-title">Founder @ Synapse AI</p>
+                <img src="public/avatars/ned-ramirez.png" alt="Sarah Jenkins" class="profile-avatar">
+                <h2 class="profile-name">Sarah Jenkins</h2>
+                <p class="profile-title">Managing Director @ Sphera Ventures</p>
                 <div class="verified-line"><span class="pulse"></span> Liveness verified</div>
                 <div class="stats">
                     <div class="stat-item">
@@ -1011,7 +1127,7 @@
 
             <nav class="card pad" aria-label="Primary">
                 <ul class="nav-menu">
-                    <li class="nav-item active">
+                    <li class="nav-item active" id="navNetwork" onclick="switchToNetwork()">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -1028,7 +1144,7 @@
                         </svg>
                         Feed
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="navInvites" onclick="switchToInvites()">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
@@ -1037,7 +1153,7 @@
                             <line x1="22" y1="11" x2="16" y2="11"></line>
                         </svg>
                         Invites
-                        <span class="nav-count">3</span>
+                        <span class="nav-count" id="inviteCount">5</span>
                     </li>
                     <li class="nav-item" onclick="window.location.href='reward.html'">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -1076,12 +1192,13 @@
                 </div>
                 <div class="invite-card">
                     <span>Personal invite</span>
-                    <code>syncup.link/aarav24</code>
+                    <code>syncup.link/sarah24</code>
                     <button class="btn btn-subtle" data-action="copy-invite">Copy link</button>
                 </div>
             </section>
 
-            <section>
+            <!-- ═══ NETWORK VIEW (default) ═══ -->
+            <section class="network-section" id="networkSection">
                 <div class="section-toolbar">
                     <div>
                         <div class="section-kicker">People</div>
@@ -1099,8 +1216,8 @@
 
                 <div class="connection-list">
                     <article class="connection-card" data-tags="investor fintech partner verified"
-                        data-name="Priya Nair" data-role="Partner at Nila Ventures"
-                        data-location="Bengaluru, KA" data-mutuals="4 shared mutuals" data-status="verified">
+                        data-name="Priya Nair" data-role="Partner at Nila Ventures" data-location="Bengaluru, KA"
+                        data-mutuals="4 shared mutuals" data-status="verified">
                         <img class="c-avatar" src="public/avatars/priya-nair.png" alt="Priya Nair">
                         <div class="c-info">
                             <h3>Priya Nair <span class="badge">Verified</span></h3>
@@ -1132,7 +1249,7 @@
                     <article class="connection-card" data-tags="founder hiring cto cloud deep-tech verified"
                         data-name="Arjun Mehta" data-role="CTO @ CloudScale · Deep-tech enthusiast"
                         data-location="Hyderabad, TS" data-mutuals="7 shared mutuals" data-status="verified">
-                    <img class="c-avatar" src="public/avatars/arjun-mehta.png" alt="Arjun Mehta">
+                        <img class="c-avatar" src="public/avatars/arjun-mehta.png" alt="Arjun Mehta">
                         <div class="c-info">
                             <h3>Arjun Mehta <span class="badge">Verified</span> <span
                                     class="badge badge-green">Open</span></h3>
@@ -1159,6 +1276,21 @@
                         </div>
                     </article>
                     <div class="card empty-state" id="emptyState" hidden>No contacts match this view.</div>
+                </div>
+            </section>
+
+            <!-- ═══ INVITES VIEW (hidden by default) ═══ -->
+            <section class="invite-section" id="inviteSection">
+                <div class="section-toolbar">
+                    <div>
+                        <div class="section-kicker">Incoming</div>
+                        <h2>Connection requests</h2>
+                    </div>
+                    <button class="btn btn-ghost" onclick="switchToNetwork()">← Back to Network</button>
+                </div>
+
+                <div class="connection-list" id="inviteList">
+                    <!-- Populated by JS -->
                 </div>
             </section>
         </main>
@@ -1225,6 +1357,198 @@
         const CREDIT_KEY = 'su-credits';
         let currentFilter = 'all';
         let currentSearch = '';
+        let currentView = 'network'; // 'network' or 'invites'
+
+        /* ═══════════════════════════════════════
+           INVITE REQUEST DATA
+           ═══════════════════════════════════════ */
+        const inviteRequests = [
+            {
+                id: 'inv-1',
+                name: 'Lisa Wong',
+                avatar: 'public/avatars/lisa-wong.png',
+                role: 'Founder @ DevFlow',
+                badge: 'Verified',
+                badgeClass: '',
+                mutuals: '3 shared mutuals',
+                location: 'Seattle, WA',
+                time: '2 hours ago',
+                message: 'Hi Sarah! I\'ve been following Sphera Ventures\' work on identity-first platforms. I\'m building developer collaboration tools at DevFlow and think there could be a great integration opportunity between our products. Would love to connect and explore.',
+                status: 'pending'
+            },
+            {
+                id: 'inv-2',
+                name: 'Michael Chang',
+                avatar: 'public/avatars/michael-chang.png',
+                role: 'Partner @ Y Combinator',
+                badge: 'Verified',
+                badgeClass: '',
+                mutuals: 'Referred by David Chen',
+                location: 'San Francisco, CA',
+                time: '5 hours ago',
+                message: 'Sarah — David from Greenfield mentioned your liveness verification tech. We\'re scouting for the next batch and your approach to trust-first networking is exactly the kind of infrastructure play we fund. Let\'s chat.',
+                status: 'pending'
+            },
+            {
+                id: 'inv-3',
+                name: 'Marcus Chen',
+                avatar: 'public/avatars/mozart.png',
+                role: 'Lead Engineer @ Nexus Labs',
+                badge: 'Verified',
+                badgeClass: '',
+                mutuals: '5 shared mutuals',
+                location: 'San Francisco, CA',
+                time: '1 day ago',
+                message: 'Hey! We\'re scaling our zero-trust architecture team and I noticed your background in distributed systems. I\'d like to exchange notes on how you handle identity verification at scale. Also exploring potential partnership opportunities.',
+                status: 'pending'
+            },
+            {
+                id: 'inv-4',
+                name: 'Ned Ramirez',
+                avatar: 'public/avatars/ned-ramirez.png',
+                role: 'Head of Product @ TrustLayer',
+                badge: 'Verified',
+                badgeClass: 'badge-green',
+                mutuals: '2 shared mutuals',
+                location: 'Austin, TX',
+                time: '2 days ago',
+                message: 'Sarah, I\'m leading product at TrustLayer where we\'re building B2B verification APIs. Your Sphera profile caught my eye — the liveness verification UX is really well done. Would love to connect and share learnings on trust-layer design patterns.',
+                status: 'pending'
+            },
+            {
+                id: 'inv-5',
+                name: 'Marsellus Coolidge',
+                avatar: 'public/avatars/marsellus-coolidge.png',
+                role: 'VP Engineering @ CyberShield',
+                badge: 'Verified',
+                badgeClass: 'badge-amber',
+                mutuals: 'Intro from Elena Rodriguez',
+                location: 'Remote (EU)',
+                time: '3 days ago',
+                message: 'Elena mentioned you\'re working on some impressive identity infrastructure. At CyberShield, we\'re hiring across engineering and I think your network could help us find the right distributed systems talent. Happy to reciprocate with intros to our security community.',
+                status: 'pending'
+            }
+        ];
+
+        /* ═══ View Switching ═══ */
+        function switchToInvites() {
+            currentView = 'invites';
+            document.getElementById('networkSection')?.classList.add('is-hidden');
+            document.getElementById('inviteSection')?.classList.add('is-visible');
+            // Update nav active states
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById('navInvites')?.classList.add('active');
+            renderInvites();
+        }
+
+        function switchToNetwork() {
+            currentView = 'network';
+            document.getElementById('networkSection')?.classList.remove('is-hidden');
+            document.getElementById('inviteSection')?.classList.remove('is-visible');
+            // Update nav active states
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.getElementById('navNetwork')?.classList.add('active');
+        }
+
+        function updateInviteCount() {
+            const pending = inviteRequests.filter(r => r.status === 'pending').length;
+            const countEl = document.getElementById('inviteCount');
+            if (countEl) {
+                countEl.textContent = pending;
+                countEl.style.display = pending > 0 ? '' : 'none';
+            }
+        }
+
+        function renderInvites() {
+            const list = document.getElementById('inviteList');
+            if (!list) return;
+            list.innerHTML = inviteRequests.map(req => {
+                const badgeCls = req.badgeClass ? ` ${req.badgeClass}` : '';
+                if (req.status === 'accepted') {
+                    return `
+                        <article class="invite-request-card is-accepted" data-invite-id="${req.id}">
+                            <img class="c-avatar" src="${req.avatar}" alt="${req.name}">
+                            <div>
+                                <div class="c-info">
+                                    <h3>${req.name} <span class="badge${badgeCls}">${req.badge}</span></h3>
+                                    <p>${req.role}</p>
+                                </div>
+                                <div class="invite-status accepted">✓ Connected</div>
+                            </div>
+                        </article>`;
+                }
+                if (req.status === 'declined') {
+                    return `
+                        <article class="invite-request-card is-declined" data-invite-id="${req.id}">
+                            <img class="c-avatar" src="${req.avatar}" alt="${req.name}" style="filter:grayscale(1)">
+                            <div>
+                                <div class="c-info">
+                                    <h3>${req.name}</h3>
+                                    <p>${req.role}</p>
+                                </div>
+                                <div class="invite-status declined">Declined</div>
+                            </div>
+                        </article>`;
+                }
+                return `
+                    <article class="invite-request-card" data-invite-id="${req.id}">
+                        <img class="c-avatar" src="${req.avatar}" alt="${req.name}">
+                        <div>
+                            <div class="c-info">
+                                <h3>${req.name} <span class="badge${badgeCls}">${req.badge}</span></h3>
+                                <p>${req.role}</p>
+                                <div class="invite-meta">
+                                    <span class="meta-detail">${req.location}</span>
+                                    <span class="meta-detail">${req.mutuals}</span>
+                                    <span class="meta-detail invite-time">${req.time}</span>
+                                </div>
+                            </div>
+                            <div class="invite-message">"${req.message}"</div>
+                            <div class="invite-actions">
+                                <button class="btn btn-primary" onclick="acceptInvite('${req.id}')">Accept</button>
+                                <button class="btn btn-ghost" onclick="declineInvite('${req.id}')">Decline</button>
+                                <button class="btn btn-ghost" onclick="viewInviteProfile('${req.name}')">View profile</button>
+                            </div>
+                        </div>
+                    </article>`;
+            }).join('');
+        }
+
+        function acceptInvite(id) {
+            const req = inviteRequests.find(r => r.id === id);
+            if (!req || req.status !== 'pending') return;
+            req.status = 'accepted';
+            updateInviteCount();
+            renderInvites();
+            showToast(`Connected with ${req.name}!`);
+        }
+
+        function declineInvite(id) {
+            const req = inviteRequests.find(r => r.id === id);
+            if (!req || req.status !== 'pending') return;
+            req.status = 'declined';
+            updateInviteCount();
+            renderInvites();
+            showToast(`Declined request from ${req.name}.`);
+        }
+
+        function viewInviteProfile(name) {
+            switchToNetwork();
+            const search = document.getElementById('networkSearch');
+            if (search) search.value = name;
+            currentSearch = name.toLowerCase();
+            currentFilter = 'all';
+            setActiveFilter('all');
+            const visibleCount = applyNetworkFilters();
+            if (visibleCount > 0) {
+                showToast(`Showing profile for ${name}.`);
+            } else {
+                if (search) search.value = '';
+                currentSearch = '';
+                applyNetworkFilters();
+                showToast(`${name} is not yet in your network. Accept their invite first.`);
+            }
+        }
 
         function getCredits() {
             return parseFloat(localStorage.getItem(CREDIT_KEY) || '0');
@@ -1399,7 +1723,7 @@
             }
             if (action === 'messages') showToast('Messages panel opened.');
             if (action === 'copy-invite') {
-                copyText('syncup.link/aarav24', 'Invite link copied.');
+                copyText('syncup.link/sarah24', 'Invite link copied.');
                 target.textContent = 'Copied';
                 setTimeout(() => { target.textContent = 'Copy link'; }, 1800);
             }
@@ -1424,6 +1748,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateCreditsDisplay();
             applyNetworkFilters();
+            updateInviteCount();
         });
 
         document.querySelectorAll('.filter-btn').forEach((btn) => {
