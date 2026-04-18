@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <a href="/rewards" className="hover:text-white transition">Rewards</a>
             </nav>
             <div className="flex items-center gap-4">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-primary to-brand-secondary border border-white/20"></div>
+              <img src="/avatars/maggot.png" alt="Me" className="rounded-full object-cover border border-slate-700 bg-slate-800 w-8 h-8" />
             </div>
           </div>
         </header>
