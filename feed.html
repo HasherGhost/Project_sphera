@@ -1,1145 +1,1579 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sphera | Business Social Feed</title>
-    <meta name="description" content="A clean, business-focused social environment for professionals.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            --bg: #09090b;
-            --bg-glass: rgba(24, 24, 27, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
-            --primary: #3b82f6;
-            --primary-glow: rgba(59, 130, 246, 0.5);
-            --text-main: #f4f4f5;
-            --text-muted: #a1a1aa;
-            --surface: #18181b;
-            --radius: 16px;
-            --accent: #8b5cf6;
-        }
-
-        [data-theme="light"] {
-            --bg: #f8fafc;
-            --bg-glass: rgba(255, 255, 255, 0.8);
-            --border: rgba(0, 0, 0, 0.08);
-            --primary: #2563eb;
-            --primary-glow: rgba(37, 99, 235, 0.3);
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --surface: #ffffff;
-            --accent: #7c3aed;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        body {
-            background-color: transparent;
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-
-        /* ── Video Background ── */
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            overflow: hidden;
-        }
-
-        .video-bg video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            opacity: 0.8;
-            z-index: -1;
-            backdrop-filter: blur(8px);
-            transition: background 0.3s ease;
-        }
-
-        /* --- Global Layout --- */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 280px 1fr 320px;
-            gap: 24px;
-            padding-top: 80px;
-        }
-
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 240px 1fr;
-            }
-
-            .right-sidebar {
-                display: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-
-            .left-sidebar {
-                display: none;
-            }
-        }
-
-        /* --- Header --- */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 64px;
-            background: var(--bg-glass);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-        }
-
-        .header-content {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            letter-spacing: -1px;
-        }
-
-        .search-bar {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 99px;
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            width: 400px;
-            transition: all 0.2s ease;
-        }
-
-        .search-bar:focus-within {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px var(--primary-glow);
-        }
-
-        .search-bar input {
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            margin-left: 8px;
-            width: 100%;
-            outline: none;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-
-        .icon-btn {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
-        .icon-btn:hover {
-            background: var(--border);
-            transform: translateY(-2px);
-        }
-
-        .notification-dot {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 8px;
-            height: 8px;
-            background: #ef4444;
-            border-radius: 50%;
-            border: 2px solid var(--bg);
-        }
-
-        /* --- Left Sidebar --- */
-        .glass-card {
-            background: var(--bg-glass);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 24px;
-            margin-bottom: 24px;
-            transition: all 0.3s ease;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .profile-summary {
-            text-align: center;
-        }
-
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            margin: 0 auto 16px;
-            object-fit: cover;
-            border: 2px solid var(--primary);
-            padding: 3px;
-            background: var(--bg);
-        }
-
-        .profile-name {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .profile-title {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-value {
-            font-weight: 700;
-            font-size: 16px;
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .nav-menu {
-            list-style: none;
-            margin-top: 8px;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .nav-item:hover {
-            background: var(--border);
-            color: var(--text-main);
-        }
-
-        .nav-item.active {
-            background: var(--primary-glow);
-            color: var(--primary);
-        }
-
-        /* --- Middle Feed --- */
-        .composer {
-            display: flex;
-            gap: 16px;
-        }
-
-        .composer-input {
-            width: 100%;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: var(--text-main);
-            outline: none;
-            resize: none;
-            min-height: 48px;
-            transition: all 0.2s ease;
-        }
-
-        .composer-input:focus {
-            border-color: var(--primary);
-        }
-
-        .composer-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 16px;
-        }
-
-        .action-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: #fff;
-        }
-
-        .btn-primary:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px var(--primary-glow);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--text-muted);
-        }
-
-        .btn-ghost:hover {
-            background: var(--border);
-            color: var(--text-main);
-        }
-
-        /* --- Post Card --- */
-        .post {
-            animation: fadeIn 0.5s ease backwards;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .post-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .post-author {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .author-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            object-fit: cover;
-        }
-
-        .author-info h4 {
-            font-size: 15px;
-            font-weight: 700;
-        }
-
-        .author-info p {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .post-content {
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 16px;
-            color: var(--text-main);
-        }
-
-        .post-image {
-            width: 100%;
-            border-radius: 12px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border);
-        }
-
-        .post-actions {
-            display: flex;
-            gap: 24px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-        }
-
-        .post-action {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-muted);
-            font-size: 14px;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .post-action:hover {
-            color: var(--primary);
-        }
-
-        .badge {
-            background: var(--primary-glow);
-            color: var(--primary);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- Right Sidebar --- */
-        .sidebar-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .suggestion-list {
-            list-style: none;
-        }
-
-        .suggestion-item {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .suggestion-info {
-            flex: 1;
-        }
-
-        .suggestion-info h5 {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .suggestion-info p {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: #fff;
-        }
-
-        .trending-item {
-            margin-bottom: 16px;
-            cursor: pointer;
-        }
-
-        .trending-item:hover .trending-title {
-            color: var(--primary);
-        }
-
-        .trending-tag {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .trending-title {
-            font-size: 14px;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-
-        .trending-count {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        /* --- Liveness Tag --- */
-        .liveness-verified {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            color: #10b981;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .pulse {
-            width: 6px;
-            height: 6px;
-            background: #10b981;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            animation: pulse-green 2s infinite;
-        }
-
-        @keyframes pulse-green {
-            0% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            }
-
-            70% {
-                transform: scale(1);
-                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
-            }
-
-            100% {
-                transform: scale(0.95);
-                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-            }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
-        }
-
-        /* --- Credits Pill --- */
-        .credits-pill {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(139, 92, 246, 0.18));
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            border-radius: 99px;
-            padding: 6px 14px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-main);
-            cursor: default;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .credits-pill:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
-        }
-
-        .credits-amount {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            font-weight: 800;
-            font-size: 14px;
-        }
-
-        /* --- Media Modal Styles --- */
-        .modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-backdrop.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .media-modal {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 32px;
-            width: min(440px, 90%);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-backdrop.show .media-modal {
-            transform: scale(1);
-        }
-
-        .modal-title {
-            font-size: 20px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .modal-subtitle {
-            color: var(--text-muted);
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .modal-options {
-            display: grid;
-            gap: 12px;
-        }
-
-        .option-btn {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            width: 100%;
-            text-align: left;
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        .option-btn:hover {
-            border-color: var(--primary);
-            background: var(--primary-glow);
-            transform: translateY(-2px);
-        }
-
-        .option-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--surface);
-            border-radius: 10px;
-            display: grid;
-            place-items: center;
-            border: 1px solid var(--border);
-        }
-
-        .hidden-inputs {
-            display: none;
-        }
-    </style>
-    <script src="theme.js"></script>
-    <script src="media_handler.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sphera | Business Social Feed</title>
+  <meta name="description" content="A clean, business-focused social environment for verified professionals.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --bg-soft: rgba(9, 9, 11, 0.76);
+      --surface: rgba(24, 24, 27, 0.74);
+      --surface-strong: rgba(32, 32, 36, 0.9);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --primary: #3b82f6;
+      --primary-soft: rgba(59, 130, 246, 0.14);
+      --accent: #8b5cf6;
+      --accent-soft: rgba(139, 92, 246, 0.14);
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --text-faint: #71717a;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.22);
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-soft: rgba(248, 250, 252, 0.82);
+      --surface: rgba(255, 255, 255, 0.84);
+      --surface-strong: rgba(255, 255, 255, 0.96);
+      --border: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(15, 23, 42, 0.12);
+      --primary: #2563eb;
+      --primary-soft: rgba(37, 99, 235, 0.1);
+      --accent: #7c3aed;
+      --accent-soft: rgba(124, 58, 237, 0.1);
+      --text-main: #172033;
+      --text-muted: #64748b;
+      --text-faint: #94a3b8;
+      --shadow-soft: 0 18px 60px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+    button,
+    input,
+    textarea { font: inherit; }
+    button { border: 0; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; }
+
+    .video-bg,
+    .video-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+    .video-bg { z-index: -2; overflow: hidden; }
+    .video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-overlay {
+      z-index: -1;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(59, 130, 246, 0.16), transparent 36%),
+        radial-gradient(circle at 88% 16%, rgba(139, 92, 246, 0.16), transparent 32%),
+        var(--bg);
+      opacity: 0.92;
+      backdrop-filter: blur(12px);
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-soft);
+      backdrop-filter: blur(18px);
+    }
+    .header-content {
+      width: min(1180px, calc(100% - 40px));
+      height: 68px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 220px minmax(260px, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+    }
+    .logo {
+      width: fit-content;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+    .search-bar {
+      width: 100%;
+      max-width: 460px;
+      justify-self: center;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      color: var(--text-faint);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .search-bar:focus-within {
+      border-color: rgba(59, 130, 246, 0.6);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+    .search-bar input {
+      width: 100%;
+      min-width: 0;
+      color: var(--text-main);
+      background: transparent;
+      border: 0;
+      outline: 0;
+    }
+    .search-bar input::placeholder { color: var(--text-faint); }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .icon-btn,
+    .profile-button {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .icon-btn:hover,
+    .profile-button:hover {
+      color: var(--text-main);
+      border-color: var(--border-strong);
+      background: var(--surface-strong);
+    }
+    .profile-button img {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      object-fit: cover;
+    }
+    .notification-dot {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 7px;
+      height: 7px;
+      background: var(--danger);
+      border: 2px solid var(--bg);
+      border-radius: 999px;
+    }
+    .credits-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 38px;
+      padding: 0 12px;
+      color: var(--text-main);
+      background: linear-gradient(135deg, var(--primary-soft), var(--accent-soft));
+      border: 1px solid rgba(139, 92, 246, 0.28);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .credits-amount { color: var(--primary); font-weight: 800; }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 92px 0 48px;
+      display: grid;
+      grid-template-columns: 236px minmax(0, 1fr) 282px;
+      gap: 20px;
+      align-items: start;
+    }
+    .left-sidebar,
+    .right-sidebar {
+      position: sticky;
+      top: 88px;
+    }
+    .stack { display: grid; gap: 16px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px);
+    }
+    .card.pad { padding: 18px; }
+
+    .profile-card { text-align: center; }
+    .profile-avatar {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 14px;
+      object-fit: cover;
+      border: 1px solid rgba(59, 130, 246, 0.45);
+      border-radius: 24px;
+      background: var(--bg);
+    }
+    .profile-name {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .profile-title {
+      margin-top: 5px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .verified-line {
+      width: fit-content;
+      margin: 14px auto 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 9px;
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .pulse {
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 999px;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.14);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-item {
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .stat-value { display: block; font-size: 16px; font-weight: 800; }
+    .stat-label {
+      display: block;
+      margin-top: 3px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .nav-menu {
+      display: grid;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+      padding: 10px 11px;
+      color: var(--text-muted);
+      border-radius: 13px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .nav-item:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .nav-item.active {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .feed-intro {
+      position: relative;
+      overflow: hidden;
+      padding: 24px;
+    }
+    .feed-intro::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 16% 0%, rgba(59, 130, 246, 0.22), transparent 34%),
+        radial-gradient(circle at 96% 12%, rgba(139, 92, 246, 0.2), transparent 36%);
+      pointer-events: none;
+    }
+    .feed-intro > * {
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 11px;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 999px;
+    }
+    .feed-intro h1 {
+      max-width: 640px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.02;
+      letter-spacing: -0.055em;
+    }
+    .feed-intro p {
+      max-width: 640px;
+      margin-top: 13px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .feed-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .metric {
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .metric strong {
+      display: block;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+    .metric span {
+      display: block;
+      margin-top: 3px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .composer {
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+    .avatar {
+      width: 46px;
+      height: 46px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg);
+    }
+    .composer-input {
+      width: 100%;
+      min-height: 88px;
+      padding: 13px 14px;
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      outline: 0;
+      resize: vertical;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .composer-input:focus {
+      border-color: rgba(59, 130, 246, 0.6);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+    }
+    .composer-input::placeholder { color: var(--text-faint); }
+    .composer-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .section-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 14px;
+      margin: 2px 0 -2px;
+    }
+    .section-kicker {
+      color: var(--text-faint);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .section-toolbar h2 {
+      margin-top: 5px;
+      font-size: 20px;
+      letter-spacing: -0.035em;
+    }
+    .feed-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tab-btn {
+      padding: 8px 13px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tab-btn.active {
+      color: var(--text-main);
+      border-color: rgba(59, 130, 246, 0.4);
+      background: var(--primary-soft);
+    }
+
+    .post {
+      padding: 18px;
+    }
+    .post-list {
+      display: grid;
+      gap: 16px;
+    }
+    .post[hidden],
+    .empty-state[hidden] {
+      display: none;
+    }
+    .post-header {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: var(--bg);
+    }
+    .author-info h3 {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .author-info p {
+      margin-top: 4px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+    .post-menu {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+    }
+    .post-content {
+      margin-top: 16px;
+      color: var(--text-main);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .post-image {
+      width: 100%;
+      max-height: 360px;
+      margin-top: 16px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .post-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .post-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 10px;
+      color: var(--text-muted);
+      background: transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    .post-action:hover {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+    .post-action.is-trusted {
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.12);
+    }
+    .post-options,
+    .comment-panel {
+      margin-top: 14px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .post-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .comment-panel {
+      display: grid;
+      gap: 10px;
+    }
+    .comment-row {
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .comment-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+    }
+    .comment-input {
+      min-width: 0;
+      padding: 10px 12px;
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      outline: 0;
+    }
+    .comment-input:focus {
+      border-color: rgba(59, 130, 246, 0.55);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+    .empty-state {
+      padding: 24px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 4px 8px;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .badge-green { color: var(--success); background: rgba(16, 185, 129, 0.14); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 36px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+    }
+    .btn-ghost {
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      color: var(--text-main);
+      border-color: var(--border-strong);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .btn-subtle {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+    .btn.is-connected,
+    .btn:disabled {
+      cursor: default;
+      transform: none;
+      opacity: 0.78;
+    }
+    .btn.is-connected {
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.12);
+    }
+
+    .sidebar-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .sidebar-note {
+      color: var(--text-faint);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .suggestion-list,
+    .trend-list,
+    .signal-list {
+      display: grid;
+      gap: 10px;
+      list-style: none;
+    }
+    .suggestion-item {
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 8px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .suggestion-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--border);
+    }
+    .mini-avatar {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .suggestion-info h3 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .suggestion-info p {
+      overflow: hidden;
+      margin-top: 2px;
+      color: var(--text-muted);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 12px;
+    }
+    .trend-item,
+    .signal-item {
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .trend-tag {
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .trend-title {
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+    .trend-count,
+    .signal-item p {
+      margin-top: 4px;
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .signal-item strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .media-modal {
+      width: min(440px, 100%);
+      padding: 24px;
+      background: var(--surface-strong);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+      transform: translateY(8px) scale(0.98);
+      transition: transform 0.25s ease;
+    }
+    .modal-backdrop.show .media-modal { transform: translateY(0) scale(1); }
+    .modal-title {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      text-align: center;
+    }
+    .modal-subtitle {
+      margin: 8px 0 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+      text-align: center;
+    }
+    .modal-options {
+      display: grid;
+      gap: 10px;
+    }
+    .option-btn {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      padding: 13px;
+      color: var(--text-main);
+      text-align: left;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 800;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .option-btn:hover {
+      background: var(--primary-soft);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+    .option-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border-radius: 13px;
+      font-weight: 900;
+    }
+    .option-btn small {
+      display: block;
+      margin-top: 3px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .hidden-inputs { display: none; }
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 3000;
+      max-width: min(360px, calc(100% - 40px));
+      padding: 12px 14px;
+      color: var(--text-main);
+      background: var(--surface-strong);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+
+    @media (max-width: 1120px) {
+      .header-content { grid-template-columns: 180px minmax(220px, 1fr) auto; }
+      .container { grid-template-columns: 220px minmax(0, 1fr); }
+      .right-sidebar { display: none; }
+    }
+
+    @media (max-width: 820px) {
+      .header-content {
+        width: min(100% - 28px, 1180px);
+        grid-template-columns: auto 1fr auto;
+      }
+      .search-bar { display: none; }
+      .credits-pill span:last-child,
+      .icon-btn[title="Messages"] { display: none; }
+      .container {
+        width: min(100% - 28px, 1180px);
+        grid-template-columns: 1fr;
+        padding-top: 86px;
+      }
+      .left-sidebar { position: static; }
+      .profile-card { display: none; }
+      .feed-metrics,
+      .post-header,
+      .suggestion-item { grid-template-columns: 1fr; }
+      .composer { grid-template-columns: 1fr; }
+      .composer > .avatar { display: none; }
+      .composer-actions,
+      .section-toolbar {
+        align-items: stretch;
+        flex-direction: column;
+      }
+      .post-menu { justify-self: start; }
+    }
+  </style>
+  <script src="theme.js"></script>
+  <script src="media_handler.js" defer></script>
 </head>
-
 <body>
-    <div class="video-bg">
-        <video autoplay muted loop playsinline>
-            <source src="4779866-hd_1920_1080_30fps.mp4" type="video/mp4">
-        </video>
-    </div>
-    <div class="video-overlay"></div>
+  <div class="video-bg" aria-hidden="true">
+    <video autoplay muted loop playsinline>
+      <source src="4779866-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="video-overlay" aria-hidden="true"></div>
 
-    <header>
-        <div class="header-content">
-            <div class="logo">SPHERA</div>
-            <div class="search-bar">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" class="text-muted">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="text" placeholder="Explore opportunities and connections...">
-            </div>
-            <div class="header-actions">
-                <!-- 🌙 Theme toggle -->
-                <div class="icon-btn" onclick="toggleTheme()" title="Toggle theme">
-                    <svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </div>
-                <!-- 🔔 Notifications -->
-                <div class="icon-btn" title="Notifications">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <div class="notification-dot"></div>
-                </div>
-                <!-- ✉️ Messages -->
-                <div class="icon-btn" title="Messages">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                </div>
-                <!-- 💳 Credits -->
-                <div class="credits-pill" id="creditsPill" title="Your redeemed credits">
-                    <span>💳</span>
-                    <span id="creditsDisplay" class="credits-amount">0</span>
-                    <span style="font-weight: 600; font-size: 12px; color: var(--text-muted);">Credits</span>
-                </div>
-                <!-- 👤 Profile -->
-                <img src="public/avatars/maggot.png" alt="Me"
-                    class="rounded-full object-cover border border-slate-700 bg-slate-800"
-                    style="width: 32px; height: 32px; cursor:pointer;">
-            </div>
+  <header class="site-header">
+    <div class="header-content">
+      <a href="index.html" class="logo">SPHERA</a>
+      <label class="search-bar" aria-label="Search feed">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input id="feedSearch" type="text" placeholder="Search insights, people, opportunities...">
+      </label>
+      <div class="header-actions">
+        <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
+          <svg id="theme-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button class="icon-btn" title="Notifications" aria-label="Notifications" style="position:relative;" data-action="notifications">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="notification-dot"></span>
+        </button>
+        <button class="icon-btn" title="Messages" aria-label="Messages" data-action="messages">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        </button>
+        <div class="credits-pill" id="creditsPill" title="Your redeemed credits">
+          <span id="creditsDisplay" class="credits-amount">0</span>
+          <span>Credits</span>
         </div>
-    </header>
-
-    <div class="container">
-        <!-- Left Sidebar -->
-        <aside class="left-sidebar">
-            <div class="glass-card profile-summary">
-                <img src="public/avatars/ned-ramirez.png" alt="Profile"
-                    class="rounded-full object-cover border border-slate-700 bg-slate-800"
-                    style="width: 80px; height: 80px;">
-                <h3 class="profile-name">Sarah Jenkins</h3>
-                <p class="profile-title">Managing Director @ Sphere Ventures</p>
-                <div class="liveness-verified">
-                    <span class="pulse"></span> Liveness Verified
-                </div>
-                <div class="stats">
-                    <div class="stat-item">
-                        <span class="stat-value">1,248</span>
-                        <span class="stat-label">Connections</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-value">843</span>
-                        <span class="stat-label">Views</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="glass-card">
-                <ul class="nav-menu">
-                    <li class="nav-item active">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="3 9 12 2 21 9 21 21 9 21 9 12 12 12 15 12 15 21 3 21"></polyline>
-                        </svg>
-                        Feed
-                    </li>
-                    <li class="nav-item" onclick="window.location.href='network.html'">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                        Network
-                    </li>
-                    <li class="nav-item" onclick="window.location.href='opportunity.html'">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                        </svg>
-                        Opportunities
-                    </li>
-                    <li class="nav-item" onclick="window.location.href='event.html'">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        Events
-                    </li>
-                    <li class="nav-item" onclick="window.location.href='reward.html'">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
-                            </path>
-                        </svg>
-                        Rewards
-                    </li>
-                </ul>
-            </div>
-        </aside>
-
-        <!-- Main Feed -->
-        <main class="feed-column">
-            <div class="glass-card">
-                <div class="composer">
-                    <img src="public/avatars/maggot.png" alt="Me"
-                        class="rounded-full object-cover border border-slate-700 bg-slate-800"
-                        style="width: 48px; height: 48px;">
-                    <div style="flex: 1;">
-                        <textarea class="composer-input"
-                            placeholder="Share an industry insight, opportunity, or connection search..."></textarea>
-                        <div class="composer-actions">
-                            <div class="action-group">
-                                <button id="mediaBtn" class="btn btn-ghost">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        style="color: #3b82f6;">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                        <polyline points="21 15 16 10 5 21"></polyline>
-                                    </svg>
-                                    Media
-                                </button>
-                                <button class="btn btn-ghost" onclick="window.location.href='TrustSignal.html'">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        style="color: #10b981;">
-                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                                    </svg>
-                                    Trust Signal
-                                </button>
-                            </div>
-                            <button class="btn btn-primary">Post Update</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Post 1 -->
-            <article class="glass-card post">
-                <div class="post-header">
-                    <div class="post-author">
-                        <img src="public/avatars/mozart.png" alt="Marcus"
-                            class="rounded-full object-cover border border-slate-700 bg-slate-800"
-                            style="width: 48px; height: 48px;">
-                        <div class="author-info">
-                            <h4>Marcus Chen <span class="badge" style="margin-left:8px;">Hiring</span></h4>
-                            <p>Lead Engineer @ Nexus Labs • 2h ago</p>
-                        </div>
-                    </div>
-                    <button class="btn btn-ghost" style="padding: 4px;"><svg width="20" height="20" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="1"></circle>
-                            <circle cx="19" cy="12" r="1"></circle>
-                            <circle cx="5" cy="12" r="1"></circle>
-                        </svg></button>
-                </div>
-                <div class="post-content">
-                    We are expanding our core infrastructure team. Looking for senior distributed systems engineers who
-                    are passionate about high-availability and zero-trust architectures. <br><br>
-                    Our stack: Go, Rust, and Kubernetes. Based in San Francisco, hybrid model. Repost if you know
-                    anyone!
-                </div>
-                <img src="assets/office.png" alt="Office" class="post-image">
-                <div class="post-actions">
-                    <div class="post-action">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3">
-                            </path>
-                        </svg>
-                        Trust (42)
-                    </div>
-                    <div class="post-action">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
-                            </path>
-                        </svg>
-                        Comment (12)
-                    </div>
-                    <div class="post-action">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                            <polyline points="16 6 12 2 8 6"></polyline>
-                            <line x1="12" y1="2" x2="12" y2="15"></line>
-                        </svg>
-                        Refer
-                    </div>
-                </div>
-            </article>
-
-            <!-- Post 2 -->
-            <article class="glass-card post" style="animation-delay: 0.1s;">
-                <div class="post-header">
-                    <div class="post-author">
-                        <img src="public/avatars/bounty-hunter.png" alt="Elena"
-                            class="rounded-full object-cover border border-slate-700 bg-slate-800"
-                            style="width: 48px; height: 48px;">
-                        <div class="author-info">
-                            <h4>Elena Rodriguez</h4>
-                            <p>VP of Growth @ ScaleUp • 5h ago</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="post-content">
-                    Interesting shift in the B2B SaaS market today. We're seeing a 30% increase in demand for integrated
-                    identity solutions. The "Clean Social" movement is real - verified networks are the future of
-                    corporate communication.
-                </div>
-                <div class="post-actions">
-                    <div class="post-action">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3">
-                            </path>
-                        </svg>
-                        Trust (128)
-                    </div>
-                    <div class="post-action">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
-                            </path>
-                        </svg>
-                        Comment (4)
-                    </div>
-                </div>
-            </article>
-        </main>
-
-        <!-- Right Sidebar -->
-        <aside class="right-sidebar">
-            <div class="glass-card">
-                <div class="sidebar-title">
-                    Suggested Connections
-                </div>
-                <ul class="suggestion-list">
-                    <li class="suggestion-item">
-                        <img src="public/avatars/david-chen.png" alt="Avatar"
-                            style="width: 40px; height: 40px; border-radius: 10px;">
-                        <div class="suggestion-info">
-                            <h5>David K.</h5>
-                            <p>Tech Lead @ V-Chain</p>
-                        </div>
-                        <button class="btn-outline">Connect</button>
-                    </li>
-                    <li class="suggestion-item">
-                        <img src="public/avatars/lisa-wong.png" alt="Avatar"
-                            style="width: 40px; height: 40px; border-radius: 10px;">
-                        <div class="suggestion-info">
-                            <h5>Lisa Wong</h5>
-                            <p>Founder @ DevFlow</p>
-                        </div>
-                        <button class="btn-outline">Connect</button>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="glass-card">
-                <div class="sidebar-title">
-                    Trending Opportunities
-                </div>
-                <div class="trending-item">
-                    <div class="trending-tag">#FINTECH</div>
-                    <div class="trending-title">Series A Startup seeking CTO</div>
-                    <div class="trending-count">14 referrals</div>
-                </div>
-                <div class="trending-item">
-                    <div class="trending-tag">#IDENTITY</div>
-                    <div class="trending-title">Verified Identity Summit 2024</div>
-                    <div class="trending-count">248 professionals going</div>
-                </div>
-                <div class="trending-item">
-                    <div class="trending-tag">#CAREERS</div>
-                    <div class="trending-title">Hiring: Senior UX Designer</div>
-                    <div class="trending-count">8 new openings</div>
-                </div>
-            </div>
-
-        </aside>
+        <a class="profile-button" href="#profile" aria-label="Open profile">
+          <img src="public/avatars/maggot.png" alt="Current user">
+        </a>
+      </div>
     </div>
+  </header>
 
-    <script>
-        /* ── Credit System ── */
-        const CREDIT_KEY = 'su-credits';
-
-        function getCredits() {
-            return parseFloat(localStorage.getItem(CREDIT_KEY) || '0');
-        }
-
-        function updateCreditsDisplay() {
-            const el = document.getElementById('creditsDisplay');
-            if (el) el.textContent = getCredits().toFixed(2);
-        }
-
-        // Animate credit increment when arriving from index.html redeem
-        function animateCredits(from, to) {
-            const el = document.getElementById('creditsDisplay');
-            if (!el) return;
-            const start = performance.now();
-            const duration = 900;
-            const step = (now) => {
-                const p = Math.min((now - start) / duration, 1);
-                const current = from + (to - from) * (1 - Math.pow(1 - p, 3));
-                el.textContent = current.toFixed(2);
-                if (p < 1) requestAnimationFrame(step);
-            };
-            requestAnimationFrame(step);
-        }
-
-        // On load: check if a pending credit was passed from index.html via sessionStorage
-        document.addEventListener('DOMContentLoaded', () => {
-            const pending = sessionStorage.getItem('su-pending-credit');
-            const prev = getCredits();
-            if (pending) {
-                const added = parseFloat(pending);
-                const next = prev + added;
-                localStorage.setItem(CREDIT_KEY, next.toFixed(2));
-                sessionStorage.removeItem('su-pending-credit');
-                updateCreditsDisplay();
-                setTimeout(() => animateCredits(prev, next), 300);
-            } else {
-                updateCreditsDisplay();
-            }
-        });
-
-
-    </script>
-    <!-- Media Selection Modal -->
-    <div class="modal-backdrop" id="mediaModalBackdrop">
-        <div class="media-modal" id="mediaModalContent">
-            <!-- Content will be dynamically swapped by JS -->
-            <div id="typeSelection">
-                <h3 class="modal-title">Select Media Type</h3>
-                <p class="modal-subtitle">What would you like to share today?</p>
-                <div class="modal-options">
-                    <button class="option-btn" onclick="selectMediaType('photos')">
-                        <div class="option-icon">🖼️</div>
-                        <div>
-                            <div>Photos</div>
-                            <small style="color:var(--text-muted); font-weight:400;">Images, infographics, snapshots</small>
-                        </div>
-                    </button>
-                    <button class="option-btn" onclick="selectMediaType('videos')">
-                        <div class="option-icon">🎥</div>
-                        <div>
-                            <div>Videos</div>
-                            <small style="color:var(--text-muted); font-weight:400;">MP4, MOV, or shorts</small>
-                        </div>
-                    </button>
-                </div>
-            </div>
-
-            <div id="sourceSelection" style="display: none;">
-                <h3 class="modal-title" id="sourceTitle">Select Source</h3>
-                <p class="modal-subtitle">Where is your media stored?</p>
-                <div class="modal-options">
-                    <button class="option-btn" onclick="selectMediaSource('google')">
-                        <div class="option-icon">🔍</div>
-                        <div>
-                            <div>Google Photos</div>
-                            <small style="color:var(--text-muted); font-weight:400;">Cloud storage & albums</small>
-                        </div>
-                    </button>
-                    <button class="option-btn" onclick="selectMediaSource('local')">
-                        <div class="option-icon">💻</div>
-                        <div>
-                            <div>Local Device</div>
-                            <small style="color:var(--text-muted); font-weight:400;">From your computer files</small>
-                        </div>
-                    </button>
-                    <button class="btn btn-ghost" style="margin-top: 12px; width: 100%;" onclick="resetMediaModal()">← Back</button>
-                </div>
-            </div>
+  <div class="container">
+    <aside class="left-sidebar stack" aria-label="Feed navigation">
+      <section class="card pad profile-card" id="profile">
+        <img src="public/avatars/ned-ramirez.png" alt="Sarah Jenkins" class="profile-avatar">
+        <h2 class="profile-name">Sarah Jenkins</h2>
+        <p class="profile-title">Managing Director @ Sphera Ventures</p>
+        <div class="verified-line"><span class="pulse"></span> Liveness verified</div>
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-value">1,248</span>
+            <span class="stat-label">Connections</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">843</span>
+            <span class="stat-label">Views</span>
+          </div>
         </div>
-    </div>
+      </section>
 
-    <!-- Hidden File Inputs -->
-    <div class="hidden-inputs">
-        <input type="file" id="localPhotoInput" accept="image/*">
-        <input type="file" id="localVideoInput" accept="video/*">
-    </div>
+      <nav class="card pad" aria-label="Primary">
+        <ul class="nav-menu">
+          <li class="nav-item active">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 9 12 2 21 9 21 21 15 21 15 12 9 12 9 21 3 21"></polyline></svg>
+            Feed
+          </li>
+          <li class="nav-item" onclick="window.location.href='network.html'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            Network
+          </li>
+          <li class="nav-item" onclick="window.location.href='opportunity.html'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            Opportunities
+          </li>
+          <li class="nav-item" onclick="window.location.href='event.html'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Events
+          </li>
+          <li class="nav-item" onclick="window.location.href='reward.html'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+            Rewards
+          </li>
+        </ul>
+      </nav>
+    </aside>
 
+    <main class="stack">
+      <section class="card feed-intro">
+        <div class="eyebrow">Verified feed</div>
+        <h1>Signal-rich updates from real professionals.</h1>
+        <p>A focused feed for hiring, referrals, events, and trusted market notes. Every profile is tied to a verified human signal.</p>
+        <div class="feed-metrics" aria-label="Feed summary">
+          <div class="metric">
+            <strong>36</strong>
+            <span>New signals</span>
+          </div>
+          <div class="metric">
+            <strong>12</strong>
+            <span>Warm asks</span>
+          </div>
+          <div class="metric">
+            <strong>8</strong>
+            <span>Open roles</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card pad" aria-label="Create post">
+        <div class="composer">
+          <img src="public/avatars/maggot.png" alt="Current user" class="avatar">
+          <div>
+            <textarea id="composerInput" class="composer-input" placeholder="Share an insight, opportunity, referral ask, or trust signal..."></textarea>
+            <div class="composer-actions">
+              <div class="action-group">
+                <button id="mediaBtn" class="btn btn-ghost">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                  Media
+                </button>
+                <button class="btn btn-ghost" onclick="window.location.href='TrustSignal.html'">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  Trust signal
+                </button>
+              </div>
+              <button id="postButton" class="btn btn-primary">Post update</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-toolbar" aria-label="Feed filters">
+        <div>
+          <div class="section-kicker">Today</div>
+          <h2>Latest updates</h2>
+        </div>
+        <div class="feed-tabs">
+          <button class="tab-btn active" data-filter="all">All</button>
+          <button class="tab-btn" data-filter="hiring">Hiring</button>
+          <button class="tab-btn" data-filter="insight">Insights</button>
+          <button class="tab-btn" data-filter="event">Events</button>
+        </div>
+      </section>
+
+      <section class="post-list" id="postList" aria-live="polite">
+      <article class="card post" data-category="hiring">
+        <div class="post-header">
+          <img src="public/avatars/mozart.png" alt="Marcus Chen" class="author-avatar">
+          <div class="author-info">
+            <h3>Marcus Chen <span class="badge">Hiring</span></h3>
+            <p>Lead Engineer @ Nexus Labs &middot; 2h ago</p>
+          </div>
+          <button class="btn btn-ghost post-menu" aria-label="More options" data-action="menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+          </button>
+        </div>
+        <div class="post-content">
+          We are expanding our core infrastructure team and looking for senior distributed systems engineers who care about high availability and zero-trust architecture. Stack: Go, Rust, and Kubernetes. San Francisco hybrid.
+        </div>
+        <img src="assets/office.png" alt="Verified team collaboration illustration" class="post-image">
+        <div class="post-actions" aria-label="Post actions">
+          <button class="post-action" data-action="trust" data-count="42">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+            <span>Trust 42</span>
+          </button>
+          <button class="post-action" data-action="comment" data-count="12">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span>Comment 12</span>
+          </button>
+          <button class="post-action" data-action="refer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+            Refer
+          </button>
+        </div>
+      </article>
+
+      <article class="card post" data-category="insight">
+        <div class="post-header">
+          <img src="public/avatars/elena-rodriguez.png" alt="Elena Rodriguez" class="author-avatar">
+          <div class="author-info">
+            <h3>Elena Rodriguez <span class="badge badge-green">Insight</span></h3>
+            <p>VP of Growth @ ScaleUp &middot; 5h ago</p>
+          </div>
+        </div>
+        <div class="post-content">
+          Interesting shift in B2B SaaS: we are seeing rising demand for integrated identity and trust layers. Verified networks are becoming less of a premium feature and more of a baseline for serious business communication.
+        </div>
+        <div class="post-actions" aria-label="Post actions">
+          <button class="post-action" data-action="trust" data-count="128">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+            <span>Trust 128</span>
+          </button>
+          <button class="post-action" data-action="comment" data-count="4">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span>Comment 4</span>
+          </button>
+        </div>
+      </article>
+      <div class="card empty-state" id="emptyState" hidden>No feed items match this view.</div>
+      </section>
+    </main>
+
+    <aside class="right-sidebar stack" aria-label="Feed sidebar">
+      <section class="card pad">
+        <div class="sidebar-title">
+          Suggested connections
+          <span class="sidebar-note">2</span>
+        </div>
+        <ul class="suggestion-list">
+          <li class="suggestion-item">
+            <img src="public/avatars/david-chen.png" alt="David K." class="mini-avatar">
+            <div class="suggestion-info">
+              <h3>David K.</h3>
+              <p>Tech Lead @ V-Chain</p>
+            </div>
+            <button class="btn btn-subtle" data-action="connect">Connect</button>
+          </li>
+          <li class="suggestion-item">
+            <img src="public/avatars/lisa-wong.png" alt="Lisa Wong" class="mini-avatar">
+            <div class="suggestion-info">
+              <h3>Lisa Wong</h3>
+              <p>Founder @ DevFlow</p>
+            </div>
+            <button class="btn btn-subtle" data-action="connect">Connect</button>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card pad">
+        <div class="sidebar-title">
+          Trending opportunities
+          <span class="sidebar-note">Live</span>
+        </div>
+        <div class="trend-list">
+          <div class="trend-item">
+            <div class="trend-tag">Fintech</div>
+            <div class="trend-title">Series A startup seeking CTO</div>
+            <div class="trend-count">14 referrals</div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-tag">Identity</div>
+            <div class="trend-title">Verified Identity Summit</div>
+            <div class="trend-count">248 professionals going</div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-tag">Careers</div>
+            <div class="trend-title">Hiring: Senior UX Designer</div>
+            <div class="trend-count">8 new openings</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card pad">
+        <div class="sidebar-title">
+          Trust checklist
+          <span class="sidebar-note">Good</span>
+        </div>
+        <div class="signal-list">
+          <div class="signal-item">
+            <strong>Profile verified</strong>
+            <p>Your liveness and identity signals are active.</p>
+          </div>
+          <div class="signal-item">
+            <strong>Company context</strong>
+            <p>Add a recent role milestone to increase intro quality.</p>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <div class="modal-backdrop" id="mediaModalBackdrop" role="presentation">
+    <div class="media-modal" id="mediaModalContent" role="dialog" aria-modal="true" aria-labelledby="mediaModalTitle">
+      <div id="typeSelection">
+        <h3 class="modal-title" id="mediaModalTitle">Select media type</h3>
+        <p class="modal-subtitle">Choose what you want to attach to this update.</p>
+        <div class="modal-options">
+          <button class="option-btn" onclick="selectMediaType('photos')">
+            <div class="option-icon">IMG</div>
+            <div>
+              <div>Photos</div>
+              <small>Images, infographics, and snapshots</small>
+            </div>
+          </button>
+          <button class="option-btn" onclick="selectMediaType('videos')">
+            <div class="option-icon">VID</div>
+            <div>
+              <div>Videos</div>
+              <small>MP4, MOV, and short clips</small>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div id="sourceSelection" style="display: none;">
+        <h3 class="modal-title" id="sourceTitle">Select source</h3>
+        <p class="modal-subtitle">Where is your media stored?</p>
+        <div class="modal-options">
+          <button class="option-btn" onclick="selectMediaSource('google')">
+            <div class="option-icon">WEB</div>
+            <div>
+              <div>Google Photos</div>
+              <small>Cloud storage and albums</small>
+            </div>
+          </button>
+          <button class="option-btn" onclick="selectMediaSource('local')">
+            <div class="option-icon">PC</div>
+            <div>
+              <div>Local device</div>
+              <small>Pick a file from this computer</small>
+            </div>
+          </button>
+          <button class="btn btn-ghost" style="width:100%;" onclick="resetMediaModal()">Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden-inputs">
+    <input type="file" id="localPhotoInput" accept="image/*">
+    <input type="file" id="localVideoInput" accept="video/*">
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const CREDIT_KEY = 'su-credits';
+    const FEED_POSTS_KEY = 'sphera-feed-posts';
+    let currentFilter = 'all';
+    let currentSearch = '';
+
+    function getCredits() {
+      return parseFloat(localStorage.getItem(CREDIT_KEY) || '0');
+    }
+
+    function updateCreditsDisplay() {
+      const el = document.getElementById('creditsDisplay');
+      if (el) el.textContent = getCredits().toFixed(2);
+    }
+
+    function animateCredits(from, to) {
+      const el = document.getElementById('creditsDisplay');
+      if (!el) return;
+      const start = performance.now();
+      const duration = 900;
+      const step = (now) => {
+        const p = Math.min((now - start) / duration, 1);
+        const current = from + (to - from) * (1 - Math.pow(1 - p, 3));
+        el.textContent = current.toFixed(2);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timeoutId);
+      showToast.timeoutId = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function escapeHTML(value) {
+      return value.replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+    }
+
+    function inferCategory(text) {
+      const lower = text.toLowerCase();
+      if (/(hiring|job|role|opening|candidate|engineer|designer)/.test(lower)) return 'hiring';
+      if (/(event|summit|meetup|webinar|conference|registered)/.test(lower)) return 'event';
+      return 'insight';
+    }
+
+    function categoryLabel(category) {
+      if (category === 'hiring') return 'Hiring';
+      if (category === 'event') return 'Event';
+      return 'Insight';
+    }
+
+    function postTemplate(post) {
+      const category = post.category || 'insight';
+      const badgeClass = category === 'insight' ? ' badge-green' : '';
+      return `
+        <div class="post-header">
+          <img src="${escapeHTML(post.avatar)}" alt="${escapeHTML(post.author)}" class="author-avatar">
+          <div class="author-info">
+            <h3>${escapeHTML(post.author)} <span class="badge${badgeClass}">${escapeHTML(categoryLabel(category))}</span></h3>
+            <p>${escapeHTML(post.role)} &middot; ${escapeHTML(post.time)}</p>
+          </div>
+          <button class="btn btn-ghost post-menu" aria-label="More options" data-action="menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+          </button>
+        </div>
+        <div class="post-content">${escapeHTML(post.content)}</div>
+        <div class="post-actions" aria-label="Post actions">
+          <button class="post-action" data-action="trust" data-count="0">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+            <span>Trust 0</span>
+          </button>
+          <button class="post-action" data-action="comment" data-count="0">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span>Comment 0</span>
+          </button>
+          <button class="post-action" data-action="refer">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+            Refer
+          </button>
+        </div>
+      `;
+    }
+
+    function createPostElement(post) {
+      const article = document.createElement('article');
+      article.className = 'card post';
+      article.dataset.category = post.category || 'insight';
+      article.dataset.dynamic = 'true';
+      article.innerHTML = postTemplate(post);
+      return article;
+    }
+
+    function getStoredPosts() {
+      try {
+        return JSON.parse(localStorage.getItem(FEED_POSTS_KEY) || '[]');
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function saveStoredPost(post) {
+      const posts = getStoredPosts();
+      posts.unshift(post);
+      localStorage.setItem(FEED_POSTS_KEY, JSON.stringify(posts.slice(0, 20)));
+    }
+
+    function loadStoredPosts() {
+      const postList = document.getElementById('postList');
+      if (!postList) return;
+      getStoredPosts().slice().reverse().forEach((post) => {
+        postList.insertBefore(createPostElement(post), postList.firstElementChild);
+      });
+    }
+
+    function setActiveTab(filter) {
+      document.querySelectorAll('.tab-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.filter === filter);
+      });
+    }
+
+    function applyFeedFilters() {
+      const posts = Array.from(document.querySelectorAll('.post'));
+      const emptyState = document.getElementById('emptyState');
+      let visibleCount = 0;
+      posts.forEach((post) => {
+        const categoryMatch = currentFilter === 'all' || post.dataset.category === currentFilter;
+        const searchMatch = !currentSearch || post.textContent.toLowerCase().includes(currentSearch);
+        const visible = categoryMatch && searchMatch;
+        post.hidden = !visible;
+        if (visible) visibleCount += 1;
+      });
+      if (emptyState) emptyState.hidden = visibleCount > 0;
+    }
+
+    function publishPost() {
+      const input = document.getElementById('composerInput');
+      const postList = document.getElementById('postList');
+      if (!input || !postList) return;
+      const content = input.value.trim();
+      if (!content) {
+        showToast('Write something before posting.');
+        input.focus();
+        return;
+      }
+      const category = inferCategory(content);
+      const post = {
+        id: Date.now(),
+        author: 'You',
+        role: 'Verified member',
+        time: 'Just now',
+        avatar: 'public/avatars/maggot.png',
+        category,
+        content
+      };
+      saveStoredPost(post);
+      postList.insertBefore(createPostElement(post), postList.firstElementChild);
+      input.value = '';
+      const search = document.getElementById('feedSearch');
+      if (search) search.value = '';
+      currentFilter = 'all';
+      currentSearch = '';
+      setActiveTab('all');
+      applyFeedFilters();
+      showToast('Post published.');
+    }
+
+    function updateActionCount(button, label, nextCount) {
+      button.dataset.count = String(nextCount);
+      const text = button.querySelector('span');
+      if (text) text.textContent = `${label} ${nextCount}`;
+    }
+
+    function toggleTrust(button) {
+      const trusted = button.classList.toggle('is-trusted');
+      const current = parseInt(button.dataset.count || '0', 10);
+      updateActionCount(button, 'Trust', trusted ? current + 1 : Math.max(0, current - 1));
+      showToast(trusted ? 'Trust added.' : 'Trust removed.');
+    }
+
+    function ensureCommentPanel(post) {
+      let panel = post.querySelector('.comment-panel');
+      if (panel) return panel;
+      panel = document.createElement('div');
+      panel.className = 'comment-panel';
+      panel.innerHTML = `
+        <div class="comment-row">No comments yet. Start the thread.</div>
+        <div class="comment-form">
+          <input class="comment-input" type="text" placeholder="Write a comment...">
+          <button class="btn btn-subtle" data-action="add-comment">Send</button>
+        </div>
+      `;
+      post.appendChild(panel);
+      return panel;
+    }
+
+    function toggleComments(button) {
+      const post = button.closest('.post');
+      if (!post) return;
+      const existingPanel = post.querySelector('.comment-panel');
+      const panel = ensureCommentPanel(post);
+      if (existingPanel) {
+        panel.hidden = !panel.hidden;
+      } else {
+        panel.hidden = false;
+      }
+      if (!panel.hidden) {
+        const input = panel.querySelector('.comment-input');
+        if (input) input.focus();
+      }
+    }
+
+    function addComment(button) {
+      const panel = button.closest('.comment-panel');
+      const post = button.closest('.post');
+      if (!panel || !post) return;
+      const input = panel.querySelector('.comment-input');
+      const value = input ? input.value.trim() : '';
+      if (!value) {
+        showToast('Write a comment first.');
+        if (input) input.focus();
+        return;
+      }
+      const starter = panel.querySelector('.comment-row');
+      if (starter && starter.textContent.includes('No comments yet')) starter.remove();
+      const row = document.createElement('div');
+      row.className = 'comment-row';
+      row.textContent = `You: ${value}`;
+      panel.insertBefore(row, panel.querySelector('.comment-form'));
+      input.value = '';
+      const commentButton = post.querySelector('[data-action="comment"]');
+      if (commentButton) {
+        const current = parseInt(commentButton.dataset.count || '0', 10);
+        updateActionCount(commentButton, 'Comment', current + 1);
+      }
+      showToast('Comment added.');
+    }
+
+    function copyText(text, successMessage) {
+      const fallback = () => {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+        showToast(successMessage);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(successMessage)).catch(fallback);
+      } else {
+        fallback();
+      }
+    }
+
+    function referPost(button) {
+      const post = button.closest('.post');
+      const title = post ? post.querySelector('.author-info h3')?.textContent.trim() : 'this post';
+      copyText(`I found a useful Sphera update from ${title}.`, 'Referral note copied.');
+    }
+
+    function togglePostMenu(button) {
+      const post = button.closest('.post');
+      if (!post) return;
+      let options = post.querySelector('.post-options');
+      if (!options) {
+        options = document.createElement('div');
+        options.className = 'post-options';
+        options.innerHTML = `
+          <button class="btn btn-ghost" data-action="save-post">Save post</button>
+          <button class="btn btn-ghost" data-action="hide-post">Hide post</button>
+        `;
+        post.appendChild(options);
+      } else {
+        options.hidden = !options.hidden;
+      }
+    }
+
+    function connect(button) {
+      button.textContent = 'Connected';
+      button.classList.add('is-connected');
+      button.disabled = true;
+      showToast('Connection request sent.');
+    }
+
+    function handleDelegatedClick(event) {
+      const button = event.target.closest('button[data-action]');
+      if (!button) return;
+      const action = button.dataset.action;
+      if (action === 'notifications') {
+        button.querySelector('.notification-dot')?.remove();
+        showToast('Notifications are up to date.');
+      }
+      if (action === 'messages') showToast('Messages panel opened.');
+      if (action === 'trust') toggleTrust(button);
+      if (action === 'comment') toggleComments(button);
+      if (action === 'add-comment') addComment(button);
+      if (action === 'refer') referPost(button);
+      if (action === 'menu') togglePostMenu(button);
+      if (action === 'save-post') {
+        button.textContent = 'Saved';
+        button.disabled = true;
+        showToast('Post saved.');
+      }
+      if (action === 'hide-post') {
+        button.closest('.post')?.remove();
+        applyFeedFilters();
+        showToast('Post hidden.');
+      }
+      if (action === 'connect') connect(button);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStoredPosts();
+      const pending = sessionStorage.getItem('su-pending-credit');
+      const prev = getCredits();
+      if (pending) {
+        const added = parseFloat(pending);
+        const next = prev + added;
+        localStorage.setItem(CREDIT_KEY, next.toFixed(2));
+        sessionStorage.removeItem('su-pending-credit');
+        updateCreditsDisplay();
+        setTimeout(() => animateCredits(prev, next), 300);
+      } else {
+        updateCreditsDisplay();
+      }
+      applyFeedFilters();
+    });
+
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        currentFilter = btn.dataset.filter || 'all';
+        setActiveTab(currentFilter);
+        applyFeedFilters();
+      });
+    });
+
+    document.getElementById('postButton')?.addEventListener('click', publishPost);
+    document.getElementById('composerInput')?.addEventListener('keydown', (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') publishPost();
+    });
+    document.getElementById('feedSearch')?.addEventListener('input', (event) => {
+      currentSearch = event.target.value.trim().toLowerCase();
+      applyFeedFilters();
+    });
+    document.addEventListener('click', handleDelegatedClick);
+  </script>
 </body>
-
 </html>
