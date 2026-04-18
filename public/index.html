@@ -1441,6 +1441,13 @@
                 min-height: 360px
             }
         }
+        /* Performance Optimizations */
+        html { scroll-behavior: smooth; }
+        .reveal, .orbit-card, .stage-card, .pulse-dot { will-change: transform; }
+        .hdr { transform: translateZ(0); }
+        .sec, .hero { contain: layout style; }
+        @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+        img { image-rendering: optimizeSpeed; }
     </style>
 </head>
 
@@ -1520,7 +1527,6 @@
                             camera liveness checks and verified profile signals.</p>
                         <div class="hero-actions">
                             <button class="btn btn-p btn-lg" type="button" data-open-auth>Sign Up</button>
-                            <a class="btn btn-s btn-lg" href="feed.html">Explore dashboard</a>
                         </div>
 
                         <div class="metric-strip">
@@ -1536,7 +1542,7 @@
                     <div class="n-stage reveal">
                         <div class="stage-grid"></div>
                         <article class="stage-card prof-card">
-                            <div class="prof-media"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Verified founder"
+                            <div class="prof-media"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Verified founder" loading="lazy"
                                     class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
                             <div>
                                 <div class="prof-name">Maya Raman</div>
@@ -1559,9 +1565,9 @@
                             <div class="feed-dots"><span></span><span></span><span></span></div>
                         </article>
                         <article class="stage-card orbit-card">
-                            <div class="orbit-img"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Engineer"
+                            <div class="orbit-img"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Engineer" loading="lazy"
                                     class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
-                            <div class="orbit-img"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Investor"
+                            <div class="orbit-img"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Investor" loading="lazy"
                                     class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
                             <div class="orbit-copy">Warm intros are moving</div>
                         </article>
