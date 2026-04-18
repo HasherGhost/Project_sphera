@@ -1463,9 +1463,36 @@
                             ecosystem</small></span>
                 </a>
                 <nav class="hdr-nav">
-                    <a href="#network">Network</a>
+                    <style>
+                        .nav-dropdown-wrapper { position: relative; display: flex; align-items: center; height: 100%; }
+                        .nav-dropdown {
+                            position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%) translateY(5px);
+                            background: #110920; border: 1px solid rgba(200,180,255,0.15); padding: 16px;
+                            border-radius: 8px; box-shadow: 0 24px 70px rgba(0,0,0,0.38); width: max-content;
+                            opacity: 0; visibility: hidden; transition: all 0.2s ease; z-index: 100;
+                            color: #f3eeff; text-align: center; cursor: default;
+                        }
+                        .nav-dropdown-wrapper:hover .nav-dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+                        .nav-dropdown::before {
+                            content: ''; position: absolute; top: -5px; left: 50%; transform: translateX(-50%) rotate(45deg);
+                            width: 10px; height: 10px; background: #110920; border-top: 1px solid rgba(200,180,255,0.15); border-left: 1px solid rgba(200,180,255,0.15);
+                        }
+                    </style>
+                    <div class="nav-dropdown-wrapper">
+                        <a href="#network">Network</a>
+                        <div class="nav-dropdown">
+                            <div style="margin-bottom: 12px; font-weight: 500; font-size: 14px;">🔒 Login to access your Network</div>
+                            <button class="btn btn-p" type="button" data-open-auth style="width: 100%;">Login</button>
+                        </div>
+                    </div>
                     <a href="#opportunities">Opportunities</a>
-                    <a href="#events" id="eventsNavBtn">Events</a>
+                    <div class="nav-dropdown-wrapper">
+                        <a href="#events" id="eventsNavBtn">Events</a>
+                        <div class="nav-dropdown">
+                            <div style="margin-bottom: 12px; font-weight: 500; font-size: 14px;">🔒 Login to browse Events</div>
+                            <button class="btn btn-p" type="button" data-open-auth style="width: 100%;">Login</button>
+                        </div>
+                    </div>
                     <a href="#trust">Trust</a>
                 </nav>
                 <div class="hdr-acts">
@@ -1473,8 +1500,8 @@
                         <span class="theme-track"><span class="theme-thumb"></span></span>
                         <span id="themeLabel">Light</span>
                     </button>
-                    <button class="btn btn-s" type="button" data-open-signup>Sign Up</button>
-                    <button class="btn btn-p" type="button" data-open-auth>Sign In</button>
+                    <button class="btn btn-s" type="button" data-open-signup>Login</button>
+                    <button class="btn btn-p" type="button" data-open-auth>Sign Up</button>
                 </div>
             </div>
         </header>
@@ -1492,7 +1519,7 @@
                             workspace with
                             camera liveness checks and verified profile signals.</p>
                         <div class="hero-actions">
-                            <button class="btn btn-p btn-lg" type="button" data-open-auth>Sign In</button>
+                            <button class="btn btn-p btn-lg" type="button" data-open-auth>Sign Up</button>
                             <a class="btn btn-s btn-lg" href="feed.html">Explore dashboard</a>
                         </div>
 
@@ -1509,7 +1536,7 @@
                     <div class="n-stage reveal">
                         <div class="stage-grid"></div>
                         <article class="stage-card prof-card">
-                            <div class="prof-media"><img src="public/avatars/ned-ramirez.png" alt="Verified founder"
+                            <div class="prof-media"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Verified founder"
                                     class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
                             <div>
                                 <div class="prof-name">Maya Raman</div>
@@ -1532,9 +1559,9 @@
                             <div class="feed-dots"><span></span><span></span><span></span></div>
                         </article>
                         <article class="stage-card orbit-card">
-                            <div class="orbit-img"><img src="public/avatars/marsellus-coolidge.png" alt="Engineer"
+                            <div class="orbit-img"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Engineer"
                                     class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
-                            <div class="orbit-img"><img src="public/avatars/mozart.png" alt="Investor"
+                            <div class="orbit-img"><img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Investor"
                                     class="rounded-full object-cover border border-slate-700 bg-slate-800"></div>
                             <div class="orbit-copy">Warm intros are moving</div>
                         </article>
@@ -2010,28 +2037,34 @@
             if (!email || !pass) return;
 
             try {
-                await signInWithEmailAndPassword(auth, email, pass);
-                console.log('✅ Signed in!');
+                // Try to create account
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                // Save to Firestore users collection
+                await setDoc(doc(db, 'users', cred.user.uid), {
+                    email: email,
+                    createdAt: new Date().toISOString()
+                });
+                console.log('✅ Account created!');
                 window.location.href = 'feed.html';
             } catch (error) {
-                if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                // Show friendly errors
+                if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                    alert("Incorrect password");
+                } else if (error.code === 'auth/user-not-found') {
+                    alert("No account found");
+                } else if (error.code === 'auth/email-already-in-use') {
+                    alert("Account exists, logging you in");
+                    // Optionally log them in automatically
                     try {
-                        const cred = await createUserWithEmailAndPassword(auth, email, pass);
-                        await setDoc(doc(db, 'users', cred.user.uid), {
-                            email: email,
-                            createdAt: new Date().toISOString()
-                        });
-                        console.log('✅ Account created!');
+                        await signInWithEmailAndPassword(auth, email, pass);
                         window.location.href = 'feed.html';
-                    } catch (createError) {
-                        if (createError.code === 'auth/email-already-in-use') {
-                            alert("Account exists, signing you in...");
+                    } catch (signInErr) {
+                        if (signInErr.code === 'auth/wrong-password' || signInErr.code === 'auth/invalid-credential') {
+                            alert("Incorrect password");
                         } else {
-                            alert(createError.message);
+                            alert(signInErr.message);
                         }
                     }
-                } else if (error.code === 'auth/wrong-password') {
-                    alert("Incorrect password");
                 } else {
                     alert(error.message);
                 }
