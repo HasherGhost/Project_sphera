@@ -1984,8 +1984,8 @@
         function doLogin(e) {
             e.preventDefault(); const em = document.getElementById('em').value.trim(), pw = document.getElementById('pw').value, er = document.getElementById('le'), et = document.getElementById('let'); er.classList.remove('show');
             if (!em || !pw) { et.textContent = 'Fill in all fields.'; er.classList.add('show'); return; } if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { et.textContent = 'Enter a valid email.'; er.classList.add('show'); return; }
-            const nm = em.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()), ini = nm.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-            document.getElementById('du').textContent = nm.split(' ')[0]; document.getElementById('dn').textContent = nm; document.getElementById('da').textContent = ini; document.getElementById('fa').textContent = ini; showPage('dash');
+            const nm = em.split('@')[0].split(/[+._-]/)[0].replace(/\b\w/g, c => c.toUpperCase()), ini = nm.charAt(0).toUpperCase();
+            document.getElementById('du').textContent = nm; document.getElementById('dn').textContent = nm; document.getElementById('da').textContent = ini; document.getElementById('fa').textContent = ini; showPage('dash');
         }
 
         function animStats() { const o = new IntersectionObserver(es => { es.forEach(en => { if (en.isIntersecting) { const el = en.target, t = +el.dataset.target; let s = null; (function step(ts) { if (!s) s = ts; const p = Math.min((ts - s) / 2000, 1); el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * t).toLocaleString('en-IN') + (t > 1000 ? '+' : ''); if (p < 1) requestAnimationFrame(step); })(performance.now()); o.unobserve(el); } }); }, { threshold: .3 }); document.querySelectorAll('.sv[data-target]').forEach(el => o.observe(el)); }
@@ -2042,7 +2042,7 @@
         }
 
         function analyze(ctx, W, H) {
-            const rx = W * 0.2 | 0, ry = H * 0.08 | 0, rw = W * 0.6 | 0, rh = H * 0.84 | 0;
+            const rx = W * 0.25 | 0, ry = H * 0.1 | 0, rw = W * 0.5 | 0, rh = H * 0.8 | 0;
             let d; try { d = ctx.getImageData(rx, ry, rw, rh); } catch { return; }
             const px = d.data, gray = new Uint8ClampedArray(rw * rh);
             let skin = 0, bSum = 0, mSum = 0, cnt = 0;
@@ -2051,40 +2051,49 @@
                 const r = px[i], gr = px[i + 1], b = px[i + 2];
                 const v = r * 0.299 + gr * 0.587 + b * 0.114 | 0;
                 gray[g] = v; bSum += v;
-                if (g & 1) { const cb = 128 + (.5 * r - .419 * gr - .081 * b), cr = 128 + (-.169 * r - .331 * gr + .5 * b); if (cb > 77 && cb < 127 && cr > 133 && cr < 173) skin++; }
+                // Correct YCbCr Skin color detection
+                if (g % 2 === 0) {
+                    const cb = 128 - (0.1687 * r) - (0.3313 * gr) + (0.5 * b);
+                    const cr = 128 + (0.5 * r) - (0.4187 * gr) - (0.0813 * b);
+                    if (cb > 77 && cb < 127 && cr > 133 && cr < 173) skin++;
+                }
                 if (_prev && _prev.length === gray.length) mSum += Math.abs(v - _prev[g]);
                 cnt++;
             }
 
-            const skinR = skin / ((cnt >> 1) || 1), avgB = bSum / cnt, motion = _prev ? mSum / cnt : 0;
+            const skinR = skin / ((cnt / 2) || 1), avgB = bSum / cnt, motion = _prev ? mSum / cnt : 0;
             _prev = gray;
 
             const hl = document.getElementById('hud-l'), hr = document.getElementById('hud-r');
-            if (hl) hl.textContent = `SKIN ${(skinR * 100).toFixed(0)}%`;
+            if (hl) hl.textContent = `FACE ${(skinR * 100).toFixed(0)}%`;
             if (hr) hr.textContent = `MOTION ${motion.toFixed(1)}`;
 
-            const face = skinR > 0.08 && avgB > 30 && avgB < 240;
+            const face = skinR > 0.15 && avgB > 40 && avgB < 235;
             S.face = face;
-            if (face) _sc = Math.min(_sc + 1, SN + 5); else _sc = Math.max(_sc - 2, 0);
-            if (!face) { setSt('No face detected — look at the camera.'); updCk(); return; }
-            if (_sc < SN) { setSt(`Face found. Hold still... (${_sc}/${SN})`); updCk(); return; }
+            if (face) _sc = Math.min(_sc + 1, SN); else if(_sc > 0) _sc--;
+            
+            if (!face) { setSt('Position face in oval...'); updCk(); return; }
+            if (_sc < SN) { setSt(`Hold steady... (${_sc}/${SN})`); updCk(); return; }
 
             if (S.blinks < BN) {
-                const ey = rh * 0.25 | 0, eh = rh * 0.1 | 0; let eb = 0, ec = 0;
-                for (let y = ey; y < ey + eh && y < rh; y++)for (let x = rw * 0.15 | 0; x < rw * 0.85 | 0; x++) { eb += gray[y * rw + x]; ec++; }
-                eb /= (ec || 1); _ey.push(eb); if (_ey.length > 15) _ey.shift();
-                if (_ey.length >= 8) { const rec = _ey.slice(-8), avg = rec.reduce((a, b) => a + b) / rec.length, mn = Math.min(...rec); if (avg - mn > 5) { S.blinks++; _ey = []; } }
-                setSt(`Blink naturally. (${S.blinks}/${BN} detected)`); updCk(); return;
+                const ey = rh * 0.2 | 0, eh = rh * 0.15 | 0; let eb = 0, ec = 0;
+                for (let y = ey; y < ey + eh && y < rh; y++)for (let x = rw * 0.1 | 0; x < rw * 0.9 | 0; x++) { eb += gray[y * rw + x]; ec++; }
+                eb /= (ec || 1); _ey.push(eb); if (_ey.length > 12) _ey.shift();
+                if (_ey.length >= 6) { 
+                    const rec = _ey.slice(-6), avg = rec.reduce((a, b) => a + b) / rec.length, mn = Math.min(...rec); 
+                    if (avg - mn > 4.5) { S.blinks++; _ey = []; } 
+                }
+                setSt(`Blink naturally (${S.blinks}/${BN})`); updCk(); return;
             }
 
             if (!S.moved) {
-                if (motion > MT && motion < 42) _ma++; else if (_ma > 0) _ma -= 0.5;
-                S.moved = _ma >= 6;
-                setSt(`Turn your head slowly left then right.`); updCk(); return;
+                if (motion > MT && motion < 45) _ma++; else if (_ma > 0) _ma -= 0.3;
+                S.moved = _ma >= 7;
+                setSt(`Slowly turn your head left/right.`); updCk(); return;
             }
 
-            S.done = true; setSt('All checks passed! Liveness confirmed ✓'); setProg(100); updCk();
-            setTimeout(() => { camStop(); fStep('ok'); setTimeout(() => { lucide.createIcons(); updIcons(); }, 100); }, 1200);
+            S.done = true; setSt('Liveness confirmed! Redirecting...'); setProg(100); updCk();
+            setTimeout(() => { camStop(); fStep('ok'); }, 1000);
         }
     </script>
 </body>
