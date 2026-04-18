@@ -1,537 +1,547 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyncUp | Trusted Professional Network</title>
-    <meta name="description" content="Build a trusted professional ecosystem with camera-based liveness verification.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        :root {
-            --purple: #7C3AED; --purple-light: #EDE9FE; --purple-mid: #A78BFA; --purple-dark: #5B21B6;
-            --orange: #F97316; --orange-light: #FFF7ED; --orange-mid: #FB923C;
-            --green: #10B981; --danger: #EF4444; --t: 0.3s ease;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SyncUp — Verified Professional Ecosystem</title>
+  <meta name="description" content="Camera-based liveness verification, trusted networking, hiring, and events in one workspace.">
+  <script>
+    (function(){try{var t=localStorage.getItem('su-theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+/* ═══════════════════════════════════════════════════════
+   CSS — SyncUp  (Nexus-inspired grid + float aesthetic)
+   ═══════════════════════════════════════════════════════ */
+:root{
+  color-scheme:light;
+  --bg:#f5f0ff;--bg2:#ece4ff;
+  --surface:rgba(255,255,255,.88);--surface-s:#fff;--surface-f:#f0eafc;
+  --line:rgba(88,28,235,.11);--line-s:rgba(88,28,235,.22);
+  --text:#1a0e33;--muted:#6b5e82;--faint:#9b90b0;
+  --accent:#7C3AED;--accent-s:#5B21B6;--accent-f:rgba(124,58,237,.12);
+  --orange:#F97316;--orange-f:rgba(249,115,22,.1);
+  --green:#10B981;--green-f:rgba(16,185,129,.12);
+  --danger:#EF4444;--danger-f:rgba(239,68,68,.1);
+  --amber:#D97706;--amber-f:rgba(217,119,6,.12);
+  --shadow:0 22px 70px rgba(60,20,140,.1);--shadow-f:0 14px 40px rgba(60,20,140,.06);
+  --header-bg:rgba(245,240,255,.86);
+  --focus:rgba(124,58,237,.28);--radius:8px;
+}
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0a0514;--bg2:#110920;
+  --surface:rgba(22,12,44,.9);--surface-s:#160c2c;--surface-f:#1e1238;
+  --line:rgba(200,180,255,.11);--line-s:rgba(200,180,255,.22);
+  --text:#f3eeff;--muted:#b0a4c8;--faint:#7a6e94;
+  --accent:#A78BFA;--accent-s:#C4B5FD;--accent-f:rgba(167,139,250,.14);
+  --orange:#FB923C;--orange-f:rgba(251,146,60,.12);
+  --green:#34D399;--green-f:rgba(52,211,153,.14);
+  --danger:#F87171;--danger-f:rgba(248,113,113,.12);
+  --amber:#FBBF24;--amber-f:rgba(251,191,36,.14);
+  --shadow:0 24px 70px rgba(0,0,0,.38);--shadow-f:0 14px 40px rgba(0,0,0,.24);
+  --header-bg:rgba(10,5,20,.88);
+  --focus:rgba(167,139,250,.32);
+}
 
-        [data-theme="light"] {
-            --bg: #FAFAF8; --bg2: #FFF; --bg3: #F4F2EE; --bg4: #F4F2EE;
-            --tx: #1A1A1A; --tx2: #4B5563; --tx3: #9CA3AF;
-            --bd: #E5E5E0; --bdL: #F0EEEA;
-            --sh: 0 4px 20px rgba(0,0,0,0.06); --shL: 0 12px 40px rgba(0,0,0,0.08);
-            --nav: rgba(255,255,255,0.88);
-            --pbg: #EDE9FE; --pbd: #DDD6FE; --obg: #FFF7ED; --obd: #FED7AA;
-            --gBg: #F0FDF4; --gBd: #BBF7D0;
-        }
-        [data-theme="dark"] {
-            --bg: #09090B; --bg2: rgba(18,18,20,0.92); --bg3: rgba(255,255,255,0.04); --bg4: rgba(255,255,255,0.06);
-            --tx: #F5F5F5; --tx2: #A1A1AA; --tx3: #71717A;
-            --bd: rgba(255,255,255,0.1); --bdL: rgba(255,255,255,0.06);
-            --sh: 0 4px 24px rgba(0,0,0,0.3); --shL: 0 16px 48px rgba(0,0,0,0.4);
-            --nav: rgba(9,9,11,0.88);
-            --pbg: rgba(124,58,237,0.12); --pbd: rgba(124,58,237,0.3);
-            --obg: rgba(249,115,22,0.1); --obd: rgba(249,115,22,0.25);
-            --gBg: rgba(16,185,129,0.1); --gBd: rgba(16,185,129,0.3);
-        }
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;overflow-x:hidden;font-family:'Inter',system-ui,sans-serif;
+  background:linear-gradient(var(--line) 1px,transparent 1px),
+             linear-gradient(90deg,var(--line) 1px,transparent 1px),
+             linear-gradient(180deg,var(--bg),var(--bg2));
+  background-size:72px 72px,72px 72px,auto;
+  color:var(--text);transition:background .2s,color .2s}
+body.modal-open{overflow:hidden}
+button,input,select{font:inherit}button{color:inherit}a{color:inherit;text-decoration:none}
+img,video,canvas{display:block;max-width:100%}h1,h2,h3,p{margin:0}
+h1{font-size:clamp(2.8rem,6vw,5.6rem);line-height:.92;letter-spacing:0;max-width:920px}
+h2{font-size:clamp(1.8rem,3.4vw,3rem);line-height:.96;letter-spacing:0}
+h3{font-size:1.18rem;line-height:1.16;letter-spacing:0}
+.hidden{display:none!important}
+.wrap{width:min(1200px,calc(100% - 32px));margin:0 auto}
 
-        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        html{scroll-behavior:smooth}
-        body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background var(--t),color var(--t)}
-        ::selection{background:rgba(124,58,237,0.25);color:var(--tx)}
-        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:99px}
-        a{text-decoration:none;color:inherit}.hidden{display:none!important}
-        .container{max-width:1100px;margin:0 auto;padding:0 1.5rem}
+/* ── Header ── */
+.hdr{position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line);background:var(--header-bg);backdrop-filter:blur(18px)}
+.hdr-row{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:78px}
+.brand{display:flex;align-items:center;gap:12px;flex-shrink:0;cursor:pointer}
+.brand-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:var(--radius);background:var(--text);color:var(--bg);font-size:.92rem;font-weight:900}
+.brand strong{font-size:1rem}.brand small{color:var(--muted);font-size:.78rem}
+.hdr-nav{display:flex;align-items:center;gap:22px;margin-left:auto;color:var(--muted);font-weight:700;font-size:.92rem}
+.hdr-nav a{position:relative}
+.hdr-nav a::after{content:'';position:absolute;right:0;bottom:-8px;left:0;height:2px;border-radius:2px;background:var(--accent);opacity:0;transform:scaleX(.5);transition:opacity .2s,transform .2s}
+.hdr-nav a:hover::after{opacity:1;transform:scaleX(1)}
+.hdr-acts{display:flex;gap:10px;align-items:center}
 
-        /* ── Buttons ── */
-        .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 22px;border-radius:10px;font-family:inherit;font-weight:600;font-size:.85rem;cursor:pointer;border:none;transition:all .2s;outline:none}
-        .btn:active{transform:scale(.97)}
-        .btn-p{background:var(--purple);color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.25)}
-        .btn-p:hover{background:var(--purple-dark);transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,58,237,.35)}
-        .btn-s{background:var(--bg3);color:var(--tx);border:1px solid var(--bd)}
-        .btn-s:hover{border-color:var(--purple-mid);color:var(--purple)}
-        .btn-g{background:transparent;color:var(--tx2);border:none;padding:8px}
-        .btn-g:hover{color:var(--purple)}
-        .btn-o{background:var(--orange);color:#fff;box-shadow:0 4px 14px rgba(249,115,22,.25)}
-        .btn-o:hover{background:#EA580C;transform:translateY(-1px)}
-        .theme-toggle{width:38px;height:38px;border-radius:10px;border:1px solid var(--bd);background:var(--bg3);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:var(--tx2)}
-        .theme-toggle:hover{border-color:var(--purple-mid);color:var(--purple)}
+/* ── Buttons ── */
+.btn,.theme-tog,.icon-btn,.chip-btn{border-radius:var(--radius);border:1px solid transparent;cursor:pointer;transition:transform .18s,border-color .18s,background .18s,color .18s}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;font-weight:800;white-space:nowrap}
+.btn-lg{min-height:52px;padding:0 20px}.btn-sm{min-height:36px;padding:0 12px;font-size:.88rem}.btn-full{width:100%}
+.btn-p{background:var(--text);color:var(--bg)}.btn-p:hover{transform:translateY(-1px)}
+.btn-s{border-color:var(--line);background:var(--surface);color:var(--text)}.btn-s:hover{transform:translateY(-1px)}
+.btn-o{background:var(--orange);color:#fff}.btn-o:hover{transform:translateY(-1px)}
+.btn-g{background:transparent;color:var(--muted);border:none;padding:8px}.btn-g:hover{color:var(--accent)}
+.theme-tog{display:inline-flex;align-items:center;gap:10px;min-height:42px;padding:0 12px;background:var(--surface);border-color:var(--line);font-weight:800}
+.theme-track{position:relative;width:44px;height:24px;border-radius:999px;border:1px solid var(--line);background:var(--surface-f)}
+.theme-thumb{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--accent);transition:transform .2s}
+html[data-theme="dark"] .theme-thumb{transform:translateX(20px)}
 
-        /* ── Inputs ── */
-        .inp{width:100%;background:var(--bg4);border:1.5px solid var(--bd);border-radius:10px;padding:11px 14px 11px 40px;color:var(--tx);font-family:inherit;font-size:.88rem;transition:all .2s;outline:none}
-        .inp::placeholder{color:var(--tx3)}
-        .inp:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,.1);background:var(--bg2)}
-        .ig{margin-bottom:1.15rem}.ig label{display:block;margin-bottom:5px;font-size:.8rem;font-weight:600}
-        .iw{position:relative}.ii{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--tx3);pointer-events:none}
-        .iw:focus-within .ii{color:var(--purple)}
-        .err{display:none;align-items:center;gap:8px;padding:10px 14px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;color:var(--danger);font-size:.8rem;margin-bottom:1rem}
-        .err.show{display:flex}
-        .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:var(--bg3);border:1px solid var(--bd);border-radius:99px;font-size:.72rem;font-weight:500;color:var(--tx2)}
-        .page{min-height:100vh}
+/* ── Hero ── */
+.hero{min-height:calc(100vh - 78px);display:grid;align-items:center;padding:54px 0 42px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:28px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--accent-s);font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.pulse-dot{position:relative;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.pulse-dot::after{content:'';position:absolute;inset:-7px;border-radius:inherit;border:1px solid var(--accent);opacity:0;animation:pulseRing 1.8s ease-out infinite}
+.hero-copy{display:grid;gap:22px}
+.hero-lead{max-width:680px;font-size:1.18rem;color:var(--muted);line-height:1.6}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.acc-p{color:var(--accent)}.acc-o{color:var(--orange)}
+.metric-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:680px}
 
-        /* ── Header ── */
-        .hdr{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 0}
-        .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-radius:14px;background:var(--nav);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--bdL);box-shadow:var(--sh);transition:background var(--t)}
-        .logo{display:flex;align-items:center;gap:8px;cursor:pointer}
-        .lm{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--purple),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff}
-        .ln{font-size:1rem;font-weight:800;letter-spacing:-.03em}
-        .na{display:flex;gap:6px;align-items:center}
+/* Shared card base */
+.card,.metric-card,.stage-card,.feat-card,.step-card,.auth-panel,.post-card,.insight-card,.composer-card,.status-banner,.person-card,.job-card,.event-card{
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-f);backdrop-filter:blur(16px)}
+.metric-card{display:grid;gap:10px;padding:18px}
+.metric-card span{color:var(--muted);font-weight:700;font-size:.88rem}
+.metric-card strong{font-size:2.12rem;letter-spacing:0}
 
-        /* ── Hero ── */
-        .hero{min-height:100vh;display:flex;align-items:center;padding:7rem 1.5rem 4rem;position:relative;overflow:hidden}
-        .hero-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-        [data-theme="light"] .hero-bg-video{opacity:.18;filter:grayscale(.3)}
-        [data-theme="dark"] .hero-bg-video{opacity:.08;filter:grayscale(1) brightness(.6)}
-        .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none}
-        [data-theme="light"] .hero-overlay{background:linear-gradient(135deg,rgba(250,250,248,.7),rgba(250,250,248,.92) 60%,rgba(250,250,248,.98))}
-        [data-theme="dark"] .hero-overlay{background:linear-gradient(135deg,rgba(9,9,11,.6),rgba(9,9,11,.88) 60%,rgba(9,9,11,.97))}
-        .hero-content{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;width:100%;max-width:1100px;margin:0 auto}
-        .hero-tag{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;background:var(--pbg);border:1px solid var(--pbd);border-radius:99px;font-size:.73rem;font-weight:600;color:var(--purple);margin-bottom:1.5rem}
-        .hero h1{font-size:clamp(2.25rem,4.5vw,3.5rem);font-weight:900;line-height:1.06;letter-spacing:-.03em;margin-bottom:1.1rem}
-        .acc{color:var(--purple)}.aco{color:var(--orange)}
-        .hero p{font-size:1.05rem;color:var(--tx2);max-width:460px;margin-bottom:1.75rem;line-height:1.7}
-        .ha{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:2rem}
-        .tr{display:flex;gap:1.25rem;flex-wrap:wrap}
-        .tri{display:flex;align-items:center;gap:5px;font-size:.78rem;color:var(--tx3)}
-        .tri i{color:var(--purple-mid)}
-        .hv{position:relative;border-radius:14px;overflow:hidden;background:var(--bg3);border:1px solid var(--bd);box-shadow:var(--shL);aspect-ratio:4/3;transition:border var(--t)}
-        .hv img{width:100%;height:100%;object-fit:cover}
-        [data-theme="dark"] .hv img{filter:brightness(.7) contrast(1.1)}
-        .hv-ov{position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,.06),rgba(249,115,22,.04))}
-        .hv-b{position:absolute;bottom:14px;left:14px;right:14px;display:flex;justify-content:space-between;padding:9px 13px;background:var(--nav);backdrop-filter:blur(12px);border-radius:8px;border:1px solid var(--bd);font-size:.68rem;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.04em}
-        .dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;margin-right:4px;animation:pdot 2s infinite}
+/* ── Network Stage (hero right) ── */
+.n-stage{position:relative;min-height:620px;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(135deg,var(--surface-s),var(--surface-f));box-shadow:var(--shadow)}
+.stage-grid{position:absolute;inset:0;opacity:.42;background:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(180deg,#000 20%,transparent)}
+.stage-card{position:absolute;background:var(--surface)}
+.prof-card{top:46px;left:42px;right:42px;display:grid;grid-template-columns:92px 1fr auto;gap:16px;align-items:center;padding:16px;animation:floatCard 6s ease-in-out infinite}
+.prof-media{width:92px;height:92px;overflow:hidden;border-radius:var(--radius);background:var(--surface-f)}
+.prof-media img,.person-card img,.event-card img,.orbit-img img{width:100%;height:100%;object-fit:cover}
+.prof-name{font-size:1.28rem;font-weight:900}.prof-role{color:var(--muted);line-height:1.6}
+.v-badge{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:0 10px;border-radius:var(--radius);background:var(--accent-f);color:var(--accent-s);font-size:.78rem;font-weight:900}
 
-        /* ── Stats ── */
-        .ss{padding:3rem 1.5rem}
-        .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border-radius:14px;overflow:hidden;box-shadow:var(--sh);transition:background var(--t)}
-        .si{background:var(--bg2);padding:1.75rem;text-align:center;transition:background var(--t)}
-        .sv{font-size:1.85rem;font-weight:800;letter-spacing:-.03em;color:var(--purple)}
-        .sl{font-size:.78rem;color:var(--tx3);margin-top:3px}
+.signal-card{top:210px;left:42px;width:min(330px,calc(100% - 84px));display:grid;grid-template-columns:76px 1fr;gap:14px;padding:18px;animation:floatCard 7s ease-in-out infinite .5s}
+.signal-ring{position:relative;display:grid;place-items:center;width:70px;height:70px;border-radius:50%;border:2px solid var(--accent)}
+.signal-ring::before,.signal-ring::after{content:'';position:absolute;inset:8px;border-radius:inherit;border:1px solid var(--orange);animation:spin 8s linear infinite}
+.signal-ring::after{inset:19px;border-color:var(--green);animation-duration:5s;animation-direction:reverse}
+.signal-ring span{width:14px;height:14px;border-radius:50%;background:var(--accent)}
 
-        /* ── Features ── */
-        .fs{padding:4.5rem 1.5rem}
-        .sh{text-align:center;margin-bottom:2.5rem}
-        .st{display:inline-flex;padding:4px 11px;background:var(--obg);border:1px solid var(--obd);border-radius:99px;font-size:.68rem;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem}
-        .sh h2{font-size:clamp(1.6rem,3vw,2.25rem);font-weight:800;letter-spacing:-.02em;line-height:1.15}
-        .sh p{color:var(--tx2);max-width:480px;margin:.6rem auto 0;font-size:.95rem}
-        .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
-        .fc{padding:1.5rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);transition:all .25s}
-        .fc:hover{transform:translateY(-3px);border-color:var(--purple-mid);box-shadow:0 8px 28px rgba(124,58,237,.12)}
-        .fi{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:.85rem}
-        .fc h3{font-size:.95rem;font-weight:700;margin-bottom:5px}
-        .fc p{font-size:.82rem;color:var(--tx2);line-height:1.6}
+.mini-feed{right:40px;bottom:50px;width:min(350px,calc(100% - 80px));padding:20px;animation:floatCard 8s ease-in-out infinite .2s}
+.feed-line{height:12px;margin-bottom:12px;overflow:hidden;border-radius:99px;background:var(--surface-f)}
+.feed-line::after{content:'';display:block;width:42%;height:100%;background:linear-gradient(90deg,transparent,var(--accent-f),transparent);animation:shimmer 2.2s ease-in-out infinite}
+.feed-line.w78{width:78%}.feed-line.w54{width:54%}
+.feed-dots{display:flex;gap:8px;margin-top:4px}
+.feed-dots span{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:bounceDot 1.2s ease-in-out infinite}
+.feed-dots span:nth-child(2){animation-delay:.14s;background:var(--orange)}
+.feed-dots span:nth-child(3){animation-delay:.28s;background:var(--green)}
 
-        /* ── Steps ── */
-        .sps{padding:4.5rem 1.5rem}
-        .spg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-        .spc{text-align:center;padding:1.75rem 1.25rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);transition:all .25s}
-        .spc:hover{border-color:var(--orange-mid);box-shadow:0 6px 20px rgba(249,115,22,.1)}
-        .sn{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto .85rem;font-weight:800;font-size:.8rem;color:#fff}
-        .spc h3{font-size:.95rem;font-weight:700;margin-bottom:5px}
-        .spc p{font-size:.8rem;color:var(--tx2);line-height:1.6}
+.orbit-card{top:365px;left:72px;display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:10px;padding:12px;animation:floatCard 6.5s ease-in-out infinite .9s}
+.orbit-img{width:52px;height:52px;overflow:hidden;border-radius:50%;border:3px solid var(--surface-s);box-shadow:var(--shadow-f)}
+.orbit-img+.orbit-img{margin-left:-20px}
+.orbit-copy{color:var(--muted);font-size:.86rem;font-weight:800}
 
-        /* ── CTA ── */
-        .cts{padding:4.5rem 1.5rem}
-        .ctb{text-align:center;padding:3rem 2rem;border-radius:18px;background:linear-gradient(135deg,var(--pbg),var(--obg));border:1px solid var(--pbd);transition:all var(--t)}
-        .ctb h2{font-size:1.85rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem}
-        .ctb p{color:var(--tx2);margin-bottom:1.75rem}
+/* ── Sections ── */
+.sec{padding:84px 0}
+.sec-hdr{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}
+.sec-hdr h2{margin-top:8px}
+.sec-kicker{color:var(--accent-s);font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.sec-copy{max-width:540px;color:var(--muted);line-height:1.6}
 
-        /* ── Footer ── */
-        .ft{padding:2rem 1.5rem;border-top:1px solid var(--bd);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem}
-        .ft p{font-size:.78rem;color:var(--tx3)}
-        .fl{display:flex;gap:1.25rem}.fl a{font-size:.78rem;color:var(--tx3);transition:color .2s}.fl a:hover{color:var(--purple)}
+/* Features */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat-card{display:grid;gap:14px;padding:22px;min-height:230px}
+.feat-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:var(--radius);background:var(--text);color:var(--bg);font-weight:900}
+.feat-card h3{font-size:1.18rem}.feat-card p{color:var(--muted);line-height:1.6}
 
-        /* ── Login ── */
-        #page-login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
-        .lp{display:flex;width:100%;max-width:920px;min-height:520px;border-radius:18px;overflow:hidden;background:var(--bg2);border:1px solid var(--bd);box-shadow:var(--shL);animation:fU .5s ease both;transition:background var(--t)}
-        .lb{flex:1;padding:2.5rem;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(135deg,var(--purple),#9333EA);color:#fff;position:relative;overflow:hidden}
-        .lb::after{content:'';position:absolute;bottom:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(249,115,22,.2);filter:blur(50px)}
-        .lb h1{font-size:2rem;font-weight:800;line-height:1.1;margin-top:2rem;letter-spacing:-.02em}
-        .lb>p{font-size:.9rem;opacity:.8;line-height:1.6;max-width:320px;margin-top:.6rem}
-        .lfs{width:400px;padding:2.5rem;display:flex;flex-direction:column;justify-content:center}
-        .lfs h2{font-size:1.4rem;font-weight:800;margin-bottom:3px;letter-spacing:-.02em}
-        .lfs .sub{color:var(--tx2);font-size:.82rem;margin-bottom:1.5rem}.lfs .sub a{color:var(--purple);font-weight:600}
-        .rs{display:flex;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:3px;margin-bottom:1.35rem;position:relative}
-        .rb{flex:1;padding:7px 0;text-align:center;font-weight:600;font-size:.78rem;color:var(--tx3);cursor:pointer;border-radius:8px;transition:color .3s;position:relative;z-index:2}
-        .rb.active{color:var(--purple)}
-        .ri{position:absolute;top:3px;bottom:3px;width:calc(33.333% - 2px);background:var(--bg2);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:1}
-        .fgl{display:block;text-align:right;font-size:.75rem;color:var(--purple);margin-top:3px;font-weight:500}
-        .dl{display:flex;align-items:center;margin:1.25rem 0;color:var(--tx3);font-size:.72rem}
-        .dl::before,.dl::after{content:'';flex:1;border-bottom:1px solid var(--bd)}.dl span{padding:0 .85rem}
+/* Trust layout */
+.trust-layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(320px,.8fr);gap:24px;align-items:start;padding:28px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-f)}
+.trust-list{display:grid;gap:12px}
+.trust-item{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-s);font-weight:800}
+.trust-item span{width:12px;height:12px;flex-shrink:0;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px var(--accent-f)}
 
-        /* ══════ FACE VERIFY — SCANNER AESTHETIC ══════ */
-        #page-fv{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
-        .fcard{width:100%;max-width:540px;padding:2.25rem;border-radius:18px;background:var(--bg2);border:1px solid var(--bd);box-shadow:var(--shL);text-align:center;animation:fU .5s ease both;transition:background var(--t)}
-        .fic{width:68px;height:68px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.15rem}
-        .ins{text-align:left;margin:1.25rem 0 1.5rem;display:grid;gap:7px}
-        .insi{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;background:var(--bg3);border:1px solid var(--bdL);font-size:.83rem;transition:background var(--t)}
-        .insn{width:26px;height:26px;border-radius:7px;background:var(--pbg);color:var(--purple);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.68rem;flex-shrink:0}
+/* ── Auth Modal ── */
+.auth-modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:18px}
+.auth-scrim{position:absolute;inset:0;background:rgba(2,2,8,.62);backdrop-filter:blur(12px);animation:fadeIn .2s both}
+.auth-panel{position:relative;z-index:1;width:min(980px,100%);max-height:min(820px,calc(100vh - 36px));overflow:auto;padding:24px;background:var(--surface-s);animation:modalIn .26s both}
+.auth-close{position:absolute;top:18px;right:18px;z-index:2}
+.auth-progress{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 54px 24px 0}
+.auth-progress span{height:4px;border-radius:4px;background:var(--surface-f)}
+.auth-progress span.active,.auth-progress span.done{background:var(--accent)}
+.auth-step{display:none;animation:panelIn .22s both}.auth-step.active{display:block}
+.auth-step h2{max-width:760px;margin-top:8px}
+.auth-copy{max-width:720px;margin-top:12px;margin-bottom:22px;color:var(--muted);line-height:1.6}
+.field-grid{display:grid;gap:12px;margin-bottom:18px}
+.field{display:grid;gap:8px}.field span{color:var(--muted);font-weight:800;font-size:.9rem}
+.field input,.field select{width:100%;min-height:48px;padding:0 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-s);color:var(--text);outline:none}
+.field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--focus)}
 
-        /* Scanner viewport */
-        .scanner-wrap{position:relative;width:100%;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#000;margin-bottom:.85rem;border:2px solid var(--bd)}
-        .scanner-wrap video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
-        .scanner-wrap canvas{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(-1);pointer-events:none}
+/* Camera */
+.cam-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:18px;align-items:stretch}
+.cam-shell{position:relative;min-height:470px;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);background:#050505}
+.cam-shell video,.cam-shell canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.cam-shell canvas{z-index:2}
+.cam-ph{position:absolute;inset:0;z-index:3;display:grid;place-content:center;gap:8px;text-align:center;color:#fff;
+  background:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px),#07060c;background-size:34px 34px}
+.cam-ph span{color:rgba(255,255,255,.64);font-size:.82rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.cam-ph strong{font-size:1.18rem}
+.cam-shell.cam-on .cam-ph{opacity:0;pointer-events:none;transition:opacity .22s}
+.scan-frame{position:absolute;inset:9%;z-index:4;pointer-events:none;border:1px solid rgba(255,255,255,.45);border-radius:50% 50% 46% 46%/58% 58% 42% 42%}
+.scan-frame::before,.scan-frame::after{content:'';position:absolute;width:36px;height:36px;border-color:var(--accent)}
+.scan-frame::before{top:14px;left:26px;border-top:3px solid;border-left:3px solid}
+.scan-frame::after{right:26px;bottom:14px;border-right:3px solid;border-bottom:3px solid}
+.scan-frame i{position:absolute;right:12%;left:12%;top:18%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;display:block}
+.cam-shell.scanning .scan-frame i{opacity:1;animation:scanSweep 2s ease-in-out infinite}
 
-        /* HUD overlay elements */
-        .hud{position:absolute;inset:0;pointer-events:none;z-index:5}
-        .hud-corner{position:absolute;width:28px;height:28px;border-color:var(--purple);border-style:solid}
-        .hud-tl{top:12px;left:12px;border-width:2px 0 0 2px;border-radius:4px 0 0 0}
-        .hud-tr{top:12px;right:12px;border-width:2px 2px 0 0;border-radius:0 4px 0 0}
-        .hud-bl{bottom:12px;left:12px;border-width:0 0 2px 2px;border-radius:0 0 0 4px}
-        .hud-br{bottom:12px;right:12px;border-width:0 2px 2px 0;border-radius:0 0 4px 0}
-        .hud-scanline{position:absolute;left:14px;right:14px;height:2px;background:linear-gradient(90deg,transparent,var(--purple-mid),transparent);opacity:.7;animation:scanY 2.8s ease-in-out infinite;will-change:top}
-        .hud-crosshair{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px}
-        .hud-crosshair::before,.hud-crosshair::after{content:'';position:absolute;background:var(--purple-mid);border-radius:1px}
-        .hud-crosshair::before{width:20px;height:1.5px;top:50%;left:0;transform:translateY(-50%)}
-        .hud-crosshair::after{width:1.5px;height:20px;left:50%;top:0;transform:translateX(-50%)}
-        .hud-oval{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48%;aspect-ratio:3/4;border:1.5px dashed rgba(124,58,237,.35);border-radius:50%;animation:pulse-oval 3s ease-in-out infinite}
-        .hud-label{position:absolute;bottom:14px;left:14px;right:14px;display:flex;justify-content:space-between;padding:6px 10px;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);border-radius:6px;font-size:.62rem;font-weight:600;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em;font-family:'Inter',monospace}
-        .hud-phase{position:absolute;top:14px;left:14px;padding:4px 10px;background:rgba(124,58,237,.8);border-radius:6px;font-size:.62rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.05em;transition:background .3s}
-        .hud-phase.ok{background:rgba(16,185,129,.8)}
+.live-panel{display:grid;align-content:start;gap:14px}
+.score-box,.chk-item{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.score-box{display:grid;gap:10px;padding:16px}.score-box span{color:var(--muted);font-weight:700}
+.score-box strong{font-size:2.4rem;line-height:.95;letter-spacing:0}
+.prog-track{height:8px;overflow:hidden;border-radius:999px;background:var(--surface-f)}
+.prog-track i{display:block;width:0%;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--accent),var(--orange));transition:width .45s}
+.chk-item{display:grid;grid-template-columns:18px 1fr;gap:10px;align-items:center;padding:12px;color:var(--muted);font-weight:800}
+.chk-item span{width:18px;height:18px;border:1px solid var(--line-s);border-radius:50%;background:var(--surface-f)}
+.chk-item.active{border-color:var(--accent);color:var(--text)}
+.chk-item.active span{background:var(--amber);box-shadow:0 0 0 5px var(--amber-f)}
+.chk-item.pass{border-color:var(--accent);color:var(--accent-s)}
+.chk-item.pass span{display:grid;place-items:center;border-color:var(--accent);background:var(--accent);color:var(--bg)}
+.chk-item.pass span::after{content:'✓';font-size:.7rem;font-weight:900}
+.cam-status{min-height:52px;padding:12px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface-f);font-size:.9rem;font-weight:700;color:var(--muted)}
+.cam-acts{display:flex;gap:10px}.cam-acts .btn{flex:1}
+.model-pill{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:var(--radius);background:var(--amber-f);color:var(--amber);font-size:.78rem;font-weight:900;white-space:nowrap}
+.model-pill.ok{background:var(--green-f);color:var(--green)}
+.model-pill.err{background:var(--danger-f);color:var(--danger)}
+.success-step{max-width:560px;margin:0 auto;padding:44px 0 20px;text-align:center}
+.success-mark{display:grid;place-items:center;width:88px;height:88px;margin:0 auto 18px;border-radius:50%;background:var(--accent);color:var(--bg);font-size:2.8rem;font-weight:900;box-shadow:0 0 0 12px var(--accent-f);animation:popIn .36s both}
 
-        .sbar{padding:9px 13px;border-radius:8px;background:var(--bg3);border:1px solid var(--bdL);margin-bottom:.85rem;font-size:.8rem;color:var(--tx2);font-weight:500;transition:all .3s}
-        .ptr{height:4px;border-radius:4px;background:var(--bg3);margin-bottom:.85rem;overflow:hidden}
-        .ptf{height:100%;width:0%;border-radius:4px;background:linear-gradient(90deg,var(--purple),var(--orange));transition:width .5s ease}
-        .ckg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-        .cki{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:8px;background:var(--bg3);border:1px solid var(--bdL);font-size:.68rem;font-weight:600;color:var(--tx3);transition:all .3s}
-        .cki.done{background:var(--gBg);border-color:var(--gBd);color:var(--green)}
-        .spinner{width:34px;height:34px;border:3px solid var(--bd);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem}
+/* ── Toast ── */
+.toast{position:fixed;right:20px;bottom:20px;z-index:140;max-width:min(360px,calc(100% - 32px));padding:14px 16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--text);color:var(--bg);box-shadow:var(--shadow);opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .18s,transform .18s;font-weight:800}
+.toast.show{opacity:1;transform:translateY(0)}
 
-        /* ── Dashboard ── */
-        #page-dash{padding-top:5rem}
-        .dh{padding:1.75rem 0}.dh h1{font-size:1.4rem;font-weight:800;letter-spacing:-.02em}
-        .dg{display:grid;grid-template-columns:250px 1fr 250px;gap:1.15rem;padding-bottom:3rem}
-        .pc{padding:1.35rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);transition:background var(--t)}
-        .av-c{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:#fff;margin-bottom:8px}
-        .pc .nm{font-weight:700;font-size:.88rem}.pc .hl{font-size:.75rem;color:var(--tx2);margin-top:2px}
-        .ps{display:flex;gap:1rem;margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--bd)}
-        .ps div{text-align:center;flex:1}.ps .v{font-weight:800;font-size:.95rem;color:var(--purple)}.ps .l{font-size:.65rem;color:var(--tx3);margin-top:2px}
-        .cpb{display:flex;align-items:center;gap:10px;padding:1rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);margin-bottom:.85rem;cursor:pointer;transition:border-color .2s}
-        .cpb:hover{border-color:var(--purple-mid)}
-        .pa{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--purple),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;color:#fff;flex-shrink:0}
-        .pib{flex:1;background:var(--bg3);border:1px solid var(--bdL);border-radius:99px;padding:8px 14px;font-size:.8rem;color:var(--tx3)}
-        .pcd{padding:1.15rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);margin-bottom:.85rem;transition:background var(--t)}
-        .pau{display:flex;align-items:center;gap:9px;margin-bottom:9px}
-        .pau .pav{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.7rem;color:#fff;flex-shrink:0}
-        .pau .an{font-weight:600;font-size:.83rem}.pau .ai{font-size:.7rem;color:var(--tx3)}
-        .pct{font-size:.85rem;color:var(--tx2);line-height:1.65;margin-bottom:9px}
-        .pac{display:flex;gap:4px;border-top:1px solid var(--bdL);padding-top:9px}
-        .pab{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:8px;font-size:.75rem;color:var(--tx3);background:none;border:none;cursor:pointer;font-family:inherit;font-weight:500;transition:all .15s}
-        .pab:hover{color:var(--purple);background:rgba(124,58,237,.06)}
-        .sw{padding:1.15rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);margin-bottom:.85rem;transition:background var(--t)}
-        .sw h3{font-size:.8rem;font-weight:700;margin-bottom:9px}
-        .wi{display:flex;align-items:center;gap:9px;padding:5px 0}
-        .wia{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.62rem;color:#fff;flex-shrink:0}
-        .win{font-size:.78rem;font-weight:600}.wis{font-size:.68rem;color:var(--tx3)}
+/* ── Reveal ── */
+.reveal{opacity:0;transform:translateY(18px)}
+.reveal.revealed{opacity:1;transform:translateY(0);transition:opacity .55s,transform .55s}
 
-        @keyframes fU{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        @keyframes pdot{0%,100%{opacity:1}50%{opacity:.4}}
-        @keyframes scanY{0%{top:14px}50%{top:calc(100% - 16px)}100%{top:14px}}
-        @keyframes pulse-oval{0%,100%{opacity:.35;transform:translate(-50%,-50%) scale(1)}50%{opacity:.6;transform:translate(-50%,-50%) scale(1.02)}}
+/* ── Keyframes ── */
+@keyframes pulseRing{0%{opacity:.8;transform:scale(.4)}100%{opacity:0;transform:scale(1.7)}}
+@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(260%)}}
+@keyframes bounceDot{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(-5px);opacity:1}}
+@keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes scanSweep{0%{top:16%}50%{top:78%}100%{top:16%}}
+@keyframes popIn{from{opacity:0;transform:scale(.78)}to{opacity:1;transform:scale(1)}}
 
-        @media(max-width:900px){
-            .hero-content{grid-template-columns:1fr}
-            .hv{display:none}
-            .lp{flex-direction:column;max-width:460px}.lb{padding:2rem}.lb h1{font-size:1.65rem;margin-top:.75rem}.lfs{width:100%;padding:2rem}
-            .sg{grid-template-columns:repeat(2,1fr)}.spg{grid-template-columns:1fr}
-            .dg{grid-template-columns:1fr}.dg>aside{display:none}
-        }
-    </style>
+/* ── Responsive ── */
+@media(max-width:1120px){.hero-grid,.trust-layout,.cam-layout{grid-template-columns:1fr}.n-stage{min-height:560px}}
+@media(max-width:860px){h1{font-size:clamp(2.2rem,5vw,4.4rem)}h2{font-size:2.4rem}.hdr-row,.sec-hdr{flex-direction:column;align-items:flex-start}.hdr-nav{width:100%;justify-content:space-between}.feat-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.wrap{width:min(100% - 24px,1200px)}.hdr{position:static}.hero{min-height:auto;padding:36px 0 24px}h1{font-size:2.8rem}.n-stage{min-height:610px}.prof-card{top:18px;left:16px;right:16px}.signal-card{top:190px;left:16px;width:auto;right:16px}.orbit-card{top:380px;left:16px;right:16px}.mini-feed{bottom:18px;left:16px;right:16px;width:auto}.sec{padding:52px 0}.cam-shell{min-height:360px}}
+  </style>
 </head>
 <body>
+<div class="page-shell">
+  <!-- ═══ HEADER ═══ -->
+  <header class="hdr">
+    <div class="wrap hdr-row">
+      <a class="brand" href="#home">
+        <span class="brand-mark">SU</span>
+        <span style="display:grid;gap:2px"><strong>SyncUp.</strong><small>Verified professional ecosystem</small></span>
+      </a>
+      <nav class="hdr-nav">
+        <a href="#network">Network</a>
+        <a href="#opportunities">Opportunities</a>
+        <a href="#trust">Trust</a>
+      </nav>
+      <div class="hdr-acts">
+        <button class="theme-tog" id="themeToggle" type="button">
+          <span class="theme-track"><span class="theme-thumb"></span></span>
+          <span id="themeLabel">Light</span>
+        </button>
+        <button class="btn btn-s" type="button" data-open-auth>Sign in</button>
+        <button class="btn btn-p" type="button" data-open-auth>Verify now</button>
+      </div>
+    </div>
+  </header>
 
-<!-- ══════ LANDING ══════ -->
-<div id="page-landing" class="page">
-    <header class="hdr"><div class="container"><div class="nav">
-        <div class="logo" onclick="showPage('landing')"><div class="lm"><i data-lucide="zap" style="width:14px;height:14px;"></i></div><div class="ln">SyncUp</div></div>
-        <div class="na"><button class="theme-toggle" onclick="toggleTheme()" id="tb"><i data-lucide="sun" style="width:16px;height:16px;" id="ti"></i></button><button class="btn btn-s" onclick="showPage('login')">Sign In</button><button class="btn btn-p" onclick="showPage('login')">Join Free</button></div>
-    </div></div></header>
-
-    <section class="hero">
-        <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
-            <source src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_30fps.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div>
-                <div class="hero-tag"><i data-lucide="shield-check" style="width:12px;height:12px;"></i> Live human verification</div>
-                <h1>Build a <span class="acc">trusted</span> professional <span class="aco">network</span></h1>
-                <p>Every profile starts with camera liveness — real presence, real connections, zero fakes.</p>
-                <div class="ha">
-                    <button class="btn btn-p" onclick="showPage('login')">Start Verification <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></button>
-                    <button class="btn btn-s" onclick="document.getElementById('feat').scrollIntoView({behavior:'smooth'})"><i data-lucide="scan-face" style="width:14px;height:14px;"></i> How it works</button>
-                </div>
-                <div class="tr">
-                    <div class="tri"><i data-lucide="shield" style="width:13px;height:13px;"></i> Face-verified</div>
-                    <div class="tri"><i data-lucide="activity" style="width:13px;height:13px;"></i> Liveness checks</div>
-                    <div class="tri"><i data-lucide="building-2" style="width:13px;height:13px;"></i> Professionals only</div>
-                </div>
-            </div>
-            <div class="hv">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80" alt="Team">
-                <div class="hv-ov"></div>
-                <div class="hv-b"><span><span class="dot"></span> ON-DEVICE LIVENESS</span><span>getUserMedia API</span></div>
-            </div>
+  <main>
+    <!-- ═══ HERO ═══ -->
+    <section id="home" class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span class="pulse-dot"></span> Live identity layer enabled</p>
+          <h1>Meet <span class="acc-p">real professionals</span> before the <span class="acc-o">conversation</span> starts.</h1>
+          <p class="hero-lead">SyncUp keeps networking, hiring, funding, and events in one trusted workspace with camera liveness checks and verified profile signals.</p>
+          <div class="hero-actions">
+            <button class="btn btn-p btn-lg" type="button" data-open-auth>Start verification</button>
+            <a class="btn btn-s btn-lg" href="#network">Explore dashboard</a>
+          </div>
+          <div class="metric-strip">
+            <article class="metric-card"><span>Verified members</span><strong data-count="120000">0</strong></article>
+            <article class="metric-card"><span>Trusted companies</span><strong data-count="3400">0</strong></article>
+            <article class="metric-card"><span>Live events</span><strong data-count="520">0</strong></article>
+          </div>
         </div>
+
+        <div class="n-stage reveal">
+          <div class="stage-grid"></div>
+          <article class="stage-card prof-card">
+            <div class="prof-media"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=480&q=80" alt="Verified founder"></div>
+            <div><div class="prof-name">Maya Raman</div><div class="prof-role">Founder at Threadbase</div></div>
+            <span class="v-badge">Verified</span>
+          </article>
+          <article class="stage-card signal-card">
+            <div class="signal-ring"><span></span></div>
+            <div><strong>Identity confidence</strong><p style="color:var(--muted);line-height:1.6">Face match, liveness, and account risk signals are ready before outreach.</p></div>
+          </article>
+          <article class="stage-card mini-feed">
+            <div class="feed-line w78"></div><div class="feed-line"></div><div class="feed-line w54"></div>
+            <div class="feed-dots"><span></span><span></span><span></span></div>
+          </article>
+          <article class="stage-card orbit-card">
+            <div class="orbit-img"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=320&q=80" alt="Engineer"></div>
+            <div class="orbit-img"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=320&q=80" alt="Investor"></div>
+            <div class="orbit-copy">Warm intros are moving</div>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <section class="ss container"><div class="sg">
-        <div class="si"><div class="sv" data-target="42891">0</div><div class="sl">Active Users</div></div>
-        <div class="si"><div class="sv" data-target="1245">0</div><div class="sl">Live Events</div></div>
-        <div class="si"><div class="sv" data-target="8234">0</div><div class="sl">Listings</div></div>
-        <div class="si"><div class="sv" data-target="18920">0</div><div class="sl">Reviews</div></div>
-    </div></section>
+    <!-- ═══ OPPORTUNITIES ═══ -->
+    <section id="opportunities" class="sec">
+      <div class="wrap">
+        <div class="sec-hdr reveal">
+          <div><p class="sec-kicker">Opportunities</p><h2>Cleaner paths to work, funding, and partnerships.</h2></div>
+          <p class="sec-copy">Every role, intro, and event can carry identity, domain, and company checks.</p>
+        </div>
+        <div class="feat-grid reveal">
+          <article class="feat-card"><span class="feat-icon">01</span><h3>Signal-rich profiles</h3><p>Profiles combine role history, verification state, active intent, and trust context.</p></article>
+          <article class="feat-card"><span class="feat-icon">02</span><h3>Validated companies</h3><p>Domain matching and registry checks keep company pages clean and harder to spoof.</p></article>
+          <article class="feat-card"><span class="feat-icon">03</span><h3>Live event access</h3><p>High-trust rooms can require camera liveness before registration or check-in.</p></article>
+        </div>
+      </div>
+    </section>
 
-    <section class="fs container" id="feat"><div class="sh"><div class="st">Why SyncUp</div><h2>Everything you need to<br>thrive professionally</h2><p>From networking to opportunities — connecting the most ambitious professionals.</p></div>
-    <div class="fg">
-        <div class="fc"><div class="fi" style="background:var(--pbg);"><i data-lucide="users" style="width:18px;height:18px;color:var(--purple);"></i></div><h3>Connect</h3><p>Network with verified professionals and build lasting relationships.</p></div>
-        <div class="fc"><div class="fi" style="background:var(--obg);"><i data-lucide="trending-up" style="width:18px;height:18px;color:var(--orange);"></i></div><h3>Grow</h3><p>Access exclusive opportunities and mentorship for your journey.</p></div>
-        <div class="fc"><div class="fi" style="background:var(--gBg);"><i data-lucide="handshake" style="width:18px;height:18px;color:var(--green);"></i></div><h3>Collaborate</h3><p>Find partners and co-founders for your next big venture.</p></div>
-        <div class="fc"><div class="fi" style="background:rgba(239,68,68,.08);"><i data-lucide="megaphone" style="width:18px;height:18px;color:var(--danger);"></i></div><h3>Promote</h3><p>Reach thousands of verified professionals with campaigns.</p></div>
-    </div></section>
-
-    <section class="sps container"><div class="sh"><div class="st" style="background:var(--pbg);border-color:var(--pbd);color:var(--purple);">Get Started</div><h2>Three steps to join</h2><p>Up and running in minutes.</p></div>
-    <div class="spg">
-        <div class="spc"><div class="sn" style="background:linear-gradient(135deg,var(--purple),var(--purple-dark));">01</div><h3>Register</h3><p>Create your account with your professional email.</p></div>
-        <div class="spc"><div class="sn" style="background:linear-gradient(135deg,var(--orange-mid),var(--orange));">02</div><h3>Verify</h3><p>Complete camera liveness check to prove you're real.</p></div>
-        <div class="spc"><div class="sn" style="background:linear-gradient(135deg,var(--green),#059669);">03</div><h3>Connect</h3><p>Start networking and finding opportunities.</p></div>
-    </div></section>
-
-    <section class="cts container"><div class="ctb">
-        <div class="lm" style="width:44px;height:44px;border-radius:12px;margin:0 auto 1rem;"><i data-lucide="zap" style="width:20px;height:20px;color:#fff;"></i></div>
-        <h2>Ready to get verified?</h2><p>Join 42,000+ verified professionals.</p>
-        <button class="btn btn-p" onclick="showPage('login')">Get Started Free <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></button>
-    </div></section>
-
-    <footer class="ft container">
-        <div class="logo"><div class="lm" style="width:24px;height:24px;border-radius:7px;"><i data-lucide="zap" style="width:11px;height:11px;color:#fff;"></i></div><span class="ln" style="font-size:.85rem;">SyncUp</span></div>
-        <p>&copy; 2025 SyncUp</p><div class="fl"><a href="#">Events</a><a href="#">Companies</a><a href="#">Jobs</a></div>
-    </footer>
+    <!-- ═══ TRUST ═══ -->
+    <section id="trust" class="sec" style="padding-top:36px">
+      <div class="wrap trust-layout reveal">
+        <div>
+          <p class="sec-kicker">Trust engine</p>
+          <h2>Camera liveness with clear production boundaries.</h2>
+          <p class="sec-copy">This browser demo requests camera access, tracks one face, and requires blink, head movement, and smile challenges.</p>
+        </div>
+        <div class="trust-list">
+          <div class="trust-item"><span></span> Uses getUserMedia for live camera access</div>
+          <div class="trust-item"><span></span> Runs pixel-level face analysis in real time</div>
+          <div class="trust-item"><span></span> Requires challenge-response liveness gestures</div>
+          <div class="trust-item"><span></span> Stops camera tracks after verification closes</div>
+        </div>
+      </div>
+    </section>
+  </main>
 </div>
 
-<!-- ══════ LOGIN ══════ -->
-<div id="page-login" class="page hidden">
-    <div class="lp">
-        <div class="lb">
-            <div class="logo" onclick="showPage('landing')"><div class="lm" style="background:rgba(255,255,255,.2);"><i data-lucide="zap" style="width:13px;height:13px;color:#fff;"></i></div><div class="ln" style="color:#fff;">SyncUp</div></div>
-            <div style="position:relative;z-index:1;"><h1>The Trusted<br>Professional<br>Ecosystem</h1><p>Verified humans only. No bots, no fakes.</p>
-                <div style="display:flex;gap:7px;margin-top:1.25rem;"><div class="badge" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2);color:#fff;"><i data-lucide="shield-check" style="width:11px;height:11px;"></i> Verified</div><div class="badge" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2);color:#fff;"><i data-lucide="lock" style="width:11px;height:11px;"></i> Secured</div></div>
-            </div><p style="font-size:.68rem;opacity:.45;">&copy; 2025 SyncUp</p>
-        </div>
-        <div class="lfs">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;">
-                <div><h2>Welcome back</h2><p class="sub" style="margin-bottom:0;">Sign in. <a href="#" onclick="event.preventDefault()">Create Account</a></p></div>
-                <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" style="width:15px;height:15px;"></i></button>
-            </div>
-            <div class="rs"><div class="ri" id="ri"></div><div class="rb active" onclick="selRole(0)">Member</div><div class="rb" onclick="selRole(1)">Recruiter</div><div class="rb" onclick="selRole(2)">Admin</div></div>
-            <div class="err" id="le"><i data-lucide="alert-circle" style="width:13px;height:13px;flex-shrink:0;"></i><span id="let"></span></div>
-            <form onsubmit="doLogin(event)">
-                <div class="ig"><label for="em">Work Email</label><div class="iw"><input type="email" id="em" class="inp" placeholder="you@company.com" required><i data-lucide="mail" style="width:14px;height:14px;" class="ii"></i></div></div>
-                <div class="ig"><label for="pw">Password</label><div class="iw"><input type="password" id="pw" class="inp" placeholder="Enter password" required><i data-lucide="key-round" style="width:14px;height:14px;" class="ii"></i></div><a href="#" class="fgl" onclick="event.preventDefault()">Forgot?</a></div>
-                <button type="submit" class="btn btn-p" style="width:100%;">Sign In <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></button>
-            </form>
-            <div class="dl"><span>or</span></div>
-            <button class="btn btn-o" style="width:100%;" onclick="showPage('fv')"><i data-lucide="scan-face" style="width:15px;height:15px;"></i> Face Verification</button>
-            <p style="text-align:center;margin-top:1.1rem;font-size:.8rem;color:var(--tx2);">Not verified? <a href="#" style="color:var(--purple);font-weight:600;" onclick="event.preventDefault();showPage('fv')">Verify Now</a></p>
-        </div>
+<!-- ═══ AUTH MODAL ═══ -->
+<div id="authModal" class="auth-modal hidden" role="dialog" aria-modal="true">
+  <div class="auth-scrim" data-close-auth></div>
+  <section class="auth-panel">
+    <button class="icon-btn auth-close" type="button" data-close-auth style="width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);background:var(--surface);font-weight:900">&times;</button>
+    <div class="auth-progress"><span id="dot1" class="active"></span><span id="dot2"></span><span id="dot3"></span></div>
+
+    <!-- Step 1 -->
+    <div id="step1" class="auth-step active">
+      <p class="sec-kicker">Step 1</p>
+      <h2>Create your verified account.</h2>
+      <p class="auth-copy">Use your real profile details before starting the camera check.</p>
+      <div class="field-grid">
+        <label class="field"><span>Full name</span><input id="authName" type="text" placeholder="John Doe" autocomplete="name"></label>
+        <label class="field"><span>Email address</span><input id="authEmail" type="email" placeholder="john@example.com" autocomplete="email"></label>
+        <label class="field"><span>Professional role</span><select id="authRole"><option>Professional</option><option>Founder</option><option>Investor</option><option>Recruiter</option></select></label>
+      </div>
+      <button id="continueBtn" class="btn btn-p btn-full" type="button">Continue to camera</button>
     </div>
-</div>
 
-<!-- ══════ FACE VERIFICATION — SCANNER ══════ -->
-<div id="page-fv" class="page hidden">
-    <div class="fcard">
-        <div style="text-align:left;margin-bottom:1rem;"><button class="btn btn-g" onclick="camStop();showPage('login')"><i data-lucide="arrow-left" style="width:15px;height:15px;"></i> Back</button></div>
-
-        <div id="fs-instr">
-            <div class="fic" style="background:var(--pbg);border:2px solid var(--pbd);"><i data-lucide="scan-face" style="width:30px;height:30px;color:var(--purple);"></i></div>
-            <h2 style="font-size:1.25rem;font-weight:800;margin-bottom:5px;">Liveness Verification</h2>
-            <p style="color:var(--tx2);font-size:.85rem;line-height:1.6;">We verify you're a real person using <code style="background:var(--bg3);padding:1px 5px;border-radius:4px;font-size:.78rem;">getUserMedia</code> — all processing happens on-device.</p>
-            <div class="ins">
-                <div class="insi"><div class="insn">1</div> Find steady lighting</div>
-                <div class="insi"><div class="insn">2</div> Center your face in the frame</div>
-                <div class="insi"><div class="insn">3</div> Blink naturally when prompted</div>
-                <div class="insi"><div class="insn">4</div> Turn your head left & right</div>
-            </div>
-            <button class="btn btn-p" style="width:100%;" onclick="camStart()"><i data-lucide="camera" style="width:15px;height:15px;"></i> Start Liveness Check</button>
+    <!-- Step 2 — Camera -->
+    <div id="step2" class="auth-step">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+        <div><p class="sec-kicker">Step 2</p><h2>Prove you are live.</h2></div>
+        <span id="modePill" class="model-pill">Camera idle</span>
+      </div>
+      <p class="auth-copy">Keep one face inside the frame. Follow the live challenges until every check turns green.</p>
+      <div class="cam-layout">
+        <div class="cam-shell" id="camShell">
+          <video id="camVideo" autoplay muted playsinline></video>
+          <canvas id="camCanvas"></canvas>
+          <div id="camPh" class="cam-ph"><span>Camera preview</span><strong>Start camera to begin</strong></div>
+          <div class="scan-frame"><i></i></div>
         </div>
-
-        <div id="fs-load" class="hidden"><div class="spinner"></div><h2 style="font-size:1.1rem;font-weight:700;">Starting camera...</h2><p style="color:var(--tx2);font-size:.8rem;">Requesting getUserMedia access</p></div>
-
-        <div id="fs-scan" class="hidden">
-            <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:3px;">Verifying Liveness</h2>
-            <p style="color:var(--tx2);font-size:.78rem;margin-bottom:.85rem;">Follow the prompts below</p>
-            <div class="scanner-wrap">
-                <video id="cam" autoplay playsinline muted></video>
-                <canvas id="cvs"></canvas>
-                <div class="hud">
-                    <div class="hud-corner hud-tl"></div><div class="hud-corner hud-tr"></div>
-                    <div class="hud-corner hud-bl"></div><div class="hud-corner hud-br"></div>
-                    <div class="hud-scanline"></div><div class="hud-oval"></div><div class="hud-crosshair"></div>
-                    <div class="hud-phase" id="hud-ph">DETECTING</div>
-                    <div class="hud-label"><span id="hud-l">SKIN —%</span><span id="hud-r">MOTION 0.0</span></div>
-                </div>
-            </div>
-            <div class="sbar" id="fstat">Initializing camera...</div>
-            <div class="ptr"><div class="ptf" id="fprog"></div></div>
-            <div class="ckg">
-                <div class="cki" id="c1"><i data-lucide="user" style="width:13px;height:13px;"></i><span>Face</span></div>
-                <div class="cki" id="c2"><i data-lucide="eye" style="width:13px;height:13px;"></i><span id="bl">Blinks 0/2</span></div>
-                <div class="cki" id="c3"><i data-lucide="move" style="width:13px;height:13px;"></i><span id="ml">Head Turn</span></div>
-            </div>
-        </div>
-
-        <div id="fs-ok" class="hidden">
-            <div class="fic" style="background:var(--gBg);border:2px solid var(--gBd);"><i data-lucide="check-circle-2" style="width:32px;height:32px;color:var(--green);"></i></div>
-            <h2 style="font-size:1.25rem;font-weight:800;margin-bottom:5px;">Liveness Confirmed &#127881;</h2>
-            <p style="color:var(--tx2);font-size:.85rem;margin-bottom:1.75rem;">Your session is verified. Welcome to SyncUp.</p>
-            <button class="btn btn-p" onclick="showPage('dash')">Go to Dashboard <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></button>
-        </div>
-
-        <div id="fs-err" class="hidden">
-            <div class="fic" style="background:rgba(239,68,68,.08);border:2px solid rgba(239,68,68,.2);"><i data-lucide="alert-triangle" style="width:32px;height:32px;color:var(--danger);"></i></div>
-            <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:5px;">Verification Failed</h2>
-            <p style="color:var(--danger);font-size:.8rem;margin-bottom:1.25rem;" id="ferr">Camera denied.</p>
-            <button class="btn btn-p" onclick="camReset()">Try Again</button>
-        </div>
+        <aside class="live-panel">
+          <div class="score-box"><span>Liveness confidence</span><strong id="liveScore">0%</strong><div class="prog-track"><i id="liveBar"></i></div></div>
+          <div id="ckFace" class="chk-item active"><span></span><p>One face centered</p></div>
+          <div id="ckBlink" class="chk-item"><span></span><p>Blink twice</p></div>
+          <div id="ckMove" class="chk-item"><span></span><p>Turn head both sides</p></div>
+          <p id="camStatus" class="cam-status">Camera access requires HTTPS or localhost.</p>
+          <div class="cam-acts">
+            <button id="startCam" class="btn btn-p" type="button">Start camera</button>
+            <button id="stopCam" class="btn btn-s" type="button" disabled>Stop</button>
+          </div>
+        </aside>
+      </div>
     </div>
+
+    <!-- Step 3 — Success -->
+    <div id="step3" class="auth-step success-step">
+      <div class="success-mark">&#10003;</div>
+      <p class="sec-kicker">Step 3</p>
+      <h2>Verified.</h2>
+      <p class="auth-copy" style="margin-inline:auto">Liveness checks passed. Your profile is verified.</p>
+      <button id="enterBtn" class="btn btn-p btn-full" type="button">Enter dashboard</button>
+    </div>
+  </section>
 </div>
 
-<!-- ══════ DASHBOARD ══════ -->
-<div id="page-dash" class="page hidden">
-    <header class="hdr"><div class="container"><div class="nav">
-        <div class="logo" onclick="showPage('dash')"><div class="lm"><i data-lucide="zap" style="width:13px;height:13px;color:#fff;"></i></div><div class="ln">SyncUp</div></div>
-        <div class="na"><button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" style="width:15px;height:15px;"></i></button><button class="btn btn-g"><i data-lucide="search" style="width:17px;height:17px;"></i></button><button class="btn btn-g"><i data-lucide="bell" style="width:17px;height:17px;"></i></button><button class="btn btn-s" onclick="showPage('landing')"><i data-lucide="log-out" style="width:13px;height:13px;"></i> Logout</button></div>
-    </div></div></header>
-    <div class="container">
-        <div class="dh"><h1>Welcome, <span style="color:var(--purple);" id="du">User</span> &#128075;</h1></div>
-        <div class="dg">
-            <aside><div class="pc"><div class="av-c" id="da">U</div><div class="nm" id="dn">User</div><div class="hl">Professional &middot; SyncUp Verified</div><div style="margin-top:5px;"><span class="badge" style="font-size:.65rem;padding:2px 7px;"><i data-lucide="check-circle-2" style="width:10px;height:10px;color:var(--green);"></i> Verified</span></div><div class="ps"><div><div class="v">128</div><div class="l">Connections</div></div><div><div class="v">47</div><div class="l">Followers</div></div></div></div></aside>
-            <div>
-                <div class="cpb" onclick="alert('Coming soon!')"><div class="pa" id="fa">U</div><div class="pib">Share something&hellip;</div></div>
-                <div class="pcd"><div class="pau"><div class="pav" style="background:linear-gradient(135deg,var(--purple),#6366F1);">RM</div><div><div class="an">Rohan Mehta <span class="badge" style="font-size:.58rem;padding:1px 5px;margin-left:3px;"><i data-lucide="check-circle-2" style="width:8px;height:8px;color:var(--green);"></i></span></div><div class="ai">CTO &middot; 2h ago</div></div></div><div class="pct">Excited to announce we just closed our Series A! &#128640; Couldn't have done it without SyncUp.</div><div class="pac"><button class="pab" onclick="this.style.color='var(--purple)'"><i data-lucide="heart" style="width:13px;height:13px;"></i> 142</button><button class="pab"><i data-lucide="message-circle" style="width:13px;height:13px;"></i> 23</button><button class="pab"><i data-lucide="share-2" style="width:13px;height:13px;"></i> Share</button></div></div>
-                <div class="pcd"><div class="pau"><div class="pav" style="background:linear-gradient(135deg,var(--orange),#EA580C);">PS</div><div><div class="an">Priya Sharma</div><div class="ai">Product Lead &middot; 5h ago</div></div></div><div class="pct">3 things from 50 enterprise customers:<br>1. Speed > Features<br>2. Support = deal-breaker<br>3. Integrations win deals</div><div class="pac"><button class="pab"><i data-lucide="heart" style="width:13px;height:13px;"></i> 89</button><button class="pab"><i data-lucide="message-circle" style="width:13px;height:13px;"></i> 34</button><button class="pab"><i data-lucide="share-2" style="width:13px;height:13px;"></i> Share</button></div></div>
-            </div>
-            <aside>
-                <div class="sw"><h3>People you may know</h3><div class="wi"><div class="wia" style="background:linear-gradient(135deg,var(--purple),#6366F1);">AP</div><div><div class="win">Anjali Patel</div><div class="wis">Investor</div></div></div><div class="wi"><div class="wia" style="background:linear-gradient(135deg,var(--orange),#EA580C);">VS</div><div><div class="win">Vikram Singh</div><div class="wis">Eng. Manager</div></div></div></div>
-                <div class="sw"><h3>Trending</h3><div class="wi"><div><div class="win" style="color:var(--purple);">Series A &middot; &#8377;2.5Cr</div><div class="wis">TechVentures</div></div></div></div>
-            </aside>
-        </div>
-    </div>
-</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
-document.addEventListener('DOMContentLoaded',()=>{lucide.createIcons();animStats();const s=localStorage.getItem('su-t');if(s)document.documentElement.setAttribute('data-theme',s);updIcons();});
+/* ════════════════════════════════════════
+   SyncUp — JS  (theme, reveal, auth, camera)
+   ════════════════════════════════════════ */
 
-function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('su-t',n);updIcons();}
-function updIcons(){const d=document.documentElement.getAttribute('data-theme')==='dark';document.querySelectorAll('.theme-toggle i').forEach(e=>e.setAttribute('data-lucide',d?'sun':'moon'));lucide.createIcons();}
+/* ── Theme ── */
+const themeKey='su-theme';
+function applyTheme(t){const d=t==='dark';document.documentElement.setAttribute('data-theme',d?'dark':'light');
+const l=document.getElementById('themeLabel');if(l)l.textContent=d?'Dark':'Light';}
+document.getElementById('themeToggle')?.addEventListener('click',()=>{
+const n=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+applyTheme(n);try{localStorage.setItem(themeKey,n)}catch(e){}});
 
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));const e=document.getElementById('page-'+id);if(e){e.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});}setTimeout(()=>{lucide.createIcons();updIcons();},60);}
+/* ── Toast ── */
+let toastTimer;function showToast(m){const t=document.getElementById('toast');if(!t)return;t.textContent=m;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2600);}
 
-function selRole(i){document.querySelectorAll('.rb').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.rb')[i].classList.add('active');document.getElementById('ri').style.transform=`translateX(${i*100}%)`;}
+/* ── Counter ── */
+function fmtMetric(v){return v>=1000?`${(v/1000).toFixed(v>=10000?0:1)}K+`:`${v}+`}
+function animCounters(){const cs=[...document.querySelectorAll('[data-count]')];if(!cs.length)return;
+const run=c=>{const t=+c.dataset.count,s=performance.now(),d=1250;
+const tick=n=>{const p=Math.min((n-s)/d,1);c.textContent=fmtMetric(Math.round(t*(1-Math.pow(1-p,3))));if(p<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);};
+const o=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting||e.target.dataset.counted)return;e.target.dataset.counted='1';run(e.target);});},{threshold:.45});
+cs.forEach(c=>o.observe(c));}
 
-function doLogin(e){e.preventDefault();const em=document.getElementById('em').value.trim(),pw=document.getElementById('pw').value,er=document.getElementById('le'),et=document.getElementById('let');er.classList.remove('show');
-if(!em||!pw){et.textContent='Fill in all fields.';er.classList.add('show');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){et.textContent='Enter a valid email.';er.classList.add('show');return;}
-const nm=em.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),ini=nm.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-document.getElementById('du').textContent=nm.split(' ')[0];document.getElementById('dn').textContent=nm;document.getElementById('da').textContent=ini;document.getElementById('fa').textContent=ini;showPage('dash');}
+/* ── Reveal ── */
+function revealOnScroll(){const items=[...document.querySelectorAll('.reveal')];if(!items.length)return;
+const o=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target);}});},{threshold:.18});
+items.forEach(i=>o.observe(i));}
 
-function animStats(){const o=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){const el=en.target,t=+el.dataset.target;let s=null;(function step(ts){if(!s)s=ts;const p=Math.min((ts-s)/2000,1);el.textContent=Math.floor((1-Math.pow(1-p,3))*t).toLocaleString('en-IN')+(t>1000?'+':'');if(p<1)requestAnimationFrame(step);})(performance.now());o.unobserve(el);}});},{threshold:.3});document.querySelectorAll('.sv[data-target]').forEach(el=>o.observe(el));}
+/* ── Auth ── */
+const modal=document.getElementById('authModal');
+function openAuth(){modal?.classList.remove('hidden');document.body.classList.add('modal-open');resetAuth();}
+function closeAuth(){camStop();modal?.classList.add('hidden');document.body.classList.remove('modal-open');}
+document.querySelectorAll('[data-open-auth]').forEach(b=>b.addEventListener('click',openAuth));
+document.querySelectorAll('[data-close-auth]').forEach(b=>b.addEventListener('click',closeAuth));
 
-/* ═══════════════════════════════════════════════════════
-   CAMERA LIVENESS — getUserMedia + requestAnimationFrame
-   60fps render, throttled 5fps analysis = zero lag
-   ═══════════════════════════════════════════════════════ */
+function goStep(s){[1,2,3].forEach(n=>{document.getElementById('step'+n)?.classList.toggle('active',n===s);const d=document.getElementById('dot'+n);if(d){d.classList.toggle('done',n<s);d.classList.toggle('active',n===s);}});}
+function resetAuth(){camStop();resetLive();goStep(1);}
 
+document.getElementById('continueBtn')?.addEventListener('click',()=>{
+const name=document.getElementById('authName')?.value.trim();
+const email=document.getElementById('authEmail')?.value.trim();
+if(!name||!email){showToast('Fill in name and email.');return;}goStep(2);});
+
+document.getElementById('enterBtn')?.addEventListener('click',()=>{closeAuth();showToast('Welcome to SyncUp — your identity is verified.');
+document.querySelector('#home .hero-copy h1').scrollIntoView({behavior:'smooth'});});
+
+/* ════════════════════════════════════════
+   Camera Liveness — getUserMedia + RAF
+   60fps render, 5fps throttled analysis
+   ════════════════════════════════════════ */
 let _s=null,_raf=null,_prev=null,_t0=0;
 let S={face:false,blinks:0,moved:false,done:false};
 let _ey=[],_ma=0,_sc=0;
 const BN=2,MT=5.5,SN=8;
 
-function fStep(n){['instr','load','scan','ok','err'].forEach(s=>document.getElementById('fs-'+s).classList.add('hidden'));document.getElementById('fs-'+n).classList.remove('hidden');setTimeout(()=>{lucide.createIcons();updIcons();},60);}
+function resetLive(){S={face:false,blinks:0,moved:false,done:false};_ey=[];_ma=0;_sc=0;_prev=null;_t0=0;
+setLiveScore(0);updChecks();
+const st=document.getElementById('camStatus');if(st)st.textContent='Camera access requires HTTPS or localhost.';
+const pill=document.getElementById('modePill');if(pill){pill.className='model-pill';pill.textContent='Camera idle';}}
 
-function camReset(){camStop();S={face:false,blinks:0,moved:false,done:false};_ey=[];_ma=0;_sc=0;_prev=null;_t0=0;setProg(0);updCk();fStep('instr');}
+function setLiveScore(v){v=Math.max(0,Math.min(100,Math.round(v)));
+const s=document.getElementById('liveScore'),b=document.getElementById('liveBar');
+if(s)s.textContent=v+'%';if(b)b.style.width=v+'%';}
 
-function camStop(){if(_raf){cancelAnimationFrame(_raf);_raf=null;}if(_s){_s.getTracks().forEach(t=>t.stop());_s=null;}_prev=null;}
+function setChk(id,pass,active){const n=document.getElementById(id);if(!n)return;
+n.classList.toggle('pass',pass);n.classList.toggle('active',!!active&&!pass);}
 
-function setSt(m){const e=document.getElementById('fstat');if(e)e.textContent=m;}
-function setProg(p){const e=document.getElementById('fprog');if(e)e.style.width=Math.min(100,Math.round(p))+'%';}
+function updChecks(){
+const fOk=S.face&&_sc>=SN;
+setChk('ckFace',fOk,!fOk);
+setChk('ckBlink',S.blinks>=BN,fOk&&S.blinks<BN);
+setChk('ckMove',S.moved,S.blinks>=BN&&!S.moved);
+let p=0;if(fOk)p+=33;if(S.blinks>=BN)p+=33;if(S.moved)p+=34;setLiveScore(p);}
 
-function updCk(){
-    const c1=document.getElementById('c1'),c2=document.getElementById('c2'),c3=document.getElementById('c3'),bl=document.getElementById('bl'),ml=document.getElementById('ml'),ph=document.getElementById('hud-ph');
-    if(!c1)return;
-    c1.classList.toggle('done',S.face&&_sc>=SN);c2.classList.toggle('done',S.blinks>=BN);c3.classList.toggle('done',S.moved);
-    if(bl)bl.textContent=`Blinks ${S.blinks}/${BN}`;if(ml)ml.textContent=S.moved?'Turn ✓':'Head Turn';
-    let p=0;if(S.face&&_sc>=SN)p+=33;if(S.blinks>=BN)p+=33;if(S.moved)p+=34;setProg(p);
-    if(ph){if(S.moved){ph.textContent='COMPLETE';ph.classList.add('ok');}else if(S.blinks>=BN){ph.textContent='TURN HEAD';}else if(S.face&&_sc>=SN){ph.textContent='BLINK';}else{ph.textContent='DETECTING';ph.classList.remove('ok');}}
-}
+function camStop(){if(_raf){cancelAnimationFrame(_raf);_raf=null;}
+if(_s){_s.getTracks().forEach(t=>t.stop());_s=null;}_prev=null;
+const sh=document.getElementById('camShell');if(sh)sh.classList.remove('cam-on','scanning');
+const sb=document.getElementById('startCam'),st=document.getElementById('stopCam');
+if(sb){sb.disabled=false;sb.textContent='Start camera';}if(st)st.disabled=true;}
 
 async function camStart(){
-    fStep('load');
-    try{
-        _s=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:'user',width:{ideal:640},height:{ideal:480},frameRate:{ideal:30}}});
-        const v=document.getElementById('cam');v.srcObject=_s;await v.play();
-        S={face:false,blinks:0,moved:false,done:false};_ey=[];_ma=0;_sc=0;_prev=null;_t0=0;
-        fStep('scan');setTimeout(()=>{lucide.createIcons();updIcons();},100);
-        setSt('Camera active. Position your face in the oval.');setProg(0);updCk();
-        _raf=requestAnimationFrame(function loop(ts){if(!_s)return;renderFrame(ts);_raf=requestAnimationFrame(loop);});
-    }catch(e){document.getElementById('ferr').textContent=e.message||'Camera access denied.';fStep('err');}
-}
+if(!navigator.mediaDevices?.getUserMedia){document.getElementById('camStatus').textContent='Camera API unavailable.';return;}
+resetLive();
+const sb=document.getElementById('startCam'),st=document.getElementById('stopCam');
+sb.disabled=true;sb.textContent='Starting...';st.disabled=false;
+try{
+_s=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:'user',width:{ideal:640},height:{ideal:480},frameRate:{ideal:30}}});
+const v=document.getElementById('camVideo');v.srcObject=_s;await v.play();
+const sh=document.getElementById('camShell');sh.classList.add('cam-on','scanning');
+const pill=document.getElementById('modePill');if(pill){pill.className='model-pill ok';pill.textContent='Camera active';}
+sb.textContent='Scanning';
+document.getElementById('camStatus').textContent='Center one face in the oval.';
+_raf=requestAnimationFrame(function loop(ts){if(!_s)return;renderFrame(ts);_raf=requestAnimationFrame(loop);});
+}catch(e){
+document.getElementById('camStatus').textContent=e.name==='NotAllowedError'?'Camera permission blocked.':e.message;
+const pill=document.getElementById('modePill');if(pill){pill.className='model-pill err';pill.textContent='Unavailable';}
+camStop();}}
+
+document.getElementById('startCam')?.addEventListener('click',camStart);
+document.getElementById('stopCam')?.addEventListener('click',()=>camStop());
 
 function renderFrame(ts){
-    const v=document.getElementById('cam'),c=document.getElementById('cvs');
-    if(!v||!c||v.readyState<2)return;
-    const ctx=c.getContext('2d',{willReadFrequently:true});
-    c.width=v.videoWidth||640;c.height=v.videoHeight||480;
-    ctx.drawImage(v,0,0,c.width,c.height);
-    if(ts-_t0<200||S.done)return;
-    _t0=ts;
-    analyze(ctx,c.width,c.height);
-}
+const v=document.getElementById('camVideo'),c=document.getElementById('camCanvas');
+if(!v||!c||v.readyState<2)return;
+const ctx=c.getContext('2d',{willReadFrequently:true});
+c.width=v.videoWidth||640;c.height=v.videoHeight||480;
+ctx.drawImage(v,0,0,c.width,c.height);
+if(ts-_t0<200||S.done)return;_t0=ts;analyze(ctx,c.width,c.height);}
 
 function analyze(ctx,W,H){
-    const rx=W*0.2|0,ry=H*0.08|0,rw=W*0.6|0,rh=H*0.84|0;
-    let d;try{d=ctx.getImageData(rx,ry,rw,rh);}catch{return;}
-    const px=d.data,gray=new Uint8ClampedArray(rw*rh);
-    let skin=0,bSum=0,mSum=0,cnt=0;
+const rx=W*.2|0,ry=H*.08|0,rw=W*.6|0,rh=H*.84|0;
+let d;try{d=ctx.getImageData(rx,ry,rw,rh);}catch{return;}
+const px=d.data,gray=new Uint8ClampedArray(rw*rh);
+let skin=0,bSum=0,mSum=0,cnt=0;
+for(let i=0,g=0;i<px.length;i+=4,g++){
+const r=px[i],gr=px[i+1],b=px[i+2];const v=r*.299+gr*.587+b*.114|0;
+gray[g]=v;bSum+=v;
+if(g&1){const cb=128+(.5*r-.419*gr-.081*b),cr=128+(-.169*r-.331*gr+.5*b);if(cb>77&&cb<127&&cr>133&&cr<173)skin++;}
+if(_prev&&_prev.length===gray.length)mSum+=Math.abs(v-_prev[g]);cnt++;}
 
-    for(let i=0,g=0;i<px.length;i+=4,g++){
-        const r=px[i],gr=px[i+1],b=px[i+2];
-        const v=r*0.299+gr*0.587+b*0.114|0;
-        gray[g]=v;bSum+=v;
-        if(g&1){const cb=128+(.5*r-.419*gr-.081*b),cr=128+(-.169*r-.331*gr+.5*b);if(cb>77&&cb<127&&cr>133&&cr<173)skin++;}
-        if(_prev&&_prev.length===gray.length)mSum+=Math.abs(v-_prev[g]);
-        cnt++;
-    }
+const skinR=skin/((cnt>>1)||1),avgB=bSum/cnt,motion=_prev?mSum/cnt:0;_prev=gray;
+const st=document.getElementById('camStatus');
 
-    const skinR=skin/((cnt>>1)||1),avgB=bSum/cnt,motion=_prev?mSum/cnt:0;
-    _prev=gray;
+const face=skinR>.08&&avgB>30&&avgB<240;S.face=face;
+if(face)_sc=Math.min(_sc+1,SN+5);else _sc=Math.max(_sc-2,0);
+if(!face){if(st)st.textContent='No face detected — look at the camera.';updChecks();return;}
+if(_sc<SN){if(st)st.textContent=`Face found. Hold still... (${_sc}/${SN})`;updChecks();return;}
 
-    const hl=document.getElementById('hud-l'),hr=document.getElementById('hud-r');
-    if(hl)hl.textContent=`SKIN ${(skinR*100).toFixed(0)}%`;
-    if(hr)hr.textContent=`MOTION ${motion.toFixed(1)}`;
+if(S.blinks<BN){
+const ey=rh*.25|0,eh=rh*.1|0;let eb=0,ec=0;
+for(let y=ey;y<ey+eh&&y<rh;y++)for(let x=rw*.15|0;x<rw*.85|0;x++){eb+=gray[y*rw+x];ec++;}
+eb/=(ec||1);_ey.push(eb);if(_ey.length>15)_ey.shift();
+if(_ey.length>=8){const rec=_ey.slice(-8),avg=rec.reduce((a,b)=>a+b)/rec.length,mn=Math.min(...rec);if(avg-mn>5){S.blinks++;_ey=[];}}
+if(st)st.textContent=`Blink naturally. (${S.blinks}/${BN} detected)`;updChecks();return;}
 
-    const face=skinR>0.08&&avgB>30&&avgB<240;
-    S.face=face;
-    if(face)_sc=Math.min(_sc+1,SN+5);else _sc=Math.max(_sc-2,0);
-    if(!face){setSt('No face detected — look at the camera.');updCk();return;}
-    if(_sc<SN){setSt(`Face found. Hold still... (${_sc}/${SN})`);updCk();return;}
+if(!S.moved){if(motion>MT&&motion<42)_ma++;else if(_ma>0)_ma-=.5;S.moved=_ma>=6;
+if(st)st.textContent='Turn your head slowly left then right.';updChecks();return;}
 
-    if(S.blinks<BN){
-        const ey=rh*0.25|0,eh=rh*0.1|0;let eb=0,ec=0;
-        for(let y=ey;y<ey+eh&&y<rh;y++)for(let x=rw*0.15|0;x<rw*0.85|0;x++){eb+=gray[y*rw+x];ec++;}
-        eb/=(ec||1);_ey.push(eb);if(_ey.length>15)_ey.shift();
-        if(_ey.length>=8){const rec=_ey.slice(-8),avg=rec.reduce((a,b)=>a+b)/rec.length,mn=Math.min(...rec);if(avg-mn>5){S.blinks++;_ey=[];}}
-        setSt(`Blink naturally. (${S.blinks}/${BN} detected)`);updCk();return;
-    }
+S.done=true;if(st)st.textContent='All checks passed! Liveness confirmed ✓';setLiveScore(100);updChecks();
+setTimeout(()=>{camStop();goStep(3);showToast('Liveness verified — identity confirmed.');},1200);}
 
-    if(!S.moved){
-        if(motion>MT&&motion<42)_ma++;else if(_ma>0)_ma-=0.5;
-        S.moved=_ma>=6;
-        setSt(`Turn your head slowly left then right.`);updCk();return;
-    }
-
-    S.done=true;setSt('All checks passed! Liveness confirmed ✓');setProg(100);updCk();
-    setTimeout(()=>{camStop();fStep('ok');setTimeout(()=>{lucide.createIcons();updIcons();},100);},1200);
-}
+/* ── Init ── */
+document.addEventListener('DOMContentLoaded',()=>{animCounters();revealOnScroll();});
 </script>
 </body>
 </html>
