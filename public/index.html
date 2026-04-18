@@ -1605,7 +1605,8 @@
             <div id="step1" class="auth-step active">
                 <p class="sec-kicker">Step 1</p>
                 <h2>Sign in to your account.</h2>
-                <p class="auth-copy">Please provide your details. Face verification is required to access your dashboard.</p>
+                <p class="auth-copy">Please provide your details. Face verification is required to access your
+                    dashboard.</p>
                 <div class="field-grid">
                     <label class="field"><span>Full name</span><input id="authName" type="text" placeholder="John Doe"
                             autocomplete="name"></label>
@@ -1686,7 +1687,8 @@
             <button class="icon-btn auth-close" type="button" data-close-signup
                 style="width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);background:var(--surface);font-weight:900">&times;</button>
             <h2 style="text-align:center;">Sign Up</h2>
-            <p class="auth-copy" style="text-align:center;">Get started in seconds. No verification required for sign up.</p>
+            <p class="auth-copy" style="text-align:center;">Get started in seconds. No verification required for sign
+                up.</p>
             <div class="field-grid">
                 <label class="field"><span>Username or Email</span><input id="signupEmail" type="email"
                         placeholder="john@example.com" autocomplete="email"></label>
@@ -1695,8 +1697,11 @@
                 <label class="field"><span>Confirm Password</span><input id="signupConfirm" type="password"
                         placeholder="Confirm your password"></label>
             </div>
-            <button id="signupSubmitBtn" class="btn btn-p btn-full" type="button" style="margin-top:8px;">Sign Up</button>
-            <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted);">Don't have an Account? <a href="#" id="switchToSignIn" style="color:var(--accent);font-weight:700;cursor:pointer;">Sign In</a></p>
+            <button id="signupSubmitBtn" class="btn btn-p btn-full" type="button" style="margin-top:8px;">Sign
+                Up</button>
+            <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted);">Don't have an Account? <a
+                    href="#" id="switchToSignIn" style="color:var(--accent);font-weight:700;cursor:pointer;">Sign In</a>
+            </p>
         </section>
     </div>
 
@@ -1978,6 +1983,99 @@
             const newTotal = addCredits(rewardValue);
             showToast(`Redeemed! +$${rewardValue} credited. Balance: $${newTotal.toFixed(2)}`);
             document.getElementById('couponInput').value = '';
+        });
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBfF_Gfn_YaIHfHVCpaA6IdUjDVNlDQTjg",
+            authDomain: "sphera-6778e.firebaseapp.com",
+            projectId: "sphera-6778e",
+            storageBucket: "sphera-6778e.firebasestorage.app",
+            messagingSenderId: "851527615297",
+            appId: "1:851527615297:web:9ea78e42c27b3585e5d7c0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        try {
+            await setDoc(doc(db, "test", "connection"), {
+                status: "Firebase is working!",
+                time: new Date().toISOString()
+            });
+            console.log("✅ Firebase connected successfully!");
+        } catch (e) {
+            console.error("❌ Firebase error:", e);
+        }
+    </script>
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBfF_Gfn_YaIHfHVCpaA6IdUjDVNlDQTjg",
+            authDomain: "sphera-6778e.firebaseapp.com",
+            projectId: "sphera-6778e",
+            storageBucket: "sphera-6778e.firebasestorage.app",
+            messagingSenderId: "851527615297",
+            appId: "1:851527615297:web:9ea78e42c27b3585e5d7c0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // SIGN UP
+        document.getElementById('signupSubmitBtn')?.addEventListener('click', async () => {
+            const email = document.getElementById('signupEmail')?.value.trim();
+            const pass = document.getElementById('signupPassword')?.value;
+            const confirm = document.getElementById('signupConfirm')?.value;
+            if (!email || !pass) return;
+            if (pass !== confirm) return;
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                await setDoc(doc(db, 'users', cred.user.uid), {
+                    email: email,
+                    createdAt: new Date().toISOString()
+                });
+                console.log('✅ Account created!');
+                window.location.href = 'feed.html';
+            } catch (e) {
+                console.error('❌ Signup error:', e.message);
+                alert(e.message);
+            }
+        });
+
+        // SIGN IN
+        document.getElementById('enterBtn')?.addEventListener('click', async () => {
+            const email = document.getElementById('authEmail')?.value.trim();
+            const pass = document.getElementById('authPassword')?.value;
+            if (!email || !pass) return;
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+                console.log('✅ Signed in!');
+                window.location.href = 'feed.html';
+            } catch (e) {
+                console.error('❌ Signin error:', e.message);
+                alert(e.message);
+            }
+        });
+
+        // SAVE PROFILE on continueBtn
+        document.getElementById('continuBtn')?.addEventListener('click', async () => {
+            const name = document.getElementById('authName')?.value.trim();
+            const email = document.getElementById('authEmail')?.value.trim();
+            const dob = document.getElementById('authDob')?.value;
+            const company = document.getElementById('authCompany')?.value.trim();
+            const role = document.getElementById('authRole')?.value;
+            if (!name || !email) return;
+            localStorage.setItem('pendingProfile', JSON.stringify({ name, email, dob, company, role }));
         });
     </script>
 </body>
