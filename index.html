@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyncUp | Secure Login</title>
-    <!-- Modern Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>SyncUp | Professional Networking Platform</title>
+    <meta name="description" content="Build a Trusted Professional Ecosystem. Face-verified connections, real opportunities.">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        /* ============================================
+           CSS VARIABLES
+           ============================================ */
         :root {
             --bg-base: #030712;
+            --bg-surface: rgba(17, 24, 39, 0.6);
             --brand-primary: #3b82f6;
             --brand-secondary: #8b5cf6;
             --brand-accent: #10b981;
@@ -17,14 +21,20 @@
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #f9fafb;
             --text-muted: #9ca3af;
+            --text-dim: #6b7280;
             --input-bg: rgba(255, 255, 255, 0.03);
             --input-border: rgba(255, 255, 255, 0.1);
+            --danger: #ef4444;
+            --success: #10b981;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -32,473 +42,1467 @@
             background-color: var(--bg-base);
             color: var(--text-main);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             position: relative;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Animated Ambient Background */
+        ::selection {
+            background: rgba(139, 92, 246, 0.35);
+            color: #e2d9fc;
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(100,116,139,0.4); border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(139,92,246,0.5); }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* ============================================
+           AMBIENT BACKGROUND
+           ============================================ */
         .ambient-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             z-index: 0;
-            overflow: hidden;
+            pointer-events: none;
         }
 
         .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(100px);
-            opacity: 0.5;
-            animation: float 20s infinite alternate ease-in-out;
+            opacity: 0.4;
+            animation: orb-drift 20s infinite alternate ease-in-out;
         }
+        .orb-1 { width: 50vw; height: 50vw; background: rgba(59,130,246,0.25); top: -20%; left: -10%; }
+        .orb-2 { width: 40vw; height: 40vw; background: rgba(139,92,246,0.2); bottom: -10%; right: -10%; animation-delay: -5s; }
+        .orb-3 { width: 30vw; height: 30vw; background: rgba(16,185,129,0.15); top: 40%; left: 40%; animation-delay: -10s; }
 
-        .orb-1 {
-            width: 50vw;
-            height: 50vw;
-            background: rgba(59, 130, 246, 0.3);
-            top: -20%;
-            left: -10%;
-        }
-
-        .orb-2 {
-            width: 40vw;
-            height: 40vw;
-            background: rgba(139, 92, 246, 0.25);
-            bottom: -10%;
-            right: -10%;
-            animation-delay: -5s;
-        }
-
-        .orb-3 {
-            width: 30vw;
-            height: 30vw;
-            background: rgba(16, 185, 129, 0.2);
-            top: 40%;
-            left: 40%;
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(5%, 10%) scale(1.1); }
+        @keyframes orb-drift {
+            0%   { transform: translate(0, 0) scale(1); }
+            50%  { transform: translate(5%, 10%) scale(1.1); }
             100% { transform: translate(-5%, -5%) scale(0.9); }
         }
 
-        /* Main Container */
-        .login-wrapper {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 1100px;
-            padding: 2rem;
-            display: flex;
-            gap: 2rem;
-            animation: reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+        /* ============================================
+           UTILITY CLASSES
+           ============================================ */
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 2rem; }
+        .text-gradient { background: linear-gradient(to right, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .text-gradient-2 { background: linear-gradient(135deg, #a78bfa, #818cf8, #6ee7b7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        @keyframes reveal {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .hidden { display: none !important; }
 
-        /* Split Screen Layout */
-        .glass-panel {
+        .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--glass-border);
-            border-radius: 32px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            display: flex;
-            width: 100%;
-            min-height: 600px;
         }
 
-        /* Brand / Info Section */
-        .brand-section {
-            flex: 1;
-            padding: 4rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%);
-            border-right: 1px solid var(--glass-border);
-        }
-
-        .brand-section::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=');
-            z-index: -1;
-            opacity: 0.5;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
-        }
-
-        .logo-text {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: -0.05em;
-            background: linear-gradient(to right, #fff, #9ca3af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .brand-content {
-            margin-top: 4rem;
-        }
-
-        .brand-content h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-        }
-
-        .text-gradient {
-            background: linear-gradient(to right, #60a5fa, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-        }
-
-        .brand-content p {
-            font-size: 1.125rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            max-width: 400px;
-        }
-
-        .badge-list {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .badge {
+        .btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            font-size: 0.875rem;
-            color: #d1d5db;
-        }
-
-        .badge i {
-            color: var(--brand-accent);
-        }
-
-        /* Form Section */
-        .form-section {
-            width: 480px;
-            padding: 4rem;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
-        }
-
-        .form-header {
-            margin-bottom: 2.5rem;
-        }
-
-        .form-header h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Segmented Role Output */
-        .role-selector {
-            display: flex;
-            background: var(--input-bg);
-            border: 1px solid var(--input-border);
+            gap: 0.6rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 12px;
-            padding: 0.25rem;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .role-btn {
-            flex: 1;
-            padding: 0.75rem;
-            text-align: center;
-            font-weight: 500;
-            font-size: 0.875rem;
-            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            border: none;
+            outline: none;
         }
+        .btn:active { transform: scale(0.97); }
 
-        .role-btn.active {
+        .btn-primary {
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            color: white;
+            box-shadow: 0 4px 16px rgba(59,130,246,0.35);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(59,130,246,0.5); }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             color: var(--text-main);
         }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
 
-        .role-indicator {
-            position: absolute;
-            top: 0.25rem;
-            bottom: 0.25rem;
-            width: calc(33.333% - 0.25rem);
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 1;
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(139,92,246,0.4);
+            color: #a78bfa;
         }
+        .btn-outline:hover { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.7); }
 
-        /* Input Fields */
-        .input-group {
-            margin-bottom: 1.5rem;
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            padding: 0.5rem;
         }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #d1d5db;
-        }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 1rem;
-            color: #6b7280;
-            pointer-events: none;
-            transition: color 0.3s;
-        }
+        .btn-ghost:hover { color: var(--text-main); }
 
         .input-field {
             width: 100%;
             background: var(--input-bg);
             border: 1px solid var(--input-border);
             border-radius: 12px;
-            padding: 0.875rem 1rem 0.875rem 3rem;
+            padding: 0.8rem 1rem 0.8rem 2.75rem;
             color: var(--text-main);
             font-family: inherit;
-            font-size: 1rem;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
-        }
-
-        .input-field:focus {
             outline: none;
-            border-color: rgba(59, 130, 246, 0.5);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
+        .input-field::placeholder { color: var(--text-dim); }
+        .input-field:focus { border-color: rgba(59,130,246,0.5); background: rgba(255,255,255,0.05); box-shadow: 0 0 0 4px rgba(59,130,246,0.1); }
 
-        .input-field:focus + .input-icon {
-            color: var(--brand-primary);
-        }
+        .input-group { margin-bottom: 1.25rem; position: relative; }
+        .input-group label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 500; color: #d1d5db; }
+        .input-wrapper { position: relative; display: flex; align-items: center; }
+        .input-icon { position: absolute; left: 0.85rem; color: #6b7280; pointer-events: none; z-index: 2; transition: color 0.3s; }
+        .input-field:focus ~ .input-icon,
+        .input-wrapper:focus-within .input-icon { color: var(--brand-primary); }
 
-        .forgot-password {
-            display: block;
-            text-align: right;
-            font-size: 0.875rem;
-            color: var(--brand-primary);
-            text-decoration: none;
-            margin-top: 0.5rem;
-            transition: color 0.3s;
-        }
-
-        .forgot-password:hover {
-            color: #60a5fa;
-            text-decoration: underline;
-        }
-
-        /* Buttons */
-        .btn {
-            width: 100%;
-            padding: 1rem;
+        .error-msg {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.25);
             border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            color: #fca5a5;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        .error-msg.show { display: flex; }
+
+        .success-msg {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.25);
+            border-radius: 12px;
+            color: #6ee7b7;
+            font-size: 0.85rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.85rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #d1d5db;
+        }
+        .badge i { color: var(--brand-accent); }
+
+        /* ============================================
+           PAGE: ALL PAGES (VIEWS)
+           ============================================ */
+        .page {
+            min-height: 100vh;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ============================================
+           HEADER / NAV
+           ============================================ */
+        .site-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 1rem 0;
+        }
+        .site-header .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1.5rem;
+            border-radius: 16px;
+            background: rgba(3,7,18,0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .logo-container { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+        .logo-icon {
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            box-shadow: 0 6px 14px rgba(59,130,246,0.3);
+        }
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem; font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+        .nav-actions { display: flex; gap: 0.5rem; align-items: center; }
+
+        /* ============================================
+           PAGE: LANDING / HOME
+           ============================================ */
+        #page-landing {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 1.2rem;
+            background: rgba(59,130,246,0.1);
+            border: 1px solid rgba(59,130,246,0.25);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #93c5fd;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
+            line-height: 1.08;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 0.6s 0.1s ease both;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+            animation: fadeInUp 0.6s 0.2s ease both;
+        }
+
+        .hero-actions {
+            display: flex;
             gap: 0.75rem;
-            border: none;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s 0.3s ease both;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+        .trust-row {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+            animation: fadeInUp 0.6s 0.4s ease both;
+        }
+        .trust-row span { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--text-dim); }
+        .trust-row i { color: var(--brand-secondary); width: 14px; height: 14px; }
+
+        /* Stats */
+        .stats-section {
+            padding: 4rem 2rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            padding: 2.5rem;
+            border-radius: 20px;
+            background: rgba(17,24,39,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat-item { text-align: center; }
+        .stat-value { font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 800; }
+        .stat-label { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem; }
+
+        /* Features */
+        .features-section { padding: 5rem 2rem; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--brand-secondary); margin-bottom: 0.75rem; }
+        .section-header h2 { font-family: 'Outfit', sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; line-height: 1.2; }
+        .section-header p { color: var(--text-muted); max-width: 500px; margin: 0.75rem auto 0; font-size: 1rem; }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+        .feature-card {
+            padding: 2rem;
+            border-radius: 16px;
+            background: rgba(17,24,39,0.5);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(139,92,246,0.25);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+        }
+        .feature-icon {
+            width: 48px; height: 48px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .feature-card h3 { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .feature-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* Steps */
+        .steps-section { padding: 5rem 2rem; }
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+        .step-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-radius: 16px;
+            background: rgba(17,24,39,0.5);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+        }
+        .step-card:hover { transform: translateY(-2px); border-color: rgba(59,130,246,0.2); }
+        .step-number {
+            width: 44px; height: 44px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: 700; font-size: 0.85rem;
             color: white;
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
-            margin-top: 1.5rem;
         }
+        .step-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
+        .step-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5);
+        /* CTA */
+        .cta-section { padding: 5rem 2rem; }
+        .cta-box {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.08));
+            border: 1px solid rgba(139,92,246,0.2);
+            position: relative;
+            overflow: hidden;
         }
-
-        .btn-primary:active {
-            transform: translateY(0);
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: 50%; transform: translateX(-50%);
+            width: 300px; height: 200px;
+            background: radial-gradient(ellipse, rgba(59,130,246,0.25), transparent 70%);
+            pointer-events: none;
         }
+        .cta-box h2 { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; position: relative; }
+        .cta-box p { color: var(--text-muted); margin-bottom: 2rem; position: relative; }
 
-        .divider {
+        /* Footer */
+        .site-footer {
+            padding: 2.5rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .site-footer p { font-size: 0.8rem; color: var(--text-dim); }
+        .footer-links { display: flex; gap: 1.5rem; }
+        .footer-links a { font-size: 0.8rem; color: var(--text-dim); transition: color 0.2s; }
+        .footer-links a:hover { color: var(--text-main); }
+
+        /* ============================================
+           PAGE: LOGIN
+           ============================================ */
+        #page-login {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            text-align: center;
-            margin: 2rem 0;
-            color: #6b7280;
-            font-size: 0.875rem;
+            justify-content: center;
+            padding: 2rem;
         }
 
-        .divider::before, .divider::after {
-            content: '';
+        .login-panel {
+            display: flex;
+            width: 100%;
+            max-width: 1050px;
+            min-height: 580px;
+            border-radius: 28px;
+            overflow: hidden;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+            animation: fadeInUp 0.7s ease both;
+        }
+
+        .login-brand {
             flex: 1;
-            border-bottom: 1px solid var(--input-border);
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            border-right: 1px solid var(--glass-border);
+            background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
         }
-
-        .divider span {
-            padding: 0 1rem;
+        .login-brand::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=');
+            z-index: -1; opacity: 0.5;
         }
+        .login-brand h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.75rem; font-weight: 700;
+            line-height: 1.1; margin-bottom: 1rem;
+            margin-top: 3rem;
+        }
+        .login-brand p { font-size: 1rem; color: var(--text-muted); line-height: 1.6; max-width: 380px; }
+        .login-brand .badge-list { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .login-brand .brand-footer { font-size: 0.75rem; color: var(--text-dim); }
 
-        /* Biometric Button */
-        .btn-biometric {
-            background: rgba(255, 255, 255, 0.03);
+        .login-form-section {
+            width: 440px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .login-form-section h2 { font-family: 'Outfit', sans-serif; font-size: 1.75rem; font-weight: 600; margin-bottom: 0.35rem; }
+        .login-form-section .subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+        .login-form-section .subtitle a { color: var(--brand-primary); font-weight: 500; }
+        .login-form-section .subtitle a:hover { text-decoration: underline; }
+
+        /* Role selector */
+        .role-selector {
+            display: flex;
+            background: var(--input-bg);
             border: 1px solid var(--input-border);
+            border-radius: 12px;
+            padding: 0.2rem;
+            margin-bottom: 1.75rem;
+            position: relative;
+        }
+        .role-btn {
+            flex: 1;
+            padding: 0.6rem 0;
+            text-align: center;
+            font-weight: 500; font-size: 0.825rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 10px;
+            transition: color 0.3s;
+            position: relative; z-index: 2;
+        }
+        .role-btn.active { color: var(--text-main); }
+        .role-indicator {
+            position: absolute;
+            top: 0.2rem; bottom: 0.2rem;
+            width: calc(33.333% - 0.15rem);
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+        }
+
+        .forgot-link {
+            display: block; text-align: right;
+            font-size: 0.8rem; color: var(--brand-primary);
+            margin-top: 0.3rem; transition: color 0.2s;
+        }
+        .forgot-link:hover { color: #60a5fa; text-decoration: underline; }
+
+        .divider-line {
+            display: flex; align-items: center; margin: 1.5rem 0;
+            color: var(--text-dim); font-size: 0.8rem;
+        }
+        .divider-line::before, .divider-line::after { content: ''; flex: 1; border-bottom: 1px solid var(--input-border); }
+        .divider-line span { padding: 0 1rem; }
+
+        .signup-prompt {
+            text-align: center; margin-top: 1.5rem;
+            font-size: 0.85rem; color: var(--text-muted);
+        }
+        .signup-prompt a { color: white; font-weight: 500; }
+        .signup-prompt a:hover { color: var(--brand-primary); }
+
+        /* ============================================
+           PAGE: FACE VERIFY
+           ============================================ */
+        #page-face-verify {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .face-verify-card {
+            width: 100%;
+            max-width: 520px;
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .face-icon-circle {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .instructions-list {
+            text-align: left;
+            margin: 1.5rem 0 2rem;
+        }
+        .instructions-list .instruction {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            color: #d1d5db;
+        }
+        .instructions-list .instruction span.emoji { font-size: 1.25rem; flex-shrink: 0; }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #0f172a;
+            border: 2px solid rgba(255,255,255,0.08);
+            margin-bottom: 1rem;
+        }
+        .video-container video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+        .video-container canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%; height: 100%;
+            transform: scaleX(-1);
+        }
+        .face-guide {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            pointer-events: none;
+        }
+        .face-guide .guide-oval {
+            width: 55%;
+            aspect-ratio: 3/4;
+            border: 2px dashed rgba(139,92,246,0.5);
+            border-radius: 50%;
+        }
+
+        .status-bar {
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            background: rgba(17,24,39,0.7);
+            border: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            font-weight: 500;
+        }
+
+        .checks-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.6rem;
+        }
+        .check-item {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 0.4rem;
+            padding: 0.75rem 0.5rem;
+            border-radius: 12px;
+            background: rgba(30,41,59,0.6);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .check-item.done {
+            background: rgba(16,185,129,0.1);
+            border-color: rgba(16,185,129,0.3);
+            color: #6ee7b7;
+        }
+
+        /* ============================================
+           PAGE: DASHBOARD / FEED
+           ============================================ */
+        #page-dashboard {
+            padding-top: 5rem;
+        }
+        .dash-header {
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dash-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem; font-weight: 700;
+        }
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr 280px;
+            gap: 1.5rem;
+            padding: 0 2rem 3rem;
+        }
+
+        .profile-card {
+            padding: 1.5rem;
+            border-radius: 16px;
+            background: rgba(17,24,39,0.6);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .profile-card .avatar {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.25rem;
+            margin-bottom: 0.75rem; color: white;
+        }
+        .profile-card .name { font-weight: 600; font-size: 0.95rem; }
+        .profile-card .headline { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
+        .profile-stats {
+            display: flex; gap: 1.5rem;
+            margin-top: 1rem; padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .profile-stats div { text-align: center; flex: 1; }
+        .profile-stats .val { font-weight: 700; font-size: 1rem; }
+        .profile-stats .lbl { font-size: 0.7rem; color: var(--text-dim); margin-top: 0.15rem; }
+
+        .feed-area { min-width: 0; }
+        .create-post-bar {
+            padding: 1.25rem;
+            border-radius: 16px;
+            background: rgba(17,24,39,0.6);
+            border: 1px solid rgba(255,255,255,0.06);
+            display: flex; align-items: center; gap: 0.75rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .create-post-bar:hover { border-color: rgba(255,255,255,0.12); }
+        .create-post-bar .post-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 600; font-size: 0.8rem; color: white; flex-shrink: 0;
+        }
+        .create-post-bar .post-input {
+            flex: 1;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50px;
+            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .post-card {
+            padding: 1.25rem;
+            border-radius: 16px;
+            background: rgba(17,24,39,0.6);
+            border: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 1rem;
+        }
+        .post-author { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem; }
+        .post-author .av {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 600; font-size: 0.75rem; color: white; flex-shrink: 0;
+        }
+        .post-author .meta .author-name { font-weight: 600; font-size: 0.85rem; }
+        .post-author .meta .author-info { font-size: 0.7rem; color: var(--text-dim); }
+        .post-content { font-size: 0.9rem; line-height: 1.65; color: #d1d5db; margin-bottom: 0.75rem; }
+        .post-actions { display: flex; gap: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; }
+        .post-action-btn {
+            display: flex; align-items: center; gap: 0.35rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.775rem;
+            color: var(--text-dim);
+            background: none; border: none;
+            cursor: pointer; transition: all 0.2s;
+            font-family: inherit;
+        }
+        .post-action-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+
+        .sidebar-widget {
+            padding: 1.25rem;
+            border-radius: 16px;
+            background: rgba(17,24,39,0.6);
+            border: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 1rem;
+        }
+        .sidebar-widget h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem; }
+        .sidebar-widget .widget-item {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+        .sidebar-widget .widget-item .wi-av {
+            width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 600; font-size: 0.7rem; color: white; flex-shrink: 0;
+        }
+        .sidebar-widget .widget-item .wi-name { font-size: 0.8rem; font-weight: 500; }
+        .sidebar-widget .widget-item .wi-sub { font-size: 0.7rem; color: var(--text-dim); }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--brand-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 900px) {
+            .login-panel { flex-direction: column; max-width: 480px; }
+            .login-brand { border-right: none; border-bottom: 1px solid var(--glass-border); padding: 2rem; }
+            .login-brand h1 { font-size: 2rem; margin-top: 1rem; }
+            .login-form-section { width: 100%; padding: 2rem; }
+            .dash-grid { grid-template-columns: 1fr; }
+            .dash-grid aside { display: none; }
+        }
+
+        /* ============================================
+           MODERN MINIMAL REDESIGN OVERRIDES
+           ============================================ */
+        :root {
+            color-scheme: dark;
+            --bg-base: #050505;
+            --bg-surface: rgba(15, 16, 14, 0.78);
+            --brand-primary: #d8ff67;
+            --brand-secondary: #69f6cf;
+            --brand-accent: #d8ff67;
+            --glass-bg: rgba(13, 14, 12, 0.76);
+            --glass-border: rgba(247, 247, 242, 0.12);
+            --text-main: #f7f7f2;
+            --text-muted: #b8bbb4;
+            --text-dim: #7c8178;
+            --input-bg: rgba(247, 247, 242, 0.055);
+            --input-border: rgba(247, 247, 242, 0.12);
+            --danger: #ff6b6b;
+            --success: #d8ff67;
+        }
+
+        * { letter-spacing: 0 !important; }
+
+        body {
+            font-family: 'Geist', Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background:
+                linear-gradient(115deg, rgba(216,255,103,0.08), transparent 34%),
+                linear-gradient(250deg, rgba(105,246,207,0.075), transparent 32%),
+                #050505;
             color: var(--text-main);
         }
 
-        .btn-biometric:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
+        body::selection {
+            background: rgba(216,255,103,0.32);
+            color: #050505;
         }
 
-        .btn-biometric i {
-            color: var(--brand-accent);
+        .ambient-bg {
+            overflow: hidden;
+            background-image:
+                linear-gradient(rgba(247,247,242,0.055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(247,247,242,0.055) 1px, transparent 1px);
+            background-size: 72px 72px;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.88), transparent 78%);
+            animation: grid-drift 18s linear infinite;
         }
 
-        .signup-prompt {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.875rem;
-            color: var(--text-muted);
+        .ambient-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(100deg, transparent 0 42%, rgba(216,255,103,0.12) 49%, transparent 58% 100%);
+            transform: translateX(-100%);
+            animation: ambient-sweep 9s cubic-bezier(0.16, 1, 0.3, 1) infinite;
         }
 
-        .signup-prompt a {
-            color: white;
-            font-weight: 500;
-            text-decoration: none;
-            transition: color 0.3s;
+        .orb { display: none; }
+
+        .container { max-width: 1180px; }
+
+        .text-gradient,
+        .text-gradient-2 {
+            background: linear-gradient(to right, #f7f7f2, #d8ff67 48%, #69f6cf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .signup-prompt a:hover {
+        .glass-card,
+        .login-panel,
+        .stats-grid,
+        .feature-card,
+        .step-card,
+        .cta-box,
+        .profile-card,
+        .create-post-bar,
+        .post-card,
+        .sidebar-widget,
+        .nav-inner,
+        .video-container,
+        .status-bar,
+        .check-item,
+        .input-field,
+        .error-msg,
+        .success-msg,
+        .role-selector,
+        .role-btn,
+        .role-indicator,
+        .badge,
+        .btn {
+            border-radius: 8px !important;
+        }
+
+        .site-header { padding-top: 1.25rem; }
+
+        .site-header .nav-inner {
+            background: rgba(5, 5, 5, 0.78);
+            border: 1px solid rgba(247,247,242,0.12);
+            box-shadow: 0 18px 54px rgba(0,0,0,0.38);
+        }
+
+        .logo-icon {
+            background: linear-gradient(145deg, rgba(247,247,242,0.18), rgba(247,247,242,0.04)) !important;
+            border: 1px solid rgba(247,247,242,0.2);
+            color: var(--brand-primary);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 32px rgba(0,0,0,0.38);
+        }
+
+        .logo-text,
+        h1,
+        h2,
+        h3,
+        .stat-value {
+            font-family: 'Geist', Inter, ui-sans-serif, system-ui, sans-serif !important;
+        }
+
+        .btn {
+            min-height: 44px;
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: var(--text-main) !important;
+            color: #070806 !important;
+            box-shadow: 0 12px 34px rgba(247,247,242,0.12) !important;
+        }
+
+        .btn-primary:hover {
+            background: var(--brand-primary) !important;
+            box-shadow: 0 16px 42px rgba(216,255,103,0.18) !important;
+        }
+
+        .btn-secondary,
+        .btn-outline {
+            background: rgba(247,247,242,0.055) !important;
+            border: 1px solid rgba(247,247,242,0.14) !important;
+            color: var(--text-main) !important;
+        }
+
+        .btn-secondary:hover,
+        .btn-outline:hover {
+            background: rgba(105,246,207,0.12) !important;
+            border-color: rgba(105,246,207,0.35) !important;
+        }
+
+        .hero {
+            min-height: 96vh;
+            text-align: left;
+            padding-top: 8.5rem;
+            padding-bottom: 2rem;
+        }
+
+        .hero > div {
+            width: min(1180px, 100%);
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(340px, 0.86fr);
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .hero-copy { min-width: 0; }
+
+        .hero-badge {
+            background: rgba(216,255,103,0.08);
+            border-color: rgba(216,255,103,0.28);
+            color: var(--brand-primary);
+            border-radius: 8px;
+        }
+
+        .hero h1 {
+            max-width: 720px;
+            font-size: 68px;
+            line-height: 0.96;
+            font-weight: 800;
+        }
+
+        .hero p {
+            max-width: 610px;
+            margin-left: 0;
+            margin-right: 0;
+            font-size: 18px;
+        }
+
+        .hero-actions,
+        .trust-row {
+            justify-content: flex-start;
+        }
+
+        .trust-row i,
+        .badge i,
+        .forgot-link,
+        .login-form-section .subtitle a,
+        .footer-links a:hover {
+            color: var(--brand-primary) !important;
+        }
+
+        .hero-visual {
+            position: relative;
+            min-height: 470px;
+            border: 1px solid rgba(247,247,242,0.12);
+            border-radius: 8px;
+            overflow: hidden;
+            background: #090a08;
+            box-shadow: 0 30px 90px rgba(0,0,0,0.42);
+            isolation: isolate;
+        }
+
+        .hero-visual img {
+            width: 100%;
+            height: 100%;
+            min-height: 470px;
+            display: block;
+            object-fit: cover;
+            filter: grayscale(1) contrast(1.18) brightness(0.62);
+            opacity: 0.68;
+            transform: scale(1.02);
+            animation: image-breathe 14s ease-in-out infinite alternate;
+        }
+
+        .hero-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(90deg, rgba(5,5,5,0.58), transparent 58%),
+                repeating-linear-gradient(0deg, rgba(247,247,242,0.035) 0 1px, transparent 1px 5px);
+            pointer-events: none;
+        }
+
+        .hero-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: linear-gradient(90deg, transparent, rgba(216,255,103,0.22), transparent);
+            transform: translateX(-100%);
+            animation: signal-sweep 4.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+            pointer-events: none;
+        }
+
+        .signal-caption {
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 18px;
+            z-index: 3;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            border: 1px solid rgba(216,255,103,0.28);
+            border-radius: 6px;
+            background: rgba(5,5,5,0.66);
+            color: var(--brand-primary);
+            font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 11px;
+        }
+
+        .stats-grid,
+        .feature-card,
+        .step-card,
+        .profile-card,
+        .create-post-bar,
+        .post-card,
+        .sidebar-widget {
+            background: rgba(13,14,12,0.72) !important;
+            border: 1px solid rgba(247,247,242,0.1) !important;
+            box-shadow: 0 18px 52px rgba(0,0,0,0.24);
+        }
+
+        .feature-card:hover,
+        .step-card:hover {
+            border-color: rgba(216,255,103,0.28) !important;
+            box-shadow: 0 20px 54px rgba(0,0,0,0.36);
+        }
+
+        .feature-icon,
+        .step-number,
+        .avatar,
+        .post-avatar,
+        .post-author .av,
+        .sidebar-widget .widget-item .wi-av,
+        .profile-card .avatar,
+        .create-post-bar .post-avatar {
+            background: linear-gradient(145deg, #f7f7f2, #d8ff67) !important;
+            color: #070806 !important;
+        }
+
+        .section-label,
+        .stat-value {
+            color: var(--brand-primary) !important;
+        }
+
+        .cta-box {
+            background:
+                linear-gradient(135deg, rgba(216,255,103,0.08), rgba(105,246,207,0.055)),
+                rgba(13,14,12,0.74) !important;
+            border-color: rgba(247,247,242,0.12) !important;
+        }
+
+        .cta-box::before { display: none; }
+
+        .login-panel {
+            max-width: 1120px;
+            background: rgba(13,14,12,0.78);
+            border-color: rgba(247,247,242,0.12);
+        }
+
+        .login-brand {
+            background: linear-gradient(145deg, rgba(247,247,242,0.06), rgba(247,247,242,0.01));
+        }
+
+        .login-brand::after {
+            background-image:
+                linear-gradient(rgba(247,247,242,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(247,247,242,0.05) 1px, transparent 1px);
+            background-size: 28px 28px;
+            opacity: 0.42;
+        }
+
+        .role-indicator {
+            background: rgba(247,247,242,0.12);
+        }
+
+        .input-field:focus {
+            border-color: rgba(216,255,103,0.5);
+            background: rgba(247,247,242,0.08);
+            box-shadow: 0 0 0 4px rgba(216,255,103,0.08);
+        }
+
+        .input-wrapper:focus-within .input-icon { color: var(--brand-primary); }
+
+        #page-face-verify {
+            padding-top: 5rem;
+            background:
+                linear-gradient(115deg, rgba(216,255,103,0.06), transparent 34%),
+                linear-gradient(250deg, rgba(105,246,207,0.06), transparent 32%);
+        }
+
+        .face-verify-card {
+            max-width: 620px;
+            background: rgba(13,14,12,0.8);
+            border: 1px solid rgba(247,247,242,0.12);
+            box-shadow: 0 30px 90px rgba(0,0,0,0.42);
+        }
+
+        .face-icon-circle {
+            border-radius: 8px !important;
+            background: rgba(216,255,103,0.08) !important;
+            border-color: rgba(216,255,103,0.28) !important;
+        }
+
+        .face-icon-circle i { color: var(--brand-primary) !important; }
+
+        .instructions-list {
+            display: grid;
+            gap: 0.65rem;
+        }
+
+        .instructions-list .instruction {
+            padding: 0.75rem 0.85rem;
+            border: 1px solid rgba(247,247,242,0.1);
+            border-radius: 8px;
+            background: rgba(247,247,242,0.04);
+        }
+
+        .instructions-list .instruction span.emoji {
+            color: var(--brand-primary);
+            font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+        }
+
+        .video-container {
+            border: 1px solid rgba(247,247,242,0.12);
+            background: #050505;
+            box-shadow: inset 0 0 0 1px rgba(216,255,103,0.08);
+        }
+
+        .video-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(105,246,207,0.13), transparent);
+            transform: translateY(-100%);
+            animation: camera-scan 2.2s linear infinite;
+            pointer-events: none;
+        }
+
+        .face-guide .guide-oval {
+            border-color: rgba(216,255,103,0.56);
+            border-radius: 8px;
+        }
+
+        .status-bar {
+            background: rgba(5,5,5,0.58);
+            border-color: rgba(247,247,242,0.12);
+        }
+
+        .check-item {
+            background: rgba(247,247,242,0.045);
+            border-color: rgba(247,247,242,0.1);
+        }
+
+        .check-item.done {
+            background: rgba(216,255,103,0.075);
+            border-color: rgba(216,255,103,0.34);
             color: var(--brand-primary);
         }
 
-        /* Responsive */
-        @media (max-width: 900px) {
-            .glass-panel {
+        .post-content { color: var(--text-muted); }
+
+        @keyframes grid-drift {
+            from { background-position: 0 0; }
+            to { background-position: 72px 72px; }
+        }
+
+        @keyframes ambient-sweep {
+            0% { transform: translateX(-100%); opacity: 0; }
+            16% { opacity: 1; }
+            54% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        @keyframes image-breathe {
+            from { transform: scale(1.02); }
+            to { transform: scale(1.08); }
+        }
+
+        @keyframes signal-sweep {
+            0% { transform: translateX(-100%); opacity: 0; }
+            18% { opacity: 1; }
+            62% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        @keyframes camera-scan {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(520%); }
+        }
+
+        @media (max-width: 980px) {
+            .hero > div {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .hero-visual,
+            .hero-visual img {
+                min-height: 320px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+                line-height: 1;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .signal-caption {
                 flex-direction: column;
             }
-            .brand-section {
-                padding: 3rem 2rem;
-                border-right: none;
-                border-bottom: 1px solid var(--glass-border);
-                min-height: auto;
-            }
-            .form-section {
-                width: 100%;
-                padding: 3rem 2rem;
-            }
-            .brand-content h1 {
-                font-size: 2.5rem;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 1ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 1ms !important;
+                scroll-behavior: auto !important;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- Ambient Background (always present) -->
     <div class="ambient-bg">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
     </div>
 
-    <div class="login-wrapper">
-        <div class="glass-panel">
-            
-            <!-- Branding Section -->
-            <div class="brand-section">
-                <div class="logo-container">
-                    <div class="logo-icon">
-                        <i data-lucide="hexagon" stroke-width="2.5"></i>
-                    </div>
-                    <div class="logo-text">SyncUp</div>
-                </div>
+    <!-- ================================================
+         PAGE: LANDING
+         ================================================ -->
+    <div id="page-landing" class="page">
 
-                <div class="brand-content">
-                    <h1>The True <br><span class="text-gradient">Professional</span><br>Ecosystem</h1>
-                    <p>Enter a verified-humans-only network. No bots, no fake profiles, just authentic business connections and escrow-backed opportunities.</p>
-                    
-                    <div class="badge-list">
-                        <div class="badge">
-                            <i data-lucide="shield-check" size="16"></i> 100% Verified
-                        </div>
-                        <div class="badge">
-                            <i data-lucide="lock" size="16"></i> Escrow Secured
-                        </div>
+        <!-- Header -->
+        <header class="site-header">
+            <div class="container">
+                <div class="nav-inner">
+                    <div class="logo-container" onclick="showPage('landing')">
+                        <div class="logo-icon"><i data-lucide="hexagon" stroke-width="2.5"></i></div>
+                        <div class="logo-text text-gradient-2">SyncUp</div>
+                    </div>
+                    <div class="nav-actions">
+                        <button class="btn btn-secondary" onclick="showPage('login')" id="nav-signin">Sign In</button>
+                        <button class="btn btn-primary" onclick="showPage('login')" id="nav-join">Join Now</button>
                     </div>
                 </div>
             </div>
+        </header>
 
-            <!-- Login Form Section -->
-            <div class="form-section">
-                <div class="form-header">
-                    <h2>Welcome back</h2>
-                    <p>Log in to access your verified profile.</p>
+        <!-- Hero -->
+        <section class="hero">
+            <div>
+                <div class="hero-badge">
+                    <i data-lucide="shield-check" style="width:14px;height:14px;"></i>
+                    Face-verified professionals only
                 </div>
+                <h1>Build Your <span class="text-gradient">Trusted</span><br>Professional Network</h1>
+                <p>SyncUp is the only professional network with mandatory face verification — every connection is with a real, verified professional.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="showPage('login')" id="hero-join">
+                        Get Started Free <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                    </button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('features-section').scrollIntoView({behavior:'smooth'})" id="hero-learn">
+                        <i data-lucide="calendar-days" style="width:16px;height:16px;"></i> Learn More
+                    </button>
+                </div>
+                <div class="trust-row">
+                    <span><i data-lucide="shield"></i> Face-verified only</span>
+                    <span><i data-lucide="star"></i> Authenticity checks</span>
+                    <span><i data-lucide="building-2"></i> Professionals & businesses</span>
+                </div>
+            </div>
+        </section>
 
+        <!-- Stats -->
+        <section class="stats-section container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value text-gradient-2" data-target="42891">0</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value text-gradient-2" data-target="1245">0</div>
+                    <div class="stat-label">Live Events</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value text-gradient-2" data-target="8234">0</div>
+                    <div class="stat-label">Listings</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value text-gradient-2" data-target="18920">0</div>
+                    <div class="stat-label">Reviews</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features-section container" id="features-section">
+            <div class="section-header">
+                <div class="section-label">Why SyncUp</div>
+                <h2>Everything you need to<br>thrive professionally</h2>
+                <p>From networking to business opportunities, SyncUp connects India's most ambitious professionals.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);"><i data-lucide="users" style="width:22px;height:22px; color: white;"></i></div>
+                    <h3>Connect</h3>
+                    <p>Network with verified professionals across industries. Build meaningful relationships that last.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);"><i data-lucide="trending-up" style="width:22px;height:22px; color: white;"></i></div>
+                    <h3>Grow</h3>
+                    <p>Access exclusive opportunities, mentorship, and resources to accelerate your professional journey.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #10b981, #14b8a6);"><i data-lucide="handshake" style="width:22px;height:22px; color: white;"></i></div>
+                    <h3>Collaborate</h3>
+                    <p>Find partners, co-founders, and collaborators for your next big project or venture.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(135deg, #f43f5e, #ec4899);"><i data-lucide="megaphone" style="width:22px;height:22px; color: white;"></i></div>
+                    <h3>Promote</h3>
+                    <p>Reach thousands of verified professionals with precision-targeted campaigns.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Steps -->
+        <section class="steps-section container">
+            <div class="section-header">
+                <div class="section-label">Get Started</div>
+                <h2>Three steps to join</h2>
+                <p>Get up and running in minutes. No friction, just results.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number" style="background: linear-gradient(135deg, #8b5cf6, #6366f1);">01</div>
+                    <h3>Register</h3>
+                    <p>Create your account with your professional email and select your role.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number" style="background: linear-gradient(135deg, #6366f1, #3b82f6);">02</div>
+                    <h3>Verify</h3>
+                    <p>Complete face verification to prove you're a real professional.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">03</div>
+                    <h3>Connect</h3>
+                    <p>Start networking, find opportunities, and grow your career.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section container">
+            <div class="cta-box">
+                <div class="logo-icon" style="margin: 0 auto 1.5rem; width: 52px; height: 52px; border-radius: 16px;">
+                    <i data-lucide="hexagon" style="width:24px;height:24px; color:white;"></i>
+                </div>
+                <h2>Ready to build your network?</h2>
+                <p>Join 42,000+ verified professionals already on SyncUp.</p>
+                <button class="btn btn-primary" onclick="showPage('login')" id="cta-join">
+                    Get Started Free <i data-lucide="chevron-right" style="width:16px;height:16px;"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer container">
+            <div class="logo-container" onclick="showPage('landing')">
+                <div class="logo-icon" style="width:28px;height:28px;border-radius:8px;"><i data-lucide="hexagon" style="width:14px;height:14px;color:white;"></i></div>
+                <span class="logo-text text-gradient-2" style="font-size:1rem;">SyncUp</span>
+            </div>
+            <p>© 2025 SyncUp · For working professionals and businesses only.</p>
+            <div class="footer-links">
+                <a href="#" onclick="event.preventDefault()">Events</a>
+                <a href="#" onclick="event.preventDefault()">Companies</a>
+                <a href="#" onclick="event.preventDefault()">Jobs</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ================================================
+         PAGE: LOGIN
+         ================================================ -->
+    <div id="page-login" class="page hidden">
+        <div class="login-panel">
+            <!-- Brand Side -->
+            <div class="login-brand">
+                <div class="logo-container" onclick="showPage('landing')">
+                    <div class="logo-icon"><i data-lucide="hexagon" stroke-width="2.5"></i></div>
+                    <div class="logo-text text-gradient-2">SyncUp</div>
+                </div>
+                <div>
+                    <h1>The True<br><span class="text-gradient">Professional</span><br>Ecosystem</h1>
+                    <p>Enter a verified-humans-only network. No bots, no fake profiles, just authentic business connections.</p>
+                    <div class="badge-list">
+                        <div class="badge"><i data-lucide="shield-check" style="width:14px;height:14px;"></i> 100% Verified</div>
+                        <div class="badge"><i data-lucide="lock" style="width:14px;height:14px;"></i> Secured</div>
+                    </div>
+                </div>
+                <p class="brand-footer">© 2025 SyncUp · Trusted by 42,000+ professionals</p>
+            </div>
+
+            <!-- Form Side -->
+            <div class="login-form-section">
+                <h2>Welcome back</h2>
+                <p class="subtitle">Log in to access your verified profile. <br>New here? <a href="#" onclick="event.preventDefault(); alert('Registration coming soon!')">Apply for Access</a></p>
+
+                <!-- Role -->
                 <div class="role-selector">
                     <div class="role-indicator" id="role-indicator"></div>
                     <div class="role-btn active" onclick="selectRole(0)">Member</div>
@@ -506,59 +1510,634 @@
                     <div class="role-btn" onclick="selectRole(2)">Admin</div>
                 </div>
 
-                <form>
+                <!-- Error -->
+                <div class="error-msg" id="login-error">
+                    <i data-lucide="alert-circle" style="width:16px;height:16px; flex-shrink:0;"></i>
+                    <span id="login-error-text"></span>
+                </div>
+
+                <form id="login-form" onsubmit="handleLogin(event)">
                     <div class="input-group">
                         <label for="email">Work Email</label>
                         <div class="input-wrapper">
                             <input type="email" id="email" class="input-field" placeholder="name@company.com" required>
-                            <i data-lucide="mail" size="18" class="input-icon"></i>
+                            <i data-lucide="mail" style="width:16px;height:16px;" class="input-icon"></i>
                         </div>
                     </div>
-
                     <div class="input-group">
                         <label for="password">Password</label>
                         <div class="input-wrapper">
                             <input type="password" id="password" class="input-field" placeholder="••••••••" required>
-                            <i data-lucide="key-round" size="18" class="input-icon"></i>
+                            <i data-lucide="key-round" style="width:16px;height:16px;" class="input-icon"></i>
                         </div>
-                        <a href="#" class="forgot-password">Forgot password?</a>
+                        <a href="#" class="forgot-link" onclick="event.preventDefault(); alert('Password reset coming soon!')">Forgot password?</a>
                     </div>
-
-                    <button type="submit" class="btn btn-primary">
-                        Sign In <i data-lucide="arrow-right" size="18"></i>
+                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;" id="login-submit">
+                        Sign In <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
                     </button>
                 </form>
 
-                <div class="divider">
-                    <span>Secure Access</span>
-                </div>
+                <div class="divider-line"><span>Secure Access</span></div>
 
-                <button class="btn btn-biometric">
-                    <i data-lucide="scan-face" size="20"></i> Sign in with Face Verification
+                <button class="btn btn-secondary" style="width:100%;" onclick="showPage('face-verify')" id="btn-face-login">
+                    <i data-lucide="scan-face" style="width:18px;height:18px; color: var(--brand-accent);"></i>
+                    Sign in with Face Verification
                 </button>
 
-                <p class="signup-prompt">
-                    Not verified yet? <a href="#">Apply for Access</a>
-                </p>
+                <p class="signup-prompt">Not verified yet? <a href="#" onclick="event.preventDefault(); showPage('face-verify')">Verify Now</a></p>
             </div>
-
         </div>
     </div>
 
-    <script>
-        // Initialize Icons
-        lucide.createIcons();
+    <!-- ================================================
+         PAGE: FACE VERIFICATION (with Camera Liveness)
+         ================================================ -->
+    <div id="page-face-verify" class="page hidden">
+        <div class="face-verify-card glass-card" style="margin: 0 auto;">
 
-        // Role Selector Logic
+            <!-- Back button -->
+            <div style="text-align: left; margin-bottom: 1.5rem;">
+                <button class="btn btn-ghost" onclick="stopCamera(); showPage('login')" id="face-back-btn">
+                    <i data-lucide="arrow-left" style="width:18px;height:18px;"></i> Back
+                </button>
+            </div>
+
+            <!-- Step: Instructions -->
+            <div id="face-step-instructions">
+                <div class="face-icon-circle" style="background: rgba(139,92,246,0.1); border: 2px solid rgba(139,92,246,0.3);">
+                    <i data-lucide="camera" style="width:36px;height:36px; color: #a78bfa;"></i>
+                </div>
+                <h2 style="font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:0.5rem;">Face Verification</h2>
+                <p style="color: var(--text-muted); font-size:0.9rem; line-height:1.6; margin-bottom:0.5rem;">
+                    We verify you are a real human. Your face data is encrypted and never stored as a photo.
+                </p>
+                <div class="instructions-list">
+                    <div class="instruction"><span class="emoji">💡</span> Find a well-lit area — avoid backlighting</div>
+                    <div class="instruction"><span class="emoji">😊</span> Position your face fully in the frame</div>
+                    <div class="instruction"><span class="emoji">👁️</span> Blink naturally twice when prompted</div>
+                    <div class="instruction"><span class="emoji">🔄</span> Turn your head slightly when prompted</div>
+                </div>
+                <button class="btn btn-primary" style="width:100%;" onclick="startFaceVerification()" id="face-start-btn">
+                    <i data-lucide="camera" style="width:18px;height:18px;"></i> Start Face Verification
+                </button>
+            </div>
+
+            <!-- Step: Loading -->
+            <div id="face-step-loading" class="hidden">
+                <div class="spinner"></div>
+                <h2 style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:600; margin-bottom:0.4rem;">Initialising Camera</h2>
+                <p style="color: var(--text-muted); font-size:0.85rem;">Requesting camera access…</p>
+            </div>
+
+            <!-- Step: Detecting -->
+            <div id="face-step-detecting" class="hidden">
+                <h2 style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:600; margin-bottom:0.25rem;">Verifying your identity</h2>
+                <p style="color: var(--text-muted); font-size:0.8rem; margin-bottom:1rem;">Look at the camera and follow prompts</p>
+
+                <div class="video-container">
+                    <video id="face-video" autoplay playsinline muted></video>
+                    <canvas id="face-canvas"></canvas>
+                    <div class="face-guide"><div class="guide-oval"></div></div>
+                </div>
+
+                <div class="status-bar" id="face-status">Position your face in the frame…</div>
+
+                <div class="checks-grid">
+                    <div class="check-item" id="check-face">
+                        <i data-lucide="user" style="width:16px;height:16px;"></i>
+                        <span>Face Detected</span>
+                    </div>
+                    <div class="check-item" id="check-blink">
+                        <i data-lucide="eye" style="width:16px;height:16px;"></i>
+                        <span id="blink-label">Blinks 0/2</span>
+                    </div>
+                    <div class="check-item" id="check-move">
+                        <i data-lucide="move" style="width:16px;height:16px;"></i>
+                        <span>Movement</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step: Success -->
+            <div id="face-step-success" class="hidden">
+                <div class="face-icon-circle" style="background: rgba(16,185,129,0.1); border: 2px solid rgba(16,185,129,0.3);">
+                    <i data-lucide="check-circle-2" style="width:40px;height:40px; color: #6ee7b7;"></i>
+                </div>
+                <h2 style="font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:0.5rem;">Identity Verified! 🎉</h2>
+                <p style="color: var(--text-muted); font-size:0.9rem; margin-bottom:2rem;">
+                    Your face has been successfully verified. Welcome to SyncUp's trusted network.
+                </p>
+                <button class="btn btn-primary" onclick="showPage('dashboard')" id="face-continue">
+                    Go to Dashboard <i data-lucide="arrow-right" style="width:16px;height:16px;"></i>
+                </button>
+            </div>
+
+            <!-- Step: Error -->
+            <div id="face-step-error" class="hidden">
+                <div class="face-icon-circle" style="background: rgba(239,68,68,0.1); border: 2px solid rgba(239,68,68,0.3);">
+                    <i data-lucide="alert-triangle" style="width:40px;height:40px; color: #f87171;"></i>
+                </div>
+                <h2 style="font-family:'Outfit',sans-serif; font-size:1.25rem; font-weight:700; margin-bottom:0.5rem;">Verification Failed</h2>
+                <p style="color: #f87171; font-size:0.85rem; margin-bottom:1.5rem;" id="face-error-text">Camera access denied. Please allow camera access.</p>
+                <button class="btn btn-primary" onclick="resetFaceVerification()" id="face-retry">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================
+         PAGE: DASHBOARD (after login/verification)
+         ================================================ -->
+    <div id="page-dashboard" class="page hidden">
+        <!-- Dashboard Header -->
+        <header class="site-header">
+            <div class="container">
+                <div class="nav-inner">
+                    <div class="logo-container" onclick="showPage('dashboard')">
+                        <div class="logo-icon"><i data-lucide="hexagon" stroke-width="2.5"></i></div>
+                        <div class="logo-text text-gradient-2">SyncUp</div>
+                    </div>
+                    <div class="nav-actions">
+                        <button class="btn btn-ghost" title="Search"><i data-lucide="search" style="width:18px;height:18px;"></i></button>
+                        <button class="btn btn-ghost" title="Notifications"><i data-lucide="bell" style="width:18px;height:18px;"></i></button>
+                        <button class="btn btn-secondary" onclick="handleLogout()" id="btn-logout">
+                            <i data-lucide="log-out" style="width:14px;height:14px;"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="dash-header">
+                <h1>Welcome back, <span class="text-gradient" id="dash-username">User</span> 👋</h1>
+            </div>
+
+            <div class="dash-grid">
+                <!-- Left Sidebar -->
+                <aside>
+                    <div class="profile-card">
+                        <div class="avatar" id="dash-avatar">U</div>
+                        <div class="name" id="dash-name">User Name</div>
+                        <div class="headline">Professional · SyncUp Member</div>
+                        <div style="margin-top:0.5rem;">
+                            <span class="badge" style="font-size:0.7rem; padding: 0.25rem 0.6rem;">
+                                <i data-lucide="check-circle-2" style="width:12px;height:12px; color:#10b981;"></i> Verified
+                            </span>
+                        </div>
+                        <div class="profile-stats">
+                            <div><div class="val">128</div><div class="lbl">Connections</div></div>
+                            <div><div class="val">47</div><div class="lbl">Followers</div></div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Feed -->
+                <div class="feed-area">
+                    <div class="create-post-bar" onclick="alert('Post creation coming soon!')">
+                        <div class="post-avatar" id="feed-avatar">U</div>
+                        <div class="post-input">Share something with your network…</div>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-author">
+                            <div class="av">RM</div>
+                            <div class="meta">
+                                <div class="author-name">Rohan Mehta <span class="badge" style="font-size:0.6rem; padding:0.15rem 0.5rem; margin-left:0.3rem;"><i data-lucide="check-circle-2" style="width:10px;height:10px;color:#10b981;"></i> Verified</span></div>
+                                <div class="author-info">CTO at TechVentures · 2h ago</div>
+                            </div>
+                        </div>
+                        <div class="post-content">Excited to announce we just closed our Series A round of ₹2.5 Cr! 🚀 Couldn't have done it without the incredible SyncUp community connecting us with the right investors.</div>
+                        <div class="post-actions">
+                            <button class="post-action-btn" onclick="this.style.color='#60a5fa'"><i data-lucide="heart" style="width:14px;height:14px;"></i> 142</button>
+                            <button class="post-action-btn"><i data-lucide="message-circle" style="width:14px;height:14px;"></i> 23</button>
+                            <button class="post-action-btn"><i data-lucide="share-2" style="width:14px;height:14px;"></i> Share</button>
+                        </div>
+                    </div>
+
+                    <div class="post-card">
+                        <div class="post-author">
+                            <div class="av" style="background: linear-gradient(135deg, #10b981, #06b6d4);">PS</div>
+                            <div class="meta">
+                                <div class="author-name">Priya Sharma</div>
+                                <div class="author-info">Product Lead · ex-Razorpay · 5h ago</div>
+                            </div>
+                        </div>
+                        <div class="post-content">3 things I learned from talking to 50 enterprise customers this quarter:<br><br>1. Speed > Features. They want fast, not fancy.<br>2. Support response time is a deal-breaker.<br>3. Integrations win deals.</div>
+                        <div class="post-actions">
+                            <button class="post-action-btn" onclick="this.style.color='#60a5fa'"><i data-lucide="heart" style="width:14px;height:14px;"></i> 89</button>
+                            <button class="post-action-btn"><i data-lucide="message-circle" style="width:14px;height:14px;"></i> 34</button>
+                            <button class="post-action-btn"><i data-lucide="share-2" style="width:14px;height:14px;"></i> Share</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <aside>
+                    <div class="sidebar-widget">
+                        <h3>People you may know</h3>
+                        <div class="widget-item">
+                            <div class="wi-av" style="background: linear-gradient(135deg, #8b5cf6, #6366f1);">AP</div>
+                            <div>
+                                <div class="wi-name">Anjali Patel</div>
+                                <div class="wi-sub">Investor · Seed Stage</div>
+                            </div>
+                        </div>
+                        <div class="widget-item">
+                            <div class="wi-av" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">VS</div>
+                            <div>
+                                <div class="wi-name">Vikram Singh</div>
+                                <div class="wi-sub">Engineering Manager · Swiggy</div>
+                            </div>
+                        </div>
+                        <div class="widget-item">
+                            <div class="wi-av" style="background: linear-gradient(135deg, #10b981, #14b8a6);">KR</div>
+                            <div>
+                                <div class="wi-name">Kavita Rao</div>
+                                <div class="wi-sub">Co-founder @ EduTech</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Trending Opportunities</h3>
+                        <div class="widget-item" style="cursor:pointer;">
+                            <div>
+                                <div class="wi-name" style="color: #93c5fd;">Series A · ₹2.5 Cr</div>
+                                <div class="wi-sub">TechVentures</div>
+                            </div>
+                        </div>
+                        <div class="widget-item" style="cursor:pointer;">
+                            <div>
+                                <div class="wi-name" style="color: #93c5fd;">Partnership</div>
+                                <div class="wi-sub">FinanceHub</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================================================
+         JAVASCRIPT
+         ================================================ -->
+    <script>
+        // ── Initialize icons ─────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            animateStats();
+        });
+
+        // ── Page Navigation (SPA) ────────────────────
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            const target = document.getElementById('page-' + pageId);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            // Re-init icons for dynamically shown content
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        // ── Role Selector ────────────────────────────
+        let currentRole = 0;
         function selectRole(index) {
+            currentRole = index;
             const buttons = document.querySelectorAll('.role-btn');
             const indicator = document.getElementById('role-indicator');
-            
             buttons.forEach(btn => btn.classList.remove('active'));
             buttons[index].classList.add('active');
-            
             indicator.style.transform = `translateX(${index * 100}%)`;
         }
+
+        // ── Login Handler ────────────────────────────
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const errorEl = document.getElementById('login-error');
+            const errorText = document.getElementById('login-error-text');
+
+            errorEl.classList.remove('show');
+
+            if (!email || !password) {
+                errorText.textContent = 'Please fill in all fields.';
+                errorEl.classList.add('show');
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                errorText.textContent = 'Please enter a valid email address.';
+                errorEl.classList.add('show');
+                return;
+            }
+            if (password.length < 4) {
+                errorText.textContent = 'Password must be at least 4 characters.';
+                errorEl.classList.add('show');
+                return;
+            }
+
+            // Simulate successful login
+            const name = email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+
+            sessionStorage.setItem('syncup_user', JSON.stringify({ name, email, initials }));
+
+            // Update dashboard
+            document.getElementById('dash-username').textContent = name.split(' ')[0];
+            document.getElementById('dash-name').textContent = name;
+            document.getElementById('dash-avatar').textContent = initials;
+            document.getElementById('feed-avatar').textContent = initials;
+
+            showPage('dashboard');
+        }
+
+        // ── Logout ───────────────────────────────────
+        function handleLogout() {
+            sessionStorage.removeItem('syncup_user');
+            showPage('landing');
+        }
+
+        // ── Stat Counter Animation ───────────────────
+        function animateStats() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const target = parseInt(el.dataset.target);
+                        animateNumber(el, target, 2000);
+                        observer.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll('.stat-value[data-target]').forEach(el => observer.observe(el));
+        }
+
+        function animateNumber(el, target, duration) {
+            let start = null;
+            function step(ts) {
+                if (!start) start = ts;
+                const progress = Math.min((ts - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.floor(eased * target).toLocaleString('en-IN') + (target > 1000 ? '+' : '');
+                if (progress < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
+        // ══════════════════════════════════════════════
+        // FACE VERIFICATION WITH CAMERA LIVENESS
+        // ══════════════════════════════════════════════
+        let faceStream = null;
+        let faceDetectionInterval = null;
+        let blinkCount = 0;
+        let movementDetected = false;
+        let faceDetected = false;
+        let lastBrightness = [];
+        let positionHistory = [];
+
+        function showFaceStep(step) {
+            ['instructions', 'loading', 'detecting', 'success', 'error'].forEach(s => {
+                document.getElementById('face-step-' + s).classList.add('hidden');
+            });
+            document.getElementById('face-step-' + step).classList.remove('hidden');
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        function resetFaceVerification() {
+            stopCamera();
+            blinkCount = 0;
+            movementDetected = false;
+            faceDetected = false;
+            lastBrightness = [];
+            positionHistory = [];
+            updateChecks();
+            showFaceStep('instructions');
+        }
+
+        function stopCamera() {
+            if (faceDetectionInterval) {
+                clearInterval(faceDetectionInterval);
+                faceDetectionInterval = null;
+            }
+            if (faceStream) {
+                faceStream.getTracks().forEach(t => t.stop());
+                faceStream = null;
+            }
+        }
+
+        async function startFaceVerification() {
+            showFaceStep('loading');
+
+            try {
+                faceStream = await navigator.mediaDevices.getUserMedia({
+                    video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }
+                });
+
+                const video = document.getElementById('face-video');
+                video.srcObject = faceStream;
+                await video.play();
+
+                showFaceStep('detecting');
+                setTimeout(() => lucide.createIcons(), 100);
+
+                // Start liveness detection loop
+                blinkCount = 0;
+                movementDetected = false;
+                faceDetected = false;
+                lastBrightness = [];
+                positionHistory = [];
+                updateStatus('Position your face in the oval guide…');
+
+                faceDetectionInterval = setInterval(() => detectLiveness(video), 250);
+            } catch (err) {
+                console.error('Camera error:', err);
+                document.getElementById('face-error-text').textContent =
+                    'Camera access denied. Please allow camera access and try again.';
+                showFaceStep('error');
+            }
+        }
+
+        function detectLiveness(video) {
+            const canvas = document.getElementById('face-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const w = canvas.width;
+            const h = canvas.height;
+
+            // ── 1. Detect face-like region via skin-color analysis ──
+            const faceX = Math.floor(w * 0.25);
+            const faceY = Math.floor(h * 0.15);
+            const faceW = Math.floor(w * 0.5);
+            const faceH = Math.floor(h * 0.7);
+
+            let imageData;
+            try {
+                imageData = ctx.getImageData(faceX, faceY, faceW, faceH);
+            } catch { return; }
+
+            const pixels = imageData.data;
+            let skinPixels = 0;
+            let totalPixels = (faceW * faceH);
+            let totalBrightness = 0;
+
+            // Sample every 4th pixel for performance
+            for (let i = 0; i < pixels.length; i += 16) {
+                const r = pixels[i];
+                const g = pixels[i + 1];
+                const b = pixels[i + 2];
+                const brightness = (r + g + b) / 3;
+                totalBrightness += brightness;
+
+                // Simple skin color detection (works for many skin tones in good lighting)
+                if (r > 60 && g > 40 && b > 20 &&
+                    r > g && r > b &&
+                    (r - g) > 10 && (r - b) > 10 &&
+                    Math.abs(r - g) < 130 &&
+                    brightness > 40 && brightness < 230) {
+                    skinPixels++;
+                }
+            }
+
+            const sampledTotal = Math.floor(totalPixels / 4);
+            const skinRatio = skinPixels / sampledTotal;
+            const avgBrightness = totalBrightness / sampledTotal;
+
+            // ── 2. Face presence (skin ratio > threshold) ──
+            const hasFace = skinRatio > 0.12;
+
+            if (hasFace && !faceDetected) {
+                faceDetected = true;
+                updateChecks();
+            }
+
+            if (!hasFace) {
+                updateStatus('⚠ No face detected. Move closer to the camera.');
+                // Draw warning rectangle
+                ctx.strokeStyle = '#f59e0b';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(faceX, faceY, faceW, faceH);
+                return;
+            }
+
+            // Draw green detection rectangle
+            ctx.strokeStyle = '#10b981';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(faceX, faceY, faceW, faceH);
+
+            // ── 3. Blink detection via brightness fluctuation in eye region ──
+            const eyeY = Math.floor(h * 0.3);
+            const eyeH = Math.floor(h * 0.12);
+            let eyeData;
+            try {
+                eyeData = ctx.getImageData(faceX, eyeY, faceW, eyeH);
+            } catch { return; }
+
+            let eyeBrightness = 0;
+            const eyePixels = eyeData.data;
+            for (let i = 0; i < eyePixels.length; i += 16) {
+                eyeBrightness += (eyePixels[i] + eyePixels[i + 1] + eyePixels[i + 2]) / 3;
+            }
+            eyeBrightness /= Math.floor((faceW * eyeH) / 4);
+
+            lastBrightness.push(eyeBrightness);
+            if (lastBrightness.length > 20) lastBrightness.shift();
+
+            // Detect a blink = sudden dip then recovery in eye region brightness
+            if (lastBrightness.length >= 6) {
+                const recent = lastBrightness.slice(-6);
+                const avg = recent.reduce((a, b) => a + b) / recent.length;
+                const min = Math.min(...recent);
+                const dip = avg - min;
+
+                if (dip > 8 && blinkCount < 2) {
+                    blinkCount++;
+                    // Clear history to avoid double-counting
+                    lastBrightness = [];
+                    updateChecks();
+                }
+            }
+
+            // ── 4. Head movement detection (pixel shift analysis) ──
+            // Take a center vertical strip and measure its weighted average position
+            const stripX = Math.floor(w * 0.45);
+            const stripW = Math.floor(w * 0.1);
+            let stripData;
+            try {
+                stripData = ctx.getImageData(stripX, faceY, stripW, faceH);
+            } catch { return; }
+
+            let weightedSum = 0;
+            let totalWeight = 0;
+            const sp = stripData.data;
+            for (let i = 0; i < sp.length; i += 16) {
+                const v = (sp[i] + sp[i + 1] + sp[i + 2]) / 3;
+                const row = Math.floor((i / 4) / stripW);
+                weightedSum += v * row;
+                totalWeight += v;
+            }
+            const centroid = totalWeight > 0 ? weightedSum / totalWeight : 0;
+
+            positionHistory.push(centroid);
+            if (positionHistory.length > 15) positionHistory.shift();
+
+            if (positionHistory.length >= 10 && !movementDetected) {
+                const first = positionHistory.slice(0, 3).reduce((a, b) => a + b) / 3;
+                const last = positionHistory.slice(-3).reduce((a, b) => a + b) / 3;
+                const shift = Math.abs(last - first);
+
+                if (shift > 3) {
+                    movementDetected = true;
+                    updateChecks();
+                }
+            }
+
+            // ── 5. Status messages ──
+            if (blinkCount < 2 && !movementDetected) {
+                updateStatus('Face detected ✓ — Now blink naturally and move slightly.');
+            } else if (blinkCount < 2) {
+                updateStatus(`Blinks: ${blinkCount}/2 — Please blink naturally.`);
+            } else if (!movementDetected) {
+                updateStatus('Moving your head slightly left or right…');
+            }
+
+            // ── 6. All checks pass → Success ──
+            if (faceDetected && blinkCount >= 2 && movementDetected) {
+                updateStatus('All checks passed! ✅');
+                clearInterval(faceDetectionInterval);
+                faceDetectionInterval = null;
+
+                // Brief delay then show success
+                setTimeout(() => {
+                    stopCamera();
+                    showFaceStep('success');
+                    setTimeout(() => lucide.createIcons(), 100);
+                }, 1200);
+            }
+        }
+
+        function updateStatus(msg) {
+            document.getElementById('face-status').textContent = msg;
+        }
+
+        function updateChecks() {
+            const checkFace = document.getElementById('check-face');
+            const checkBlink = document.getElementById('check-blink');
+            const checkMove = document.getElementById('check-move');
+            const blinkLabel = document.getElementById('blink-label');
+
+            if (faceDetected) checkFace.classList.add('done');
+            if (blinkCount >= 2) checkBlink.classList.add('done');
+            if (movementDetected) checkMove.classList.add('done');
+
+            blinkLabel.textContent = `Blinks ${blinkCount}/2`;
+        }
     </script>
+
 </body>
 </html>
