@@ -30,8 +30,8 @@ export default function EventsPage() {
             <p className="text-sm text-gray-400 mb-4 line-clamp-2">Join industry verified leaders discussing the decentralized identity grid and next-gen hardware architectures.</p>
             <div className="flex items-center justify-between pt-4 border-t border-white/5">
               <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full border-2 border-gray-900 bg-gray-800"></div>
-                <div className="w-8 h-8 rounded-full border-2 border-gray-900 bg-gray-700"></div>
+                <img src="/avatars/bounty-hunter.png" alt="Attendee" className="rounded-full object-cover border-2 border-gray-900 bg-gray-800 w-8 h-8" />
+                <img src="/avatars/mozart.png" alt="Attendee" className="rounded-full object-cover border-2 border-gray-900 bg-gray-700 w-8 h-8" />
                 <div className="w-8 h-8 rounded-full border-2 border-gray-900 bg-gray-600 flex items-center justify-center text-[10px]">+4k</div>
               </div>
               <button className="text-blue-400 text-sm font-semibold hover:text-blue-300 transition">Register Now</button>
