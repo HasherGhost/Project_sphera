@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1411,72 +1412,144 @@
     </style>
 </head>
 
-<body>
 
-    <!-- ══════ LANDING ══════ -->
-    <div id="page-landing" class="page">
+<body>
+    <div class="page-shell">
+        <!-- ═══ HEADER ═══ -->
         <header class="hdr">
-            <div class="container">
-                <div class="nav">
-                    <div class="logo" onclick="showPage('landing')">
-                        <div class="lm"><i data-lucide="zap" style="width:14px;height:14px;"></i></div>
-                        <div class="ln">SyncUp</div>
-                    </div>
-                    <div class="na"><button class="theme-toggle" onclick="toggleTheme()" id="tb"><i data-lucide="sun"
-                                style="width:16px;height:16px;" id="ti"></i></button><button class="btn btn-s"
-                            onclick="showPage('login')">Sign In</button><button class="btn btn-p"
-                            onclick="showPage('login')">Join Free</button></div>
+            <div class="wrap hdr-row">
+                <a class="brand" href="#home">
+                    <span class="brand-mark">SU</span>
+                    <span style="display:grid;gap:2px"><strong>SyncUp.</strong><small>Verified professional
+                            ecosystem</small></span>
+                </a>
+                <nav class="hdr-nav">
+                    <a href="#network">Network</a>
+                    <a href="#opportunities">Opportunities</a>
+                    <a href="#trust">Trust</a>
+                </nav>
+                <div class="hdr-acts">
+                    <button class="theme-tog" id="themeToggle" type="button">
+                        <span class="theme-track"><span class="theme-thumb"></span></span>
+                        <span id="themeLabel">Light</span>
+                    </button>
+                    <button class="btn btn-s" type="button" data-open-auth>Sign in</button>
+                    <button class="btn btn-p" type="button" data-open-auth>Verify now</button>
                 </div>
             </div>
         </header>
 
-            </div>
-        </section>
-
-        <!-- ═══ OPPORTUNITIES ═══ -->
-        <section id="opportunities" class="sec">
-            <div class="wrap">
-                <div class="sec-hdr reveal">
-                    <div>
-                        <p class="sec-kicker">Opportunities</p>
-                        <h2>Cleaner paths to work, funding, and partnerships.</h2>
+        <main>
+            <!-- ═══ HERO ═══ -->
+            <section id="home" class="hero">
+                <div class="wrap hero-grid">
+                    <div class="hero-copy reveal">
+                        <p class="eyebrow"><span class="pulse-dot"></span> Live identity layer enabled</p>
+                        <h1>Meet <span class="acc-p">real professionals</span> before the <span
+                                class="acc-o">conversation</span>
+                            starts.</h1>
+                        <p class="hero-lead">SyncUp keeps networking, hiring, funding, and events in one trusted
+                            workspace with
+                            camera liveness checks and verified profile signals.</p>
+                        <div class="hero-actions">
+                            <button class="btn btn-p btn-lg" type="button" data-open-auth>Start verification</button>
+                            <a class="btn btn-s btn-lg" href="#network">Explore dashboard</a>
+                        </div>
+                        <div class="metric-strip">
+                            <article class="metric-card"><span>Verified members</span><strong
+                                    data-count="120000">0</strong></article>
+                            <article class="metric-card"><span>Trusted companies</span><strong
+                                    data-count="3400">0</strong></article>
+                            <article class="metric-card"><span>Live events</span><strong data-count="520">0</strong>
+                            </article>
+                        </div>
                     </div>
-                    <p class="sec-copy">Every role, intro, and event can carry identity, domain, and company checks.</p>
-                </div>
-                <div class="feat-grid reveal">
-                    <article class="feat-card"><span class="feat-icon">01</span>
-                        <h3>Signal-rich profiles</h3>
-                        <p>Profiles combine role history, verification state, active intent, and trust context.</p>
-                    </article>
-                    <article class="feat-card"><span class="feat-icon">02</span>
-                        <h3>Validated companies</h3>
-                        <p>Domain matching and registry checks keep company pages clean and harder to spoof.</p>
-                    </article>
-                    <article class="feat-card"><span class="feat-icon">03</span>
-                        <h3>Live event access</h3>
-                        <p>High-trust rooms can require camera liveness before registration or check-in.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
 
-        <!-- ═══ TRUST ═══ -->
-        <section id="trust" class="sec" style="padding-top:36px">
-            <div class="wrap trust-layout reveal">
-                <div>
-                    <p class="sec-kicker">Trust engine</p>
-                    <h2>Camera liveness with clear production boundaries.</h2>
-                    <p class="sec-copy">This browser demo requests camera access, tracks one face, and requires blink,
-                        head movement, and smile challenges.</p>
+                    <div class="n-stage reveal">
+                        <div class="stage-grid"></div>
+                        <article class="stage-card prof-card">
+                            <div class="prof-media"><img
+                                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=480&q=80"
+                                    alt="Verified founder"></div>
+                            <div>
+                                <div class="prof-name">Maya Raman</div>
+                                <div class="prof-role">Founder at Threadbase</div>
+                            </div>
+                            <span class="v-badge">Verified</span>
+                        </article>
+                        <article class="stage-card signal-card">
+                            <div class="signal-ring"><span></span></div>
+                            <div><strong>Identity confidence</strong>
+                                <p style="color:var(--muted);line-height:1.6">Face match, liveness, and account risk
+                                    signals are ready
+                                    before outreach.</p>
+                            </div>
+                        </article>
+                        <article class="stage-card mini-feed">
+                            <div class="feed-line w78"></div>
+                            <div class="feed-line"></div>
+                            <div class="feed-line w54"></div>
+                            <div class="feed-dots"><span></span><span></span><span></span></div>
+                        </article>
+                        <article class="stage-card orbit-card">
+                            <div class="orbit-img"><img
+                                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=320&q=80"
+                                    alt="Engineer"></div>
+                            <div class="orbit-img"><img
+                                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=320&q=80"
+                                    alt="Investor"></div>
+                            <div class="orbit-copy">Warm intros are moving</div>
+                        </article>
+                    </div>
                 </div>
-                <div class="trust-list">
-                    <div class="trust-item"><span></span> Uses getUserMedia for live camera access</div>
-                    <div class="trust-item"><span></span> Runs pixel-level face analysis in real time</div>
-                    <div class="trust-item"><span></span> Requires challenge-response liveness gestures</div>
-                    <div class="trust-item"><span></span> Stops camera tracks after verification closes</div>
+            </section>
+
+            <!-- ═══ OPPORTUNITIES ═══ -->
+            <section id="opportunities" class="sec">
+                <div class="wrap">
+                    <div class="sec-hdr reveal">
+                        <div>
+                            <p class="sec-kicker">Opportunities</p>
+                            <h2>Cleaner paths to work, funding, and partnerships.</h2>
+                        </div>
+                        <p class="sec-copy">Every role, intro, and event can carry identity, domain, and company checks.
+                        </p>
+                    </div>
+                    <div class="feat-grid reveal">
+                        <article class="feat-card"><span class="feat-icon">01</span>
+                            <h3>Signal-rich profiles</h3>
+                            <p>Profiles combine role history, verification state, active intent, and trust context.</p>
+                        </article>
+                        <article class="feat-card"><span class="feat-icon">02</span>
+                            <h3>Validated companies</h3>
+                            <p>Domain matching and registry checks keep company pages clean and harder to spoof.</p>
+                        </article>
+                        <article class="feat-card"><span class="feat-icon">03</span>
+                            <h3>Live event access</h3>
+                            <p>High-trust rooms can require camera liveness before registration or check-in.</p>
+                        </article>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <!-- ═══ TRUST ═══ -->
+            <section id="trust" class="sec" style="padding-top:36px">
+                <div class="wrap trust-layout reveal">
+                    <div>
+                        <p class="sec-kicker">Trust engine</p>
+                        <h2>Camera liveness with clear production boundaries.</h2>
+                        <p class="sec-copy">This browser demo requests camera access, tracks one face, and requires
+                            blink, head
+                            movement, and smile challenges.</p>
+                    </div>
+                    <div class="trust-list">
+                        <div class="trust-item"><span></span> Uses getUserMedia for live camera access</div>
+                        <div class="trust-item"><span></span> Runs pixel-level face analysis in real time</div>
+                        <div class="trust-item"><span></span> Requires challenge-response liveness gestures</div>
+                        <div class="trust-item"><span></span> Stops camera tracks after verification closes</div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -1487,7 +1560,8 @@
             <button class="icon-btn auth-close" type="button" data-close-auth
                 style="width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);background:var(--surface);font-weight:900">&times;</button>
             <div class="auth-progress"><span id="dot1" class="active"></span><span id="dot2"></span><span
-                    id="dot3"></span></div>
+                    id="dot3"></span>
+            </div>
 
             <!-- Step 1 -->
             <div id="step1" class="auth-step active">
@@ -1519,7 +1593,8 @@
                     <span id="modePill" class="model-pill">Camera idle</span>
                 </div>
                 <p class="auth-copy">Keep one face inside the frame. Follow the live challenges until every check turns
-                    green.</p>
+                    green.
+                </p>
                 <div class="cam-layout">
                     <div class="cam-shell" id="camShell">
                         <video id="camVideo" autoplay muted playsinline></video>
