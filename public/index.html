@@ -1686,23 +1686,23 @@
         <section class="auth-panel">
             <button class="icon-btn auth-close" type="button" data-close-signup
                 style="width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);background:var(--surface);font-weight:900">&times;</button>
-            <h2 style="text-align:center;">Sign Up</h2>
-            <p class="auth-copy" style="text-align:center;">Get started in seconds. No verification required for sign
-                up.</p>
+            <h2 style="text-align:center;">Login</h2>
+            <p class="auth-copy" style="text-align:center;">Sign in to your existing account.
+            </p>
             <div class="field-grid">
                 <label class="field"><span>Username or Email</span><input id="signupEmail" type="email"
                         placeholder="john@example.com" autocomplete="email"></label>
                 <label class="field"><span>Password</span><input id="signupPassword" type="password"
                         placeholder="Create a password" autocomplete="new-password"></label>
-                <label class="field"><span>Confirm Password</span><input id="signupConfirm" type="password"
-                        placeholder="Confirm your password"></label>
+
             </div>
-            <button id="signupSubmitBtn" class="btn btn-p btn-full" type="button" style="margin-top:8px;">Sign
-                Up</button>
+            <button id="signupSubmitBtn" class="btn btn-p btn-full" type="button" style="margin-top:8px;">Login
+            </button>
             <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--muted);">Don't have an Account? <a
-                    href="#" id="switchToSignIn" style="color:var(--accent);font-weight:700;cursor:pointer;">Sign In</a>
+                    href="#" id="switchToSignIn" style="color:var(--accent);font-weight:700;cursor:pointer;">Sign Up</a>
             </p>
         </section>
+
     </div>
 
     <!-- COUPON MODAL -->
@@ -1828,15 +1828,38 @@
             e.preventDefault(); closeSignup(); openAuth();
         });
 
-        document.getElementById('signupSubmitBtn')?.addEventListener('click', () => {
+        document.getElementById('signupSubmitBtn')?.addEventListener('click', async () => {
             const email = document.getElementById('signupEmail')?.value.trim();
             const pass = document.getElementById('signupPassword')?.value;
             const confirm = document.getElementById('signupConfirm')?.value;
             if (!email || !pass) { showToast('Please fill in email and password.'); return; }
             if (pass !== confirm) { showToast('Passwords do not match.'); return; }
             if (pass.length < 6) { showToast('Password must be at least 6 characters.'); return; }
-            showToast('Account created successfully! Redirecting...');
-            setTimeout(() => { window.location.href = 'feed.html'; }, 1200);
+            try {
+                const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js");
+                const { getAuth, createUserWithEmailAndPassword } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js");
+                const { getFirestore, doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+                const firebaseConfig = {
+                    apiKey: "AIzaSyBfF_Gfn_YaIHfHVCpaA6IdUjDVNlDQTjg",
+                    authDomain: "sphera-6778e.firebaseapp.com",
+                    projectId: "sphera-6778e",
+                    storageBucket: "sphera-6778e.firebasestorage.app",
+                    messagingSenderId: "851527615297",
+                    appId: "1:851527615297:web:9ea78e42c27b3585e5d7c0"
+                };
+                const app = initializeApp(firebaseConfig);
+                const auth = getAuth(app);
+                const db = getFirestore(app);
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                await setDoc(doc(db, 'users', cred.user.uid), {
+                    email: email,
+                    createdAt: new Date().toISOString()
+                });
+                showToast('Account created successfully! Redirecting...');
+                setTimeout(() => { window.location.href = 'feed.html'; }, 1200);
+            } catch (e) {
+                showToast(e.message);
+            }
         });
 
         /* ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢Ãƒâ€šÃ‚Â
