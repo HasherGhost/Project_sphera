@@ -17,11 +17,11 @@
         :root {
             --bg: #09090b;
             --bg-glass: rgba(24, 24, 27, 0.7);
-            var(--line): rgba(255, 255, 255, 0.1);
-            var(--accent): #3b82f6;
-            var(--accent)-glow: rgba(59, 130, 246, 0.5);
-            var(--text): #f4f4f5;
-            var(--muted): #a1a1aa;
+            --line: rgba(255, 255, 255, 0.1);
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --text: #f4f4f5;
+            --muted: #a1a1aa;
             --surface: #18181b;
             --radius: 16px;
             --accent: #8b5cf6;
@@ -30,11 +30,11 @@
         [data-theme="light"] {
             --bg: #f8fafc;
             --bg-glass: rgba(255, 255, 255, 0.8);
-            var(--line): rgba(0, 0, 0, 0.08);
-            var(--accent): #2563eb;
-            var(--accent)-glow: rgba(37, 99, 235, 0.3);
-            var(--text): #1e293b;
-            var(--muted): #64748b;
+            --line: rgba(0, 0, 0, 0.08);
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.3);
+            --text: #1e293b;
+            --muted: #64748b;
             --surface: #ffffff;
             --accent: #7c3aed;
         }
@@ -90,7 +90,7 @@
         }
         .credits-pill {
             display: flex; align-items: center; gap: 8px;
-            background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(139,92,246,0.18);
+            background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(139,92,246,0.18));
             border: 1px solid rgba(139,92,246,0.4); border-radius: 99px;
             padding: 6px 14px; font-size: 13px; font-weight: 700;
             color: var(--text); cursor: default; transition: all 0.2s ease; white-space: nowrap;
@@ -237,7 +237,7 @@
         /* ── CTA ── */
         .cta-box {
             text-align: center; padding: 36px;
-            background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(139,92,246,0.12);
+            background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(139,92,246,0.12));
             border: 1px solid rgba(139,92,246,0.25);
         }
         .cta-box h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
@@ -249,7 +249,7 @@
             background: var(--accent); color: #fff;
             transition: all 0.2s;
         }
-        .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent)-glow); }
+        .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent-glow); }
 
         .btn-back {
             display: inline-flex; align-items: center; gap: 6px;
@@ -570,6 +570,7 @@
 </body>
 
 </html>
+
 
 
 
