@@ -1,537 +1,2092 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SyncUp | Trusted Professional Network</title>
     <meta name="description" content="Build a trusted professional ecosystem with camera-based liveness verification.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --purple: #7C3AED; --purple-light: #EDE9FE; --purple-mid: #A78BFA; --purple-dark: #5B21B6;
-            --orange: #F97316; --orange-light: #FFF7ED; --orange-mid: #FB923C;
-            --green: #10B981; --danger: #EF4444; --t: 0.3s ease;
+            --purple: #7C3AED;
+            --purple-light: #EDE9FE;
+            --purple-mid: #A78BFA;
+            --purple-dark: #5B21B6;
+            --orange: #F97316;
+            --orange-light: #FFF7ED;
+            --orange-mid: #FB923C;
+            --green: #10B981;
+            --danger: #EF4444;
+            --t: 0.3s ease;
         }
 
         [data-theme="light"] {
-            --bg: #FAFAF8; --bg2: #FFF; --bg3: #F4F2EE; --bg4: #F4F2EE;
-            --tx: #1A1A1A; --tx2: #4B5563; --tx3: #9CA3AF;
-            --bd: #E5E5E0; --bdL: #F0EEEA;
-            --sh: 0 4px 20px rgba(0,0,0,0.06); --shL: 0 12px 40px rgba(0,0,0,0.08);
-            --nav: rgba(255,255,255,0.88);
-            --pbg: #EDE9FE; --pbd: #DDD6FE; --obg: #FFF7ED; --obd: #FED7AA;
-            --gBg: #F0FDF4; --gBd: #BBF7D0;
-        }
-        [data-theme="dark"] {
-            --bg: #09090B; --bg2: rgba(18,18,20,0.92); --bg3: rgba(255,255,255,0.04); --bg4: rgba(255,255,255,0.06);
-            --tx: #F5F5F5; --tx2: #A1A1AA; --tx3: #71717A;
-            --bd: rgba(255,255,255,0.1); --bdL: rgba(255,255,255,0.06);
-            --sh: 0 4px 24px rgba(0,0,0,0.3); --shL: 0 16px 48px rgba(0,0,0,0.4);
-            --nav: rgba(9,9,11,0.88);
-            --pbg: rgba(124,58,237,0.12); --pbd: rgba(124,58,237,0.3);
-            --obg: rgba(249,115,22,0.1); --obd: rgba(249,115,22,0.25);
-            --gBg: rgba(16,185,129,0.1); --gBd: rgba(16,185,129,0.3);
+            --bg: #FAFAF8;
+            --bg2: #FFF;
+            --bg3: #F4F2EE;
+            --bg4: #F4F2EE;
+            --tx: #1A1A1A;
+            --tx2: #4B5563;
+            --tx3: #9CA3AF;
+            --bd: #E5E5E0;
+            --bdL: #F0EEEA;
+            --sh: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shL: 0 12px 40px rgba(0, 0, 0, 0.08);
+            --nav: rgba(255, 255, 255, 0.88);
+            --pbg: #EDE9FE;
+            --pbd: #DDD6FE;
+            --obg: #FFF7ED;
+            --obd: #FED7AA;
+            --gBg: #F0FDF4;
+            --gBd: #BBF7D0;
         }
 
-        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        html{scroll-behavior:smooth}
-        body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;transition:background var(--t),color var(--t)}
-        ::selection{background:rgba(124,58,237,0.25);color:var(--tx)}
-        ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:99px}
-        a{text-decoration:none;color:inherit}.hidden{display:none!important}
-        .container{max-width:1100px;margin:0 auto;padding:0 1.5rem}
+        [data-theme="dark"] {
+            --bg: #09090B;
+            --bg2: rgba(18, 18, 20, 0.92);
+            --bg3: rgba(255, 255, 255, 0.04);
+            --bg4: rgba(255, 255, 255, 0.06);
+            --tx: #F5F5F5;
+            --tx2: #A1A1AA;
+            --tx3: #71717A;
+            --bd: rgba(255, 255, 255, 0.1);
+            --bdL: rgba(255, 255, 255, 0.06);
+            --sh: 0 4px 24px rgba(0, 0, 0, 0.3);
+            --shL: 0 16px 48px rgba(0, 0, 0, 0.4);
+            --nav: rgba(9, 9, 11, 0.88);
+            --pbg: rgba(124, 58, 237, 0.12);
+            --pbd: rgba(124, 58, 237, 0.3);
+            --obg: rgba(249, 115, 22, 0.1);
+            --obd: rgba(249, 115, 22, 0.25);
+            --gBg: rgba(16, 185, 129, 0.1);
+            --gBd: rgba(16, 185, 129, 0.3);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--tx);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            transition: background var(--t), color var(--t)
+        }
+
+        ::selection {
+            background: rgba(124, 58, 237, 0.25);
+            color: var(--tx)
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bd);
+            border-radius: 99px
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem
+        }
 
         /* ── Buttons ── */
-        .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 22px;border-radius:10px;font-family:inherit;font-weight:600;font-size:.85rem;cursor:pointer;border:none;transition:all .2s;outline:none}
-        .btn:active{transform:scale(.97)}
-        .btn-p{background:var(--purple);color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.25)}
-        .btn-p:hover{background:var(--purple-dark);transform:translateY(-1px);box-shadow:0 6px 24px rgba(124,58,237,.35)}
-        .btn-s{background:var(--bg3);color:var(--tx);border:1px solid var(--bd)}
-        .btn-s:hover{border-color:var(--purple-mid);color:var(--purple)}
-        .btn-g{background:transparent;color:var(--tx2);border:none;padding:8px}
-        .btn-g:hover{color:var(--purple)}
-        .btn-o{background:var(--orange);color:#fff;box-shadow:0 4px 14px rgba(249,115,22,.25)}
-        .btn-o:hover{background:#EA580C;transform:translateY(-1px)}
-        .theme-toggle{width:38px;height:38px;border-radius:10px;border:1px solid var(--bd);background:var(--bg3);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:var(--tx2)}
-        .theme-toggle:hover{border-color:var(--purple-mid);color:var(--purple)}
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: .85rem;
+            cursor: pointer;
+            border: none;
+            transition: all .2s;
+            outline: none
+        }
+
+        .btn:active {
+            transform: scale(.97)
+        }
+
+        .btn-p {
+            background: var(--purple);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(124, 58, 237, .25)
+        }
+
+        .btn-p:hover {
+            background: var(--purple-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(124, 58, 237, .35)
+        }
+
+        .btn-s {
+            background: var(--bg3);
+            color: var(--tx);
+            border: 1px solid var(--bd)
+        }
+
+        .btn-s:hover {
+            border-color: var(--purple-mid);
+            color: var(--purple)
+        }
+
+        .btn-g {
+            background: transparent;
+            color: var(--tx2);
+            border: none;
+            padding: 8px
+        }
+
+        .btn-g:hover {
+            color: var(--purple)
+        }
+
+        .btn-o {
+            background: var(--orange);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(249, 115, 22, .25)
+        }
+
+        .btn-o:hover {
+            background: #EA580C;
+            transform: translateY(-1px)
+        }
+
+        .theme-toggle {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            border: 1px solid var(--bd);
+            background: var(--bg3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .2s;
+            color: var(--tx2)
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--purple-mid);
+            color: var(--purple)
+        }
 
         /* ── Inputs ── */
-        .inp{width:100%;background:var(--bg4);border:1.5px solid var(--bd);border-radius:10px;padding:11px 14px 11px 40px;color:var(--tx);font-family:inherit;font-size:.88rem;transition:all .2s;outline:none}
-        .inp::placeholder{color:var(--tx3)}
-        .inp:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(124,58,237,.1);background:var(--bg2)}
-        .ig{margin-bottom:1.15rem}.ig label{display:block;margin-bottom:5px;font-size:.8rem;font-weight:600}
-        .iw{position:relative}.ii{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--tx3);pointer-events:none}
-        .iw:focus-within .ii{color:var(--purple)}
-        .err{display:none;align-items:center;gap:8px;padding:10px 14px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;color:var(--danger);font-size:.8rem;margin-bottom:1rem}
-        .err.show{display:flex}
-        .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:var(--bg3);border:1px solid var(--bd);border-radius:99px;font-size:.72rem;font-weight:500;color:var(--tx2)}
-        .page{min-height:100vh}
+        .inp {
+            width: 100%;
+            background: var(--bg4);
+            border: 1.5px solid var(--bd);
+            border-radius: 10px;
+            padding: 11px 14px 11px 40px;
+            color: var(--tx);
+            font-family: inherit;
+            font-size: .88rem;
+            transition: all .2s;
+            outline: none
+        }
+
+        .inp::placeholder {
+            color: var(--tx3)
+        }
+
+        .inp:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, .1);
+            background: var(--bg2)
+        }
+
+        .ig {
+            margin-bottom: 1.15rem
+        }
+
+        .ig label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: .8rem;
+            font-weight: 600
+        }
+
+        .iw {
+            position: relative
+        }
+
+        .ii {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--tx3);
+            pointer-events: none
+        }
+
+        .iw:focus-within .ii {
+            color: var(--purple)
+        }
+
+        .err {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: rgba(239, 68, 68, .08);
+            border: 1px solid rgba(239, 68, 68, .2);
+            border-radius: 8px;
+            color: var(--danger);
+            font-size: .8rem;
+            margin-bottom: 1rem
+        }
+
+        .err.show {
+            display: flex
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 10px;
+            background: var(--bg3);
+            border: 1px solid var(--bd);
+            border-radius: 99px;
+            font-size: .72rem;
+            font-weight: 500;
+            color: var(--tx2)
+        }
+
+        .page {
+            min-height: 100vh
+        }
 
         /* ── Header ── */
-        .hdr{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 0}
-        .nav{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-radius:14px;background:var(--nav);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--bdL);box-shadow:var(--sh);transition:background var(--t)}
-        .logo{display:flex;align-items:center;gap:8px;cursor:pointer}
-        .lm{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--purple),var(--orange));display:flex;align-items:center;justify-content:center;color:#fff}
-        .ln{font-size:1rem;font-weight:800;letter-spacing:-.03em}
-        .na{display:flex;gap:6px;align-items:center}
+        .hdr {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 14px 0
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 18px;
+            border-radius: 14px;
+            background: var(--nav);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--bdL);
+            box-shadow: var(--sh);
+            transition: background var(--t)
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer
+        }
+
+        .lm {
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, var(--purple), var(--orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff
+        }
+
+        .ln {
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: -.03em
+        }
+
+        .na {
+            display: flex;
+            gap: 6px;
+            align-items: center
+        }
 
         /* ── Hero ── */
-        .hero{min-height:100vh;display:flex;align-items:center;padding:7rem 1.5rem 4rem;position:relative;overflow:hidden}
-        .hero-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-        [data-theme="light"] .hero-bg-video{opacity:.18;filter:grayscale(.3)}
-        [data-theme="dark"] .hero-bg-video{opacity:.08;filter:grayscale(1) brightness(.6)}
-        .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none}
-        [data-theme="light"] .hero-overlay{background:linear-gradient(135deg,rgba(250,250,248,.7),rgba(250,250,248,.92) 60%,rgba(250,250,248,.98))}
-        [data-theme="dark"] .hero-overlay{background:linear-gradient(135deg,rgba(9,9,11,.6),rgba(9,9,11,.88) 60%,rgba(9,9,11,.97))}
-        .hero-content{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;width:100%;max-width:1100px;margin:0 auto}
-        .hero-tag{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;background:var(--pbg);border:1px solid var(--pbd);border-radius:99px;font-size:.73rem;font-weight:600;color:var(--purple);margin-bottom:1.5rem}
-        .hero h1{font-size:clamp(2.25rem,4.5vw,3.5rem);font-weight:900;line-height:1.06;letter-spacing:-.03em;margin-bottom:1.1rem}
-        .acc{color:var(--purple)}.aco{color:var(--orange)}
-        .hero p{font-size:1.05rem;color:var(--tx2);max-width:460px;margin-bottom:1.75rem;line-height:1.7}
-        .ha{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:2rem}
-        .tr{display:flex;gap:1.25rem;flex-wrap:wrap}
-        .tri{display:flex;align-items:center;gap:5px;font-size:.78rem;color:var(--tx3)}
-        .tri i{color:var(--purple-mid)}
-        .hv{position:relative;border-radius:14px;overflow:hidden;background:var(--bg3);border:1px solid var(--bd);box-shadow:var(--shL);aspect-ratio:4/3;transition:border var(--t)}
-        .hv img{width:100%;height:100%;object-fit:cover}
-        [data-theme="dark"] .hv img{filter:brightness(.7) contrast(1.1)}
-        .hv-ov{position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,.06),rgba(249,115,22,.04))}
-        .hv-b{position:absolute;bottom:14px;left:14px;right:14px;display:flex;justify-content:space-between;padding:9px 13px;background:var(--nav);backdrop-filter:blur(12px);border-radius:8px;border:1px solid var(--bd);font-size:.68rem;font-weight:600;color:var(--tx2);text-transform:uppercase;letter-spacing:.04em}
-        .dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;margin-right:4px;animation:pdot 2s infinite}
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 7rem 1.5rem 4rem;
+            position: relative;
+            overflow: hidden
+        }
+
+        .hero-bg-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0
+        }
+
+        [data-theme="light"] .hero-bg-video {
+            opacity: .18;
+            filter: grayscale(.3)
+        }
+
+        [data-theme="dark"] .hero-bg-video {
+            opacity: .08;
+            filter: grayscale(1) brightness(.6)
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none
+        }
+
+        [data-theme="light"] .hero-overlay {
+            background: linear-gradient(135deg, rgba(250, 250, 248, .7), rgba(250, 250, 248, .92) 60%, rgba(250, 250, 248, .98))
+        }
+
+        [data-theme="dark"] .hero-overlay {
+            background: linear-gradient(135deg, rgba(9, 9, 11, .6), rgba(9, 9, 11, .88) 60%, rgba(9, 9, 11, .97))
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 13px;
+            background: var(--pbg);
+            border: 1px solid var(--pbd);
+            border-radius: 99px;
+            font-size: .73rem;
+            font-weight: 600;
+            color: var(--purple);
+            margin-bottom: 1.5rem
+        }
+
+        .hero h1 {
+            font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.06;
+            letter-spacing: -.03em;
+            margin-bottom: 1.1rem
+        }
+
+        .acc {
+            color: var(--purple)
+        }
+
+        .aco {
+            color: var(--orange)
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--tx2);
+            max-width: 460px;
+            margin-bottom: 1.75rem;
+            line-height: 1.7
+        }
+
+        .ha {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 2rem
+        }
+
+        .tr {
+            display: flex;
+            gap: 1.25rem;
+            flex-wrap: wrap
+        }
+
+        .tri {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: .78rem;
+            color: var(--tx3)
+        }
+
+        .tri i {
+            color: var(--purple-mid)
+        }
+
+        .hv {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            background: var(--bg3);
+            border: 1px solid var(--bd);
+            box-shadow: var(--shL);
+            aspect-ratio: 4/3;
+            transition: border var(--t)
+        }
+
+        .hv img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        [data-theme="dark"] .hv img {
+            filter: brightness(.7) contrast(1.1)
+        }
+
+        .hv-ov {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(124, 58, 237, .06), rgba(249, 115, 22, .04))
+        }
+
+        .hv-b {
+            position: absolute;
+            bottom: 14px;
+            left: 14px;
+            right: 14px;
+            display: flex;
+            justify-content: space-between;
+            padding: 9px 13px;
+            background: var(--nav);
+            backdrop-filter: blur(12px);
+            border-radius: 8px;
+            border: 1px solid var(--bd);
+            font-size: .68rem;
+            font-weight: 600;
+            color: var(--tx2);
+            text-transform: uppercase;
+            letter-spacing: .04em
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            display: inline-block;
+            margin-right: 4px;
+            animation: pdot 2s infinite
+        }
 
         /* ── Stats ── */
-        .ss{padding:3rem 1.5rem}
-        .sg{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--bd);border-radius:14px;overflow:hidden;box-shadow:var(--sh);transition:background var(--t)}
-        .si{background:var(--bg2);padding:1.75rem;text-align:center;transition:background var(--t)}
-        .sv{font-size:1.85rem;font-weight:800;letter-spacing:-.03em;color:var(--purple)}
-        .sl{font-size:.78rem;color:var(--tx3);margin-top:3px}
+        .ss {
+            padding: 3rem 1.5rem
+        }
+
+        .sg {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--bd);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: var(--sh);
+            transition: background var(--t)
+        }
+
+        .si {
+            background: var(--bg2);
+            padding: 1.75rem;
+            text-align: center;
+            transition: background var(--t)
+        }
+
+        .sv {
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: -.03em;
+            color: var(--purple)
+        }
+
+        .sl {
+            font-size: .78rem;
+            color: var(--tx3);
+            margin-top: 3px
+        }
 
         /* ── Features ── */
-        .fs{padding:4.5rem 1.5rem}
-        .sh{text-align:center;margin-bottom:2.5rem}
-        .st{display:inline-flex;padding:4px 11px;background:var(--obg);border:1px solid var(--obd);border-radius:99px;font-size:.68rem;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem}
-        .sh h2{font-size:clamp(1.6rem,3vw,2.25rem);font-weight:800;letter-spacing:-.02em;line-height:1.15}
-        .sh p{color:var(--tx2);max-width:480px;margin:.6rem auto 0;font-size:.95rem}
-        .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
-        .fc{padding:1.5rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);transition:all .25s}
-        .fc:hover{transform:translateY(-3px);border-color:var(--purple-mid);box-shadow:0 8px 28px rgba(124,58,237,.12)}
-        .fi{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:.85rem}
-        .fc h3{font-size:.95rem;font-weight:700;margin-bottom:5px}
-        .fc p{font-size:.82rem;color:var(--tx2);line-height:1.6}
+        .fs {
+            padding: 4.5rem 1.5rem
+        }
+
+        .sh {
+            text-align: center;
+            margin-bottom: 2.5rem
+        }
+
+        .st {
+            display: inline-flex;
+            padding: 4px 11px;
+            background: var(--obg);
+            border: 1px solid var(--obd);
+            border-radius: 99px;
+            font-size: .68rem;
+            font-weight: 700;
+            color: var(--orange);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: .75rem
+        }
+
+        .sh h2 {
+            font-size: clamp(1.6rem, 3vw, 2.25rem);
+            font-weight: 800;
+            letter-spacing: -.02em;
+            line-height: 1.15
+        }
+
+        .sh p {
+            color: var(--tx2);
+            max-width: 480px;
+            margin: .6rem auto 0;
+            font-size: .95rem
+        }
+
+        .fg {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1rem
+        }
+
+        .fc {
+            padding: 1.5rem;
+            border-radius: 14px;
+            background: var(--bg2);
+            border: 1px solid var(--bd);
+            transition: all .25s
+        }
+
+        .fc:hover {
+            transform: translateY(-3px);
+            border-color: var(--purple-mid);
+            box-shadow: 0 8px 28px rgba(124, 58, 237, .12)
+        }
+
+        .fi {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: .85rem
+        }
+
+        .fc h3 {
+            font-size: .95rem;
+            font-weight: 700;
+            margin-bottom: 5px
+        }
+
+        .fc p {
+            font-size: .82rem;
+            color: var(--tx2);
+            line-height: 1.6
+        }
 
         /* ── Steps ── */
-        .sps{padding:4.5rem 1.5rem}
-        .spg{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-        .spc{text-align:center;padding:1.75rem 1.25rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);transition:all .25s}
-        .spc:hover{border-color:var(--orange-mid);box-shadow:0 6px 20px rgba(249,115,22,.1)}
-        .sn{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto .85rem;font-weight:800;font-size:.8rem;color:#fff}
-        .spc h3{font-size:.95rem;font-weight:700;margin-bottom:5px}
-        .spc p{font-size:.8rem;color:var(--tx2);line-height:1.6}
+        .sps {
+            padding: 4.5rem 1.5rem
+        }
+
+        .spg {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem
+        }
+
+        .spc {
+            text-align: center;
+            padding: 1.75rem 1.25rem;
+            border-radius: 14px;
+            background: var(--bg2);
+            border: 1px solid var(--bd);
+            transition: all .25s
+        }
+
+        .spc:hover {
+            border-color: var(--orange-mid);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, .1)
+        }
+
+        .sn {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto .85rem;
+            font-weight: 800;
+            font-size: .8rem;
+            color: #fff
+        }
+
+        .spc h3 {
+            font-size: .95rem;
+            font-weight: 700;
+            margin-bottom: 5px
+        }
+
+        .spc p {
+            font-size: .8rem;
+            color: var(--tx2);
+            line-height: 1.6
+        }
 
         /* ── CTA ── */
-        .cts{padding:4.5rem 1.5rem}
-        .ctb{text-align:center;padding:3rem 2rem;border-radius:18px;background:linear-gradient(135deg,var(--pbg),var(--obg));border:1px solid var(--pbd);transition:all var(--t)}
-        .ctb h2{font-size:1.85rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem}
-        .ctb p{color:var(--tx2);margin-bottom:1.75rem}
+        .cts {
+            padding: 4.5rem 1.5rem
+        }
+
+        .ctb {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--pbg), var(--obg));
+            border: 1px solid var(--pbd);
+            transition: all var(--t)
+        }
+
+        .ctb h2 {
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: -.02em;
+            margin-bottom: .5rem
+        }
+
+        .ctb p {
+            color: var(--tx2);
+            margin-bottom: 1.75rem
+        }
 
         /* ── Footer ── */
-        .ft{padding:2rem 1.5rem;border-top:1px solid var(--bd);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem}
-        .ft p{font-size:.78rem;color:var(--tx3)}
-        .fl{display:flex;gap:1.25rem}.fl a{font-size:.78rem;color:var(--tx3);transition:color .2s}.fl a:hover{color:var(--purple)}
+        .ft {
+            padding: 2rem 1.5rem;
+            border-top: 1px solid var(--bd);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem
+        }
+
+        .ft p {
+            font-size: .78rem;
+            color: var(--tx3)
+        }
+
+        .fl {
+            display: flex;
+            gap: 1.25rem
+        }
+
+        .fl a {
+            font-size: .78rem;
+            color: var(--tx3);
+            transition: color .2s
+        }
+
+        .fl a:hover {
+            color: var(--purple)
+        }
 
         /* ── Login ── */
-        #page-login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
-        .lp{display:flex;width:100%;max-width:920px;min-height:520px;border-radius:18px;overflow:hidden;background:var(--bg2);border:1px solid var(--bd);box-shadow:var(--shL);animation:fU .5s ease both;transition:background var(--t)}
-        .lb{flex:1;padding:2.5rem;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(135deg,var(--purple),#9333EA);color:#fff;position:relative;overflow:hidden}
-        .lb::after{content:'';position:absolute;bottom:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(249,115,22,.2);filter:blur(50px)}
-        .lb h1{font-size:2rem;font-weight:800;line-height:1.1;margin-top:2rem;letter-spacing:-.02em}
-        .lb>p{font-size:.9rem;opacity:.8;line-height:1.6;max-width:320px;margin-top:.6rem}
-        .lfs{width:400px;padding:2.5rem;display:flex;flex-direction:column;justify-content:center}
-        .lfs h2{font-size:1.4rem;font-weight:800;margin-bottom:3px;letter-spacing:-.02em}
-        .lfs .sub{color:var(--tx2);font-size:.82rem;margin-bottom:1.5rem}.lfs .sub a{color:var(--purple);font-weight:600}
-        .rs{display:flex;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:3px;margin-bottom:1.35rem;position:relative}
-        .rb{flex:1;padding:7px 0;text-align:center;font-weight:600;font-size:.78rem;color:var(--tx3);cursor:pointer;border-radius:8px;transition:color .3s;position:relative;z-index:2}
-        .rb.active{color:var(--purple)}
-        .ri{position:absolute;top:3px;bottom:3px;width:calc(33.333% - 2px);background:var(--bg2);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);transition:transform .4s cubic-bezier(.16,1,.3,1);z-index:1}
-        .fgl{display:block;text-align:right;font-size:.75rem;color:var(--purple);margin-top:3px;font-weight:500}
-        .dl{display:flex;align-items:center;margin:1.25rem 0;color:var(--tx3);font-size:.72rem}
-        .dl::before,.dl::after{content:'';flex:1;border-bottom:1px solid var(--bd)}.dl span{padding:0 .85rem}
+        #page-login {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem
+        }
+
+        .lp {
+            display: flex;
+            width: 100%;
+            max-width: 920px;
+            min-height: 520px;
+            border-radius: 18px;
+            overflow: hidden;
+            background: var(--bg2);
+            border: 1px solid var(--bd);
+            box-shadow: var(--shL);
+            animation: fU .5s ease both;
+            transition: background var(--t)
+        }
+
+        .lb {
+            flex: 1;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(135deg, var(--purple), #9333EA);
+            color: #fff;
+            position: relative;
+            overflow: hidden
+        }
+
+        .lb::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(249, 115, 22, .2);
+            filter: blur(50px)
+        }
+
+        .lb h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-top: 2rem;
+            letter-spacing: -.02em
+        }
+
+        .lb>p {
+            font-size: .9rem;
+            opacity: .8;
+            line-height: 1.6;
+            max-width: 320px;
+            margin-top: .6rem
+        }
+
+        .lfs {
+            width: 400px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+        .lfs h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 3px;
+            letter-spacing: -.02em
+        }
+
+        .lfs .sub {
+            color: var(--tx2);
+            font-size: .82rem;
+            margin-bottom: 1.5rem
+        }
+
+        .lfs .sub a {
+            color: var(--purple);
+            font-weight: 600
+        }
+
+        .rs {
+            display: flex;
+            background: var(--bg3);
+            border: 1px solid var(--bd);
+            border-radius: 10px;
+            padding: 3px;
+            margin-bottom: 1.35rem;
+            position: relative
+        }
+
+        .rb {
+            flex: 1;
+            padding: 7px 0;
+            text-align: center;
+            font-weight: 600;
+            font-size: .78rem;
+            color: var(--tx3);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: color .3s;
+            position: relative;
+            z-index: 2
+        }
+
+        .rb.active {
+            color: var(--purple)
+        }
+
+        .ri {
+            position: absolute;
+            top: 3px;
+            bottom: 3px;
+            width: calc(33.333% - 2px);
+            background: var(--bg2);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+            transition: transform .4s cubic-bezier(.16, 1, .3, 1);
+            z-index: 1
+        }
+
+        .fgl {
+            display: block;
+            text-align: right;
+            font-size: .75rem;
+            color: var(--purple);
+            margin-top: 3px;
+            font-weight: 500
+        }
+
+        .dl {
+            display: flex;
+            align-items: center;
+            margin: 1.25rem 0;
+            color: var(--tx3);
+            font-size: .72rem
+        }
+
+        .dl::before,
+        .dl::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--bd)
+        }
+
+        .dl span {
+            padding: 0 .85rem
+        }
 
         /* ══════ FACE VERIFY — SCANNER AESTHETIC ══════ */
-        #page-fv{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
-        .fcard{width:100%;max-width:540px;padding:2.25rem;border-radius:18px;background:var(--bg2);border:1px solid var(--bd);box-shadow:var(--shL);text-align:center;animation:fU .5s ease both;transition:background var(--t)}
-        .fic{width:68px;height:68px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.15rem}
-        .ins{text-align:left;margin:1.25rem 0 1.5rem;display:grid;gap:7px}
-        .insi{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:8px;background:var(--bg3);border:1px solid var(--bdL);font-size:.83rem;transition:background var(--t)}
-        .insn{width:26px;height:26px;border-radius:7px;background:var(--pbg);color:var(--purple);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.68rem;flex-shrink:0}
+        #page-fv {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem
+        }
+
+        .fcard {
+            width: 100%;
+            max-width: 540px;
+            padding: 2.25rem;
+            border-radius: 18px;
+            background: var(--bg2);
+            border: 1px solid var(--bd);
+            box-shadow: var(--shL);
+            text-align: center;
+            animation: fU .5s ease both;
+            transition: background var(--t)
+        }
+
+        .fic {
+            width: 68px;
+            height: 68px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.15rem
+        }
+
+        .ins {
+            text-align: left;
+            margin: 1.25rem 0 1.5rem;
+            display: grid;
+            gap: 7px
+        }
+
+        .insi {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 13px;
+            border-radius: 8px;
+            background: var(--bg3);
+            border: 1px solid var(--bdL);
+            font-size: .83rem;
+            transition: background var(--t)
+        }
+
+        .insn {
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            background: var(--pbg);
+            color: var(--purple);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: .68rem;
+            flex-shrink: 0
+        }
 
         /* Scanner viewport */
-        .scanner-wrap{position:relative;width:100%;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#000;margin-bottom:.85rem;border:2px solid var(--bd)}
-        .scanner-wrap video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
-        .scanner-wrap canvas{position:absolute;inset:0;width:100%;height:100%;transform:scaleX(-1);pointer-events:none}
+        .scanner-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #000;
+            margin-bottom: .85rem;
+            border: 2px solid var(--bd)
+        }
+
+        .scanner-wrap video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1)
+        }
+
+        .scanner-wrap canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transform: scaleX(-1);
+            pointer-events: none
+        }
 
         /* HUD overlay elements */
-        .hud{position:absolute;inset:0;pointer-events:none;z-index:5}
-        .hud-corner{position:absolute;width:28px;height:28px;border-color:var(--purple);border-style:solid}
-        .hud-tl{top:12px;left:12px;border-width:2px 0 0 2px;border-radius:4px 0 0 0}
-        .hud-tr{top:12px;right:12px;border-width:2px 2px 0 0;border-radius:0 4px 0 0}
-        .hud-bl{bottom:12px;left:12px;border-width:0 0 2px 2px;border-radius:0 0 0 4px}
-        .hud-br{bottom:12px;right:12px;border-width:0 2px 2px 0;border-radius:0 0 4px 0}
-        .hud-scanline{position:absolute;left:14px;right:14px;height:2px;background:linear-gradient(90deg,transparent,var(--purple-mid),transparent);opacity:.7;animation:scanY 2.8s ease-in-out infinite;will-change:top}
-        .hud-crosshair{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px}
-        .hud-crosshair::before,.hud-crosshair::after{content:'';position:absolute;background:var(--purple-mid);border-radius:1px}
-        .hud-crosshair::before{width:20px;height:1.5px;top:50%;left:0;transform:translateY(-50%)}
-        .hud-crosshair::after{width:1.5px;height:20px;left:50%;top:0;transform:translateX(-50%)}
-        .hud-oval{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48%;aspect-ratio:3/4;border:1.5px dashed rgba(124,58,237,.35);border-radius:50%;animation:pulse-oval 3s ease-in-out infinite}
-        .hud-label{position:absolute;bottom:14px;left:14px;right:14px;display:flex;justify-content:space-between;padding:6px 10px;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);border-radius:6px;font-size:.62rem;font-weight:600;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em;font-family:'Inter',monospace}
-        .hud-phase{position:absolute;top:14px;left:14px;padding:4px 10px;background:rgba(124,58,237,.8);border-radius:6px;font-size:.62rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.05em;transition:background .3s}
-        .hud-phase.ok{background:rgba(16,185,129,.8)}
+        .hud {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5
+        }
 
-        .sbar{padding:9px 13px;border-radius:8px;background:var(--bg3);border:1px solid var(--bdL);margin-bottom:.85rem;font-size:.8rem;color:var(--tx2);font-weight:500;transition:all .3s}
-        .ptr{height:4px;border-radius:4px;background:var(--bg3);margin-bottom:.85rem;overflow:hidden}
-        .ptf{height:100%;width:0%;border-radius:4px;background:linear-gradient(90deg,var(--purple),var(--orange));transition:width .5s ease}
-        .ckg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-        .cki{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:8px;background:var(--bg3);border:1px solid var(--bdL);font-size:.68rem;font-weight:600;color:var(--tx3);transition:all .3s}
-        .cki.done{background:var(--gBg);border-color:var(--gBd);color:var(--green)}
-        .spinner{width:34px;height:34px;border:3px solid var(--bd);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem}
+        .hud-corner {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border-color: var(--purple);
+            border-style: solid
+        }
+
+        .hud-tl {
+            top: 12px;
+            left: 12px;
+            border-width: 2px 0 0 2px;
+            border-radius: 4px 0 0 0
+        }
+
+        .hud-tr {
+            top: 12px;
+            right: 12px;
+            border-width: 2px 2px 0 0;
+            border-radius: 0 4px 0 0
+        }
+
+        .hud-bl {
+            bottom: 12px;
+            left: 12px;
+            border-width: 0 0 2px 2px;
+            border-radius: 0 0 0 4px
+        }
+
+        .hud-br {
+            bottom: 12px;
+            right: 12px;
+            border-width: 0 2px 2px 0;
+            border-radius: 0 0 4px 0
+        }
+
+        .hud-scanline {
+            position: absolute;
+            left: 14px;
+            right: 14px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--purple-mid), transparent);
+            opacity: .7;
+            animation: scanY 2.8s ease-in-out infinite;
+            will-change: top
+        }
+
+        .hud-crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px
+        }
+
+        .hud-crosshair::before,
+        .hud-crosshair::after {
+            content: '';
+            position: absolute;
+            background: var(--purple-mid);
+            border-radius: 1px
+        }
+
+        .hud-crosshair::before {
+            width: 20px;
+            height: 1.5px;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%)
+        }
+
+        .hud-crosshair::after {
+            width: 1.5px;
+            height: 20px;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%)
+        }
+
+        .hud-oval {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48%;
+            aspect-ratio: 3/4;
+            border: 1.5px dashed rgba(124, 58, 237, .35);
+            border-radius: 50%;
+            animation: pulse-oval 3s ease-in-out infinite
+        }
+
+        .hud-label {
+            position: absolute;
+            bottom: 14px;
+            left: 14px;
+            right: 14px;
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(8px);
+            border-radius: 6px;
+            font-size: .62rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, .7);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            font-family: 'Inter', monospace
+        }
+
+        .hud-phase {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            padding: 4px 10px;
+            background: rgba(124, 58, 237, .8);
+            border-radius: 6px;
+            font-size: .62rem;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            transition: background .3s
+        }
+
+        .hud-phase.ok {
+            background: rgba(16, 185, 129, .8)
+        }
+
+        .sbar {
+            padding: 9px 13px;
+            border-radius: 8px;
+            background: var(--bg3);
+            border: 1px solid var(--bdL);
+            margin-bottom: .85rem;
+            font-size: .8rem;
+            color: var(--tx2);
+            font-weight: 500;
+            transition: all .3s
+        }
+
+        .ptr {
+            height: 4px;
+            border-radius: 4px;
+            background: var(--bg3);
+            margin-bottom: .85rem;
+            overflow: hidden
+        }
+
+        .ptf {
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--purple), var(--orange));
+            transition: width .5s ease
+        }
+
+        .ckg {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7px
+        }
+
+        .cki {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 10px 6px;
+            border-radius: 8px;
+            background: var(--bg3);
+            border: 1px solid var(--bdL);
+            font-size: .68rem;
+            font-weight: 600;
+            color: var(--tx3);
+            transition: all .3s
+        }
+
+        .cki.done {
+            background: var(--gBg);
+            border-color: var(--gBd);
+            color: var(--green)
+        }
+
+        .spinner {
+            width: 34px;
+            height: 34px;
+            border: 3px solid var(--bd);
+            border-top-color: var(--purple);
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+            margin: 0 auto 1rem
+        }
 
         /* ── Dashboard ── */
-        #page-dash{padding-top:5rem}
-        .dh{padding:1.75rem 0}.dh h1{font-size:1.4rem;font-weight:800;letter-spacing:-.02em}
-        .dg{display:grid;grid-template-columns:250px 1fr 250px;gap:1.15rem;padding-bottom:3rem}
-        .pc{padding:1.35rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);transition:background var(--t)}
-        .av-c{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:#fff;margin-bottom:8px}
-        .pc .nm{font-weight:700;font-size:.88rem}.pc .hl{font-size:.75rem;color:var(--tx2);margin-top:2px}
-        .ps{display:flex;gap:1rem;margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--bd)}
-        .ps div{text-align:center;flex:1}.ps .v{font-weight:800;font-size:.95rem;color:var(--purple)}.ps .l{font-size:.65rem;color:var(--tx3);margin-top:2px}
-        .cpb{display:flex;align-items:center;gap:10px;padding:1rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);margin-bottom:.85rem;cursor:pointer;transition:border-color .2s}
-        .cpb:hover{border-color:var(--purple-mid)}
-        .pa{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--purple),var(--orange));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;color:#fff;flex-shrink:0}
-        .pib{flex:1;background:var(--bg3);border:1px solid var(--bdL);border-radius:99px;padding:8px 14px;font-size:.8rem;color:var(--tx3)}
-        .pcd{padding:1.15rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);margin-bottom:.85rem;transition:background var(--t)}
-        .pau{display:flex;align-items:center;gap:9px;margin-bottom:9px}
-        .pau .pav{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.7rem;color:#fff;flex-shrink:0}
-        .pau .an{font-weight:600;font-size:.83rem}.pau .ai{font-size:.7rem;color:var(--tx3)}
-        .pct{font-size:.85rem;color:var(--tx2);line-height:1.65;margin-bottom:9px}
-        .pac{display:flex;gap:4px;border-top:1px solid var(--bdL);padding-top:9px}
-        .pab{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:8px;font-size:.75rem;color:var(--tx3);background:none;border:none;cursor:pointer;font-family:inherit;font-weight:500;transition:all .15s}
-        .pab:hover{color:var(--purple);background:rgba(124,58,237,.06)}
-        .sw{padding:1.15rem;border-radius:14px;background:var(--bg2);border:1px solid var(--bd);margin-bottom:.85rem;transition:background var(--t)}
-        .sw h3{font-size:.8rem;font-weight:700;margin-bottom:9px}
-        .wi{display:flex;align-items:center;gap:9px;padding:5px 0}
-        .wia{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.62rem;color:#fff;flex-shrink:0}
-        .win{font-size:.78rem;font-weight:600}.wis{font-size:.68rem;color:var(--tx3)}
+        #page-dash {
+            padding-top: 5rem
+        }
 
-        @keyframes fU{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes spin{to{transform:rotate(360deg)}}
-        @keyframes pdot{0%,100%{opacity:1}50%{opacity:.4}}
-        @keyframes scanY{0%{top:14px}50%{top:calc(100% - 16px)}100%{top:14px}}
-        @keyframes pulse-oval{0%,100%{opacity:.35;transform:translate(-50%,-50%) scale(1)}50%{opacity:.6;transform:translate(-50%,-50%) scale(1.02)}}
+        .dh {
+            padding: 1.75rem 0
+        }
 
-        @media(max-width:900px){
-            .hero-content{grid-template-columns:1fr}
-            .hv{display:none}
-            .lp{flex-direction:column;max-width:460px}.lb{padding:2rem}.lb h1{font-size:1.65rem;margin-top:.75rem}.lfs{width:100%;padding:2rem}
-            .sg{grid-template-columns:repeat(2,1fr)}.spg{grid-template-columns:1fr}
-            .dg{grid-template-columns:1fr}.dg>aside{display:none}
+        .dh h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -.02em
+        }
+
+        .dg {
+            display: grid;
+            grid-template-columns: 250px 1fr 250px;
+            gap: 1.15rem;
+            padding-bottom: 3rem
+        }
+
+        .pc {
+            padding: 1.35rem;
+            border-radius: 14px;
+            background: var(--bg2);
+            border: 1px solid var(--bd);
+            transition: background var(--t)
+        }
+
+        .av-c {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--purple), var(--orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 8px
+        }
+
+        .pc .nm {
+            font-weight: 700;
+            font-size: .88rem
+        }
+
+        .pc .hl {
+            font-size: .75rem;
+            color: var(--tx2);
+            margin-top: 2px
+        }
+
+        .ps {
+            display: flex;
+            gap: 1rem;
+            margin-top: .85rem;
+            padding-top: .85rem;
+            border-top: 1px solid var(--bd)
+        }
+
+        .ps div {
+            text-align: center;
+            flex: 1
+        }
+
+        .ps .v {
+            font-weight: 800;
+            font-size: .95rem;
+            color: var(--purple)
+        }
+
+        .ps .l {
+            font-size: .65rem;
+            color: var(--tx3);
+            margin-top: 2px
+        }
+
+        .cpb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1rem;
+            border-radius: 14px;
+            background: var(--bg2);
+            border: 1px solid var(--bd);
+            margin-bottom: .85rem;
+            cursor: pointer;
+            transition: border-color .2s
+        }
+
+        .cpb:hover {
+            border-color: var(--purple-mid)
+        }
+
+        .pa {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, var(--purple), var(--orange));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: .72rem;
+            color: #fff;
+            flex-shrink: 0
+        }
+
+        .pib {
+            flex: 1;
+            background: var(--bg3);
+            border: 1px solid var(--bdL);
+            border-radius: 99px;
+            padding: 8px 14px;
+            font-size: .8rem;
+            color: var(--tx3)
+        }
+
+        .pcd {
+            padding: 1.15rem;
+            border-radius: 14px;
+            background: var(--bg2);
+            border: 1px solid var(--bd);
+            margin-bottom: .85rem;
+            transition: background var(--t)
+        }
+
+        .pau {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 9px
+        }
+
+        .pau .pav {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: .7rem;
+            color: #fff;
+            flex-shrink: 0
+        }
+
+        .pau .an {
+            font-weight: 600;
+            font-size: .83rem
+        }
+
+        .pau .ai {
+            font-size: .7rem;
+            color: var(--tx3)
+        }
+
+        .pct {
+            font-size: .85rem;
+            color: var(--tx2);
+            line-height: 1.65;
+            margin-bottom: 9px
+        }
+
+        .pac {
+            display: flex;
+            gap: 4px;
+            border-top: 1px solid var(--bdL);
+            padding-top: 9px
+        }
+
+        .pab {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: .75rem;
+            color: var(--tx3);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            transition: all .15s
+        }
+
+        .pab:hover {
+            color: var(--purple);
+            background: rgba(124, 58, 237, .06)
+        }
+
+        .sw {
+            padding: 1.15rem;
+            border-radius: 14px;
+            background: var(--bg2);
+            border: 1px solid var(--bd);
+            margin-bottom: .85rem;
+            transition: background var(--t)
+        }
+
+        .sw h3 {
+            font-size: .8rem;
+            font-weight: 700;
+            margin-bottom: 9px
+        }
+
+        .wi {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 5px 0
+        }
+
+        .wia {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: .62rem;
+            color: #fff;
+            flex-shrink: 0
+        }
+
+        .win {
+            font-size: .78rem;
+            font-weight: 600
+        }
+
+        .wis {
+            font-size: .68rem;
+            color: var(--tx3)
+        }
+
+        @keyframes fU {
+            from {
+                opacity: 0;
+                transform: translateY(18px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes pdot {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .4
+            }
+        }
+
+        @keyframes scanY {
+            0% {
+                top: 14px
+            }
+
+            50% {
+                top: calc(100% - 16px)
+            }
+
+            100% {
+                top: 14px
+            }
+        }
+
+        @keyframes pulse-oval {
+
+            0%,
+            100% {
+                opacity: .35;
+                transform: translate(-50%, -50%) scale(1)
+            }
+
+            50% {
+                opacity: .6;
+                transform: translate(-50%, -50%) scale(1.02)
+            }
+        }
+
+        @media(max-width:900px) {
+            .hero-content {
+                grid-template-columns: 1fr
+            }
+
+            .hv {
+                display: none
+            }
+
+            .lp {
+                flex-direction: column;
+                max-width: 460px
+            }
+
+            .lb {
+                padding: 2rem
+            }
+
+            .lb h1 {
+                font-size: 1.65rem;
+                margin-top: .75rem
+            }
+
+            .lfs {
+                width: 100%;
+                padding: 2rem
+            }
+
+            .sg {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .spg {
+                grid-template-columns: 1fr
+            }
+
+            .dg {
+                grid-template-columns: 1fr
+            }
+
+            .dg>aside {
+                display: none
+            }
         }
     </style>
 </head>
+
 <body>
 
-<!-- ══════ LANDING ══════ -->
-<div id="page-landing" class="page">
-    <header class="hdr"><div class="container"><div class="nav">
-        <div class="logo" onclick="showPage('landing')"><div class="lm"><i data-lucide="zap" style="width:14px;height:14px;"></i></div><div class="ln">SyncUp</div></div>
-        <div class="na"><button class="theme-toggle" onclick="toggleTheme()" id="tb"><i data-lucide="sun" style="width:16px;height:16px;" id="ti"></i></button><button class="btn btn-s" onclick="showPage('login')">Sign In</button><button class="btn btn-p" onclick="showPage('login')">Join Free</button></div>
-    </div></div></header>
-
-    <section class="hero">
-        <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
-            <source src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_30fps.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div>
-                <div class="hero-tag"><i data-lucide="shield-check" style="width:12px;height:12px;"></i> Live human verification</div>
-                <h1>Build a <span class="acc">trusted</span> professional <span class="aco">network</span></h1>
-                <p>Every profile starts with camera liveness — real presence, real connections, zero fakes.</p>
-                <div class="ha">
-                    <button class="btn btn-p" onclick="showPage('login')">Start Verification <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></button>
-                    <button class="btn btn-s" onclick="document.getElementById('feat').scrollIntoView({behavior:'smooth'})"><i data-lucide="scan-face" style="width:14px;height:14px;"></i> How it works</button>
-                </div>
-                <div class="tr">
-                    <div class="tri"><i data-lucide="shield" style="width:13px;height:13px;"></i> Face-verified</div>
-                    <div class="tri"><i data-lucide="activity" style="width:13px;height:13px;"></i> Liveness checks</div>
-                    <div class="tri"><i data-lucide="building-2" style="width:13px;height:13px;"></i> Professionals only</div>
+    <!-- ══════ LANDING ══════ -->
+    <div id="page-landing" class="page">
+        <header class="hdr">
+            <div class="container">
+                <div class="nav">
+                    <div class="logo" onclick="showPage('landing')">
+                        <div class="lm"><i data-lucide="zap" style="width:14px;height:14px;"></i></div>
+                        <div class="ln">SyncUp</div>
+                    </div>
+                    <div class="na"><button class="theme-toggle" onclick="toggleTheme()" id="tb"><i data-lucide="sun"
+                                style="width:16px;height:16px;" id="ti"></i></button><button class="btn btn-s"
+                            onclick="showPage('login')">Sign In</button><button class="btn btn-p"
+                            onclick="showPage('login')">Join Free</button></div>
                 </div>
             </div>
-            <div class="hv">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80" alt="Team">
-                <div class="hv-ov"></div>
-                <div class="hv-b"><span><span class="dot"></span> ON-DEVICE LIVENESS</span><span>getUserMedia API</span></div>
-            </div>
-        </div>
-    </section>
+        </header>
 
-    <section class="ss container"><div class="sg">
-        <div class="si"><div class="sv" data-target="42891">0</div><div class="sl">Active Users</div></div>
-        <div class="si"><div class="sv" data-target="1245">0</div><div class="sl">Live Events</div></div>
-        <div class="si"><div class="sv" data-target="8234">0</div><div class="sl">Listings</div></div>
-        <div class="si"><div class="sv" data-target="18920">0</div><div class="sl">Reviews</div></div>
-    </div></section>
-
-    <section class="fs container" id="feat"><div class="sh"><div class="st">Why SyncUp</div><h2>Everything you need to<br>thrive professionally</h2><p>From networking to opportunities — connecting the most ambitious professionals.</p></div>
-    <div class="fg">
-        <div class="fc"><div class="fi" style="background:var(--pbg);"><i data-lucide="users" style="width:18px;height:18px;color:var(--purple);"></i></div><h3>Connect</h3><p>Network with verified professionals and build lasting relationships.</p></div>
-        <div class="fc"><div class="fi" style="background:var(--obg);"><i data-lucide="trending-up" style="width:18px;height:18px;color:var(--orange);"></i></div><h3>Grow</h3><p>Access exclusive opportunities and mentorship for your journey.</p></div>
-        <div class="fc"><div class="fi" style="background:var(--gBg);"><i data-lucide="handshake" style="width:18px;height:18px;color:var(--green);"></i></div><h3>Collaborate</h3><p>Find partners and co-founders for your next big venture.</p></div>
-        <div class="fc"><div class="fi" style="background:rgba(239,68,68,.08);"><i data-lucide="megaphone" style="width:18px;height:18px;color:var(--danger);"></i></div><h3>Promote</h3><p>Reach thousands of verified professionals with campaigns.</p></div>
-    </div></section>
-
-    <section class="sps container"><div class="sh"><div class="st" style="background:var(--pbg);border-color:var(--pbd);color:var(--purple);">Get Started</div><h2>Three steps to join</h2><p>Up and running in minutes.</p></div>
-    <div class="spg">
-        <div class="spc"><div class="sn" style="background:linear-gradient(135deg,var(--purple),var(--purple-dark));">01</div><h3>Register</h3><p>Create your account with your professional email.</p></div>
-        <div class="spc"><div class="sn" style="background:linear-gradient(135deg,var(--orange-mid),var(--orange));">02</div><h3>Verify</h3><p>Complete camera liveness check to prove you're real.</p></div>
-        <div class="spc"><div class="sn" style="background:linear-gradient(135deg,var(--green),#059669);">03</div><h3>Connect</h3><p>Start networking and finding opportunities.</p></div>
-    </div></section>
-
-    <section class="cts container"><div class="ctb">
-        <div class="lm" style="width:44px;height:44px;border-radius:12px;margin:0 auto 1rem;"><i data-lucide="zap" style="width:20px;height:20px;color:#fff;"></i></div>
-        <h2>Ready to get verified?</h2><p>Join 42,000+ verified professionals.</p>
-        <button class="btn btn-p" onclick="showPage('login')">Get Started Free <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></button>
-    </div></section>
-
-    <footer class="ft container">
-        <div class="logo"><div class="lm" style="width:24px;height:24px;border-radius:7px;"><i data-lucide="zap" style="width:11px;height:11px;color:#fff;"></i></div><span class="ln" style="font-size:.85rem;">SyncUp</span></div>
-        <p>&copy; 2025 SyncUp</p><div class="fl"><a href="#">Events</a><a href="#">Companies</a><a href="#">Jobs</a></div>
-    </footer>
-</div>
-
-<!-- ══════ LOGIN ══════ -->
-<div id="page-login" class="page hidden">
-    <div class="lp">
-        <div class="lb">
-            <div class="logo" onclick="showPage('landing')"><div class="lm" style="background:rgba(255,255,255,.2);"><i data-lucide="zap" style="width:13px;height:13px;color:#fff;"></i></div><div class="ln" style="color:#fff;">SyncUp</div></div>
-            <div style="position:relative;z-index:1;"><h1>The Trusted<br>Professional<br>Ecosystem</h1><p>Verified humans only. No bots, no fakes.</p>
-                <div style="display:flex;gap:7px;margin-top:1.25rem;"><div class="badge" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2);color:#fff;"><i data-lucide="shield-check" style="width:11px;height:11px;"></i> Verified</div><div class="badge" style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2);color:#fff;"><i data-lucide="lock" style="width:11px;height:11px;"></i> Secured</div></div>
-            </div><p style="font-size:.68rem;opacity:.45;">&copy; 2025 SyncUp</p>
-        </div>
-        <div class="lfs">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;">
-                <div><h2>Welcome back</h2><p class="sub" style="margin-bottom:0;">Sign in. <a href="#" onclick="event.preventDefault()">Create Account</a></p></div>
-                <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" style="width:15px;height:15px;"></i></button>
-            </div>
-            <div class="rs"><div class="ri" id="ri"></div><div class="rb active" onclick="selRole(0)">Member</div><div class="rb" onclick="selRole(1)">Recruiter</div><div class="rb" onclick="selRole(2)">Admin</div></div>
-            <div class="err" id="le"><i data-lucide="alert-circle" style="width:13px;height:13px;flex-shrink:0;"></i><span id="let"></span></div>
-            <form onsubmit="doLogin(event)">
-                <div class="ig"><label for="em">Work Email</label><div class="iw"><input type="email" id="em" class="inp" placeholder="you@company.com" required><i data-lucide="mail" style="width:14px;height:14px;" class="ii"></i></div></div>
-                <div class="ig"><label for="pw">Password</label><div class="iw"><input type="password" id="pw" class="inp" placeholder="Enter password" required><i data-lucide="key-round" style="width:14px;height:14px;" class="ii"></i></div><a href="#" class="fgl" onclick="event.preventDefault()">Forgot?</a></div>
-                <button type="submit" class="btn btn-p" style="width:100%;">Sign In <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></button>
-            </form>
-            <div class="dl"><span>or</span></div>
-            <button class="btn btn-o" style="width:100%;" onclick="showPage('fv')"><i data-lucide="scan-face" style="width:15px;height:15px;"></i> Face Verification</button>
-            <p style="text-align:center;margin-top:1.1rem;font-size:.8rem;color:var(--tx2);">Not verified? <a href="#" style="color:var(--purple);font-weight:600;" onclick="event.preventDefault();showPage('fv')">Verify Now</a></p>
-        </div>
-    </div>
-</div>
-
-<!-- ══════ FACE VERIFICATION — SCANNER ══════ -->
-<div id="page-fv" class="page hidden">
-    <div class="fcard">
-        <div style="text-align:left;margin-bottom:1rem;"><button class="btn btn-g" onclick="camStop();showPage('login')"><i data-lucide="arrow-left" style="width:15px;height:15px;"></i> Back</button></div>
-
-        <div id="fs-instr">
-            <div class="fic" style="background:var(--pbg);border:2px solid var(--pbd);"><i data-lucide="scan-face" style="width:30px;height:30px;color:var(--purple);"></i></div>
-            <h2 style="font-size:1.25rem;font-weight:800;margin-bottom:5px;">Liveness Verification</h2>
-            <p style="color:var(--tx2);font-size:.85rem;line-height:1.6;">We verify you're a real person using <code style="background:var(--bg3);padding:1px 5px;border-radius:4px;font-size:.78rem;">getUserMedia</code> — all processing happens on-device.</p>
-            <div class="ins">
-                <div class="insi"><div class="insn">1</div> Find steady lighting</div>
-                <div class="insi"><div class="insn">2</div> Center your face in the frame</div>
-                <div class="insi"><div class="insn">3</div> Blink naturally when prompted</div>
-                <div class="insi"><div class="insn">4</div> Turn your head left & right</div>
-            </div>
-            <button class="btn btn-p" style="width:100%;" onclick="camStart()"><i data-lucide="camera" style="width:15px;height:15px;"></i> Start Liveness Check</button>
-        </div>
-
-        <div id="fs-load" class="hidden"><div class="spinner"></div><h2 style="font-size:1.1rem;font-weight:700;">Starting camera...</h2><p style="color:var(--tx2);font-size:.8rem;">Requesting getUserMedia access</p></div>
-
-        <div id="fs-scan" class="hidden">
-            <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:3px;">Verifying Liveness</h2>
-            <p style="color:var(--tx2);font-size:.78rem;margin-bottom:.85rem;">Follow the prompts below</p>
-            <div class="scanner-wrap">
-                <video id="cam" autoplay playsinline muted></video>
-                <canvas id="cvs"></canvas>
-                <div class="hud">
-                    <div class="hud-corner hud-tl"></div><div class="hud-corner hud-tr"></div>
-                    <div class="hud-corner hud-bl"></div><div class="hud-corner hud-br"></div>
-                    <div class="hud-scanline"></div><div class="hud-oval"></div><div class="hud-crosshair"></div>
-                    <div class="hud-phase" id="hud-ph">DETECTING</div>
-                    <div class="hud-label"><span id="hud-l">SKIN —%</span><span id="hud-r">MOTION 0.0</span></div>
+        <section class="hero">
+            <video class="hero-bg-video" autoplay muted loop playsinline preload="auto">
+                <source src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_30fps.mp4"
+                    type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div>
+                    <div class="hero-tag"><i data-lucide="shield-check" style="width:12px;height:12px;"></i> Live human
+                        verification</div>
+                    <h1>Build a <span class="acc">trusted</span> professional <span class="aco">network</span></h1>
+                    <p>Every profile starts with camera liveness — real presence, real connections, zero fakes.</p>
+                    <div class="ha">
+                        <button class="btn btn-p" onclick="showPage('login')">Start Verification <i
+                                data-lucide="arrow-right" style="width:14px;height:14px;"></i></button>
+                        <button class="btn btn-s"
+                            onclick="document.getElementById('feat').scrollIntoView({behavior:'smooth'})"><i
+                                data-lucide="scan-face" style="width:14px;height:14px;"></i> How it works</button>
+                    </div>
+                    <div class="tr">
+                        <div class="tri"><i data-lucide="shield" style="width:13px;height:13px;"></i> Face-verified
+                        </div>
+                        <div class="tri"><i data-lucide="activity" style="width:13px;height:13px;"></i> Liveness checks
+                        </div>
+                        <div class="tri"><i data-lucide="building-2" style="width:13px;height:13px;"></i> Professionals
+                            only</div>
+                    </div>
+                </div>
+                <div class="hv">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80"
+                        alt="Team">
+                    <div class="hv-ov"></div>
+                    <div class="hv-b"><span><span class="dot"></span> ON-DEVICE LIVENESS</span><span>getUserMedia
+                            API</span></div>
                 </div>
             </div>
-            <div class="sbar" id="fstat">Initializing camera...</div>
-            <div class="ptr"><div class="ptf" id="fprog"></div></div>
-            <div class="ckg">
-                <div class="cki" id="c1"><i data-lucide="user" style="width:13px;height:13px;"></i><span>Face</span></div>
-                <div class="cki" id="c2"><i data-lucide="eye" style="width:13px;height:13px;"></i><span id="bl">Blinks 0/2</span></div>
-                <div class="cki" id="c3"><i data-lucide="move" style="width:13px;height:13px;"></i><span id="ml">Head Turn</span></div>
+        </section>
+
+        <section class="ss container">
+            <div class="sg">
+                <div class="si">
+                    <div class="sv" data-target="42891">0</div>
+                    <div class="sl">Active Users</div>
+                </div>
+                <div class="si">
+                    <div class="sv" data-target="1245">0</div>
+                    <div class="sl">Live Events</div>
+                </div>
+                <div class="si">
+                    <div class="sv" data-target="8234">0</div>
+                    <div class="sl">Listings</div>
+                </div>
+                <div class="si">
+                    <div class="sv" data-target="18920">0</div>
+                    <div class="sl">Reviews</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fs container" id="feat">
+            <div class="sh">
+                <div class="st">Why SyncUp</div>
+                <h2>Everything you need to<br>thrive professionally</h2>
+                <p>From networking to opportunities — connecting the most ambitious professionals.</p>
+            </div>
+            <div class="fg">
+                <div class="fc">
+                    <div class="fi" style="background:var(--pbg);"><i data-lucide="users"
+                            style="width:18px;height:18px;color:var(--purple);"></i></div>
+                    <h3>Connect</h3>
+                    <p>Network with verified professionals and build lasting relationships.</p>
+                </div>
+                <div class="fc">
+                    <div class="fi" style="background:var(--obg);"><i data-lucide="trending-up"
+                            style="width:18px;height:18px;color:var(--orange);"></i></div>
+                    <h3>Grow</h3>
+                    <p>Access exclusive opportunities and mentorship for your journey.</p>
+                </div>
+                <div class="fc">
+                    <div class="fi" style="background:var(--gBg);"><i data-lucide="handshake"
+                            style="width:18px;height:18px;color:var(--green);"></i></div>
+                    <h3>Collaborate</h3>
+                    <p>Find partners and co-founders for your next big venture.</p>
+                </div>
+                <div class="fc">
+                    <div class="fi" style="background:rgba(239,68,68,.08);"><i data-lucide="megaphone"
+                            style="width:18px;height:18px;color:var(--danger);"></i></div>
+                    <h3>Promote</h3>
+                    <p>Reach thousands of verified professionals with campaigns.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="sps container">
+            <div class="sh">
+                <div class="st" style="background:var(--pbg);border-color:var(--pbd);color:var(--purple);">Get Started
+                </div>
+                <h2>Three steps to join</h2>
+                <p>Up and running in minutes.</p>
+            </div>
+            <div class="spg">
+                <div class="spc">
+                    <div class="sn" style="background:linear-gradient(135deg,var(--purple),var(--purple-dark));">01
+                    </div>
+                    <h3>Register</h3>
+                    <p>Create your account with your professional email.</p>
+                </div>
+                <div class="spc">
+                    <div class="sn" style="background:linear-gradient(135deg,var(--orange-mid),var(--orange));">02</div>
+                    <h3>Verify</h3>
+                    <p>Complete camera liveness check to prove you're real.</p>
+                </div>
+                <div class="spc">
+                    <div class="sn" style="background:linear-gradient(135deg,var(--green),#059669);">03</div>
+                    <h3>Connect</h3>
+                    <p>Start networking and finding opportunities.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cts container">
+            <div class="ctb">
+                <div class="lm" style="width:44px;height:44px;border-radius:12px;margin:0 auto 1rem;"><i
+                        data-lucide="zap" style="width:20px;height:20px;color:#fff;"></i></div>
+                <h2>Ready to get verified?</h2>
+                <p>Join 42,000+ verified professionals.</p>
+                <button class="btn btn-p" onclick="showPage('login')">Get Started Free <i data-lucide="chevron-right"
+                        style="width:14px;height:14px;"></i></button>
+            </div>
+        </section>
+
+        <footer class="ft container">
+            <div class="logo">
+                <div class="lm" style="width:24px;height:24px;border-radius:7px;"><i data-lucide="zap"
+                        style="width:11px;height:11px;color:#fff;"></i></div><span class="ln"
+                    style="font-size:.85rem;">SyncUp</span>
+            </div>
+            <p>&copy; 2025 SyncUp</p>
+            <div class="fl"><a href="#">Events</a><a href="#">Companies</a><a href="#">Jobs</a></div>
+        </footer>
+    </div>
+
+    <!-- ══════ LOGIN ══════ -->
+    <div id="page-login" class="page hidden">
+        <div class="lp">
+            <div class="lb">
+                <div class="logo" onclick="showPage('landing')">
+                    <div class="lm" style="background:rgba(255,255,255,.2);"><i data-lucide="zap"
+                            style="width:13px;height:13px;color:#fff;"></i></div>
+                    <div class="ln" style="color:#fff;">SyncUp</div>
+                </div>
+                <div style="position:relative;z-index:1;">
+                    <h1>The Trusted<br>Professional<br>Ecosystem</h1>
+                    <p>Verified humans only. No bots, no fakes.</p>
+                    <div style="display:flex;gap:7px;margin-top:1.25rem;">
+                        <div class="badge"
+                            style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2);color:#fff;"><i
+                                data-lucide="shield-check" style="width:11px;height:11px;"></i> Verified</div>
+                        <div class="badge"
+                            style="background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.2);color:#fff;"><i
+                                data-lucide="lock" style="width:11px;height:11px;"></i> Secured</div>
+                    </div>
+                </div>
+                <p style="font-size:.68rem;opacity:.45;">&copy; 2025 SyncUp</p>
+            </div>
+            <div class="lfs">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;">
+                    <div>
+                        <h2>Welcome back</h2>
+                        <p class="sub" style="margin-bottom:0;">Sign in. <a href="#"
+                                onclick="event.preventDefault()">Create Account</a></p>
+                    </div>
+                    <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun"
+                            style="width:15px;height:15px;"></i></button>
+                </div>
+                <div class="rs">
+                    <div class="ri" id="ri"></div>
+                    <div class="rb active" onclick="selRole(0)">Member</div>
+                    <div class="rb" onclick="selRole(1)">Recruiter</div>
+                    <div class="rb" onclick="selRole(2)">Admin</div>
+                </div>
+                <div class="err" id="le"><i data-lucide="alert-circle"
+                        style="width:13px;height:13px;flex-shrink:0;"></i><span id="let"></span></div>
+                <form onsubmit="doLogin(event)">
+                    <div class="ig"><label for="em">Work Email</label>
+                        <div class="iw"><input type="email" id="em" class="inp" placeholder="you@company.com"
+                                required><i data-lucide="mail" style="width:14px;height:14px;" class="ii"></i></div>
+                    </div>
+                    <div class="ig"><label for="pw">Password</label>
+                        <div class="iw"><input type="password" id="pw" class="inp" placeholder="Enter password"
+                                required><i data-lucide="key-round" style="width:14px;height:14px;" class="ii"></i>
+                        </div><a href="#" class="fgl" onclick="event.preventDefault()">Forgot?</a>
+                    </div>
+                    <button type="submit" class="btn btn-p" style="width:100%;">Sign In <i data-lucide="arrow-right"
+                            style="width:14px;height:14px;"></i></button>
+                </form>
+                <div class="dl"><span>or</span></div>
+                <button class="btn btn-o" style="width:100%;" onclick="showPage('fv')"><i data-lucide="scan-face"
+                        style="width:15px;height:15px;"></i> Face Verification</button>
+                <p style="text-align:center;margin-top:1.1rem;font-size:.8rem;color:var(--tx2);">Not verified? <a
+                        href="#" style="color:var(--purple);font-weight:600;"
+                        onclick="event.preventDefault();showPage('fv')">Verify Now</a></p>
             </div>
         </div>
-
-        <div id="fs-ok" class="hidden">
-            <div class="fic" style="background:var(--gBg);border:2px solid var(--gBd);"><i data-lucide="check-circle-2" style="width:32px;height:32px;color:var(--green);"></i></div>
-            <h2 style="font-size:1.25rem;font-weight:800;margin-bottom:5px;">Liveness Confirmed &#127881;</h2>
-            <p style="color:var(--tx2);font-size:.85rem;margin-bottom:1.75rem;">Your session is verified. Welcome to SyncUp.</p>
-            <button class="btn btn-p" onclick="showPage('dash')">Go to Dashboard <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></button>
-        </div>
-
-        <div id="fs-err" class="hidden">
-            <div class="fic" style="background:rgba(239,68,68,.08);border:2px solid rgba(239,68,68,.2);"><i data-lucide="alert-triangle" style="width:32px;height:32px;color:var(--danger);"></i></div>
-            <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:5px;">Verification Failed</h2>
-            <p style="color:var(--danger);font-size:.8rem;margin-bottom:1.25rem;" id="ferr">Camera denied.</p>
-            <button class="btn btn-p" onclick="camReset()">Try Again</button>
-        </div>
     </div>
-</div>
 
-<!-- ══════ DASHBOARD ══════ -->
-<div id="page-dash" class="page hidden">
-    <header class="hdr"><div class="container"><div class="nav">
-        <div class="logo" onclick="showPage('dash')"><div class="lm"><i data-lucide="zap" style="width:13px;height:13px;color:#fff;"></i></div><div class="ln">SyncUp</div></div>
-        <div class="na"><button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" style="width:15px;height:15px;"></i></button><button class="btn btn-g"><i data-lucide="search" style="width:17px;height:17px;"></i></button><button class="btn btn-g"><i data-lucide="bell" style="width:17px;height:17px;"></i></button><button class="btn btn-s" onclick="showPage('landing')"><i data-lucide="log-out" style="width:13px;height:13px;"></i> Logout</button></div>
-    </div></div></header>
-    <div class="container">
-        <div class="dh"><h1>Welcome, <span style="color:var(--purple);" id="du">User</span> &#128075;</h1></div>
-        <div class="dg">
-            <aside><div class="pc"><div class="av-c" id="da">U</div><div class="nm" id="dn">User</div><div class="hl">Professional &middot; SyncUp Verified</div><div style="margin-top:5px;"><span class="badge" style="font-size:.65rem;padding:2px 7px;"><i data-lucide="check-circle-2" style="width:10px;height:10px;color:var(--green);"></i> Verified</span></div><div class="ps"><div><div class="v">128</div><div class="l">Connections</div></div><div><div class="v">47</div><div class="l">Followers</div></div></div></div></aside>
-            <div>
-                <div class="cpb" onclick="alert('Coming soon!')"><div class="pa" id="fa">U</div><div class="pib">Share something&hellip;</div></div>
-                <div class="pcd"><div class="pau"><div class="pav" style="background:linear-gradient(135deg,var(--purple),#6366F1);">RM</div><div><div class="an">Rohan Mehta <span class="badge" style="font-size:.58rem;padding:1px 5px;margin-left:3px;"><i data-lucide="check-circle-2" style="width:8px;height:8px;color:var(--green);"></i></span></div><div class="ai">CTO &middot; 2h ago</div></div></div><div class="pct">Excited to announce we just closed our Series A! &#128640; Couldn't have done it without SyncUp.</div><div class="pac"><button class="pab" onclick="this.style.color='var(--purple)'"><i data-lucide="heart" style="width:13px;height:13px;"></i> 142</button><button class="pab"><i data-lucide="message-circle" style="width:13px;height:13px;"></i> 23</button><button class="pab"><i data-lucide="share-2" style="width:13px;height:13px;"></i> Share</button></div></div>
-                <div class="pcd"><div class="pau"><div class="pav" style="background:linear-gradient(135deg,var(--orange),#EA580C);">PS</div><div><div class="an">Priya Sharma</div><div class="ai">Product Lead &middot; 5h ago</div></div></div><div class="pct">3 things from 50 enterprise customers:<br>1. Speed > Features<br>2. Support = deal-breaker<br>3. Integrations win deals</div><div class="pac"><button class="pab"><i data-lucide="heart" style="width:13px;height:13px;"></i> 89</button><button class="pab"><i data-lucide="message-circle" style="width:13px;height:13px;"></i> 34</button><button class="pab"><i data-lucide="share-2" style="width:13px;height:13px;"></i> Share</button></div></div>
+    <!-- ══════ FACE VERIFICATION — SCANNER ══════ -->
+    <div id="page-fv" class="page hidden">
+        <div class="fcard">
+            <div style="text-align:left;margin-bottom:1rem;"><button class="btn btn-g"
+                    onclick="camStop();showPage('login')"><i data-lucide="arrow-left"
+                        style="width:15px;height:15px;"></i> Back</button></div>
+
+            <div id="fs-instr">
+                <div class="fic" style="background:var(--pbg);border:2px solid var(--pbd);"><i data-lucide="scan-face"
+                        style="width:30px;height:30px;color:var(--purple);"></i></div>
+                <h2 style="font-size:1.25rem;font-weight:800;margin-bottom:5px;">Liveness Verification</h2>
+                <p style="color:var(--tx2);font-size:.85rem;line-height:1.6;">We verify you're a real person using <code
+                        style="background:var(--bg3);padding:1px 5px;border-radius:4px;font-size:.78rem;">getUserMedia</code>
+                    — all processing happens on-device.</p>
+                <div class="ins">
+                    <div class="insi">
+                        <div class="insn">1</div> Find steady lighting
+                    </div>
+                    <div class="insi">
+                        <div class="insn">2</div> Center your face in the frame
+                    </div>
+                    <div class="insi">
+                        <div class="insn">3</div> Blink naturally when prompted
+                    </div>
+                    <div class="insi">
+                        <div class="insn">4</div> Turn your head left & right
+                    </div>
+                </div>
+                <button class="btn btn-p" style="width:100%;" onclick="camStart()"><i data-lucide="camera"
+                        style="width:15px;height:15px;"></i> Start Liveness Check</button>
             </div>
-            <aside>
-                <div class="sw"><h3>People you may know</h3><div class="wi"><div class="wia" style="background:linear-gradient(135deg,var(--purple),#6366F1);">AP</div><div><div class="win">Anjali Patel</div><div class="wis">Investor</div></div></div><div class="wi"><div class="wia" style="background:linear-gradient(135deg,var(--orange),#EA580C);">VS</div><div><div class="win">Vikram Singh</div><div class="wis">Eng. Manager</div></div></div></div>
-                <div class="sw"><h3>Trending</h3><div class="wi"><div><div class="win" style="color:var(--purple);">Series A &middot; &#8377;2.5Cr</div><div class="wis">TechVentures</div></div></div></div>
-            </aside>
+
+            <div id="fs-load" class="hidden">
+                <div class="spinner"></div>
+                <h2 style="font-size:1.1rem;font-weight:700;">Starting camera...</h2>
+                <p style="color:var(--tx2);font-size:.8rem;">Requesting getUserMedia access</p>
+            </div>
+
+            <div id="fs-scan" class="hidden">
+                <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:3px;">Verifying Liveness</h2>
+                <p style="color:var(--tx2);font-size:.78rem;margin-bottom:.85rem;">Follow the prompts below</p>
+                <div class="scanner-wrap">
+                    <video id="cam" autoplay playsinline muted></video>
+                    <canvas id="cvs"></canvas>
+                    <div class="hud">
+                        <div class="hud-corner hud-tl"></div>
+                        <div class="hud-corner hud-tr"></div>
+                        <div class="hud-corner hud-bl"></div>
+                        <div class="hud-corner hud-br"></div>
+                        <div class="hud-scanline"></div>
+                        <div class="hud-oval"></div>
+                        <div class="hud-crosshair"></div>
+                        <div class="hud-phase" id="hud-ph">DETECTING</div>
+                        <div class="hud-label"><span id="hud-l">SKIN —%</span><span id="hud-r">MOTION 0.0</span></div>
+                    </div>
+                </div>
+                <div class="sbar" id="fstat">Initializing camera...</div>
+                <div class="ptr">
+                    <div class="ptf" id="fprog"></div>
+                </div>
+                <div class="ckg">
+                    <div class="cki" id="c1"><i data-lucide="user" style="width:13px;height:13px;"></i><span>Face</span>
+                    </div>
+                    <div class="cki" id="c2"><i data-lucide="eye" style="width:13px;height:13px;"></i><span
+                            id="bl">Blinks 0/2</span></div>
+                    <div class="cki" id="c3"><i data-lucide="move" style="width:13px;height:13px;"></i><span
+                            id="ml">Head Turn</span></div>
+                </div>
+            </div>
+
+            <div id="fs-ok" class="hidden">
+                <div class="fic" style="background:var(--gBg);border:2px solid var(--gBd);"><i
+                        data-lucide="check-circle-2" style="width:32px;height:32px;color:var(--green);"></i></div>
+                <h2 style="font-size:1.25rem;font-weight:800;margin-bottom:5px;">Liveness Confirmed &#127881;</h2>
+                <p style="color:var(--tx2);font-size:.85rem;margin-bottom:1.75rem;">Your session is verified. Welcome to
+                    SyncUp.</p>
+                <button class="btn btn-p" onclick="showPage('dash')">Go to Dashboard <i data-lucide="arrow-right"
+                        style="width:14px;height:14px;"></i></button>
+            </div>
+
+            <div id="fs-err" class="hidden">
+                <div class="fic" style="background:rgba(239,68,68,.08);border:2px solid rgba(239,68,68,.2);"><i
+                        data-lucide="alert-triangle" style="width:32px;height:32px;color:var(--danger);"></i></div>
+                <h2 style="font-size:1.1rem;font-weight:700;margin-bottom:5px;">Verification Failed</h2>
+                <p style="color:var(--danger);font-size:.8rem;margin-bottom:1.25rem;" id="ferr">Camera denied.</p>
+                <button class="btn btn-p" onclick="camReset()">Try Again</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-document.addEventListener('DOMContentLoaded',()=>{lucide.createIcons();animStats();const s=localStorage.getItem('su-t');if(s)document.documentElement.setAttribute('data-theme',s);updIcons();});
+    <!-- ══════ DASHBOARD ══════ -->
+    <div id="page-dash" class="page hidden">
+        <header class="hdr">
+            <div class="container">
+                <div class="nav">
+                    <div class="logo" onclick="showPage('dash')">
+                        <div class="lm"><i data-lucide="zap" style="width:13px;height:13px;color:#fff;"></i></div>
+                        <div class="ln">SyncUp</div>
+                    </div>
+                    <div class="na"><button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun"
+                                style="width:15px;height:15px;"></i></button><button class="btn btn-g"><i
+                                data-lucide="search" style="width:17px;height:17px;"></i></button><button
+                            class="btn btn-g"><i data-lucide="bell" style="width:17px;height:17px;"></i></button><button
+                            class="btn btn-s" onclick="showPage('landing')"><i data-lucide="log-out"
+                                style="width:13px;height:13px;"></i> Logout</button></div>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="dh">
+                <h1>Welcome, <span style="color:var(--purple);" id="du">User</span> &#128075;</h1>
+            </div>
+            <div class="dg">
+                <aside>
+                    <div class="pc">
+                        <div class="av-c" id="da">U</div>
+                        <div class="nm" id="dn">User</div>
+                        <div class="hl">Professional &middot; SyncUp Verified</div>
+                        <div style="margin-top:5px;"><span class="badge" style="font-size:.65rem;padding:2px 7px;"><i
+                                    data-lucide="check-circle-2" style="width:10px;height:10px;color:var(--green);"></i>
+                                Verified</span></div>
+                        <div class="ps">
+                            <div>
+                                <div class="v">128</div>
+                                <div class="l">Connections</div>
+                            </div>
+                            <div>
+                                <div class="v">47</div>
+                                <div class="l">Followers</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <div>
+                    <div class="cpb" onclick="alert('Coming soon!')">
+                        <div class="pa" id="fa">U</div>
+                        <div class="pib">Share something&hellip;</div>
+                    </div>
+                    <div class="pcd">
+                        <div class="pau">
+                            <div class="pav" style="background:linear-gradient(135deg,var(--purple),#6366F1);">RM</div>
+                            <div>
+                                <div class="an">Rohan Mehta <span class="badge"
+                                        style="font-size:.58rem;padding:1px 5px;margin-left:3px;"><i
+                                            data-lucide="check-circle-2"
+                                            style="width:8px;height:8px;color:var(--green);"></i></span></div>
+                                <div class="ai">CTO &middot; 2h ago</div>
+                            </div>
+                        </div>
+                        <div class="pct">Excited to announce we just closed our Series A! &#128640; Couldn't have done
+                            it without SyncUp.</div>
+                        <div class="pac"><button class="pab" onclick="this.style.color='var(--purple)'"><i
+                                    data-lucide="heart" style="width:13px;height:13px;"></i> 142</button><button
+                                class="pab"><i data-lucide="message-circle" style="width:13px;height:13px;"></i>
+                                23</button><button class="pab"><i data-lucide="share-2"
+                                    style="width:13px;height:13px;"></i> Share</button></div>
+                    </div>
+                    <div class="pcd">
+                        <div class="pau">
+                            <div class="pav" style="background:linear-gradient(135deg,var(--orange),#EA580C);">PS</div>
+                            <div>
+                                <div class="an">Priya Sharma</div>
+                                <div class="ai">Product Lead &middot; 5h ago</div>
+                            </div>
+                        </div>
+                        <div class="pct">3 things from 50 enterprise customers:<br>1. Speed > Features<br>2. Support =
+                            deal-breaker<br>3. Integrations win deals</div>
+                        <div class="pac"><button class="pab"><i data-lucide="heart" style="width:13px;height:13px;"></i>
+                                89</button><button class="pab"><i data-lucide="message-circle"
+                                    style="width:13px;height:13px;"></i> 34</button><button class="pab"><i
+                                    data-lucide="share-2" style="width:13px;height:13px;"></i> Share</button></div>
+                    </div>
+                </div>
+                <aside>
+                    <div class="sw">
+                        <h3>People you may know</h3>
+                        <div class="wi">
+                            <div class="wia" style="background:linear-gradient(135deg,var(--purple),#6366F1);">AP</div>
+                            <div>
+                                <div class="win">Anjali Patel</div>
+                                <div class="wis">Investor</div>
+                            </div>
+                        </div>
+                        <div class="wi">
+                            <div class="wia" style="background:linear-gradient(135deg,var(--orange),#EA580C);">VS</div>
+                            <div>
+                                <div class="win">Vikram Singh</div>
+                                <div class="wis">Eng. Manager</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sw">
+                        <h3>Trending</h3>
+                        <div class="wi">
+                            <div>
+                                <div class="win" style="color:var(--purple);">Series A &middot; &#8377;2.5Cr</div>
+                                <div class="wis">TechVentures</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
 
-function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('su-t',n);updIcons();}
-function updIcons(){const d=document.documentElement.getAttribute('data-theme')==='dark';document.querySelectorAll('.theme-toggle i').forEach(e=>e.setAttribute('data-lucide',d?'sun':'moon'));lucide.createIcons();}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); animStats(); const s = localStorage.getItem('su-t'); if (s) document.documentElement.setAttribute('data-theme', s); updIcons(); });
 
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));const e=document.getElementById('page-'+id);if(e){e.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});}setTimeout(()=>{lucide.createIcons();updIcons();},60);}
+        function toggleTheme() { const h = document.documentElement; const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; h.setAttribute('data-theme', n); localStorage.setItem('su-t', n); updIcons(); }
+        function updIcons() { const d = document.documentElement.getAttribute('data-theme') === 'dark'; document.querySelectorAll('.theme-toggle i').forEach(e => e.setAttribute('data-lucide', d ? 'sun' : 'moon')); lucide.createIcons(); }
 
-function selRole(i){document.querySelectorAll('.rb').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.rb')[i].classList.add('active');document.getElementById('ri').style.transform=`translateX(${i*100}%)`;}
+        function showPage(id) { document.querySelectorAll('.page').forEach(p => p.classList.add('hidden')); const e = document.getElementById('page-' + id); if (e) { e.classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); } setTimeout(() => { lucide.createIcons(); updIcons(); }, 60); }
 
-function doLogin(e){e.preventDefault();const em=document.getElementById('em').value.trim(),pw=document.getElementById('pw').value,er=document.getElementById('le'),et=document.getElementById('let');er.classList.remove('show');
-if(!em||!pw){et.textContent='Fill in all fields.';er.classList.add('show');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){et.textContent='Enter a valid email.';er.classList.add('show');return;}
-const nm=em.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),ini=nm.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-document.getElementById('du').textContent=nm.split(' ')[0];document.getElementById('dn').textContent=nm;document.getElementById('da').textContent=ini;document.getElementById('fa').textContent=ini;showPage('dash');}
+        function selRole(i) { document.querySelectorAll('.rb').forEach(b => b.classList.remove('active')); document.querySelectorAll('.rb')[i].classList.add('active'); document.getElementById('ri').style.transform = `translateX(${i * 100}%)`; }
 
-function animStats(){const o=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){const el=en.target,t=+el.dataset.target;let s=null;(function step(ts){if(!s)s=ts;const p=Math.min((ts-s)/2000,1);el.textContent=Math.floor((1-Math.pow(1-p,3))*t).toLocaleString('en-IN')+(t>1000?'+':'');if(p<1)requestAnimationFrame(step);})(performance.now());o.unobserve(el);}});},{threshold:.3});document.querySelectorAll('.sv[data-target]').forEach(el=>o.observe(el));}
+        function doLogin(e) {
+            e.preventDefault(); const em = document.getElementById('em').value.trim(), pw = document.getElementById('pw').value, er = document.getElementById('le'), et = document.getElementById('let'); er.classList.remove('show');
+            if (!em || !pw) { et.textContent = 'Fill in all fields.'; er.classList.add('show'); return; } if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { et.textContent = 'Enter a valid email.'; er.classList.add('show'); return; }
+            const nm = em.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()), ini = nm.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+            document.getElementById('du').textContent = nm.split(' ')[0]; document.getElementById('dn').textContent = nm; document.getElementById('da').textContent = ini; document.getElementById('fa').textContent = ini; showPage('dash');
+        }
 
-/* ═══════════════════════════════════════════════════════
-   CAMERA LIVENESS — getUserMedia + requestAnimationFrame
-   60fps render, throttled 5fps analysis = zero lag
-   ═══════════════════════════════════════════════════════ */
+        function animStats() { const o = new IntersectionObserver(es => { es.forEach(en => { if (en.isIntersecting) { const el = en.target, t = +el.dataset.target; let s = null; (function step(ts) { if (!s) s = ts; const p = Math.min((ts - s) / 2000, 1); el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * t).toLocaleString('en-IN') + (t > 1000 ? '+' : ''); if (p < 1) requestAnimationFrame(step); })(performance.now()); o.unobserve(el); } }); }, { threshold: .3 }); document.querySelectorAll('.sv[data-target]').forEach(el => o.observe(el)); }
 
-let _s=null,_raf=null,_prev=null,_t0=0;
-let S={face:false,blinks:0,moved:false,done:false};
-let _ey=[],_ma=0,_sc=0;
-const BN=2,MT=5.5,SN=8;
+        /* ═══════════════════════════════════════════════════════
+           CAMERA LIVENESS — getUserMedia + requestAnimationFrame
+           60fps render, throttled 5fps analysis = zero lag
+           ═══════════════════════════════════════════════════════ */
 
-function fStep(n){['instr','load','scan','ok','err'].forEach(s=>document.getElementById('fs-'+s).classList.add('hidden'));document.getElementById('fs-'+n).classList.remove('hidden');setTimeout(()=>{lucide.createIcons();updIcons();},60);}
+        let _s = null, _raf = null, _prev = null, _t0 = 0;
+        let S = { face: false, blinks: 0, moved: false, done: false };
+        let _ey = [], _ma = 0, _sc = 0;
+        const BN = 2, MT = 5.5, SN = 8;
 
-function camReset(){camStop();S={face:false,blinks:0,moved:false,done:false};_ey=[];_ma=0;_sc=0;_prev=null;_t0=0;setProg(0);updCk();fStep('instr');}
+        function fStep(n) { ['instr', 'load', 'scan', 'ok', 'err'].forEach(s => document.getElementById('fs-' + s).classList.add('hidden')); document.getElementById('fs-' + n).classList.remove('hidden'); setTimeout(() => { lucide.createIcons(); updIcons(); }, 60); }
 
-function camStop(){if(_raf){cancelAnimationFrame(_raf);_raf=null;}if(_s){_s.getTracks().forEach(t=>t.stop());_s=null;}_prev=null;}
+        function camReset() { camStop(); S = { face: false, blinks: 0, moved: false, done: false }; _ey = []; _ma = 0; _sc = 0; _prev = null; _t0 = 0; setProg(0); updCk(); fStep('instr'); }
 
-function setSt(m){const e=document.getElementById('fstat');if(e)e.textContent=m;}
-function setProg(p){const e=document.getElementById('fprog');if(e)e.style.width=Math.min(100,Math.round(p))+'%';}
+        function camStop() { if (_raf) { cancelAnimationFrame(_raf); _raf = null; } if (_s) { _s.getTracks().forEach(t => t.stop()); _s = null; } _prev = null; }
 
-function updCk(){
-    const c1=document.getElementById('c1'),c2=document.getElementById('c2'),c3=document.getElementById('c3'),bl=document.getElementById('bl'),ml=document.getElementById('ml'),ph=document.getElementById('hud-ph');
-    if(!c1)return;
-    c1.classList.toggle('done',S.face&&_sc>=SN);c2.classList.toggle('done',S.blinks>=BN);c3.classList.toggle('done',S.moved);
-    if(bl)bl.textContent=`Blinks ${S.blinks}/${BN}`;if(ml)ml.textContent=S.moved?'Turn ✓':'Head Turn';
-    let p=0;if(S.face&&_sc>=SN)p+=33;if(S.blinks>=BN)p+=33;if(S.moved)p+=34;setProg(p);
-    if(ph){if(S.moved){ph.textContent='COMPLETE';ph.classList.add('ok');}else if(S.blinks>=BN){ph.textContent='TURN HEAD';}else if(S.face&&_sc>=SN){ph.textContent='BLINK';}else{ph.textContent='DETECTING';ph.classList.remove('ok');}}
-}
+        function setSt(m) { const e = document.getElementById('fstat'); if (e) e.textContent = m; }
+        function setProg(p) { const e = document.getElementById('fprog'); if (e) e.style.width = Math.min(100, Math.round(p)) + '%'; }
 
-async function camStart(){
-    fStep('load');
-    try{
-        _s=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:'user',width:{ideal:640},height:{ideal:480},frameRate:{ideal:30}}});
-        const v=document.getElementById('cam');v.srcObject=_s;await v.play();
-        S={face:false,blinks:0,moved:false,done:false};_ey=[];_ma=0;_sc=0;_prev=null;_t0=0;
-        fStep('scan');setTimeout(()=>{lucide.createIcons();updIcons();},100);
-        setSt('Camera active. Position your face in the oval.');setProg(0);updCk();
-        _raf=requestAnimationFrame(function loop(ts){if(!_s)return;renderFrame(ts);_raf=requestAnimationFrame(loop);});
-    }catch(e){document.getElementById('ferr').textContent=e.message||'Camera access denied.';fStep('err');}
-}
+        function updCk() {
+            const c1 = document.getElementById('c1'), c2 = document.getElementById('c2'), c3 = document.getElementById('c3'), bl = document.getElementById('bl'), ml = document.getElementById('ml'), ph = document.getElementById('hud-ph');
+            if (!c1) return;
+            c1.classList.toggle('done', S.face && _sc >= SN); c2.classList.toggle('done', S.blinks >= BN); c3.classList.toggle('done', S.moved);
+            if (bl) bl.textContent = `Blinks ${S.blinks}/${BN}`; if (ml) ml.textContent = S.moved ? 'Turn ✓' : 'Head Turn';
+            let p = 0; if (S.face && _sc >= SN) p += 33; if (S.blinks >= BN) p += 33; if (S.moved) p += 34; setProg(p);
+            if (ph) { if (S.moved) { ph.textContent = 'COMPLETE'; ph.classList.add('ok'); } else if (S.blinks >= BN) { ph.textContent = 'TURN HEAD'; } else if (S.face && _sc >= SN) { ph.textContent = 'BLINK'; } else { ph.textContent = 'DETECTING'; ph.classList.remove('ok'); } }
+        }
 
-function renderFrame(ts){
-    const v=document.getElementById('cam'),c=document.getElementById('cvs');
-    if(!v||!c||v.readyState<2)return;
-    const ctx=c.getContext('2d',{willReadFrequently:true});
-    c.width=v.videoWidth||640;c.height=v.videoHeight||480;
-    ctx.drawImage(v,0,0,c.width,c.height);
-    if(ts-_t0<200||S.done)return;
-    _t0=ts;
-    analyze(ctx,c.width,c.height);
-}
+        async function camStart() {
+            fStep('load');
+            try {
+                _s = await navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 30 } } });
+                const v = document.getElementById('cam'); v.srcObject = _s; await v.play();
+                S = { face: false, blinks: 0, moved: false, done: false }; _ey = []; _ma = 0; _sc = 0; _prev = null; _t0 = 0;
+                fStep('scan'); setTimeout(() => { lucide.createIcons(); updIcons(); }, 100);
+                setSt('Camera active. Position your face in the oval.'); setProg(0); updCk();
+                _raf = requestAnimationFrame(function loop(ts) { if (!_s) return; renderFrame(ts); _raf = requestAnimationFrame(loop); });
+            } catch (e) { document.getElementById('ferr').textContent = e.message || 'Camera access denied.'; fStep('err'); }
+        }
 
-function analyze(ctx,W,H){
-    const rx=W*0.2|0,ry=H*0.08|0,rw=W*0.6|0,rh=H*0.84|0;
-    let d;try{d=ctx.getImageData(rx,ry,rw,rh);}catch{return;}
-    const px=d.data,gray=new Uint8ClampedArray(rw*rh);
-    let skin=0,bSum=0,mSum=0,cnt=0;
+        function renderFrame(ts) {
+            const v = document.getElementById('cam'), c = document.getElementById('cvs');
+            if (!v || !c || v.readyState < 2) return;
+            const ctx = c.getContext('2d', { willReadFrequently: true });
+            c.width = v.videoWidth || 640; c.height = v.videoHeight || 480;
+            ctx.drawImage(v, 0, 0, c.width, c.height);
+            if (ts - _t0 < 200 || S.done) return;
+            _t0 = ts;
+            analyze(ctx, c.width, c.height);
+        }
 
-    for(let i=0,g=0;i<px.length;i+=4,g++){
-        const r=px[i],gr=px[i+1],b=px[i+2];
-        const v=r*0.299+gr*0.587+b*0.114|0;
-        gray[g]=v;bSum+=v;
-        if(g&1){const cb=128+(.5*r-.419*gr-.081*b),cr=128+(-.169*r-.331*gr+.5*b);if(cb>77&&cb<127&&cr>133&&cr<173)skin++;}
-        if(_prev&&_prev.length===gray.length)mSum+=Math.abs(v-_prev[g]);
-        cnt++;
-    }
+        function analyze(ctx, W, H) {
+            const rx = W * 0.2 | 0, ry = H * 0.08 | 0, rw = W * 0.6 | 0, rh = H * 0.84 | 0;
+            let d; try { d = ctx.getImageData(rx, ry, rw, rh); } catch { return; }
+            const px = d.data, gray = new Uint8ClampedArray(rw * rh);
+            let skin = 0, bSum = 0, mSum = 0, cnt = 0;
 
-    const skinR=skin/((cnt>>1)||1),avgB=bSum/cnt,motion=_prev?mSum/cnt:0;
-    _prev=gray;
+            for (let i = 0, g = 0; i < px.length; i += 4, g++) {
+                const r = px[i], gr = px[i + 1], b = px[i + 2];
+                const v = r * 0.299 + gr * 0.587 + b * 0.114 | 0;
+                gray[g] = v; bSum += v;
+                if (g & 1) { const cb = 128 + (.5 * r - .419 * gr - .081 * b), cr = 128 + (-.169 * r - .331 * gr + .5 * b); if (cb > 77 && cb < 127 && cr > 133 && cr < 173) skin++; }
+                if (_prev && _prev.length === gray.length) mSum += Math.abs(v - _prev[g]);
+                cnt++;
+            }
 
-    const hl=document.getElementById('hud-l'),hr=document.getElementById('hud-r');
-    if(hl)hl.textContent=`SKIN ${(skinR*100).toFixed(0)}%`;
-    if(hr)hr.textContent=`MOTION ${motion.toFixed(1)}`;
+            const skinR = skin / ((cnt >> 1) || 1), avgB = bSum / cnt, motion = _prev ? mSum / cnt : 0;
+            _prev = gray;
 
-    const face=skinR>0.08&&avgB>30&&avgB<240;
-    S.face=face;
-    if(face)_sc=Math.min(_sc+1,SN+5);else _sc=Math.max(_sc-2,0);
-    if(!face){setSt('No face detected — look at the camera.');updCk();return;}
-    if(_sc<SN){setSt(`Face found. Hold still... (${_sc}/${SN})`);updCk();return;}
+            const hl = document.getElementById('hud-l'), hr = document.getElementById('hud-r');
+            if (hl) hl.textContent = `SKIN ${(skinR * 100).toFixed(0)}%`;
+            if (hr) hr.textContent = `MOTION ${motion.toFixed(1)}`;
 
-    if(S.blinks<BN){
-        const ey=rh*0.25|0,eh=rh*0.1|0;let eb=0,ec=0;
-        for(let y=ey;y<ey+eh&&y<rh;y++)for(let x=rw*0.15|0;x<rw*0.85|0;x++){eb+=gray[y*rw+x];ec++;}
-        eb/=(ec||1);_ey.push(eb);if(_ey.length>15)_ey.shift();
-        if(_ey.length>=8){const rec=_ey.slice(-8),avg=rec.reduce((a,b)=>a+b)/rec.length,mn=Math.min(...rec);if(avg-mn>5){S.blinks++;_ey=[];}}
-        setSt(`Blink naturally. (${S.blinks}/${BN} detected)`);updCk();return;
-    }
+            const face = skinR > 0.08 && avgB > 30 && avgB < 240;
+            S.face = face;
+            if (face) _sc = Math.min(_sc + 1, SN + 5); else _sc = Math.max(_sc - 2, 0);
+            if (!face) { setSt('No face detected — look at the camera.'); updCk(); return; }
+            if (_sc < SN) { setSt(`Face found. Hold still... (${_sc}/${SN})`); updCk(); return; }
 
-    if(!S.moved){
-        if(motion>MT&&motion<42)_ma++;else if(_ma>0)_ma-=0.5;
-        S.moved=_ma>=6;
-        setSt(`Turn your head slowly left then right.`);updCk();return;
-    }
+            if (S.blinks < BN) {
+                const ey = rh * 0.25 | 0, eh = rh * 0.1 | 0; let eb = 0, ec = 0;
+                for (let y = ey; y < ey + eh && y < rh; y++)for (let x = rw * 0.15 | 0; x < rw * 0.85 | 0; x++) { eb += gray[y * rw + x]; ec++; }
+                eb /= (ec || 1); _ey.push(eb); if (_ey.length > 15) _ey.shift();
+                if (_ey.length >= 8) { const rec = _ey.slice(-8), avg = rec.reduce((a, b) => a + b) / rec.length, mn = Math.min(...rec); if (avg - mn > 5) { S.blinks++; _ey = []; } }
+                setSt(`Blink naturally. (${S.blinks}/${BN} detected)`); updCk(); return;
+            }
 
-    S.done=true;setSt('All checks passed! Liveness confirmed ✓');setProg(100);updCk();
-    setTimeout(()=>{camStop();fStep('ok');setTimeout(()=>{lucide.createIcons();updIcons();},100);},1200);
-}
-</script>
+            if (!S.moved) {
+                if (motion > MT && motion < 42) _ma++; else if (_ma > 0) _ma -= 0.5;
+                S.moved = _ma >= 6;
+                setSt(`Turn your head slowly left then right.`); updCk(); return;
+            }
+
+            S.done = true; setSt('All checks passed! Liveness confirmed ✓'); setProg(100); updCk();
+            setTimeout(() => { camStop(); fStep('ok'); setTimeout(() => { lucide.createIcons(); updIcons(); }, 100); }, 1200);
+        }
+    </script>
 </body>
+
 </html>
