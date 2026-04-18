@@ -1,7 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 
 <head>
+    <link rel='stylesheet' href='global.css'>
+    <script src='theme.js'></script>
+    <script src='header-loader.js'></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opportunities — Sphera</title>
@@ -11,9 +14,9 @@
         :root {
             --bg: #f5f0ff;
             --bg2: #ece4ff;
-            --Srface: rgba(255, 255, 255, .55);
-            --Srface-s: rgba(255, 255, 255, .45);
-            --Srface-f: rgba(255, 255, 255, .35);
+            --surface: rgba(255, 255, 255, .55);
+            --surface-s: rgba(255, 255, 255, .45);
+            --surface-f: rgba(255, 255, 255, .35);
             --text: #1a0e33;
             --muted: #5a5068;
             --accent: #7C3AED;
@@ -30,9 +33,9 @@
         html[data-theme="dark"] {
             --bg: #0a0514;
             --bg2: #110920;
-            --Srface: rgba(255, 255, 255, .08);
-            --Srface-s: rgba(255, 255, 255, .06);
-            --Srface-f: rgba(255, 255, 255, .04);
+            --surface: rgba(255, 255, 255, .08);
+            --surface-s: rgba(255, 255, 255, .06);
+            --surface-f: rgba(255, 255, 255, .04);
             --text: #f3eeff;
             --muted: #b0a4c8;
             --accent: #A78BFA;
@@ -140,7 +143,7 @@
 
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr);
             gap: 30px;
             margin-top: 40px;
         }
@@ -149,7 +152,7 @@
             border: 1px solid var(--line);
             border-radius: 16px;
             padding: 40px 30px;
-            background: var(--Srface);
+            background: var(--surface);
             box-shadow: var(--shadow-f);
             text-align: center;
             text-decoration: none;
@@ -218,7 +221,7 @@
             min-height: 42px;
             padding: 0 14px;
             border-radius: var(--radius);
-            background: var(--Srface);
+            background: var(--surface);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--line);
@@ -235,43 +238,13 @@
 </head>
 
 <body>
+    <div id='header-placeholder'></div>
     <div class="video-bg">
         <video autoplay muted loop playsinline>
             <source src="assets/abstract-honeycomb.1920x1080.mp4" type="video/mp4">
         </video>
     </div>
     <div class="video-overlay"></div>
-    <header class="hdr">
-        <div class="wrap hdr-row">
-            <a class="brand" href="index.html">
-                <span class="brand-mark">S</span>
-                <span><strong>Sphera.</strong><br><small>Verified professional ecosystem</small></span>
-            </a>
-            <nav style="display: flex; gap: 20px; align-items: center; font-weight: 600;">
-                <a href="index.html" style="color:var(--text); text-decoration: none;">Home</a>
-                <div class="dropdown" style="position:relative;display:inline-block;">
-                    <a href="opportunity.html"
-                        style="color:var(--text); display:flex;align-items:center;gap:4px;cursor:pointer; text-decoration: none;">Opportunities
-                        ▾</a>
-                    <div class="dropdown-content"
-                        style="display:none;position:absolute;background-color:var(--Srface);min-width:230px;box-shadow:var(--shadow-f);border-radius:var(--radius);border:1px solid var(--line);padding:8px;z-index:40;top:100%;left:0;flex-direction:column;gap:4px;margin-top:20px;">
-                        <a href="opportunity.html"
-                            style="padding:10px 12px;border-radius:6px;font-size:0.88rem;color:var(--text);text-decoration:none;">Opportunities
-                            Hub</a>
-                        <a href="business_opportunities.html"
-                            style="padding:10px 12px;border-radius:6px;font-size:0.88rem;color:var(--text);text-decoration:none;">Business
-                            Opportunities</a>
-                        <a href="job_opportunities.html"
-                            style="padding:10px 12px;border-radius:6px;font-size:0.88rem;color:var(--text);text-decoration:none;">Job
-                            Opportunities</a>
-                    </div>
-                    <style>
-                        .dropdown:hover .dropdown-content {
-                            display: flex !important;
-                        }
-
-                        .dropdown-content a:hover {
-                            background-color: var(--Srface-f);
                             color: var(--accent) !important;
                         }
                     </style>
@@ -283,7 +256,7 @@
 
     <main class="wrap hero">
         <h1>Discover Your Next <span style="color: var(--accent);">Opportunity</span></h1>
-        <p>Choose the path that fits your goals. Whether you are looking to scale a business or find the perfect role.
+        <p>Choose the path that fits your goals. Whether you are looking to scale a business, find a role, or promote your venture.
         </p>
 
         <div class="options-grid">
@@ -296,9 +269,14 @@
             <a href="job_opportunities.html" class="option-card">
                 <div class="icon-wrap">💼</div>
                 <h2>Job Opportunities</h2>
-                <p>Discover roles at top-tier verified companies. Skip the noise and connect directly with hiring
-                    managers.</p>
+                <p>Discover roles at top-tier verified companies. Skip the noise and connect directly with hiring managers.</p>
                 <div class="btn">Explore Jobs</div>
+            </a>
+            <a href="campaign.html" class="option-card">
+                <div class="icon-wrap">🚀</div>
+                <h2>Promote Ventures</h2>
+                <p>Run targeted campaigns to promote your ideas, events, or business needs to a trusted community.</p>
+                <div class="btn">Start Campaign</div>
             </a>
         </div>
     </main>
@@ -307,3 +285,7 @@
 </body>
 
 </html>
+
+
+
+

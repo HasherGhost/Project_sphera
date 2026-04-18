@@ -2,6 +2,9 @@
 <html lang="en" data-theme="light">
 
 <head>
+    <link rel='stylesheet' href='global.css'>
+    <script src='theme.js'></script>
+    <script src='header-loader.js'></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sphera — Rewards & Milestones</title>
@@ -18,9 +21,9 @@
             color-scheme: light;
             --bg: #f5f0ff;
             --bg2: #ece4ff;
-            --Srface: rgba(255, 255, 255, .55);
-            --Srface-s: rgba(255, 255, 255, .45);
-            --Srface-f: rgba(255, 255, 255, .35);
+            --surface: rgba(255, 255, 255, .55);
+            --surface-s: rgba(255, 255, 255, .45);
+            --surface-f: rgba(255, 255, 255, .35);
             --line: rgba(255, 255, 255, .5);
             --line-s: rgba(255, 255, 255, .6);
             --text: #1a0e33;
@@ -51,9 +54,9 @@
             color-scheme: dark;
             --bg: #0a0514;
             --bg2: #110920;
-            --Srface: rgba(255, 255, 255, .08);
-            --Srface-s: rgba(255, 255, 255, .06);
-            --Srface-f: rgba(255, 255, 255, .04);
+            --surface: rgba(255, 255, 255, .08);
+            --surface-s: rgba(255, 255, 255, .06);
+            --surface-f: rgba(255, 255, 255, .04);
             --line: rgba(255, 255, 255, .12);
             --line-s: rgba(255, 255, 255, .18);
             --text: #f3eeff;
@@ -166,13 +169,13 @@
         .btn-o:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--orange-f); }
 
         .theme-tog {
-            background: var(--Srface); border-color: var(--line);
+            background: var(--surface); border-color: var(--line);
             color: var(--text); padding: 0 12px;
             backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
         }
 
         .panel {
-            background: var(--Srface); border: 1px solid var(--line);
+            background: var(--surface); border: 1px solid var(--line);
             border-radius: var(--radius); box-shadow: var(--shadow-f);
             padding: 24px; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
         }
@@ -185,13 +188,13 @@
             transition: background .2s, color .2s;
         }
         .side-nav a.active { background: var(--accent-f); color: var(--accent); }
-        .side-nav a:hover:not(.active) { background: var(--Srface-f); color: var(--text); }
+        .side-nav a:hover:not(.active) { background: var(--surface-f); color: var(--text); }
         .count-pill { background: var(--orange); color: white; padding: 2px 8px; border-radius: 99px; font-size: .75rem; font-weight: 900; }
 
         /* ── Milestones ── */
         .milestone-card {
             padding: 20px; border-radius: var(--radius); border: 1px solid var(--line-s);
-            background: var(--Srface-s); margin-bottom: 16px; position: relative; overflow: hidden;
+            background: var(--surface-s); margin-bottom: 16px; position: relative; overflow: hidden;
             backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
         }
         .milestone-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
@@ -217,29 +220,13 @@
 <body>
     <div class="video-bg">
         <video autoplay muted loop playsinline>
-            <source src="assets/vecteezy_white-gradient-background-with-scattered-white-dots-Sitable_53824243.mp4" type="video/mp4">
+            <source src="assets/vecteezy_white-gradient-background-with-scattered-white-dots-suitable_53824243.mp4" type="video/mp4">
         </video>
     </div>
     <div class="video-overlay"></div>
     <!-- Header -->
-    <header class="hdr">
-        <div class="wrap hdr-row">
-            <a class="brand" href="index.html">
-                <span class="brand-mark">S</span>
-                <span style="display:grid;gap:2px"><strong>Sphera.</strong><small>Verified professional</small></span>
-            </a>
-            <nav class="hdr-nav">
-                <a href="feed.html">Feed</a>
-                <a href="network.html">Network</a>
-                <a href="event.html">Events</a>
-                <a href="reward.html" class="active">Rewards</a>
-            </nav>
-            <div class="hdr-acts">
-                 <button class="theme-tog" id="themeToggle" type="button">☼ / ☾</button>
-                 <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white; display: grid; place-items: center; font-weight: 900;">U</div>
-            </div>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
+    <script src="header-loader.js"></script>
 
     <main class="wrap page-layout">
         
@@ -266,11 +253,11 @@
             </div>
 
             <!-- Coupon Redeem -->
-            <div class="panel" style="margin-bottom: 32px; background: var(--Srface-f); border: 2px dashed var(--accent-f);">
+            <div class="panel" style="margin-bottom: 32px; background: var(--surface-f); border: 2px dashed var(--accent-f);">
                 <h2 style="font-size: 1.25rem; font-weight: 900; margin-bottom: 8px;">🎉 Got a Coupon Code?</h2>
                 <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 16px; font-weight: 500;">Enter your code below to instantly unlock escrow credits or Srprise gift rewards.</p>
                 
-                <div style="display: flex; gap: 8px; align-items: center; max-width: 400px; background: var(--Srface); padding: 8px; border-radius: 12px; border: 1px solid var(--line); box-shadow: var(--shadow-f);">
+                <div style="display: flex; gap: 8px; align-items: center; max-width: 400px; background: var(--surface); padding: 8px; border-radius: 12px; border: 1px solid var(--line); box-shadow: var(--shadow-f);">
                     <input id="couponInput" type="text" placeholder="e.g. SYNC2026" maxlength="8" style="flex: 1; padding: 12px 14px; border: none; background: transparent; font-weight: 800; font-size: 1rem; color: var(--text); outline: none; text-transform: uppercase;" />
                     <button id="redeemBtn" class="btn btn-p" type="button" style="min-height: 44px; padding: 0 24px;">Redeem</button>
                 </div>
@@ -305,7 +292,7 @@
             <div class="milestone-card" style="opacity: 0.7;">
                 <div class="milestone-header">
                     <h3>500 Verified Joins</h3>
-                    <span class="milestone-badge" style="background: var(--Srface-f); color: var(--muted);">LOCKED</span>
+                    <span class="milestone-badge" style="background: var(--surface-f); color: var(--muted);">LOCKED</span>
                 </div>
                 <p style="color: var(--muted); font-size: 0.9rem; font-weight: 500;">Unlock a Bigger Gift Reward (e.g. Premium Hardware, Event VIP Pass).</p>
                 <div class="progress-bar-bg">
@@ -319,8 +306,8 @@
             <!-- Milestone 3 -->
             <div class="milestone-card" style="opacity: 0.5;">
                 <div class="milestone-header">
-                    <h3 style="background: linear-gradient(90deg, var(--orange), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">First 1,000 Verified Leaderboard</h3>
-                    <span class="milestone-badge" style="background: var(--Srface-f); color: var(--muted);">LOCKED</span> //
+                    <h3 style="background: linear-gradient(90deg, var(--orange), var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">First 1,000 Verified Leaderboard</h3>
+                    <span class="milestone-badge" style="background: var(--surface-f); color: var(--muted);">LOCKED</span> //
                 </div>
                 <p style="color: var(--muted); font-size: 0.9rem; font-weight: 500;">Eligible for 3 Mega Gifts (Latest flagship smartphones or equivalent).</p>
                 <div class="progress-bar-bg">
@@ -340,7 +327,7 @@
                  <h3 style="font-size: .85rem; color: var(--muted); text-transform: uppercase; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px;">Escrow Credits</h3>
                  <div style="font-size: 2.8rem; font-weight: 900; color: var(--text); line-height: 1;">$140</div>
                  <p style="font-size: .8rem; color: var(--green); font-weight: 700; margin-top: 8px;">+ $20 from last referral</p>
-                 <button class="btn btn-outline" style="width: 100%; border: 1px solid var(--line); margin-top: 20px; font-weight: 800; background: var(--Srface-f);">Withdraw to Wallet</button>
+                 <button class="btn btn-outline" style="width: 100%; border: 1px solid var(--line); margin-top: 20px; font-weight: 800; background: var(--surface-f);">Withdraw to Wallet</button>
             </div>
 
             <!-- Recent Winners Activity feed -->
@@ -417,10 +404,14 @@
                 return;
             }
             const rewardValue = Math.floor(Math.random() * 41) + 10;
-            showToast(`Redeemed Sccessfully! You won a $${rewardValue} item reward!`);
+            showToast(`Redeemed successfully! You won a $${rewardValue} item reward!`);
             document.getElementById('couponInput').value = '';
         });
     </script>
     <script src="theme.js"></script>
 </body>
 </html>
+
+
+
+
