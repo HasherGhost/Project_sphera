@@ -1,7 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 
 <head>
+    <link rel='stylesheet' href='global.css'>
+    <script src='theme.js'></script>
+    <script src='header-loader.js'></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sphera — Events & Webinars</title>
@@ -18,9 +21,9 @@
             color-scheme: light;
             --bg: #f5f0ff;
             --bg2: #ece4ff;
-            --Srface: rgba(255, 255, 255, .55);
-            --Srface-s: rgba(255, 255, 255, .45);
-            --Srface-f: rgba(255, 255, 255, .35);
+            --surface: rgba(255, 255, 255, .55);
+            --surface-s: rgba(255, 255, 255, .45);
+            --surface-f: rgba(255, 255, 255, .35);
             --line: rgba(255, 255, 255, .5);
             --line-s: rgba(255, 255, 255, .6);
             --text: #1a0e33;
@@ -51,9 +54,9 @@
             color-scheme: dark;
             --bg: #0a0514;
             --bg2: #110920;
-            --Srface: rgba(255, 255, 255, .08);
-            --Srface-s: rgba(255, 255, 255, .06);
-            --Srface-f: rgba(255, 255, 255, .04);
+            --surface: rgba(255, 255, 255, .08);
+            --surface-s: rgba(255, 255, 255, .06);
+            --surface-f: rgba(255, 255, 255, .04);
             --line: rgba(255, 255, 255, .12);
             --line-s: rgba(255, 255, 255, .18);
             --text: #f3eeff;
@@ -168,12 +171,12 @@
         .btn-o:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--orange-f); }
 
         .theme-tog {
-            background: var(--Srface); border-color: var(--line);
+            background: var(--surface); border-color: var(--line);
             color: var(--text); padding: 0 12px;
         }
 
         .panel {
-            background: var(--Srface);
+            background: var(--surface);
             border: 1px solid var(--line);
             border-radius: var(--radius);
             box-shadow: var(--shadow-f);
@@ -189,8 +192,8 @@
             border-radius: var(--radius); font-weight: 700; color: var(--muted);
             transition: background .2s, color .2s;
         }
-        .side-nav a.active { background: var(--Srface-f); color: var(--accent); }
-        .side-nav a:hover:not(.active) { background: var(--Srface-f); color: var(--text); }
+        .side-nav a.active { background: var(--surface-f); color: var(--accent); }
+        .side-nav a:hover:not(.active) { background: var(--surface-f); color: var(--text); }
         .count-pill { background: var(--line-s); color: var(--text); padding: 2px 8px; border-radius: 99px; font-size: .75rem; font-weight: 800; }
 
         /* ── Event Feed ── */
@@ -200,7 +203,7 @@
         .filters { display: flex; gap: 10px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 4px; }
         .filter-btn {
             padding: 8px 16px; border-radius: 99px; border: 1px solid var(--line);
-            font-weight: 700; font-size: .85rem; color: var(--muted); background: var(--Srface);
+            font-weight: 700; font-size: .85rem; color: var(--muted); background: var(--surface);
             cursor: pointer; white-space: nowrap; transition: color .2s, background .2s;
         }
         .filter-btn.active { background: var(--text); color: var(--bg); border-color: transparent; }
@@ -209,7 +212,7 @@
         /* ── Event Cards ── */
         .event-card {
             display: flex; flex-direction: column; border: 1px solid var(--line);
-            border-radius: var(--radius); background: var(--Srface); transition: transform .2s, box-shadow .2s;
+            border-radius: var(--radius); background: var(--surface); transition: transform .2s, box-shadow .2s;
             margin-bottom: 20px; overflow: hidden;
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
@@ -217,7 +220,7 @@
         .event-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--accent-f); }
         
         .event-banner {
-            width: 100%; height: 160px; background-color: var(--Srface-f);
+            width: 100%; height: 160px; background-color: var(--surface-f);
             position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
         .event-banner img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
@@ -236,11 +239,11 @@
         .event-meta span { display: flex; align-items: center; gap: 6px; }
         
         .event-actions { display: flex; gap: 10px; align-items: center; padding-top: 16px; border-top: 1px dashed var(--line); }
-        .btn-outline { border: 1px solid var(--line); padding: 8px 14px; border-radius: var(--radius); font-weight: 700; font-size: .85rem; background: var(--Srface-s); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); transition: background .2s, border .2s; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-outline:hover { background: var(--Srface-f); border-color: var(--accent); color: var(--accent);}
+        .btn-outline { border: 1px solid var(--line); padding: 8px 14px; border-radius: var(--radius); font-weight: 700; font-size: .85rem; background: var(--surface-s); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); transition: background .2s, border .2s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-outline:hover { background: var(--surface-f); border-color: var(--accent); color: var(--accent);}
         
         .like-btn {
-            background: var(--Srface-f); border: 1px solid var(--line); border-radius: var(--radius);
+            background: var(--surface-f); border: 1px solid var(--line); border-radius: var(--radius);
             width: 40px; height: 40px; display: grid; place-items: center; font-size: 1.1rem;
             transition: transform .2s, background .2s; margin-left: auto; cursor: pointer; color: var(--muted);
         }
@@ -249,7 +252,7 @@
         .like-btn.liked:hover { transform: scale(1.1); }
 
         .attendee-stack { display: flex; align-items: center; }
-        .attendee-stack img { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--Srface); margin-left: -10px; }
+        .attendee-stack img { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--surface); margin-left: -10px; }
         .attendee-stack img:first-child { margin-left: 0; }
         .attendee-stack .count { font-size: .75rem; font-weight: 800; color: var(--muted); margin-left: 6px; }
 
@@ -259,7 +262,7 @@
         
         .mini-event { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; cursor: pointer; }
         .mini-event-date { 
-            background: var(--Srface-f); border: 1px solid var(--line); border-radius: 8px; 
+            background: var(--surface-f); border: 1px solid var(--line); border-radius: 8px; 
             padding: 6px; text-align: center; min-width: 48px; border-bottom-width: 3px; border-bottom-color: var(--accent);
         }
         .mini-event-date strong { display: block; font-size: 1.1rem; font-weight: 900; line-height: 1; color: var(--text); }
@@ -281,7 +284,7 @@
             width: 100%;
             padding: 0 14px;
             color: var(--text);
-            background: var(--Srface);
+            background: var(--surface);
             border: 1px solid var(--line);
             border-radius: var(--radius);
             outline: none;
@@ -304,7 +307,7 @@
         }
         .event-form {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr);
             gap: 12px;
         }
         .event-form label {
@@ -323,7 +326,7 @@
             min-height: 42px;
             padding: 10px 12px;
             color: var(--text);
-            background: var(--Srface-s);
+            background: var(--surface-s);
             border: 1px solid var(--line);
             border-radius: var(--radius);
             outline: none;
@@ -338,7 +341,7 @@
         .event-note {
             padding: 12px;
             color: var(--muted);
-            background: var(--Srface-f);
+            background: var(--surface-f);
             border: 1px solid var(--line);
             border-radius: var(--radius);
             font-size: .86rem;
@@ -368,7 +371,7 @@
             max-width: min(360px, calc(100% - 40px));
             padding: 12px 14px;
             color: var(--text);
-            background: var(--Srface);
+            background: var(--surface);
             border: 1px solid var(--line-s);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
@@ -403,6 +406,7 @@
 </head>
 
 <body>
+    <div id='header-placeholder'></div>
     <div class="video-bg">
         <video autoplay muted loop playsinline>
             <source src="assets/vecteezy_abstract-gradient-white-wave-background-seamless-loop_21769172.mp4" type="video/mp4">
@@ -410,23 +414,7 @@
     </div>
     <div class="video-overlay"></div>
     <!-- Header -->
-    <header class="hdr">
-        <div class="wrap hdr-row">
-            <a class="brand" href="index.html">
-                <span class="brand-mark">S</span>
-                <span style="display:grid;gap:2px"><strong>Sphera.</strong><small>Verified professional</small></span>
-            </a>
-            <nav class="hdr-nav">
-                <a href="feed.html">Feed</a>
-                <a href="network.html">Network</a>
-                <a href="event.html" class="active">Events</a>
-            </nav>
-            <div class="hdr-acts">
-                 <button class="theme-tog" id="themeToggle" type="button">☼ / ☾</button>
-                 <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white; display: grid; place-items: center; font-weight: 900;">U</div>
-            </div>
-        </div>
-    </header>
+    
 
     <main class="wrap page-layout">
         
@@ -440,7 +428,7 @@
                 <a href="#" data-view="past"><span>Past Webinars</span></a>
             </nav>
 
-            <div class="panel" style="padding: 20px; background: linear-gradient(135deg, var(--Srface-s), var(--Srface-f));">
+            <div class="panel" style="padding: 20px; background: linear-gradient(135deg, var(--surface-s), var(--surface-f));">
                 <h3 style="font-size: 1rem; font-weight: 900; margin-bottom: 8px;">Host an Event</h3>
                 <p style="font-size: .85rem; color: var(--muted); margin-bottom: 16px; line-height: 1.5;">Tap into the trusted professional ecosystem. Sphera validates attendee identity automatically.</p>
                 <button class="btn btn-p" style="width: 100%;" data-action="toggle-create">Create Event</button>
@@ -497,7 +485,7 @@
                         <textarea id="eventDescription" placeholder="Describe who should attend and what they will get from it." required></textarea>
                     </label>
                     <div class="full" style="display:flex;gap:10px;flex-wrap:wrap;">
-                        <button class="btn btn-p" type="Sbmit">Publish Event</button>
+                        <button class="btn btn-p" type="submit">Publish Event</button>
                         <button class="btn btn-outline" type="button" data-action="toggle-create">Cancel</button>
                     </div>
                 </form>
@@ -521,8 +509,8 @@
                         <span>📍 Bengaluru, KA</span>
                         <span>🎟️ $15 (Escrow)</span>
                         <div class="attendee-stack" style="margin-left: auto;">
-                            <img src="public/avatars/priya-nair.png" alt="Priya Nair">
-                            <img src="public/avatars/ishita-rao.png" alt="Ishita Rao">
+                            <img src="avatars/priya-nair.png" alt="Priya Nair">
+                            <img src="avatars/ishita-rao.png" alt="Ishita Rao">
                             <span class="count">+124 Going</span>
                         </div>
                     </div>
@@ -553,7 +541,7 @@
                         <span>💻 Online (Zoom via Sphera)</span>
                         <span>🎟️ Free</span>
                         <div class="attendee-stack" style="margin-left: auto;">
-                            <img src="public/avatars/arjun-mehta.png" alt="Arjun Mehta">
+                            <img src="avatars/arjun-mehta.png" alt="Arjun Mehta">
                             <span class="count">+892 Registered</span>
                         </div>
                     </div>
@@ -605,13 +593,13 @@
                 <div class="event-body">
                     <div class="event-date">Tuesday, October 31 • 7:30 PM IST</div>
                     <h3>Founder Revenue Dinner: Mumbai</h3>
-                    <p>A small, verified dinner for founders and operators discussing pricing, retention, and the Sbtle art of scaling without shipping chaos.</p>
+                    <p>A small, verified dinner for founders and operators discussing pricing, retention, and the subtle art of scaling without shipping chaos.</p>
 
                     <div class="event-meta">
                         <span>📍 Mumbai, MH</span>
                         <span>🎟️ $40 (Escrow)</span>
                         <div class="attendee-stack" style="margin-left: auto;">
-                            <img src="public/avatars/ananya-sharma.png" alt="Ananya Sharma">
+                            <img src="avatars/ananya-sharma.png" alt="Ananya Sharma">
                             <span class="count">+42 Going</span>
                         </div>
                     </div>
@@ -641,7 +629,7 @@
                         <span>💻 Online (Zoom via Sphera)</span>
                         <span>🎟️ Free</span>
                         <div class="attendee-stack" style="margin-left: auto;">
-                            <img src="public/avatars/neha-verma.png" alt="Neha Verma">
+                            <img src="avatars/neha-verma.png" alt="Neha Verma">
                             <span class="count">+621 Registered</span>
                         </div>
                     </div>
@@ -689,7 +677,12 @@
         </section>
 
         <!-- Right Sidebar -->
-        <aside class="hidden-md">
+        <aside class="hidden-md stack" style="display: grid; gap: 24px;">
+            <div class="panel" style="border-left: 4px solid var(--accent); padding: 20px;">
+                <h3 style="font-size: 1rem; font-weight: 900; margin-bottom: 8px;">AI Event Scout</h3>
+                <p style="font-size: .85rem; color: var(--muted); line-height: 1.5; margin-bottom: 12px;">"You recently showed interest in <b>Distributed Systems</b>. The <b>CloudScale Webinar</b> tomorrow is a highly relevant match for your skill profile."</p>
+                <button class="btn btn-p" style="width: 100%; font-size: 11px;">Join Recommended</button>
+            </div>
             <div class="panel insight-card">
                 <h3>Top Events in Network</h3>
                 
@@ -726,7 +719,7 @@
                     </div>
                 </div>
 
-                <button class="btn-outline" style="width: 100%; justify-content: center; margin-top: 8px;" data-action="explore-Sggestions">Explore All Sggestions</button>
+                <button class="btn-outline" style="width: 100%; justify-content: center; margin-top: 8px;" data-action="explore-suggestions">Explore All suggestions</button>
             </div>
             
             <div class="panel insight-card" style="background: var(--accent-f); border-color: var(--accent);">
@@ -750,14 +743,14 @@
 
         function readSet(key) {
             try {
-                return new Set(JSON.parse(localStorage.getItem(key) || '[]'));
+                return new Set(JSON.parse(localStorage.getItem(key) || '[]');
             } catch (error) {
                 return new Set();
             }
         }
 
         function writeSet(key, set) {
-            localStorage.setItem(key, JSON.stringify([...set]));
+            localStorage.setItem(key, JSON.stringify([...set]);
         }
 
         function readHostedEvents() {
@@ -769,7 +762,7 @@
         }
 
         function writeHostedEvents(events) {
-            localStorage.setItem(EVENT_HOSTED_KEY, JSON.stringify(events.slice(0, 20)));
+            localStorage.setItem(EVENT_HOSTED_KEY, JSON.stringify(events.slice(0, 20));
         }
 
         function showToast(message) {
@@ -788,10 +781,10 @@
                 '>': '&gt;',
                 '"': '&quot;',
                 "'": '&#39;'
-            }[char]));
+            }[char]);
         }
 
-        function copyText(text, SccessMessage) {
+        function copyText(text, successMessage) {
             const fallback = () => {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
@@ -799,17 +792,17 @@
                 textarea.select();
                 document.execCommand('copy');
                 textarea.remove();
-                showToast(SccessMessage);
+                showToast(successMessage);
             };
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => showToast(SccessMessage)).catch(fallback);
+                navigator.clipboard.writeText(text).then(() => showToast(successMessage).catch(fallback);
             } else {
                 fallback();
             }
         }
 
         function eventCards() {
-            return Array.from(document.querySelectorAll('.event-card'));
+            return Array.from(document.querySelectorAll('.event-card');
         }
 
         function typeLabel(type) {
@@ -846,10 +839,10 @@
                 const saveButton = card.querySelector('[data-action="save"]');
                 const rsvpButton = card.querySelector('[data-action="rsvp"]');
                 if (saveButton) {
-                    saveButton.classList.toggle('liked', saved.has(id));
+                    saveButton.classList.toggle('liked', saved.has(id);
                     saveButton.setAttribute('aria-label', saved.has(id) ? 'Remove from saved events' : 'Save this event');
                 }
-                if (rsvpButton && tickets.has(id)) {
+                if (rsvpButton && tickets.has(id) {
                     rsvpButton.textContent = 'Confirmed';
                     rsvpButton.classList.add('is-done');
                     rsvpButton.disabled = true;
@@ -883,8 +876,8 @@
                 const searchMatch = !currentSearch || text.includes(currentSearch);
                 const viewMatch =
                     currentView === 'explore' ||
-                    (currentView === 'tickets' && tickets.has(id)) ||
-                    (currentView === 'saved' && saved.has(id)) ||
+                    (currentView === 'tickets' && tickets.has(id) ||
+                    (currentView === 'saved' && saved.has(id) ||
                     (currentView === 'hosted' && card.dataset.hosted === 'true') ||
                     (currentView === 'past' && card.dataset.past === 'true');
                 const visible = typeMatch && searchMatch && viewMatch;
@@ -914,7 +907,7 @@
             const card = button.closest('.event-card');
             if (!card?.dataset.id) return;
             const saved = readSet(EVENT_SAVED_KEY);
-            if (saved.has(card.dataset.id)) {
+            if (saved.has(card.dataset.id) {
                 saved.delete(card.dataset.id);
                 button.classList.remove('liked');
                 showToast('Event removed from saved.');
@@ -956,8 +949,8 @@
             return `
                 <article class="event-card" data-id="${escapeHTML(event.id)}" data-type="${escapeHTML(event.type)}" data-title="${escapeHTML(event.title)}" data-status="available" data-hosted="true">
                     <div class="event-banner" style="height: 120px;">
-                        <div class="event-type-badge" style="background: ${color}; color: white;">${escapeHTML(typeLabel(event.type))}</div>
-                        <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--accent),var(--accent-s));display:grid;place-items:center;color:white;">
+                        <div class="event-type-badge" style="background: ${color}; color: white;">${escapeHTML(typeLabel(event.type)}</div>
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, var(--accent), var(--accent-s));display:grid;place-items:center;color:white;">
                             <strong style="font-size:1.35rem;text-align:center;padding:20px;">${escapeHTML(event.title)}</strong>
                         </div>
                     </div>
@@ -1068,10 +1061,10 @@
                     setActiveView('explore');
                     setActiveFilter('all');
                     const matches = applyEventFilters();
-                    if (!matches) showInfo(`<strong>${escapeHTML(query)}</strong><br>This Sggested event is not in your main list yet. We copied a reminder so you can search for it later.`);
-                    if (!matches) copyText(query, 'Sggested event title copied.');
+                    if (!matches) showInfo(`<strong>${escapeHTML(query)}</strong><br>This Suggested event is not in your main list yet. We copied a reminder so you can search for it later.`);
+                    if (!matches) copyText(query, 'Suggested event title copied.');
                 }
-                if (action === 'explore-Sggestions') {
+                if (action === 'explore-suggestions') {
                     resetExploreView();
                     showToast('Showing all upcoming events.');
                 }
@@ -1108,8 +1101,12 @@
             applyEventFilters();
         });
 
-        document.getElementById('createEventForm')?.addEventListener('Sbmit', createEvent);
+        document.getElementById('createEventForm')?.addEventListener('submit', createEvent);
         document.addEventListener('click', handleClick);
     </script>
 </body>
 </html>
+
+
+
+

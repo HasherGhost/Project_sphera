@@ -1,7 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 
 <head>
+    <link rel='stylesheet' href='global.css'>
+    <script src='theme.js'></script>
+    <script src='header-loader.js'></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sphera | Trust Signal Dashboard</title>
@@ -14,12 +17,12 @@
         :root {
             --bg: #09090b;
             --bg-glass: rgba(24, 24, 27, 0.7);
-            --border: rgba(255, 255, 255, 0.1);
-            --primary: #3b82f6;
-            --primary-glow: rgba(59, 130, 246, 0.5);
-            --text-main: #f4f4f5;
-            --text-muted: #a1a1aa;
-            --Srface: #18181b;
+            --line: rgba(255, 255, 255, 0.1);
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --text: #f4f4f5;
+            --muted: #a1a1aa;
+            --surface: #18181b;
             --radius: 16px;
             --accent: #8b5cf6;
         }
@@ -27,12 +30,12 @@
         [data-theme="light"] {
             --bg: #f8fafc;
             --bg-glass: rgba(255, 255, 255, 0.8);
-            --border: rgba(0, 0, 0, 0.08);
-            --primary: #2563eb;
-            --primary-glow: rgba(37, 99, 235, 0.3);
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --Srface: #ffffff;
+            --line: rgba(0, 0, 0, 0.08);
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.3);
+            --text: #1e293b;
+            --muted: #64748b;
+            --surface: #ffffff;
             --accent: #7c3aed;
         }
 
@@ -40,7 +43,7 @@
 
         body {
             background-color: transparent;
-            color: var(--text-main);
+            color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
             transition: background 0.3s ease, color 0.3s ease;
@@ -59,7 +62,7 @@
         header {
             position: fixed; top: 0; width: 100%; height: 64px;
             background: var(--bg-glass); backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border); z-index: 1000;
+            border-bottom: 1px solid var(--line); z-index: 1000;
             display: flex; align-items: center;
         }
         .header-content {
@@ -68,19 +71,19 @@
         }
         .logo {
             font-size: 24px; font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: linear-gradient(135deg, var(--accent), var(--accent));
             background-clip: text; -webkit-background-clip: text;
             -webkit-text-fill-color: transparent; color: transparent; letter-spacing: -1px;
             cursor: pointer;
         }
         .header-actions { display: flex; gap: 16px; align-items: center; }
         .icon-btn {
-            background: var(--Srface); border: 1px solid var(--border);
+            background: var(--surface); border: 1px solid var(--line);
             width: 40px; height: 40px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: all 0.2s ease; position: relative;
         }
-        .icon-btn:hover { background: var(--border); transform: translateY(-2px); }
+        .icon-btn:hover { background: var(--line); transform: translateY(-2px); }
         .notification-dot {
             position: absolute; top: 8px; right: 8px; width: 8px; height: 8px;
             background: #ef4444; border-radius: 50%; border: 2px solid var(--bg);
@@ -90,11 +93,11 @@
             background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(139,92,246,0.18));
             border: 1px solid rgba(139,92,246,0.4); border-radius: 99px;
             padding: 6px 14px; font-size: 13px; font-weight: 700;
-            color: var(--text-main); cursor: default; transition: all 0.2s ease; white-space: nowrap;
+            color: var(--text); cursor: default; transition: all 0.2s ease; white-space: nowrap;
         }
         .credits-pill:hover { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(139,92,246,0.15); }
         .credits-amount {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: linear-gradient(135deg, var(--accent), var(--accent));
             background-clip: text; -webkit-background-clip: text;
             -webkit-text-fill-color: transparent; color: transparent; font-weight: 800; font-size: 14px;
         }
@@ -107,7 +110,7 @@
         /* ── Glass Card ── */
         .glass-card {
             background: var(--bg-glass); backdrop-filter: blur(16px);
-            border: 1px solid var(--border); border-radius: var(--radius);
+            border: 1px solid var(--line); border-radius: var(--radius);
             padding: 32px; margin-bottom: 24px; transition: all 0.3s ease;
         }
         .glass-card:hover { border-color: rgba(255,255,255,0.18); }
@@ -115,7 +118,7 @@
         /* ── Breadcrumb ── */
         .breadcrumb {
             display: flex; align-items: center; gap: 8px;
-            font-size: 13px; color: var(--text-muted); font-weight: 600;
+            font-size: 13px; color: var(--muted); font-weight: 600;
             margin-bottom: 28px;
         }
         .breadcrumb a { color: var(--accent); transition: opacity 0.2s; }
@@ -129,7 +132,7 @@
         }
         .score-ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
         .ring-bg {
-            fill: none; stroke: var(--border); stroke-width: 14; stroke-linecap: round;
+            fill: none; stroke: var(--line); stroke-width: 14; stroke-linecap: round;
         }
         .ring-fill {
             fill: none; stroke-width: 14; stroke-linecap: round;
@@ -144,7 +147,7 @@
             font-size: 4rem; font-weight: 900; letter-spacing: -3px; line-height: 1;
         }
         .score-label {
-            font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;
+            font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase;
             letter-spacing: 1px; margin-top: 4px;
         }
         .score-verdict {
@@ -162,8 +165,8 @@
             font-size: 18px; font-weight: 800; margin-bottom: 6px;
             display: flex; align-items: center; gap: 10px;
         }
-        .section-Sbtitle {
-            font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5;
+        .section-subtitle {
+            font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.5;
         }
 
         /* ── Reason / Tip Cards ── */
@@ -182,7 +185,7 @@
             font-size: 18px; flex-shrink: 0;
         }
         .reason-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-        .reason-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+        .reason-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
 
         .impact-tag {
             display: inline-flex; align-items: center; gap: 4px;
@@ -206,7 +209,7 @@
             font-size: 18px; flex-shrink: 0;
         }
         .tip-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: #34d399; }
-        .tip-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+        .tip-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
 
         .boost-tag {
             display: inline-flex; align-items: center; gap: 4px;
@@ -221,10 +224,10 @@
             display: flex; justify-content: space-between; align-items: center;
             font-size: 13px; font-weight: 700; margin-bottom: 6px;
         }
-        .break-item label span { color: var(--text-muted); font-weight: 600; }
+        .break-item label span { color: var(--muted); font-weight: 600; }
         .bar-track {
             width: 100%; height: 8px; border-radius: 99px;
-            background: var(--border); overflow: hidden;
+            background: var(--line); overflow: hidden;
         }
         .bar-fill {
             height: 100%; border-radius: 99px;
@@ -238,30 +241,30 @@
             border: 1px solid rgba(139,92,246,0.25);
         }
         .cta-box h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
-        .cta-box p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+        .cta-box p { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
         .btn-cta {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 12px 28px; border-radius: 10px; font-weight: 800;
             font-size: 14px; border: none; cursor: pointer;
-            background: var(--primary); color: #fff;
+            background: var(--accent); color: #fff;
             transition: all 0.2s;
         }
-        .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--primary-glow); }
+        .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent-glow); }
 
         .btn-back {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 10px 20px; border-radius: 8px; font-weight: 700;
-            font-size: 13px; border: 1px solid var(--border);
-            background: transparent; color: var(--text-muted); cursor: pointer;
+            font-size: 13px; border: 1px solid var(--line);
+            background: transparent; color: var(--muted); cursor: pointer;
             transition: all 0.2s;
         }
-        .btn-back:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-back:hover { border-color: var(--accent); color: var(--accent); }
 
         /* ── Scrollbar ── */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+        ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
         @media (max-width: 640px) {
             .page-wrap { padding: 80px 12px 40px; }
@@ -274,6 +277,7 @@
 </head>
 
 <body>
+    <div id='header-placeholder'></div>
     <div class="video-bg">
         <video autoplay muted loop playsinline>
             <source src="4779866-hd_1920_1080_30fps.mp4" type="video/mp4">
@@ -281,29 +285,7 @@
     </div>
     <div class="video-overlay"></div>
 
-    <header>
-        <div class="header-content">
-            <div class="logo" onclick="window.location.href='feed.html'">SPHERA</div>
-            <div class="header-actions">
-                <div class="icon-btn" onclick="toggleTheme()" title="Toggle theme">
-                    <svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </div>
-                <div class="icon-btn" title="Notifications">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                    <div class="notification-dot"></div>
-                </div>
-                <div class="icon-btn" title="Messages">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                </div>
-                <div class="credits-pill" id="creditsPill" title="Your redeemed credits">
-                    <span>💳</span>
-                    <span id="creditsDisplay" class="credits-amount">0</span>
-                    <span style="font-weight:600;font-size:12px;color:var(--text-muted);">Credits</span>
-                </div>
-                <img src="assets/profile.png" alt="Me" style="width:32px;height:32px;border-radius:8px;cursor:pointer;">
-            </div>
-        </div>
-    </header>
+    
 
     <div class="page-wrap">
 
@@ -311,7 +293,7 @@
         <div class="breadcrumb">
             <a href="feed.html">Feed</a>
             <span>›</span>
-            <span style="color:var(--text-main);">Trust Signal</span>
+            <span style="color:var(--text);">Trust Signal</span>
         </div>
 
         <!-- ═══ SCORE HERO ═══ -->
@@ -334,7 +316,7 @@
                 </div>
             </div>
             <div id="verdictBadge" class="score-verdict verdict-low">⚠️ Needs Improvement</div>
-            <p style="max-width:480px;margin:18px auto 0;font-size:14px;color:var(--text-muted);line-height:1.6;">
+            <p style="max-width:480px;margin:18px auto 0;font-size:14px;color:var(--muted);line-height:1.6;">
                 Your Trust Signal represents how the professional community perceives your reliability, skills, and collaboration quality. It directly impacts job visibility, intro requests, and deal room access.
             </p>
         </div>
@@ -342,7 +324,7 @@
         <!-- ═══ SCORE BREAKDOWN ═══ -->
         <div class="glass-card">
             <div class="section-title">📊 Score Breakdown</div>
-            <div class="section-Sbtitle">Contribution of each factor to your Trust Signal</div>
+            <div class="section-subtitle">Contribution of each factor to your Trust Signal</div>
             <div class="breakdown-grid">
                 <div class="break-item">
                     <label>Professional Skills <span id="bSkill">0/250</span></label>
@@ -366,7 +348,7 @@
         <!-- ═══ REASONS WHY IT'S LOW ═══ -->
         <div class="glass-card">
             <div class="section-title">🔻 Why Your Trust Signal Is Low</div>
-            <div class="section-Sbtitle">These factors are actively dragging your score down. Address them to see improvement.</div>
+            <div class="section-subtitle">These factors are actively dragging your score down. Address them to see improvement.</div>
             <div class="reason-list">
 
                 <div class="reason-card">
@@ -382,7 +364,7 @@
                     <div class="reason-icon">⚠️</div>
                     <div>
                         <h4>Multiple negative collaboration reviews</h4>
-                        <p>Several past collaborators flagged isSes Sch as missed deadlines, unresponsive communication, and lack of follow-through on commitments — key factors that reduce trust in professional networks.</p>
+                        <p>Several past collaborators flagged issues such as missed deadlines, unresponsive communication, and lack of follow-through on commitments — key factors that reduce trust in professional networks.</p>
                         <div class="impact-tag impact-high">⬇ High Impact · −150 pts</div>
                     </div>
                 </div>
@@ -400,7 +382,7 @@
                     <div class="reason-icon">📉</div>
                     <div>
                         <h4>Low engagement on professional content</h4>
-                        <p>Your posts and shared insights receive minimal interaction, Sggesting limited thought leadership visibility. Active contributors are perceived as more credible and trustworthy.</p>
+                        <p>Your posts and shared insights receive minimal interaction, suggesting limited thought leadership visibility. Active contributors are perceived as more credible and trustworthy.</p>
                         <div class="impact-tag impact-med">⬇ Medium Impact · −90 pts</div>
                     </div>
                 </div>
@@ -420,7 +402,7 @@
         <!-- ═══ HOW TO IMPROVE ═══ -->
         <div class="glass-card">
             <div class="section-title">🚀 How to Increase Your Trust Signal</div>
-            <div class="section-Sbtitle">Follow these steps to rebuild and strengthen your professional Trust Signal. Each action directly raises your score.</div>
+            <div class="section-subtitle">Follow these steps to rebuild and strengthen your professional Trust Signal. Each action directly raises your score.</div>
             <div class="tip-list">
 
                 <div class="tip-card">
@@ -445,7 +427,7 @@
                     <div class="tip-icon">📝</div>
                     <div>
                         <h4>Publish high-quality industry insights</h4>
-                        <p>Share original analysis, case studies, or lessons learned. Posts with 10+ trust reactions boost your thought leadership score Sbstantially.</p>
+                        <p>Share original analysis, case studies, or lessons learned. Posts with 10+ trust reactions boost your thought leadership score substantially.</p>
                         <div class="boost-tag">⬆ +80 pts potential</div>
                     </div>
                 </div>
@@ -588,3 +570,8 @@
 </body>
 
 </html>
+
+
+
+
+
