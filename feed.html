@@ -626,8 +626,99 @@
             font-weight: 800;
             font-size: 14px;
         }
+
+        /* --- Media Modal Styles --- */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-backdrop.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .media-modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            width: min(440px, 90%);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-backdrop.show .media-modal {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .modal-subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            text-align: left;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .option-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .option-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--surface);
+            border-radius: 10px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border);
+        }
+
+        .hidden-inputs {
+            display: none;
+        }
     </style>
     <script src="theme.js"></script>
+    <script src="media_handler.js" defer></script>
 </head>
 
 <body>
@@ -772,7 +863,7 @@
                             placeholder="Share an industry insight, opportunity, or connection search..."></textarea>
                         <div class="composer-actions">
                             <div class="action-group">
-                                <button class="btn btn-ghost">
+                                <button id="mediaBtn" class="btn btn-ghost">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                         style="color: #3b82f6;">
@@ -994,6 +1085,61 @@
 
 
     </script>
+    <!-- Media Selection Modal -->
+    <div class="modal-backdrop" id="mediaModalBackdrop">
+        <div class="media-modal" id="mediaModalContent">
+            <!-- Content will be dynamically swapped by JS -->
+            <div id="typeSelection">
+                <h3 class="modal-title">Select Media Type</h3>
+                <p class="modal-subtitle">What would you like to share today?</p>
+                <div class="modal-options">
+                    <button class="option-btn" onclick="selectMediaType('photos')">
+                        <div class="option-icon">🖼️</div>
+                        <div>
+                            <div>Photos</div>
+                            <small style="color:var(--text-muted); font-weight:400;">Images, infographics, snapshots</small>
+                        </div>
+                    </button>
+                    <button class="option-btn" onclick="selectMediaType('videos')">
+                        <div class="option-icon">🎥</div>
+                        <div>
+                            <div>Videos</div>
+                            <small style="color:var(--text-muted); font-weight:400;">MP4, MOV, or shorts</small>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div id="sourceSelection" style="display: none;">
+                <h3 class="modal-title" id="sourceTitle">Select Source</h3>
+                <p class="modal-subtitle">Where is your media stored?</p>
+                <div class="modal-options">
+                    <button class="option-btn" onclick="selectMediaSource('google')">
+                        <div class="option-icon">🔍</div>
+                        <div>
+                            <div>Google Photos</div>
+                            <small style="color:var(--text-muted); font-weight:400;">Cloud storage & albums</small>
+                        </div>
+                    </button>
+                    <button class="option-btn" onclick="selectMediaSource('local')">
+                        <div class="option-icon">💻</div>
+                        <div>
+                            <div>Local Device</div>
+                            <small style="color:var(--text-muted); font-weight:400;">From your computer files</small>
+                        </div>
+                    </button>
+                    <button class="btn btn-ghost" style="margin-top: 12px; width: 100%;" onclick="resetMediaModal()">← Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden File Inputs -->
+    <div class="hidden-inputs">
+        <input type="file" id="localPhotoInput" accept="image/*">
+        <input type="file" id="localVideoInput" accept="video/*">
+    </div>
+
 </body>
 
 </html>
