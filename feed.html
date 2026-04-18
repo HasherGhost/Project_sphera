@@ -719,6 +719,7 @@
     </style>
     <script src="theme.js"></script>
     <script src="media_handler.js" defer></script>
+    <script src="feed_logic.js" defer></script>
 </head>
 
 <body>
@@ -859,7 +860,7 @@
                         class="rounded-full object-cover border border-slate-700 bg-slate-800"
                         style="width: 48px; height: 48px;">
                     <div style="flex: 1;">
-                        <textarea class="composer-input"
+                        <textarea id="composerInput" class="composer-input"
                             placeholder="Share an industry insight, opportunity, or connection search..."></textarea>
                         <div class="composer-actions">
                             <div class="action-group">
@@ -882,13 +883,15 @@
                                     Trust Signal
                                 </button>
                             </div>
-                            <button class="btn btn-primary">Post Update</button>
+                            <button id="postBtn" class="btn btn-primary">Post Update</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Post 1 -->
+            <!-- Posts Container -->
+            <div id="postsContainer">
+                <!-- Post 1 -->
             <article class="glass-card post">
                 <div class="post-header">
                     <div class="post-author">
@@ -985,6 +988,7 @@
                     </div>
                 </div>
             </article>
+        </div>
         </main>
 
         <!-- Right Sidebar -->
