@@ -719,6 +719,7 @@
     </style>
     <script src="theme.js"></script>
     <script src="media_handler.js" defer></script>
+    <script src="feed_logic.js" defer></script>
 </head>
 
 <body>
@@ -774,7 +775,8 @@
                 <!-- 👤 Profile -->
                 <img src="public/avatars/maggot.png" alt="Me"
                     class="rounded-full object-cover border border-slate-700 bg-slate-800"
-                    style="width: 32px; height: 32px; cursor:pointer;">
+                    style="width: 32px; height: 32px; cursor:pointer;"
+                    onclick="window.location.href='profile.html'">
             </div>
         </div>
     </header>
@@ -785,8 +787,9 @@
             <div class="glass-card profile-summary">
                 <img src="public/avatars/ned-ramirez.png" alt="Profile"
                     class="rounded-full object-cover border border-slate-700 bg-slate-800"
-                    style="width: 80px; height: 80px;">
-                <h3 class="profile-name">Sarah Jenkins</h3>
+                    style="width: 80px; height: 80px; cursor:pointer;"
+                    onclick="window.location.href='profile.html'">
+                <h3 class="profile-name" style="cursor: pointer;" onclick="window.location.href='profile.html'">Sarah Jenkins</h3>
                 <p class="profile-title">Managing Director @ Sphere Ventures</p>
                 <div class="liveness-verified">
                     <span class="pulse"></span> Liveness Verified
@@ -847,6 +850,14 @@
                         </svg>
                         Rewards
                     </li>
+                    <li class="nav-item" onclick="window.location.href='profile.html'">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Profile
+                    </li>
                 </ul>
             </div>
         </aside>
@@ -859,7 +870,7 @@
                         class="rounded-full object-cover border border-slate-700 bg-slate-800"
                         style="width: 48px; height: 48px;">
                     <div style="flex: 1;">
-                        <textarea class="composer-input"
+                        <textarea id="composerInput" class="composer-input"
                             placeholder="Share an industry insight, opportunity, or connection search..."></textarea>
                         <div class="composer-actions">
                             <div class="action-group">
@@ -882,13 +893,15 @@
                                     Trust Signal
                                 </button>
                             </div>
-                            <button class="btn btn-primary">Post Update</button>
+                            <button id="postBtn" class="btn btn-primary">Post Update</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Post 1 -->
+            <!-- Posts Container -->
+            <div id="postsContainer">
+                <!-- Post 1 -->
             <article class="glass-card post">
                 <div class="post-header">
                     <div class="post-author">
@@ -985,6 +998,7 @@
                     </div>
                 </div>
             </article>
+        </div>
         </main>
 
         <!-- Right Sidebar -->
