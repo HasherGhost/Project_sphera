@@ -42,14 +42,41 @@
         }
 
         body {
-            background-color: var(--bg);
+            background-color: transparent;
             color: var(--text-main);
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
             transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* ── Video Background ── */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            opacity: 0.8;
+            z-index: -1;
+            backdrop-filter: blur(8px);
+            transition: background 0.3s ease;
         }
 
         /* --- Global Layout --- */
@@ -546,6 +573,12 @@
     </style>
 </head>
 <body>
+    <div class="video-bg">
+        <video autoplay muted loop playsinline>
+            <source src="4779866-hd_1920_1080_30fps.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="video-overlay"></div>
 
     <header>
         <div class="header-content">
