@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SyncUp | Trusted Professional Network</title>
     <meta name="description" content="Build a trusted professional ecosystem with camera-based liveness verification.">
+<<<<<<< HEAD
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- MediaPipe Face Mesh for real landmark-based liveness -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+=======
     <link
         href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
@@ -14,6 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
         crossorigin="anonymous"></script>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
     <style>
         :root {
@@ -37,6 +45,16 @@
             --radius: 14px;
             --radius-sm: 10px;
             --radius-xs: 8px;
+<<<<<<< HEAD
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+            --shadow-purple: 0 4px 20px rgba(124,58,237,0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+=======
             --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
             --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
@@ -52,6 +70,7 @@
         html {
             scroll-behavior: smooth;
         }
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
 
         body {
             font-family: 'Inter', -apple-system, system-ui, sans-serif;
@@ -63,6 +82,27 @@
             line-height: 1.6;
         }
 
+<<<<<<< HEAD
+        ::selection { background: var(--purple-light); color: var(--purple-dark); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #D4D4D4; border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--purple-mid); }
+
+        a { text-decoration: none; color: inherit; }
+        .hidden { display: none !important; }
+
+        /* Container */
+        .container { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* === BUTTONS === */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 11px 24px; border-radius: var(--radius-sm); font-family: inherit;
+            font-weight: 600; font-size: 0.875rem; cursor: pointer; border: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); outline: none;
+            letter-spacing: -0.01em;
+=======
         ::selection {
             background: var(--purple-light);
             color: var(--purple-dark);
@@ -121,9 +161,18 @@
 
         .btn:active {
             transform: scale(0.97);
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         }
 
         .btn-primary {
+<<<<<<< HEAD
+            background: var(--purple); color: white;
+            box-shadow: var(--shadow-purple);
+        }
+        .btn-primary:hover {
+            background: var(--purple-dark);
+            box-shadow: 0 8px 30px rgba(124,58,237,0.25);
+=======
             background: var(--purple);
             color: white;
             box-shadow: var(--shadow-purple);
@@ -132,10 +181,54 @@
         .btn-primary:hover {
             background: var(--purple-dark);
             box-shadow: 0 8px 30px rgba(124, 58, 237, 0.25);
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             transform: translateY(-1px);
         }
 
         .btn-secondary {
+<<<<<<< HEAD
+            background: transparent; color: var(--text);
+            border: 1.5px solid var(--border);
+        }
+        .btn-secondary:hover { border-color: var(--purple-mid); color: var(--purple); background: var(--purple-light); }
+
+        .btn-ghost {
+            background: transparent; color: var(--text-secondary); border: none; padding: 8px;
+        }
+        .btn-ghost:hover { color: var(--purple); }
+
+        .btn-orange {
+            background: var(--orange); color: white;
+            box-shadow: 0 4px 16px rgba(249,115,22,0.2);
+        }
+        .btn-orange:hover { background: #EA580C; transform: translateY(-1px); }
+
+        /* === INPUTS === */
+        .input-field {
+            width: 100%; background: var(--bg);
+            border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+            padding: 12px 14px 12px 42px; color: var(--text);
+            font-family: inherit; font-size: 0.9rem;
+            transition: all 0.2s ease; outline: none;
+        }
+        .input-field::placeholder { color: var(--text-tertiary); }
+        .input-field:hover { border-color: #D1D1CD; }
+        .input-field:focus {
+            border-color: var(--purple); background: white;
+            box-shadow: 0 0 0 3px rgba(124,58,237,0.08);
+        }
+
+        .input-group { margin-bottom: 1.25rem; }
+        .input-group label { display: block; margin-bottom: 6px; font-size: 0.825rem; font-weight: 600; color: var(--text); }
+        .input-wrapper { position: relative; }
+        .input-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); pointer-events: none; transition: color 0.2s; }
+        .input-wrapper:focus-within .input-icon { color: var(--purple); }
+
+        .error-msg {
+            display: none; align-items: center; gap: 8px;
+            padding: 12px 14px; background: #FEF2F2; border: 1px solid #FEE2E2;
+            border-radius: var(--radius-xs); color: var(--danger); font-size: 0.825rem; margin-bottom: 1rem;
+=======
             background: transparent;
             color: var(--text);
             border: 1.5px solid var(--border);
@@ -238,8 +331,37 @@
             color: var(--danger);
             font-size: 0.825rem;
             margin-bottom: 1rem;
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         }
 
+<<<<<<< HEAD
+        /* === BADGE === */
+        .badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 4px 12px; background: var(--bg-subtle); border: 1px solid var(--border);
+            border-radius: 100px; font-size: 0.75rem; font-weight: 500; color: var(--text-secondary);
+        }
+
+        /* === PAGES === */
+        .page { min-height: 100vh; position: relative; }
+
+        /* === HEADER === */
+        .site-header {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 0;
+        }
+        .nav-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 20px; border-radius: 100px;
+            background: rgba(255,255,255,0.85); backdrop-filter: blur(20px);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow);
+        }
+        .logo { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .logo-mark {
+            width: 32px; height: 32px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--purple), var(--orange));
+            display: flex; align-items: center; justify-content: center; color: white;
+=======
         .error-msg.show {
             display: flex;
         }
@@ -291,8 +413,34 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
+        }
+        .logo-name { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
+        .nav-actions { display: flex; gap: 8px; align-items: center; }
+
+<<<<<<< HEAD
+        /* === LANDING HERO === */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 7rem 1.5rem 4rem; position: relative; overflow: hidden;
+        }
+        .hero-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4rem; align-items: center; width: 100%; max-width: 1120px; margin: 0 auto;
         }
 
+        .hero-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; background: var(--purple-light); border: 1px solid #DDD6FE;
+            border-radius: 100px; font-size: 0.75rem; font-weight: 600;
+            color: var(--purple); margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.75rem); font-weight: 900;
+            line-height: 1.05; letter-spacing: -0.035em;
+            color: var(--text); margin-bottom: 1.25rem;
+=======
         .logo-mark {
             width: 32px;
             height: 32px;
@@ -366,9 +514,144 @@
 
         .hero h1 .accent-orange {
             color: var(--orange);
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         }
+        .hero h1 .accent-purple { color: var(--purple); }
+        .hero h1 .accent-orange { color: var(--orange); }
 
         .hero p {
+<<<<<<< HEAD
+            font-size: 1.1rem; color: var(--text-secondary); max-width: 480px;
+            margin-bottom: 2rem; line-height: 1.7;
+        }
+
+        .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 2.5rem; }
+
+        .trust-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-tertiary); }
+        .trust-item i { color: var(--purple-mid); }
+
+        /* Hero visual */
+        .hero-visual {
+            position: relative; border-radius: var(--radius);
+            overflow: hidden; background: var(--bg-subtle); border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg); aspect-ratio: 4/3;
+        }
+        .hero-visual img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .hero-visual-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(249,115,22,0.06));
+        }
+        .hero-visual-badge {
+            position: absolute; bottom: 16px; left: 16px; right: 16px;
+            display: flex; justify-content: space-between; gap: 8px;
+            padding: 10px 14px; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+            border-radius: var(--radius-xs); border: 1px solid var(--border);
+            font-size: 0.7rem; font-weight: 600; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .hero-visual-badge .dot {
+            width: 6px; height: 6px; border-radius: 50%; background: var(--success);
+            display: inline-block; margin-right: 4px; animation: pulse-dot 2s infinite;
+        }
+
+        /* Decorative blobs */
+        .blob-purple {
+            position: absolute; width: 400px; height: 400px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(124,58,237,0.08), transparent 70%);
+            pointer-events: none; z-index: -1;
+        }
+        .blob-orange {
+            position: absolute; width: 300px; height: 300px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(249,115,22,0.06), transparent 70%);
+            pointer-events: none; z-index: -1;
+        }
+
+        /* === STATS === */
+        .stats-section { padding: 3rem 1.5rem; }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+            background: var(--border); border-radius: var(--radius); overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .stat-item { background: white; padding: 2rem; text-align: center; }
+        .stat-value { font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; color: var(--purple); }
+        .stat-label { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 4px; font-weight: 500; }
+
+        /* === FEATURES === */
+        .features-section { padding: 5rem 1.5rem; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-tag {
+            display: inline-flex; padding: 4px 12px; background: var(--orange-light);
+            border: 1px solid #FED7AA; border-radius: 100px;
+            font-size: 0.7rem; font-weight: 700; color: var(--orange);
+            text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;
+        }
+        .section-header h2 {
+            font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800;
+            letter-spacing: -0.03em; line-height: 1.15; color: var(--text);
+        }
+        .section-header p { color: var(--text-secondary); max-width: 500px; margin: 0.75rem auto 0; }
+
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+        .feature-card {
+            padding: 1.75rem; border-radius: var(--radius); background: white;
+            border: 1px solid var(--border); transition: all 0.25s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-3px); border-color: var(--purple-mid);
+            box-shadow: var(--shadow-purple);
+        }
+        .feature-icon {
+            width: 44px; height: 44px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
+        }
+        .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+        .feature-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* === STEPS === */
+        .steps-section { padding: 5rem 1.5rem; }
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .step-card {
+            text-align: center; padding: 2rem 1.5rem; border-radius: var(--radius);
+            background: white; border: 1px solid var(--border); transition: all 0.25s ease;
+        }
+        .step-card:hover { border-color: var(--orange-mid); box-shadow: 0 6px 24px rgba(249,115,22,0.1); }
+        .step-num {
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1rem; font-weight: 800; font-size: 0.85rem; color: white;
+        }
+        .step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+        .step-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+
+        /* === CTA === */
+        .cta-section { padding: 5rem 1.5rem; }
+        .cta-box {
+            text-align: center; padding: 3.5rem 2rem; border-radius: 20px;
+            background: linear-gradient(135deg, var(--purple-light), var(--orange-light));
+            border: 1px solid #E5DEFF; position: relative; overflow: hidden;
+        }
+        .cta-box h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+        .cta-box p { color: var(--text-secondary); margin-bottom: 2rem; }
+
+        /* === FOOTER === */
+        .site-footer {
+            padding: 2rem 1.5rem; border-top: 1px solid var(--border);
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .site-footer p { font-size: 0.8rem; color: var(--text-tertiary); }
+        .footer-links { display: flex; gap: 1.5rem; }
+        .footer-links a { font-size: 0.8rem; color: var(--text-tertiary); transition: color 0.2s; }
+        .footer-links a:hover { color: var(--purple); }
+
+        /* === LOGIN === */
+        #page-login {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 2rem; background: var(--bg);
+=======
             font-size: 1.1rem;
             color: var(--text-secondary);
             max-width: 480px;
@@ -706,9 +989,14 @@
             justify-content: center;
             padding: 2rem;
             background: var(--bg);
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         }
-
         .login-panel {
+<<<<<<< HEAD
+            display: flex; width: 100%; max-width: 960px; min-height: 540px;
+            border-radius: 20px; overflow: hidden; background: white;
+            border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+=======
             display: flex;
             width: 100%;
             max-width: 960px;
@@ -718,10 +1006,15 @@
             background: white;
             border: 1px solid var(--border);
             box-shadow: var(--shadow-lg);
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             animation: fadeUp 0.6s ease both;
         }
-
         .login-brand {
+<<<<<<< HEAD
+            flex: 1; padding: 3rem; display: flex; flex-direction: column; justify-content: space-between;
+            background: linear-gradient(135deg, var(--purple), #9333EA);
+            color: white; position: relative; overflow: hidden;
+=======
             flex: 1;
             padding: 3rem;
             display: flex;
@@ -731,9 +1024,31 @@
             color: white;
             position: relative;
             overflow: hidden;
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         }
 
         .login-brand::after {
+<<<<<<< HEAD
+            content: ''; position: absolute; bottom: -40px; right: -40px;
+            width: 200px; height: 200px; border-radius: 50%;
+            background: rgba(249,115,22,0.2); filter: blur(60px);
+        }
+        .login-brand h1 { font-size: 2.25rem; font-weight: 800; line-height: 1.1; margin-top: 2rem; letter-spacing: -0.02em; }
+        .login-brand p { font-size: 0.95rem; opacity: 0.85; line-height: 1.6; max-width: 340px; margin-top: 0.75rem; }
+        .login-brand .brand-footer { font-size: 0.7rem; opacity: 0.5; }
+
+        .login-form-section {
+            width: 420px; padding: 3rem; display: flex; flex-direction: column; justify-content: center;
+        }
+        .login-form-section h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.02em; }
+        .login-form-section .subtitle { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.75rem; }
+        .login-form-section .subtitle a { color: var(--purple); font-weight: 600; }
+        .login-form-section .subtitle a:hover { text-decoration: underline; }
+
+        .role-selector {
+            display: flex; background: var(--bg-subtle); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 3px; margin-bottom: 1.5rem; position: relative;
+=======
             content: '';
             position: absolute;
             bottom: -40px;
@@ -804,9 +1119,44 @@
             padding: 3px;
             margin-bottom: 1.5rem;
             position: relative;
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         }
 
         .role-btn {
+<<<<<<< HEAD
+            flex: 1; padding: 8px 0; text-align: center; font-weight: 600; font-size: 0.8rem;
+            color: var(--text-tertiary); cursor: pointer; border-radius: var(--radius-xs);
+            transition: color 0.3s; position: relative; z-index: 2;
+        }
+        .role-btn.active { color: var(--purple); }
+        .role-indicator {
+            position: absolute; top: 3px; bottom: 3px; width: calc(33.333% - 2px);
+            background: white; border-radius: var(--radius-xs);
+            box-shadow: var(--shadow-sm); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1;
+        }
+
+        .forgot-link { display: block; text-align: right; font-size: 0.78rem; color: var(--purple); margin-top: 4px; font-weight: 500; }
+        .forgot-link:hover { text-decoration: underline; }
+
+        .divider-line {
+            display: flex; align-items: center; margin: 1.5rem 0; color: var(--text-tertiary); font-size: 0.75rem;
+        }
+        .divider-line::before, .divider-line::after { content: ''; flex: 1; border-bottom: 1px solid var(--border); }
+        .divider-line span { padding: 0 1rem; }
+
+        .signup-prompt { text-align: center; margin-top: 1.25rem; font-size: 0.82rem; color: var(--text-secondary); }
+        .signup-prompt a { color: var(--purple); font-weight: 600; }
+
+        /* === FACE VERIFY === */
+        #page-face-verify {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 2rem; background: var(--bg);
+        }
+        .face-card {
+            width: 100%; max-width: 540px; padding: 2.5rem; border-radius: 20px;
+            background: white; border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+            text-align: center; animation: fadeUp 0.6s ease both;
+=======
             flex: 1;
             padding: 8px 0;
             text-align: center;
@@ -900,9 +1250,63 @@
             box-shadow: var(--shadow-lg);
             text-align: center;
             animation: fadeUp 0.6s ease both;
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
+        }
+        .face-icon-circle {
+<<<<<<< HEAD
+            width: 72px; height: 72px; border-radius: 18px;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem;
         }
 
-        .face-icon-circle {
+        .instructions-list { text-align: left; margin: 1.5rem 0 1.75rem; display: grid; gap: 8px; }
+        .instruction {
+            display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+            border-radius: var(--radius-xs); background: var(--bg-subtle); border: 1px solid var(--border-light);
+            font-size: 0.85rem; color: var(--text);
+        }
+        .instruction-num {
+            width: 28px; height: 28px; border-radius: 8px;
+            background: var(--purple-light); color: var(--purple);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.7rem; flex-shrink: 0;
+        }
+
+        .video-container {
+            position: relative; width: 100%; aspect-ratio: 4/3;
+            border-radius: var(--radius); overflow: hidden; background: #F9FAFB;
+            border: 2px solid var(--border); margin-bottom: 1rem;
+        }
+        .video-container video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        .video-container canvas { position: absolute; inset: 0; width: 100%; height: 100%; transform: scaleX(-1); }
+        .face-guide { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+        .guide-oval {
+            width: 55%; aspect-ratio: 3/4; border: 2.5px dashed var(--purple-mid);
+            border-radius: 50%; opacity: 0.6;
+        }
+
+        .status-bar {
+            padding: 10px 14px; border-radius: var(--radius-xs); background: var(--bg-subtle);
+            border: 1px solid var(--border-light); margin-bottom: 1rem;
+            font-size: 0.825rem; color: var(--text-secondary); font-weight: 500;
+        }
+
+        .checks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .check-item {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            padding: 12px 8px; border-radius: var(--radius-xs);
+            background: var(--bg-subtle); border: 1px solid var(--border-light);
+            font-size: 0.7rem; font-weight: 600; color: var(--text-tertiary);
+            transition: all 0.3s ease;
+        }
+        .check-item.done {
+            background: #F0FDF4; border-color: #BBF7D0; color: var(--success);
+        }
+
+        .spinner {
+            width: 36px; height: 36px; border: 3px solid var(--border);
+            border-top-color: var(--purple); border-radius: 50%;
+            animation: spin 0.7s linear infinite; margin: 0 auto 1rem;
+=======
             width: 72px;
             height: 72px;
             border-radius: 18px;
@@ -1061,9 +1465,108 @@
             grid-template-columns: 260px 1fr 260px;
             gap: 1.25rem;
             padding-bottom: 3rem;
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         }
 
+        /* === DASHBOARD === */
+        #page-dashboard { padding-top: 5rem; background: var(--bg); }
+        .dash-header { padding: 2rem 0; }
+        .dash-header h1 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
+        .dash-header .accent { color: var(--purple); }
+
+        .dash-grid { display: grid; grid-template-columns: 260px 1fr 260px; gap: 1.25rem; padding-bottom: 3rem; }
+
         .profile-card {
+<<<<<<< HEAD
+            padding: 1.5rem; border-radius: var(--radius); background: white;
+            border: 1px solid var(--border);
+        }
+        .avatar {
+            width: 52px; height: 52px; border-radius: 14px;
+            background: linear-gradient(135deg, var(--purple), var(--orange));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.1rem; color: white; margin-bottom: 10px;
+        }
+        .profile-card .name { font-weight: 700; font-size: 0.9rem; }
+        .profile-card .headline { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
+        .profile-stats {
+            display: flex; gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+        }
+        .profile-stats div { text-align: center; flex: 1; }
+        .profile-stats .val { font-weight: 800; font-size: 1rem; color: var(--purple); }
+        .profile-stats .lbl { font-size: 0.68rem; color: var(--text-tertiary); margin-top: 2px; }
+
+        .create-post-bar {
+            display: flex; align-items: center; gap: 10px; padding: 1rem;
+            border-radius: var(--radius); background: white; border: 1px solid var(--border);
+            margin-bottom: 1rem; cursor: pointer; transition: border-color 0.2s;
+        }
+        .create-post-bar:hover { border-color: var(--purple-mid); }
+        .post-avatar {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: linear-gradient(135deg, var(--purple), var(--orange));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.75rem; color: white; flex-shrink: 0;
+        }
+        .post-input-bar {
+            flex: 1; background: var(--bg-subtle); border: 1px solid var(--border-light);
+            border-radius: 100px; padding: 9px 16px; font-size: 0.82rem; color: var(--text-tertiary);
+        }
+
+        .post-card {
+            padding: 1.25rem; border-radius: var(--radius); background: white;
+            border: 1px solid var(--border); margin-bottom: 1rem;
+        }
+        .post-author { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .post-author .av {
+            width: 36px; height: 36px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.72rem; color: white; flex-shrink: 0;
+        }
+        .post-author .author-name { font-weight: 600; font-size: 0.85rem; }
+        .post-author .author-info { font-size: 0.72rem; color: var(--text-tertiary); }
+        .post-content { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
+        .post-actions { display: flex; gap: 4px; border-top: 1px solid var(--border-light); padding-top: 10px; }
+        .post-action-btn {
+            display: flex; align-items: center; gap: 5px; padding: 6px 12px;
+            border-radius: var(--radius-xs); font-size: 0.78rem; color: var(--text-tertiary);
+            background: none; border: none; cursor: pointer; font-family: inherit; font-weight: 500;
+            transition: all 0.15s;
+        }
+        .post-action-btn:hover { color: var(--purple); background: var(--purple-light); }
+
+        .sidebar-widget {
+            padding: 1.25rem; border-radius: var(--radius); background: white;
+            border: 1px solid var(--border); margin-bottom: 1rem;
+        }
+        .sidebar-widget h3 { font-size: 0.82rem; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+        .widget-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+        .wi-av {
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.65rem; color: white; flex-shrink: 0;
+        }
+        .wi-name { font-size: 0.8rem; font-weight: 600; }
+        .wi-sub { font-size: 0.7rem; color: var(--text-tertiary); }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-visual { max-height: 320px; }
+            .login-panel { flex-direction: column; max-width: 480px; }
+            .login-brand { padding: 2rem; }
+            .login-brand h1 { font-size: 1.75rem; margin-top: 1rem; }
+            .login-form-section { width: 100%; padding: 2rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .steps-grid { grid-template-columns: 1fr; }
+            .dash-grid { grid-template-columns: 1fr; }
+            .dash-grid aside { display: none; }
+=======
             padding: 1.5rem;
             border-radius: var(--radius);
             background: white;
@@ -1354,6 +1857,7 @@
             .dash-grid aside {
                 display: none;
             }
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         }
 
         /* === Grok-inspired dark minimal pass === */
@@ -1363,26 +1867,46 @@
             --bg-card: rgba(13, 14, 12, 0.78);
             --bg-subtle: rgba(247, 247, 242, 0.055);
             --purple: #d8ff67;
+<<<<<<< HEAD
+            --purple-light: rgba(216,255,103,0.08);
+            --purple-mid: #d8ff67;
+            --purple-dark: #b7ef4f;
+            --orange: #69f6cf;
+            --orange-light: rgba(105,246,207,0.08);
+=======
             --purple-light: rgba(216, 255, 103, 0.08);
             --purple-mid: #d8ff67;
             --purple-dark: #b7ef4f;
             --orange: #69f6cf;
             --orange-light: rgba(105, 246, 207, 0.08);
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             --orange-mid: #69f6cf;
             --text: #f7f7f2;
             --text-secondary: #b8bbb4;
             --text-tertiary: #7c8178;
+<<<<<<< HEAD
+            --border: rgba(247,247,242,0.12);
+            --border-light: rgba(247,247,242,0.08);
+=======
             --border: rgba(247, 247, 242, 0.12);
             --border-light: rgba(247, 247, 242, 0.08);
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             --success: #d8ff67;
             --danger: #ff6b6b;
             --radius: 8px;
             --radius-sm: 8px;
             --radius-xs: 6px;
+<<<<<<< HEAD
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.32);
+            --shadow: 0 16px 48px rgba(0,0,0,0.28);
+            --shadow-lg: 0 30px 90px rgba(0,0,0,0.44);
+            --shadow-purple: 0 16px 42px rgba(216,255,103,0.12);
+=======
             --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.32);
             --shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
             --shadow-lg: 0 30px 90px rgba(0, 0, 0, 0.44);
             --shadow-purple: 0 16px 42px rgba(216, 255, 103, 0.12);
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         }
 
         * {
@@ -1392,8 +1916,13 @@
         body {
             font-family: 'Geist', Inter, -apple-system, system-ui, sans-serif;
             background:
+<<<<<<< HEAD
+                linear-gradient(115deg, rgba(216,255,103,0.08), transparent 34%),
+                linear-gradient(250deg, rgba(105,246,207,0.07), transparent 32%),
+=======
                 linear-gradient(115deg, rgba(216, 255, 103, 0.08), transparent 34%),
                 linear-gradient(250deg, rgba(105, 246, 207, 0.07), transparent 32%),
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                 #050505;
             color: var(--text);
         }
@@ -1405,6 +1934,26 @@
             z-index: 0;
             pointer-events: none;
             background-image:
+<<<<<<< HEAD
+                linear-gradient(rgba(247,247,242,0.055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(247,247,242,0.055) 1px, transparent 1px);
+            background-size: 72px 72px;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent 78%);
+            animation: gridDrift 18s linear infinite;
+        }
+
+        .page,
+        .site-header {
+            position: relative;
+            z-index: 1;
+        }
+
+        .blob-purple,
+        .blob-orange {
+            display: none !important;
+        }
+
+=======
                 linear-gradient(rgba(247, 247, 242, 0.055) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(247, 247, 242, 0.055) 1px, transparent 1px);
             background-size: 72px 72px;
@@ -1423,6 +1972,7 @@
             display: none !important;
         }
 
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         .nav-inner,
         .stats-grid,
         .feature-card,
@@ -1434,7 +1984,11 @@
         .create-post-bar,
         .post-card,
         .sidebar-widget {
+<<<<<<< HEAD
+            background: rgba(13,14,12,0.78) !important;
+=======
             background: rgba(13, 14, 12, 0.78) !important;
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             border: 1px solid var(--border) !important;
             box-shadow: var(--shadow) !important;
             backdrop-filter: blur(24px);
@@ -1486,6 +2040,104 @@
         .forgot-link,
         .signup-prompt a {
             color: var(--purple) !important;
+<<<<<<< HEAD
+        }
+
+        .btn-primary,
+        .btn-orange {
+            background: var(--text) !important;
+            color: #070806 !important;
+            box-shadow: 0 14px 40px rgba(247,247,242,0.12) !important;
+        }
+
+        .btn-primary:hover,
+        .btn-orange:hover {
+            background: var(--purple) !important;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary,
+        .btn-ghost {
+            background: rgba(247,247,242,0.055) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text) !important;
+        }
+
+        .hero {
+            min-height: 96vh;
+            padding-top: 8rem;
+        }
+
+        .hero h1,
+        .section-header h2 {
+            font-family: 'Geist', Inter, sans-serif;
+            letter-spacing: 0 !important;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            line-height: 0.98;
+            max-width: 680px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+        }
+
+        .hero-tag,
+        .section-tag {
+            background: rgba(216,255,103,0.08) !important;
+            border-color: rgba(216,255,103,0.28) !important;
+        }
+
+        .hero-visual {
+            background: #090a08;
+            overflow: hidden;
+            min-height: 440px;
+        }
+
+        .hero-visual img {
+            filter: grayscale(1) contrast(1.2) brightness(0.62);
+            opacity: 0.72;
+            transform: scale(1.02);
+            animation: imageBreathe 14s ease-in-out infinite alternate;
+        }
+
+        .hero-visual-overlay {
+            background:
+                linear-gradient(90deg, rgba(5,5,5,0.55), transparent 58%),
+                repeating-linear-gradient(0deg, rgba(247,247,242,0.035) 0 1px, transparent 1px 5px);
+        }
+
+        .hero-visual-badge {
+            background: rgba(5,5,5,0.72);
+            border: 1px solid rgba(216,255,103,0.28);
+            color: var(--purple);
+            font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+
+        .login-brand {
+            background: rgba(13,14,12,0.92) !important;
+        }
+
+        .input-field {
+            background: rgba(247,247,242,0.055);
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        .input-field:focus {
+            border-color: rgba(216,255,103,0.5);
+            box-shadow: 0 0 0 4px rgba(216,255,103,0.08);
+        }
+
+        .role-indicator {
+            background: rgba(247,247,242,0.12) !important;
+=======
         }
 
         .btn-primary,
@@ -1582,6 +2234,7 @@
 
         .role-indicator {
             background: rgba(247, 247, 242, 0.12) !important;
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         }
 
         .video-container {
@@ -1590,13 +2243,22 @@
         }
 
         .guide-oval {
+<<<<<<< HEAD
+            border-color: rgba(216,255,103,0.56) !important;
+=======
             border-color: rgba(216, 255, 103, 0.56) !important;
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             border-radius: 8px !important;
         }
 
         .check-item.done {
+<<<<<<< HEAD
+            background: rgba(216,255,103,0.08) !important;
+            border-color: rgba(216,255,103,0.34) !important;
+=======
             background: rgba(216, 255, 103, 0.08) !important;
             border-color: rgba(216, 255, 103, 0.34) !important;
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             color: var(--purple) !important;
         }
 
@@ -1606,6 +2268,23 @@
         .headline,
         .stat-label {
             color: var(--text-secondary) !important;
+<<<<<<< HEAD
+        }
+
+        @keyframes gridDrift {
+            from { background-position: 0 0; }
+            to { background-position: 72px 72px; }
+        }
+
+        @keyframes imageBreathe {
+            from { transform: scale(1.02); }
+            to { transform: scale(1.08); }
+        }
+
+        @media (max-width: 640px) {
+            .site-header { position: relative; }
+            .nav-actions { display: none; }
+=======
         }
 
         @keyframes gridDrift {
@@ -1637,27 +2316,54 @@
                 display: none;
             }
 
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             .hero {
                 min-height: auto;
                 padding: 3rem 1rem;
             }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             .hero-grid {
                 display: block;
                 width: 100%;
                 max-width: 280px;
             }
+<<<<<<< HEAD
+            .hero-grid > div:first-child {
+=======
 
             .hero-grid>div:first-child {
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                 width: 100%;
                 max-width: 280px;
             }
-
             .hero h1 {
                 font-size: 27px;
                 line-height: 1;
                 max-width: 280px;
                 overflow-wrap: break-word;
+<<<<<<< HEAD
+            }
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            .hero p,
+            .hero-actions,
+            .trust-row,
+            .hero-visual {
+                width: 100%;
+                max-width: 280px;
+            }
+            .hero p { overflow-wrap: break-word; }
+            .hero-actions .btn {
+                width: 100%;
+            }
+            .trust-row {
+                gap: 0.75rem;
+            }
+=======
             }
 
             .section-header h2 {
@@ -1684,11 +2390,15 @@
                 gap: 0.75rem;
             }
 
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             .hero-visual {
                 margin-top: 2rem;
                 min-height: 280px;
             }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             .hero-visual-badge {
                 align-items: flex-start;
                 flex-direction: column;
@@ -1699,6 +2409,14 @@
 
 <body>
 
+<<<<<<< HEAD
+<!-- ══════ LANDING ══════ -->
+<div id="page-landing" class="page">
+    <header class="hdr"><div class="container"><div class="nav">
+        <div class="logo" onclick="showPage('landing')"><div class="lm"><i data-lucide="zap" style="width:14px;height:14px;"></i></div><div class="ln">SyncUp</div></div>
+        <div class="na"><button class="theme-toggle" onclick="toggleTheme()" id="tb"><i data-lucide="sun" style="width:16px;height:16px;" id="ti"></i></button><button class="btn btn-s" onclick="showPage('login')">Sign In</button><button class="btn btn-p" onclick="showPage('login')">Join Free</button></div>
+    </div></div></header>
+=======
     <!-- ====== LANDING ====== -->
     <div id="page-landing" class="page">
 
@@ -1716,6 +2434,7 @@
                 </div>
             </div>
         </header>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
 
         <section class="hero">
             <!-- Decorative blobs -->
@@ -1728,31 +2447,49 @@
                         <i data-lucide="shield-check" style="width:13px;height:13px;"></i>
                         Live human verification
                     </div>
+<<<<<<< HEAD
+                    <h1>Build a <span class="accent-purple">trusted</span> professional <span class="accent-orange">network</span></h1>
+=======
                     <h1>Build a <span class="accent-purple">trusted</span> professional <span
                             class="accent-orange">network</span></h1>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     <p>Every profile starts with camera liveness — real presence, real connections, zero fakes.</p>
                     <div class="hero-actions">
                         <button class="btn btn-primary" onclick="showPage('login')">
                             Start Verification <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
                         </button>
+<<<<<<< HEAD
+                        <button class="btn btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+=======
                         <button class="btn btn-secondary"
                             onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                             <i data-lucide="scan-face" style="width:15px;height:15px;"></i> How it works
                         </button>
                     </div>
                     <div class="trust-row">
+<<<<<<< HEAD
+                        <div class="trust-item"><i data-lucide="shield" style="width:14px;height:14px;"></i> Face-verified</div>
+                        <div class="trust-item"><i data-lucide="activity" style="width:14px;height:14px;"></i> Liveness checks</div>
+                        <div class="trust-item"><i data-lucide="building-2" style="width:14px;height:14px;"></i> Professionals only</div>
+=======
                         <div class="trust-item"><i data-lucide="shield" style="width:14px;height:14px;"></i>
                             Face-verified</div>
                         <div class="trust-item"><i data-lucide="activity" style="width:14px;height:14px;"></i> Liveness
                             checks</div>
                         <div class="trust-item"><i data-lucide="building-2" style="width:14px;height:14px;"></i>
                             Professionals only</div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     </div>
                 </div>
 
                 <div class="hero-visual">
+<<<<<<< HEAD
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Monochrome circuit detail with encrypted signal lighting">
+=======
                     <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"
                         alt="Monochrome circuit detail with encrypted signal lighting">
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     <div class="hero-visual-overlay"></div>
                     <div class="hero-visual-badge">
                         <span><span class="dot"></span> ON-DEVICE LIVENESS</span>
@@ -1765,6 +2502,12 @@
         <!-- Stats -->
         <section class="stats-section container">
             <div class="stats-grid">
+<<<<<<< HEAD
+                <div class="stat-item"><div class="stat-value" data-target="42891">0</div><div class="stat-label">Active Users</div></div>
+                <div class="stat-item"><div class="stat-value" data-target="1245">0</div><div class="stat-label">Live Events</div></div>
+                <div class="stat-item"><div class="stat-value" data-target="8234">0</div><div class="stat-label">Listings</div></div>
+                <div class="stat-item"><div class="stat-value" data-target="18920">0</div><div class="stat-label">Reviews</div></div>
+=======
                 <div class="stat-item">
                     <div class="stat-value" data-target="42891">0</div>
                     <div class="stat-label">Active Users</div>
@@ -1781,6 +2524,7 @@
                     <div class="stat-value" data-target="18920">0</div>
                     <div class="stat-label">Reviews</div>
                 </div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             </div>
         </section>
 
@@ -1793,26 +2537,42 @@
             </div>
             <div class="features-grid">
                 <div class="feature-card">
+<<<<<<< HEAD
+                    <div class="feature-icon" style="background: var(--purple-light);"><i data-lucide="users" style="width:20px;height:20px;color:var(--purple);"></i></div>
+=======
                     <div class="feature-icon" style="background: var(--purple-light);"><i data-lucide="users"
                             style="width:20px;height:20px;color:var(--purple);"></i></div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     <h3>Connect</h3>
                     <p>Network with verified professionals. Build meaningful, lasting relationships.</p>
                 </div>
                 <div class="feature-card">
+<<<<<<< HEAD
+                    <div class="feature-icon" style="background: var(--orange-light);"><i data-lucide="trending-up" style="width:20px;height:20px;color:var(--orange);"></i></div>
+=======
                     <div class="feature-icon" style="background: var(--orange-light);"><i data-lucide="trending-up"
                             style="width:20px;height:20px;color:var(--orange);"></i></div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     <h3>Grow</h3>
                     <p>Access exclusive opportunities and mentorship to accelerate your journey.</p>
                 </div>
                 <div class="feature-card">
+<<<<<<< HEAD
+                    <div class="feature-icon" style="background: #F0FDF4;"><i data-lucide="handshake" style="width:20px;height:20px;color:#10B981;"></i></div>
+=======
                     <div class="feature-icon" style="background: #F0FDF4;"><i data-lucide="handshake"
                             style="width:20px;height:20px;color:#10B981;"></i></div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     <h3>Collaborate</h3>
                     <p>Find partners and co-founders for your next big venture.</p>
                 </div>
                 <div class="feature-card">
+<<<<<<< HEAD
+                    <div class="feature-icon" style="background: #FEF2F2;"><i data-lucide="megaphone" style="width:20px;height:20px;color:#EF4444;"></i></div>
+=======
                     <div class="feature-icon" style="background: #FEF2F2;"><i data-lucide="megaphone"
                             style="width:20px;height:20px;color:#EF4444;"></i></div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     <h3>Promote</h3>
                     <p>Reach thousands of verified professionals with targeted campaigns.</p>
                 </div>
@@ -1822,22 +2582,34 @@
         <!-- Steps -->
         <section class="steps-section container">
             <div class="section-header">
+<<<<<<< HEAD
+                <div class="section-tag" style="background: var(--purple-light); border-color: #DDD6FE; color: var(--purple);">Get Started</div>
+=======
                 <div class="section-tag"
                     style="background: var(--purple-light); border-color: #DDD6FE; color: var(--purple);">Get Started
                 </div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                 <h2>Three steps to join</h2>
                 <p>Get up and running in minutes.</p>
             </div>
             <div class="steps-grid">
                 <div class="step-card">
+<<<<<<< HEAD
+                    <div class="step-num" style="background: linear-gradient(135deg, var(--purple), var(--purple-dark));">01</div>
+=======
                     <div class="step-num"
                         style="background: linear-gradient(135deg, var(--purple), var(--purple-dark));">01</div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     <h3>Register</h3>
                     <p>Create your account with your professional email.</p>
                 </div>
                 <div class="step-card">
+<<<<<<< HEAD
+                    <div class="step-num" style="background: linear-gradient(135deg, var(--orange-mid), var(--orange));">02</div>
+=======
                     <div class="step-num"
                         style="background: linear-gradient(135deg, var(--orange-mid), var(--orange));">02</div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     <h3>Verify</h3>
                     <p>Complete camera liveness check to prove you're real.</p>
                 </div>
@@ -1849,6 +2621,17 @@
             </div>
         </section>
 
+<<<<<<< HEAD
+    <section class="cts container"><div class="ctb">
+        <div class="lm" style="width:44px;height:44px;border-radius:12px;margin:0 auto 1rem;"><i data-lucide="zap" style="width:20px;height:20px;color:#fff;"></i></div>
+        <h2>Ready to get verified?</h2><p>Join 42,000+ verified professionals.</p>
+        <button class="btn btn-p" onclick="showPage('login')">Get Started Free <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></button>
+    </div></section>
+
+        <footer class="site-footer container">
+            <div class="logo" onclick="showPage('landing')">
+                <div class="logo-mark" style="width:26px;height:26px;border-radius:7px;"><i data-lucide="zap" style="width:12px;height:12px;color:white;"></i></div>
+=======
         <!-- CTA -->
         <section class="cta-section container">
             <div class="cta-box">
@@ -1867,6 +2650,7 @@
             <div class="logo" onclick="showPage('landing')">
                 <div class="logo-mark" style="width:26px;height:26px;border-radius:7px;"><i data-lucide="zap"
                         style="width:12px;height:12px;color:white;"></i></div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                 <span class="logo-name" style="font-size:0.9rem;">SyncUp</span>
             </div>
             <p>&copy; 2025 SyncUp &middot; For professionals and businesses only.</p>
@@ -1883,21 +2667,32 @@
         <div class="login-panel">
             <div class="login-brand">
                 <div class="logo" onclick="showPage('landing')">
+<<<<<<< HEAD
+                    <div class="logo-mark" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.15);"><i data-lucide="zap" style="width:14px;height:14px;color:white;"></i></div>
+=======
                     <div class="logo-mark"
                         style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.15);"><i
                             data-lucide="zap" style="width:14px;height:14px;color:white;"></i></div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     <div class="logo-name" style="color:white;">SyncUp</div>
                 </div>
                 <div style="position:relative;z-index:1;">
                     <h1>The Trusted<br>Professional<br>Ecosystem</h1>
                     <p>Verified humans only. No bots, no fakes — just authentic connections.</p>
                     <div style="display:flex;gap:8px;margin-top:1.5rem;">
+<<<<<<< HEAD
+                        <div class="badge" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.2);color:white;">
+                            <i data-lucide="shield-check" style="width:12px;height:12px;"></i> 100% Verified
+                        </div>
+                        <div class="badge" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.2);color:white;">
+=======
                         <div class="badge"
                             style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.2);color:white;">
                             <i data-lucide="shield-check" style="width:12px;height:12px;"></i> 100% Verified
                         </div>
                         <div class="badge"
                             style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.2);color:white;">
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                             <i data-lucide="lock" style="width:12px;height:12px;"></i> Secured
                         </div>
                     </div>
@@ -1907,8 +2702,12 @@
 
             <div class="login-form-section">
                 <h2>Welcome back</h2>
+<<<<<<< HEAD
+                <p class="subtitle">Sign in to your account. <a href="#" onclick="event.preventDefault();alert('Registration coming soon!')">Create Account</a></p>
+=======
                 <p class="subtitle">Sign in to your account. <a href="#"
                         onclick="event.preventDefault();alert('Registration coming soon!')">Create Account</a></p>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
 
                 <div class="role-selector">
                     <div class="role-indicator" id="role-indicator"></div>
@@ -1933,12 +2732,19 @@
                     <div class="input-group">
                         <label for="password">Password</label>
                         <div class="input-wrapper">
+<<<<<<< HEAD
+                            <input type="password" id="password" class="input-field" placeholder="Enter password" required>
+                            <i data-lucide="key-round" style="width:15px;height:15px;" class="input-icon"></i>
+                        </div>
+                        <a href="#" class="forgot-link" onclick="event.preventDefault();alert('Coming soon!')">Forgot password?</a>
+=======
                             <input type="password" id="password" class="input-field" placeholder="Enter password"
                                 required>
                             <i data-lucide="key-round" style="width:15px;height:15px;" class="input-icon"></i>
                         </div>
                         <a href="#" class="forgot-link" onclick="event.preventDefault();alert('Coming soon!')">Forgot
                             password?</a>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     </div>
                     <button type="submit" class="btn btn-primary" style="width:100%;">
                         Sign In <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
@@ -1952,8 +2758,12 @@
                     Sign in with Face Verification
                 </button>
 
+<<<<<<< HEAD
+                <p class="signup-prompt">Not verified? <a href="#" onclick="event.preventDefault();showPage('face-verify')">Verify Now</a></p>
+=======
                 <p class="signup-prompt">Not verified? <a href="#"
                         onclick="event.preventDefault();showPage('face-verify')">Verify Now</a></p>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             </div>
         </div>
     </div>
@@ -1962,14 +2772,29 @@
     <div id="page-face-verify" class="page hidden">
         <div class="face-card">
             <div style="text-align:left;margin-bottom:1.25rem;">
+<<<<<<< HEAD
+                <button class="btn btn-ghost" onclick="stopCamera();showPage('login')"><i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back</button>
+=======
                 <button class="btn btn-ghost" onclick="stopCamera();showPage('login')"><i data-lucide="arrow-left"
                         style="width:16px;height:16px;"></i> Back</button>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             </div>
 
             <div id="face-step-instructions">
                 <div class="face-icon-circle" style="background:var(--purple-light);border:2px solid #DDD6FE;">
                     <i data-lucide="camera" style="width:32px;height:32px;color:var(--purple);"></i>
                 </div>
+<<<<<<< HEAD
+                <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:6px;letter-spacing:-0.02em;">Liveness Verification</h2>
+                <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.6;">
+                    We check active presence using your camera. The verification looks for live texture, stable lighting, and a small prompted movement.
+                </p>
+                <div class="instructions-list">
+                    <div class="instruction"><div class="instruction-num">1</div> Find steady light — avoid backlighting</div>
+                    <div class="instruction"><div class="instruction-num">2</div> Keep your face inside the guide</div>
+                    <div class="instruction"><div class="instruction-num">3</div> Hold still for a clear texture read</div>
+                    <div class="instruction"><div class="instruction-num">4</div> Blink or turn slightly when prompted</div>
+=======
                 <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:6px;letter-spacing:-0.02em;">Liveness
                     Verification</h2>
                 <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.6;">
@@ -1989,12 +2814,20 @@
                     <div class="instruction">
                         <div class="instruction-num">4</div> Blink or turn slightly when prompted
                     </div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                 </div>
                 <button class="btn btn-primary" style="width:100%;" onclick="startFaceVerification()">
                     <i data-lucide="camera" style="width:16px;height:16px;"></i> Start Liveness Check
                 </button>
             </div>
 
+<<<<<<< HEAD
+        <div id="fs-load" class="hidden"><div class="spinner"></div><h2 style="font-size:1.1rem;font-weight:700;">Starting camera...</h2><p style="color:var(--tx2);font-size:.8rem;">Requesting getUserMedia access</p></div>
+
+            <div id="face-step-detecting" class="hidden">
+                <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:4px;">Verifying liveness</h2>
+                <p style="color:var(--text-secondary);font-size:0.8rem;margin-bottom:1rem;">Look at the camera and follow prompts</p>
+=======
             <div id="face-step-loading" class="hidden">
                 <div class="spinner"></div>
                 <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:4px;">Starting camera</h2>
@@ -2005,6 +2838,7 @@
                 <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:4px;">Verifying liveness</h2>
                 <p style="color:var(--text-secondary);font-size:0.8rem;margin-bottom:1rem;">Look at the camera and
                     follow prompts</p>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
 
                 <div class="video-container">
                     <video id="face-video" autoplay playsinline muted></video>
@@ -2017,6 +2851,16 @@
                 <div class="status-bar" id="face-status">Loading face detection model...</div>
 
                 <!-- Progress bar -->
+<<<<<<< HEAD
+                <div style="height:4px;border-radius:4px;background:rgba(255,255,255,0.06);margin-bottom:1rem;overflow:hidden;">
+                    <div id="face-progress" style="height:100%;width:0%;border-radius:4px;background:var(--purple);transition:width 0.5s ease;"></div>
+                </div>
+
+                <div class="checks-grid">
+                    <div class="check-item" id="check-face"><i data-lucide="user" style="width:14px;height:14px;"></i><span>Face Found</span></div>
+                    <div class="check-item" id="check-blink"><i data-lucide="eye" style="width:14px;height:14px;"></i><span id="blink-label">Blinks 0/2</span></div>
+                    <div class="check-item" id="check-move"><i data-lucide="move" style="width:14px;height:14px;"></i><span id="move-label">Head Turn</span></div>
+=======
                 <div
                     style="height:4px;border-radius:4px;background:rgba(255,255,255,0.06);margin-bottom:1rem;overflow:hidden;">
                     <div id="face-progress"
@@ -2031,6 +2875,7 @@
                             style="width:14px;height:14px;"></i><span id="blink-label">Blinks 0/2</span></div>
                     <div class="check-item" id="check-move"><i data-lucide="move"
                             style="width:14px;height:14px;"></i><span id="move-label">Head Turn</span></div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                 </div>
             </div>
 
@@ -2039,10 +2884,15 @@
                     <i data-lucide="check-circle-2" style="width:36px;height:36px;color:var(--success);"></i>
                 </div>
                 <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:6px;">Liveness Confirmed &#127881;</h2>
+<<<<<<< HEAD
+                <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:2rem;">Your live session is verified. Welcome to SyncUp.</p>
+                <button class="btn btn-primary" onclick="showPage('dashboard')">Go to Dashboard <i data-lucide="arrow-right" style="width:15px;height:15px;"></i></button>
+=======
                 <p style="color:var(--text-secondary);font-size:0.88rem;margin-bottom:2rem;">Your live session is
                     verified. Welcome to SyncUp.</p>
                 <button class="btn btn-primary" onclick="showPage('dashboard')">Go to Dashboard <i
                         data-lucide="arrow-right" style="width:15px;height:15px;"></i></button>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             </div>
 
             <div id="face-step-error" class="hidden">
@@ -2050,8 +2900,12 @@
                     <i data-lucide="alert-triangle" style="width:36px;height:36px;color:var(--danger);"></i>
                 </div>
                 <h2 style="font-size:1.15rem;font-weight:700;margin-bottom:6px;">Verification Failed</h2>
+<<<<<<< HEAD
+                <p style="color:var(--danger);font-size:0.82rem;margin-bottom:1.5rem;" id="face-error-text">Camera access denied.</p>
+=======
                 <p style="color:var(--danger);font-size:0.82rem;margin-bottom:1.5rem;" id="face-error-text">Camera
                     access denied.</p>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                 <button class="btn btn-primary" onclick="resetFaceVerification()">Try Again</button>
             </div>
         </div>
@@ -2063,6 +2917,15 @@
             <div class="container">
                 <div class="nav-inner">
                     <div class="logo" onclick="showPage('dashboard')">
+<<<<<<< HEAD
+                        <div class="logo-mark"><i data-lucide="zap" style="width:14px;height:14px;color:white;"></i></div>
+                        <div class="logo-name">SyncUp</div>
+                    </div>
+                    <div class="nav-actions">
+                        <button class="btn btn-ghost" title="Search"><i data-lucide="search" style="width:18px;height:18px;"></i></button>
+                        <button class="btn btn-ghost" title="Notifications"><i data-lucide="bell" style="width:18px;height:18px;"></i></button>
+                        <button class="btn btn-secondary" onclick="handleLogout()"><i data-lucide="log-out" style="width:14px;height:14px;"></i> Logout</button>
+=======
                         <div class="logo-mark"><i data-lucide="zap" style="width:14px;height:14px;color:white;"></i>
                         </div>
                         <div class="logo-name">SyncUp</div>
@@ -2074,6 +2937,7 @@
                                 style="width:18px;height:18px;"></i></button>
                         <button class="btn btn-secondary" onclick="handleLogout()"><i data-lucide="log-out"
                                 style="width:14px;height:14px;"></i> Logout</button>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     </div>
                 </div>
             </div>
@@ -2091,8 +2955,12 @@
                         <div class="headline">Professional &middot; SyncUp Verified</div>
                         <div style="margin-top:6px;">
                             <span class="badge" style="font-size:0.68rem;padding:3px 8px;">
+<<<<<<< HEAD
+                                <i data-lucide="check-circle-2" style="width:11px;height:11px;color:var(--success);"></i> Verified
+=======
                                 <i data-lucide="check-circle-2"
                                     style="width:11px;height:11px;color:var(--success);"></i> Verified
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                             </span>
                         </div>
                         <div class="profile-stats">
@@ -2117,6 +2985,15 @@
                     <div class="post-card">
                         <div class="post-author">
                             <div class="av" style="background:linear-gradient(135deg,var(--purple),#6366F1);">RM</div>
+<<<<<<< HEAD
+                            <div><div class="author-name">Rohan Mehta <span class="badge" style="font-size:0.6rem;padding:2px 6px;margin-left:4px;"><i data-lucide="check-circle-2" style="width:9px;height:9px;color:var(--success);"></i> Verified</span></div><div class="author-info">CTO at TechVentures &middot; 2h ago</div></div>
+                        </div>
+                        <div class="post-content">Excited to announce we just closed our Series A round of &#8377;2.5 Cr! &#128640; Couldn't have done it without the SyncUp community!</div>
+                        <div class="post-actions">
+                            <button class="post-action-btn" onclick="this.style.color='var(--purple)'"><i data-lucide="heart" style="width:14px;height:14px;"></i> 142</button>
+                            <button class="post-action-btn"><i data-lucide="message-circle" style="width:14px;height:14px;"></i> 23</button>
+                            <button class="post-action-btn"><i data-lucide="share-2" style="width:14px;height:14px;"></i> Share</button>
+=======
                             <div>
                                 <div class="author-name">Rohan Mehta <span class="badge"
                                         style="font-size:0.6rem;padding:2px 6px;margin-left:4px;"><i
@@ -2135,12 +3012,22 @@
                                     style="width:14px;height:14px;"></i> 23</button>
                             <button class="post-action-btn"><i data-lucide="share-2"
                                     style="width:14px;height:14px;"></i> Share</button>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                         </div>
                     </div>
 
                     <div class="post-card">
                         <div class="post-author">
                             <div class="av" style="background:linear-gradient(135deg,var(--orange),#EA580C);">PS</div>
+<<<<<<< HEAD
+                            <div><div class="author-name">Priya Sharma</div><div class="author-info">Product Lead &middot; ex-Razorpay &middot; 5h ago</div></div>
+                        </div>
+                        <div class="post-content">3 things I learned from 50 enterprise customers this quarter:<br><br>1. Speed &gt; Features<br>2. Support response is a deal-breaker<br>3. Integrations win deals</div>
+                        <div class="post-actions">
+                            <button class="post-action-btn" onclick="this.style.color='var(--orange)'"><i data-lucide="heart" style="width:14px;height:14px;"></i> 89</button>
+                            <button class="post-action-btn"><i data-lucide="message-circle" style="width:14px;height:14px;"></i> 34</button>
+                            <button class="post-action-btn"><i data-lucide="share-2" style="width:14px;height:14px;"></i> Share</button>
+=======
                             <div>
                                 <div class="author-name">Priya Sharma</div>
                                 <div class="author-info">Product Lead &middot; ex-Razorpay &middot; 5h ago</div>
@@ -2156,6 +3043,7 @@
                                     style="width:14px;height:14px;"></i> 34</button>
                             <button class="post-action-btn"><i data-lucide="share-2"
                                     style="width:14px;height:14px;"></i> Share</button>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                         </div>
                     </div>
                 </div>
@@ -2163,6 +3051,16 @@
                 <aside>
                     <div class="sidebar-widget">
                         <h3>People you may know</h3>
+<<<<<<< HEAD
+                        <div class="widget-item"><div class="wi-av" style="background:linear-gradient(135deg,var(--purple),#6366F1);">AP</div><div><div class="wi-name">Anjali Patel</div><div class="wi-sub">Investor &middot; Seed Stage</div></div></div>
+                        <div class="widget-item"><div class="wi-av" style="background:linear-gradient(135deg,var(--orange),#EA580C);">VS</div><div><div class="wi-name">Vikram Singh</div><div class="wi-sub">Engineering Manager</div></div></div>
+                        <div class="widget-item"><div class="wi-av" style="background:linear-gradient(135deg,var(--success),#059669);">KR</div><div><div class="wi-name">Kavita Rao</div><div class="wi-sub">Co-founder @ EduTech</div></div></div>
+                    </div>
+                    <div class="sidebar-widget">
+                        <h3>Trending</h3>
+                        <div class="widget-item" style="cursor:pointer;"><div><div class="wi-name" style="color:var(--purple);">Series A &middot; &#8377;2.5 Cr</div><div class="wi-sub">TechVentures</div></div></div>
+                        <div class="widget-item" style="cursor:pointer;"><div><div class="wi-name" style="color:var(--orange);">Partnership</div><div class="wi-sub">FinanceHub</div></div></div>
+=======
                         <div class="widget-item">
                             <div class="wi-av" style="background:linear-gradient(135deg,var(--purple),#6366F1);">AP
                             </div>
@@ -2202,6 +3100,7 @@
                                 <div class="wi-sub">FinanceHub</div>
                             </div>
                         </div>
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                     </div>
                 </aside>
             </div>
@@ -2209,6 +3108,35 @@
     </div>
 
 
+<<<<<<< HEAD
+<script>
+document.addEventListener('DOMContentLoaded',()=>{lucide.createIcons();animStats();const s=localStorage.getItem('su-t');if(s)document.documentElement.setAttribute('data-theme',s);updIcons();});
+
+/* ── Theme ── */
+function toggleTheme(){const h=document.documentElement;const n=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',n);localStorage.setItem('su-t',n);updIcons();}
+function updIcons(){const d=document.documentElement.getAttribute('data-theme')==='dark';document.querySelectorAll('.theme-toggle i').forEach(e=>e.setAttribute('data-lucide',d?'sun':'moon'));lucide.createIcons();}
+
+/* ── Nav ── */
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));const e=document.getElementById('page-'+id);if(e){e.classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});}setTimeout(()=>{lucide.createIcons();updIcons();},60);}
+
+/* ── Role ── */
+function selRole(i){document.querySelectorAll('.rb').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.rb')[i].classList.add('active');document.getElementById('ri').style.transform=`translateX(${i*100}%)`;}
+
+/* ── Login ── */
+function doLogin(e){e.preventDefault();const em=document.getElementById('em').value.trim(),pw=document.getElementById('pw').value,er=document.getElementById('le'),et=document.getElementById('let');er.classList.remove('show');
+if(!em||!pw){et.textContent='Fill in all fields.';er.classList.add('show');return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){et.textContent='Enter a valid email.';er.classList.add('show');return;}
+const nm=em.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g,c=>c.toUpperCase()),ini=nm.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+document.getElementById('du').textContent=nm.split(' ')[0];document.getElementById('dn').textContent=nm;document.getElementById('da').textContent=ini;document.getElementById('fa').textContent=ini;showPage('dash');}
+
+/* ── Stats ── */
+function animStats(){const o=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){const el=en.target,t=+el.dataset.target;let s=null;(function step(ts){if(!s)s=ts;const p=Math.min((ts-s)/2000,1);el.textContent=Math.floor((1-Math.pow(1-p,3))*t).toLocaleString('en-IN')+(t>1000?'+':'');if(p<1)requestAnimationFrame(step);})(performance.now());o.unobserve(el);}});},{threshold:.3});document.querySelectorAll('.sv[data-target]').forEach(el=>o.observe(el));}
+
+        // ══════════════════════════════════════════════════════════════
+        // FACE LIVENESS — MediaPipe Face Mesh (468 landmarks)
+        // Real EAR blink detection + Head yaw estimation + Challenge flow
+        // ══════════════════════════════════════════════════════════════
+
+=======
     <script>
         document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); animateStats(); });
 
@@ -2285,15 +3213,45 @@
         // ══════════════════════════════════════════════
         // FACE VERIFICATION WITH CAMERA LIVENESS
         // ══════════════════════════════════════════════
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
         let faceStream = null;
         let faceMeshInstance = null;
         let mpCamera = null;
         let faceDetected = false;
+<<<<<<< HEAD
+        let blinkCount = 0;
+        let headTurnDetected = false;
+        let verificationComplete = false;
+
+        // EAR (Eye Aspect Ratio) state
+        const EAR_BLINK_THRESHOLD = 0.21;
+        const EAR_OPEN_THRESHOLD = 0.26;
+        const BLINKS_REQUIRED = 2;
+        const HEAD_YAW_THRESHOLD = 18; // degrees
+        let eyeWasOpen = true;
+        let faceStableFrames = 0;
+        const FACE_STABLE_REQUIRED = 8; // ~2 seconds of stable face
+        let headYawHistory = [];
+
+        // MediaPipe Face Mesh landmark indices for eyes
+        // Left eye (from viewer perspective = right eye anatomically)
+        const LEFT_EYE = [362, 385, 387, 263, 373, 380];
+        // Right eye
+        const RIGHT_EYE = [33, 160, 158, 133, 153, 144];
+        // Nose tip, left ear tragion, right ear tragion for yaw
+        const NOSE_TIP = 1;
+        const LEFT_EAR = 234;
+        const RIGHT_EAR = 454;
+
+        function showFaceStep(s) {
+            ['instructions','loading','detecting','success','error'].forEach(n => document.getElementById('face-step-' + n).classList.add('hidden'));
+=======
         let lastBrightness = [];
         let positionHistory = [];
 
         function showFaceStep(s) {
             ['instructions', 'loading', 'detecting', 'success', 'error'].forEach(n => document.getElementById('face-step-' + n).classList.add('hidden'));
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             document.getElementById('face-step-' + s).classList.remove('hidden');
             setTimeout(() => lucide.createIcons(), 60);
         }
@@ -2301,13 +3259,130 @@
         function resetFaceVerification() {
             stopCamera();
             faceDetected = false;
+<<<<<<< HEAD
+            blinkCount = 0;
+            headTurnDetected = false;
+            verificationComplete = false;
+            eyeWasOpen = true;
+            faceStableFrames = 0;
+            headYawHistory = [];
+            setProgress(0);
+=======
             lastBrightness = [];
             positionHistory = [];
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             updateChecks();
             showFaceStep('instructions');
         }
 
         function stopCamera() {
+<<<<<<< HEAD
+            if (mpCamera) { mpCamera.stop(); mpCamera = null; }
+            if (faceStream) { faceStream.getTracks().forEach(t => t.stop()); faceStream = null; }
+            if (faceMeshInstance) { faceMeshInstance.close(); faceMeshInstance = null; }
+        }
+
+        function updateStatus(msg) {
+            const el = document.getElementById('face-status');
+            if (el) el.textContent = msg;
+        }
+
+        function setProgress(pct) {
+            const el = document.getElementById('face-progress');
+            if (el) el.style.width = Math.min(100, Math.round(pct)) + '%';
+        }
+
+        function updateChecks() {
+            const cf = document.getElementById('check-face');
+            const cb = document.getElementById('check-blink');
+            const cm = document.getElementById('check-move');
+            const bl = document.getElementById('blink-label');
+            const ml = document.getElementById('move-label');
+            if (!cf) return;
+
+            cf.classList.toggle('done', faceDetected && faceStableFrames >= FACE_STABLE_REQUIRED);
+            cb.classList.toggle('done', blinkCount >= BLINKS_REQUIRED);
+            cm.classList.toggle('done', headTurnDetected);
+
+            if (bl) bl.textContent = `Blinks ${blinkCount}/${BLINKS_REQUIRED}`;
+            if (ml) ml.textContent = headTurnDetected ? 'Turn ✓' : 'Head Turn';
+
+            // Progress
+            let pct = 0;
+            if (faceDetected && faceStableFrames >= FACE_STABLE_REQUIRED) pct += 33;
+            if (blinkCount >= BLINKS_REQUIRED) pct += 33;
+            if (headTurnDetected) pct += 34;
+            setProgress(pct);
+        }
+
+        // ── EAR calculation using 6 eye landmarks ──
+        function dist(a, b) {
+            return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+        }
+
+        function eyeAspectRatio(landmarks, eyeIndices) {
+            const p = eyeIndices.map(i => landmarks[i]);
+            // p[0]=outer, p[1]=upper-outer, p[2]=upper-inner, p[3]=inner, p[4]=lower-inner, p[5]=lower-outer
+            const A = dist(p[1], p[5]); // vertical 1
+            const B = dist(p[2], p[4]); // vertical 2
+            const C = dist(p[0], p[3]); // horizontal
+            return (A + B) / (2.0 * C);
+        }
+
+        // ── Head yaw from nose/ear landmarks ──
+        function estimateYaw(landmarks) {
+            const nose = landmarks[NOSE_TIP];
+            const lEar = landmarks[LEFT_EAR];
+            const rEar = landmarks[RIGHT_EAR];
+            const midX = (lEar.x + rEar.x) / 2;
+            const faceWidth = Math.abs(rEar.x - lEar.x);
+            if (faceWidth < 0.01) return 0;
+            const offset = (nose.x - midX) / faceWidth;
+            return offset * 90; // rough degrees
+        }
+
+        // ── MediaPipe Face Mesh callback ──
+        function onFaceMeshResults(results) {
+            const canvas = document.getElementById('face-canvas');
+            const ctx = canvas.getContext('2d');
+            const video = document.getElementById('face-video');
+            if (!canvas || !ctx || !video) return;
+
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (!results.multiFaceLandmarks || results.multiFaceLandmarks.length === 0) {
+                faceDetected = false;
+                faceStableFrames = 0;
+                updateStatus('No face detected. Look at the camera.');
+                updateChecks();
+                return;
+            }
+
+            const landmarks = results.multiFaceLandmarks[0];
+            faceDetected = true;
+            faceStableFrames = Math.min(faceStableFrames + 1, FACE_STABLE_REQUIRED + 5);
+
+            // ── Draw face mesh (subtle dots) ──
+            ctx.fillStyle = 'rgba(216, 255, 103, 0.35)';
+            for (let i = 0; i < landmarks.length; i += 3) {
+                const x = landmarks[i].x * canvas.width;
+                const y = landmarks[i].y * canvas.height;
+                ctx.beginPath();
+                ctx.arc(x, y, 1, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // ── Draw eye landmarks (brighter) ──
+            ctx.fillStyle = 'rgba(216, 255, 103, 0.9)';
+            [...LEFT_EYE, ...RIGHT_EYE].forEach(idx => {
+                const x = landmarks[idx].x * canvas.width;
+                const y = landmarks[idx].y * canvas.height;
+                ctx.beginPath();
+                ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+=======
             if (faceDetectionInterval) {
                 clearInterval(faceDetectionInterval);
                 faceDetectionInterval = null;
@@ -2334,24 +3409,170 @@
                 outputFaceBlendshapes: true,
                 runningMode: "VIDEO",
                 numFaces: 1
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
             });
+
+            // ── Draw nose tip ──
+            ctx.fillStyle = '#69f6cf';
+            const nx = landmarks[NOSE_TIP].x * canvas.width;
+            const ny = landmarks[NOSE_TIP].y * canvas.height;
+            ctx.beginPath();
+            ctx.arc(nx, ny, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ── Draw bounding info ──
+            const minX = Math.min(...landmarks.map(l => l.x)) * canvas.width;
+            const minY = Math.min(...landmarks.map(l => l.y)) * canvas.height;
+            const maxX = Math.max(...landmarks.map(l => l.x)) * canvas.width;
+            const maxY = Math.max(...landmarks.map(l => l.y)) * canvas.height;
+            ctx.strokeStyle = 'rgba(216, 255, 103, 0.5)';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(minX - 8, minY - 8, maxX - minX + 16, maxY - minY + 16);
+
+            if (verificationComplete) return;
+
+            // ── Phase 1: Wait for face to stabilize ──
+            if (faceStableFrames < FACE_STABLE_REQUIRED) {
+                updateStatus(`Face detected. Hold still... (${faceStableFrames}/${FACE_STABLE_REQUIRED})`);
+                updateChecks();
+                return;
+            }
+
+            // ── Phase 2: Blink detection via EAR ──
+            if (blinkCount < BLINKS_REQUIRED) {
+                const earL = eyeAspectRatio(landmarks, LEFT_EYE);
+                const earR = eyeAspectRatio(landmarks, RIGHT_EYE);
+                const avgEAR = (earL + earR) / 2;
+
+                // Draw EAR value
+                ctx.fillStyle = 'rgba(5, 5, 5, 0.72)';
+                ctx.fillRect(minX - 8, minY - 38, 180, 24);
+                ctx.fillStyle = '#d8ff67';
+                ctx.font = '600 12px Geist, Inter, sans-serif';
+                ctx.fillText(`EAR: ${avgEAR.toFixed(3)} | Blinks: ${blinkCount}/${BLINKS_REQUIRED}`, minX, minY - 20);
+
+                if (avgEAR < EAR_BLINK_THRESHOLD && eyeWasOpen) {
+                    eyeWasOpen = false;
+                } else if (avgEAR > EAR_OPEN_THRESHOLD && !eyeWasOpen) {
+                    eyeWasOpen = true;
+                    blinkCount++;
+                }
+
+                updateStatus(`Blink naturally. (${blinkCount}/${BLINKS_REQUIRED} detected)`);
+                updateChecks();
+                return;
+            }
+
+            // ── Phase 3: Head turn detection ──
+            if (!headTurnDetected) {
+                const yaw = estimateYaw(landmarks);
+                headYawHistory.push(yaw);
+                if (headYawHistory.length > 30) headYawHistory.shift();
+
+                // Draw yaw
+                ctx.fillStyle = 'rgba(5, 5, 5, 0.72)';
+                ctx.fillRect(minX - 8, minY - 38, 200, 24);
+                ctx.fillStyle = '#69f6cf';
+                ctx.font = '600 12px Geist, Inter, sans-serif';
+                ctx.fillText(`Yaw: ${yaw.toFixed(1)}° | Need: ±${HEAD_YAW_THRESHOLD}°`, minX, minY - 20);
+
+                if (headYawHistory.length >= 5) {
+                    const maxYaw = Math.max(...headYawHistory);
+                    const minYaw = Math.min(...headYawHistory);
+                    const range = maxYaw - minYaw;
+                    if (range > HEAD_YAW_THRESHOLD) {
+                        headTurnDetected = true;
+                    }
+                }
+
+                updateStatus('Now slowly turn your head left then right.');
+                updateChecks();
+                return;
+            }
+
+            // ── All checks passed ──
+            verificationComplete = true;
+            updateStatus('All checks passed! Liveness confirmed ✓');
+            setProgress(100);
+            updateChecks();
+
+            setTimeout(() => {
+                stopCamera();
+                showFaceStep('success');
+                setTimeout(() => lucide.createIcons(), 100);
+            }, 1500);
         }
 
+        // ── Start Face Verification ──
         async function startFaceVerification() {
             showFaceStep('loading');
 
             try {
+<<<<<<< HEAD
+                // 1. Get camera stream
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    throw new Error('Camera API not available in this browser.');
+                }
+=======
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
                 faceStream = await navigator.mediaDevices.getUserMedia({
-                    video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }
+                    audio: false,
+                    video: { width: { ideal: 1280 }, height: { ideal: 720 }, facingMode: 'user' }
                 });
 
                 const video = document.getElementById('face-video');
                 video.srcObject = faceStream;
                 await video.play();
 
+                // 2. Initialize MediaPipe Face Mesh
+                faceMeshInstance = new FaceMesh({
+                    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
+                });
+                faceMeshInstance.setOptions({
+                    maxNumFaces: 1,
+                    refineLandmarks: true,   // gives iris landmarks too
+                    minDetectionConfidence: 0.6,
+                    minTrackingConfidence: 0.5
+                });
+                faceMeshInstance.onResults(onFaceMeshResults);
+
+                // 3. Reset state
+                faceDetected = false;
+                blinkCount = 0;
+                headTurnDetected = false;
+                verificationComplete = false;
+                eyeWasOpen = true;
+                faceStableFrames = 0;
+                headYawHistory = [];
+
+                // 4. Show detecting UI
                 showFaceStep('detecting');
                 setTimeout(() => lucide.createIcons(), 100);
+                updateStatus('Loading face mesh model...');
+                setProgress(0);
+                updateChecks();
 
+<<<<<<< HEAD
+                // 5. Start MediaPipe camera loop
+                mpCamera = new Camera(video, {
+                    onFrame: async () => {
+                        if (faceMeshInstance) {
+                            await faceMeshInstance.send({ image: video });
+                        }
+                    },
+                    width: 1280,
+                    height: 720
+                });
+                await mpCamera.start();
+
+            } catch (err) {
+                console.error('Face verification error:', err);
+                document.getElementById('face-error-text').textContent =
+                    err.message || 'Camera access denied. Please allow camera and try again.';
+                showFaceStep('error');
+            }
+        }
+=======
                 // Start liveness detection loop
                 blinkCount = 0;
                 movementDetected = false;
@@ -2546,6 +3767,7 @@
 
             blinkLabel.textContent = `Blinks ${blinkCount}/2`;
         }
+>>>>>>> 48c305a81e418fc7f4297bd4b4b6c99471819416
     </script>
 </body>
 
