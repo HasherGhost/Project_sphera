@@ -1,3 +1,5 @@
+import { FaceCapture } from '@/frontend/components';
+
 export default function VerificationPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-1000">
@@ -9,19 +11,8 @@ export default function VerificationPage() {
 
       <div className="grid md:grid-cols-2 gap-6">
         
-        {/* Face ID Verification */}
-        <div className="glass-panel p-8 rounded-3xl text-center space-y-6">
-          <div className="w-20 h-20 mx-auto rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" x2="9.01" y1="9" y2="9"/><line x1="15" x2="15.01" y1="9" y2="9"/></svg>
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-white mb-2">Human Liveness Check</h2>
-            <p className="text-sm text-gray-400">Using AI, we confirm you are a real human in real-time. No 2D photos or masks allowed.</p>
-          </div>
-          <button className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-xl font-medium text-white shadow-lg transition-transform hover:-translate-y-1">
-            Start Camera Verification
-          </button>
-        </div>
+          <FaceCapture />
+
 
         {/* Business Claim Verification */}
         <div className="glass-panel p-8 rounded-3xl text-center space-y-6 bg-gradient-to-br from-green-500/5 to-transparent border-green-500/20">
