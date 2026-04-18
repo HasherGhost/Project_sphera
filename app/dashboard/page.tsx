@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+
 
 export default function DashboardPage() {
   return (
@@ -10,7 +10,7 @@ export default function DashboardPage() {
           <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-blue-600/40 to-purple-600/40 opacity-50 z-0"></div>
           <div className="relative z-10 flex flex-col items-center mt-8">
             <div className="w-24 h-24 rounded-2xl bg-gray-800 border-2 border-white/20 shadow-xl overflow-hidden mb-4">
-              <img src="https://i.pravatar.cc/150?img=11" alt="Profile" className="w-full h-full object-cover" />
+              <img src="/avatars/ned-ramirez.png" alt="Profile" className="rounded-full object-cover border border-slate-700 bg-slate-800 w-full h-full" />
             </div>
             <h2 className="font-title font-semibold text-xl text-white">Alex Morgan</h2>
             <p className="text-gray-400 text-sm">Founder @ TechVentures</p>
@@ -33,7 +33,7 @@ export default function DashboardPage() {
       <div className="lg:col-span-2 space-y-6">
         <div className="glass-panel p-4 rounded-3xl flex items-center gap-4">
           <div className="w-10 h-10 rounded-full bg-gray-800 overflow-hidden flex-shrink-0">
-            <img src="https://i.pravatar.cc/150?img=11" alt="User" />
+            <img src="/avatars/maggot.png" alt="User" className="rounded-full object-cover border border-slate-700 bg-slate-800 w-full h-full" />
           </div>
           <input 
             type="text" 
@@ -50,7 +50,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-gray-700 overflow-hidden">
-                <img src="https://i.pravatar.cc/150?img=47" alt="User" />
+                <img src="/avatars/mozart.png" alt="User" className="rounded-full object-cover border border-slate-700 bg-slate-800 w-full h-full" />
               </div>
               <div>
                 <h3 className="font-semibold text-white text-sm">Sarah Jenkins</h3>
@@ -77,7 +77,7 @@ export default function DashboardPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-gray-700 overflow-hidden">
-                <img src="https://i.pravatar.cc/150?img=68" alt="Match" />
+                <img src="/avatars/bounty-hunter.png" alt="Match" className="rounded-full object-cover border border-slate-700 bg-slate-800 w-full h-full" />
               </div>
               <div className="flex-1">
                 <p className="text-white text-sm font-medium">Nexus Corp</p>
