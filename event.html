@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SyncUp — Events & Webinars</title>
     <meta name="description" content="Discover, participate, and host professional events, webinars, and meetups.">
-    <script>
-        (function () { try { var t = localStorage.getItem('su-theme'); document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light'); } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); } })();
-    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -249,6 +247,7 @@
             .event-meta { flex-wrap: wrap; gap: 10px; }
         }
     </style>
+    <script src="theme.js"></script>
 </head>
 
 <body>
@@ -453,13 +452,6 @@
         </aside>
     </main>
 
-    <script>
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            const h = document.documentElement;
-            const n = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            h.setAttribute('data-theme', n);
-            try { localStorage.setItem('su-theme', n); } catch(e){}
-        });
-    </script>
+    <script></script>
 </body>
 </html>

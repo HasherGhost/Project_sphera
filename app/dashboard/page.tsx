@@ -32,7 +32,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-      
+
       {/* Left Sidebar - Profile & Stats */}
       <div className="lg:col-span-1 space-y-6">
         <div className="glass-panel p-6 rounded-3xl relative overflow-hidden">
@@ -66,8 +66,8 @@ export default async function DashboardPage() {
           <div className="w-10 h-10 rounded-full bg-gray-800 overflow-hidden flex-shrink-0">
             <img src={profile?.photo_url || "https://i.pravatar.cc/150?img=11"} alt="User" />
           </div>
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder="Share an opportunity, idea, or connection..."
             className="flex-1 bg-transparent border-none text-white outline-none placeholder:text-gray-500 text-sm"
           />
@@ -100,7 +100,7 @@ export default async function DashboardPage() {
               </div>
             )}
             <div className="flex items-center gap-4 pt-4 border-t border-white/10 mt-4 text-gray-400 text-sm">
-               <span>❤️ {post.likes_count || 0} Likes</span>
+              <span>❤️ {post.likes_count || 0} Likes</span>
             </div>
           </div>
         ))}
@@ -118,7 +118,7 @@ export default async function DashboardPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-gray-700 overflow-hidden">
-                <img src="https://i.pravatar.cc/150?img=68" alt="Match" />
+                <img src="/avatars/bounty-hunter.png" alt="Match" className="rounded-full object-cover border border-slate-700 bg-slate-800 w-full h-full" />
               </div>
               <div className="flex-1">
                 <p className="text-white text-sm font-medium">Nexus Corp</p>

@@ -23,7 +23,7 @@ export default async function EventsPage() {
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-      
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-title font-bold text-white mb-2">Escrow-Backed Events</h1>
@@ -35,13 +35,13 @@ export default async function EventsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
+
         {/* Event Cards */}
         {events?.map((event: any) => {
           const date = new Date(event.event_date);
           const month = date.toLocaleString('default', { month: 'short' });
           const day = date.getDate();
-          
+
           return (
             <div key={event.id} className="glass-panel rounded-3xl overflow-hidden group hover:-translate-y-1 hover:border-blue-500/30 transition-all duration-300">
               <div className="h-40 bg-gradient-to-br from-indigo-900 to-blue-900 relative">
