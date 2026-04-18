@@ -92,11 +92,41 @@
             overflow-x: hidden;
             font-family: 'Inter', system-ui, sans-serif;
             background: linear-gradient(var(--line) 1px, transparent 1px),
-                linear-gradient(90deg, var(--line) 1px, transparent 1px),
-                linear-gradient(180deg, var(--bg), var(--bg2));
-            background-size: 72px 72px, 72px 72px, auto;
+                linear-gradient(90deg, var(--line) 1px, transparent 1px);
+            background-size: 72px 72px, 72px 72px;
+            background-attachment: fixed;
+            background-color: transparent;
             color: var(--text);
             transition: background .2s, color .2s
+        }
+
+        /* ── Video Background ── */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            opacity: 0.85;
+            z-index: -1;
+            backdrop-filter: blur(4px);
         }
 
         body.modal-open {
@@ -1413,7 +1443,14 @@
 </head>
 
 
-<body>
+<body class="landing-body">
+
+    <div class="video-bg">
+        <video autoplay muted loop playsinline>
+            <source src="4779866-hd_1920_1080_30fps.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="video-overlay"></div>
     <div class="page-shell">
         <!-- Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â HEADER Ã¢â€¢ÂÃ¢â€¢ÂÃ¢â€¢Â -->
         <header class="hdr">
