@@ -268,6 +268,122 @@
         .mini-event-info h4 { font-size: .9rem; font-weight: 800; margin-bottom: 4px; line-height: 1.3; }
         .mini-event-info p { font-size: .75rem; color: var(--muted); font-weight: 600; }
 
+        /* Functional event prototype helpers */
+        .event-tools {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+        .event-search {
+            min-height: 42px;
+            width: 100%;
+            padding: 0 14px;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            outline: none;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+        }
+        .event-search:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--focus);
+        }
+        .event-panel {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .event-panel[hidden],
+        .event-card[hidden],
+        .empty-state[hidden] {
+            display: none;
+        }
+        .event-form {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+        .event-form label {
+            display: grid;
+            gap: 6px;
+            color: var(--muted);
+            font-size: .78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+        .event-form input,
+        .event-form select,
+        .event-form textarea {
+            width: 100%;
+            min-height: 42px;
+            padding: 10px 12px;
+            color: var(--text);
+            background: var(--surface-s);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            outline: none;
+        }
+        .event-form textarea {
+            min-height: 86px;
+            resize: vertical;
+        }
+        .event-form .full {
+            grid-column: 1 / -1;
+        }
+        .event-note {
+            padding: 12px;
+            color: var(--muted);
+            background: var(--surface-f);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            font-size: .86rem;
+            line-height: 1.55;
+        }
+        .empty-state {
+            padding: 28px;
+            color: var(--muted);
+            text-align: center;
+        }
+        .btn.is-done,
+        .btn:disabled {
+            cursor: default;
+            transform: none;
+            opacity: .78;
+        }
+        .btn.is-done {
+            color: var(--green);
+            background: var(--green-f);
+            border-color: var(--green-f);
+        }
+        .toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 3000;
+            max-width: min(360px, calc(100% - 40px));
+            padding: 12px 14px;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid var(--line-s);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+            transition: opacity .2s ease, transform .2s ease;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Responsive */
         @media(max-width: 980px) {
             .page-layout { grid-template-columns: 240px 1fr; }
@@ -279,6 +395,8 @@
             .side-nav a { flex-shrink: 0; }
             .feed-header { flex-direction: column; align-items: flex-start; gap: 12px;}
             .event-meta { flex-wrap: wrap; gap: 10px; }
+            .event-tools,
+            .event-form { grid-template-columns: 1fr; }
         }
     </style>
 
@@ -315,17 +433,17 @@
         <!-- Left Sidebar -->
         <aside>
             <nav class="side-nav">
-                <a href="#" class="active"><span>📅 Explore Events</span> </a>
-                <a href="#"><span>🎟️ My Tickets</span> <span class="count-pill">2</span></a>
-                <a href="#"><span>🏆 Hosted by Me</span> </a>
-                <a href="#"><span>❤️ Saved Events</span> <span class="count-pill">4</span></a>
-                <a href="#"><span>🎙️ Past Webinars</span></a>
+                <a href="#" class="active" data-view="explore"><span>Explore Events</span></a>
+                <a href="#" data-view="tickets"><span>My Tickets</span> <span class="count-pill" id="ticketCount">0</span></a>
+                <a href="#" data-view="hosted"><span>Hosted by Me</span></a>
+                <a href="#" data-view="saved"><span>Saved Events</span> <span class="count-pill" id="savedCount">0</span></a>
+                <a href="#" data-view="past"><span>Past Webinars</span></a>
             </nav>
 
             <div class="panel" style="padding: 20px; background: linear-gradient(135deg, var(--surface-s), var(--surface-f));">
                 <h3 style="font-size: 1rem; font-weight: 900; margin-bottom: 8px;">Host an Event</h3>
                 <p style="font-size: .85rem; color: var(--muted); margin-bottom: 16px; line-height: 1.5;">Tap into the trusted professional ecosystem. SyncUp validates attendee identity automatically.</p>
-                <button class="btn btn-p" style="width: 100%;">Create Event</button>
+                <button class="btn btn-p" style="width: 100%;" data-action="toggle-create">Create Event</button>
             </div>
         </aside>
 
@@ -344,15 +462,52 @@
             <div class="feed-header">
                 <h2>Upcoming Near You</h2>
                 <div class="filters" style="margin-bottom: 0;">
-                    <button class="filter-btn active">All</button>
-                    <button class="filter-btn">🚀 Meetups</button>
-                    <button class="filter-btn">💻 Webinars</button>
-                    <button class="filter-btn">💡 Hackathons</button>
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="meetup">Meetups</button>
+                    <button class="filter-btn" data-filter="webinar">Webinars</button>
+                    <button class="filter-btn" data-filter="hackathon">Hackathons</button>
                 </div>
             </div>
 
+            <div class="event-tools">
+                <input id="eventSearch" class="event-search" type="text" placeholder="Search events, hosts, locations...">
+                <button class="btn btn-outline" data-action="clear-search">Clear</button>
+            </div>
+
+            <section class="panel event-panel" id="createEventPanel" hidden>
+                <h3 style="font-size: 1.1rem; font-weight: 900;">Create a verified event</h3>
+                <form class="event-form" id="createEventForm">
+                    <label>Title
+                        <input id="eventTitle" type="text" placeholder="AI Operators Breakfast" required>
+                    </label>
+                    <label>Type
+                        <select id="eventType">
+                            <option value="meetup">Meetup</option>
+                            <option value="webinar">Webinar</option>
+                            <option value="hackathon">Hackathon</option>
+                        </select>
+                    </label>
+                    <label>Date
+                        <input id="eventDate" type="text" placeholder="Friday, Nov 14 - 10:00 AM" required>
+                    </label>
+                    <label>Location
+                        <input id="eventLocation" type="text" placeholder="San Francisco, CA" required>
+                    </label>
+                    <label class="full">Description
+                        <textarea id="eventDescription" placeholder="Describe who should attend and what they will get from it." required></textarea>
+                    </label>
+                    <div class="full" style="display:flex;gap:10px;flex-wrap:wrap;">
+                        <button class="btn btn-p" type="submit">Publish Event</button>
+                        <button class="btn btn-outline" type="button" data-action="toggle-create">Cancel</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="panel event-note" id="eventInfoPanel" hidden></section>
+
+            <div id="eventList">
             <!-- Event Card 1 -->
-            <article class="event-card">
+            <article class="event-card" data-id="fintech-mixer" data-type="meetup" data-title="Founders & Funders: Fintech Mixer" data-status="available" data-hosted="false">
                 <div class="event-banner">
                     <div class="event-type-badge" style="background: var(--orange); color: white;">Meetup</div>
                     <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80" alt="Event Banner">
@@ -373,10 +528,10 @@
                     </div>
                     
                     <div class="event-actions">
-                        <button class="btn btn-p">Secure Spot</button>
-                        <button class="btn btn-outline">Share</button>
+                        <button class="btn btn-p" data-action="rsvp">Secure Spot</button>
+                        <button class="btn btn-outline" data-action="share">Share</button>
                         <!-- 'Add to likes' feature -->
-                        <button class="like-btn tooltip" aria-label="Save this event" onclick="this.classList.toggle('liked');">
+                        <button class="like-btn tooltip" aria-label="Save this event" data-action="save">
                             <span class="heart-icon">♥</span>
                         </button>
                     </div>
@@ -384,7 +539,7 @@
             </article>
 
             <!-- Event Card 2 -->
-            <article class="event-card">
+            <article class="event-card" data-id="deep-tech-webinar" data-type="webinar" data-title="Scaling Deep Tech Systems Globally" data-status="available" data-hosted="false">
                 <div class="event-banner">
                     <div class="event-type-badge" style="background: var(--accent); color: white;">Webinar</div>
                     <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80" alt="Event Banner" style="object-position: center 30%;">
@@ -404,8 +559,8 @@
                     </div>
                     
                     <div class="event-actions">
-                        <button class="btn btn-o" style="background: var(--text); color: var(--bg);">Register Now</button>
-                        <button class="like-btn liked" aria-label="Remove from saved events" onclick="this.classList.toggle('liked');">
+                        <button class="btn btn-o" style="background: var(--text); color: var(--bg);" data-action="rsvp">Register Now</button>
+                        <button class="like-btn liked" aria-label="Remove from saved events" data-action="save">
                             <span class="heart-icon">♥</span>
                         </button>
                     </div>
@@ -413,7 +568,7 @@
             </article>
             
              <!-- Event Card 3 -->
-             <article class="event-card">
+             <article class="event-card" data-id="devkraft-hackathon" data-type="hackathon" data-title="DevKraft 24-Hour AI Hackathon" data-status="available" data-hosted="false">
                 <div class="event-banner" style="height: 120px;">
                     <div class="event-type-badge" style="background: var(--green); color: white;">Hackathon</div>
                     <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #111827, #374151); display: grid; place-items: center; color: white; opacity: .9;">
@@ -433,13 +588,103 @@
                     </div>
                     
                     <div class="event-actions">
-                        <button class="btn btn-p">Join Hackathon</button>
-                        <button class="like-btn" onclick="this.classList.toggle('liked');">
+                        <button class="btn btn-p" data-action="rsvp">Join Hackathon</button>
+                        <button class="like-btn" aria-label="Save this event" data-action="save">
                             <span class="heart-icon">♥</span>
                         </button>
                     </div>
                 </div>
             </article>
+
+            <!-- Event Card 4 -->
+            <article class="event-card" data-id="founder-revenue-dinner" data-type="meetup" data-title="Founder Revenue Dinner" data-status="available" data-hosted="false">
+                <div class="event-banner">
+                    <div class="event-type-badge" style="background: var(--orange); color: white;">Meetup</div>
+                    <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Event Banner">
+                </div>
+                <div class="event-body">
+                    <div class="event-date">Tuesday, October 31 • 7:30 PM EST</div>
+                    <h3>Founder Revenue Dinner</h3>
+                    <p>A small, verified dinner for founders and operators discussing pricing, retention, and the subtle art of not shipping chaos.</p>
+
+                    <div class="event-meta">
+                        <span>📍 New York, NY</span>
+                        <span>🎟️ $40 (Escrow)</span>
+                        <div class="attendee-stack" style="margin-left: auto;">
+                            <img src="public/avatars/sarah-miller.png" alt="User">
+                            <span class="count">+42 Going</span>
+                        </div>
+                    </div>
+
+                    <div class="event-actions">
+                        <button class="btn btn-p" data-action="rsvp">Secure Spot</button>
+                        <button class="btn btn-outline" data-action="share">Share</button>
+                        <button class="like-btn" aria-label="Save this event" data-action="save">
+                            <span class="heart-icon">&hearts;</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event Card 5 -->
+            <article class="event-card" data-id="ai-product-ops-webinar" data-type="webinar" data-title="AI Product Ops Webinar" data-status="available" data-hosted="false">
+                <div class="event-banner">
+                    <div class="event-type-badge" style="background: var(--accent); color: white;">Webinar</div>
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Event Banner" style="object-position: center 35%;">
+                </div>
+                <div class="event-body">
+                    <div class="event-date">Wednesday, November 1 • 12:00 PM EST</div>
+                    <h3>AI Product Ops Webinar</h3>
+                    <p>Learn how teams are using verified workflows, faster feedback loops, and practical automation to keep product velocity high.</p>
+
+                    <div class="event-meta">
+                        <span>💻 Online (Zoom via SyncUp)</span>
+                        <span>🎟️ Free</span>
+                        <div class="attendee-stack" style="margin-left: auto;">
+                            <img src="public/avatars/michael-chang.png" alt="User">
+                            <span class="count">+621 Registered</span>
+                        </div>
+                    </div>
+
+                    <div class="event-actions">
+                        <button class="btn btn-o" style="background: var(--text); color: var(--bg);" data-action="rsvp">Register Now</button>
+                        <button class="like-btn" aria-label="Save this event" data-action="save">
+                            <span class="heart-icon">&hearts;</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Event Card 6 -->
+            <article class="event-card" data-id="cyber-sprint-hackathon" data-type="hackathon" data-title="Cyber Sprint Hackathon" data-status="available" data-hosted="false">
+                <div class="event-banner" style="height: 120px;">
+                    <div class="event-type-badge" style="background: var(--green); color: white;">Hackathon</div>
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1f2937, #0f172a); display: grid; place-items: center; color: white; opacity: .95;">
+                         <strong style="font-size: 1.35rem; letter-spacing: 1.5px;">CYBER SPRINT</strong>
+                    </div>
+                </div>
+                <div class="event-body">
+                    <div class="event-date">Saturday, November 4 • 36 Hours</div>
+                    <h3>Cyber Sprint Hackathon</h3>
+                    <p>Ship defensive tooling, meet security builders, and compete for escrow-backed prizes with verified teams only.</p>
+
+                    <div class="event-meta">
+                        <span>📍 Virtual + NYC Hub</span>
+                        <div class="attendee-stack" style="margin-left: auto;">
+                            <span class="count">1,120 Hackers</span>
+                        </div>
+                    </div>
+
+                    <div class="event-actions">
+                        <button class="btn btn-p" data-action="rsvp">Join Hackathon</button>
+                        <button class="like-btn" aria-label="Save this event" data-action="save">
+                            <span class="heart-icon">&hearts;</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+            <div class="panel empty-state" id="emptyState" hidden>No events match this view.</div>
+            </div>
 
         </section>
 
@@ -448,7 +693,7 @@
             <div class="panel insight-card">
                 <h3>Top Events in Network</h3>
                 
-                <div class="mini-event">
+                <div class="mini-event" data-action="mini-event" data-query="SaaS Pricing Workshop">
                     <div class="mini-event-date">
                         <strong>18</strong>
                         <span>Oct</span>
@@ -459,7 +704,7 @@
                     </div>
                 </div>
 
-                <div class="mini-event">
+                <div class="mini-event" data-action="mini-event" data-query="B2B Marketing Masterclass">
                     <div class="mini-event-date" style="border-bottom-color: var(--orange);">
                         <strong>22</strong>
                         <span>Oct</span>
@@ -470,7 +715,7 @@
                     </div>
                 </div>
 
-                <div class="mini-event">
+                <div class="mini-event" data-action="mini-event" data-query="Open Source Security Summit">
                     <div class="mini-event-date" style="border-bottom-color: var(--green);">
                         <strong>05</strong>
                         <span>Nov</span>
@@ -481,17 +726,390 @@
                     </div>
                 </div>
 
-                <button class="btn-outline" style="width: 100%; justify-content: center; margin-top: 8px;">Explore All Suggestions</button>
+                <button class="btn-outline" style="width: 100%; justify-content: center; margin-top: 8px;" data-action="explore-suggestions">Explore All Suggestions</button>
             </div>
             
             <div class="panel insight-card" style="background: var(--accent-f); border-color: var(--accent);">
                 <h3 style="color: var(--accent-s);">Event Escrow Protection</h3>
                 <p style="font-size: .85rem; color: var(--muted); line-height: 1.5; margin-bottom: 12px;">SyncUp uses smart escrow for paid events. If the event is cancelled or fails Liveness tests, your ticket is auto-refunded.</p>
-                <a href="#" style="font-size: .85rem; font-weight: 800; color: var(--accent);">Learn about Escrow →</a>
+                <a href="#" data-action="escrow-info" style="font-size: .85rem; font-weight: 800; color: var(--accent);">Learn about Escrow -></a>
             </div>
         </aside>
     </main>
 
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
     <script src="theme.js"></script>
+    <script>
+        const EVENT_TICKETS_KEY = 'sphera-event-tickets';
+        const EVENT_SAVED_KEY = 'sphera-event-saved';
+        const EVENT_HOSTED_KEY = 'sphera-event-hosted';
+        let currentFilter = 'all';
+        let currentView = 'explore';
+        let currentSearch = '';
+
+        function readSet(key) {
+            try {
+                return new Set(JSON.parse(localStorage.getItem(key) || '[]'));
+            } catch (error) {
+                return new Set();
+            }
+        }
+
+        function writeSet(key, set) {
+            localStorage.setItem(key, JSON.stringify([...set]));
+        }
+
+        function readHostedEvents() {
+            try {
+                return JSON.parse(localStorage.getItem(EVENT_HOSTED_KEY) || '[]');
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function writeHostedEvents(events) {
+            localStorage.setItem(EVENT_HOSTED_KEY, JSON.stringify(events.slice(0, 20)));
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(showToast.timeoutId);
+            showToast.timeoutId = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        function escapeHTML(value) {
+            return value.replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function copyText(text, successMessage) {
+            const fallback = () => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                textarea.remove();
+                showToast(successMessage);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => showToast(successMessage)).catch(fallback);
+            } else {
+                fallback();
+            }
+        }
+
+        function eventCards() {
+            return Array.from(document.querySelectorAll('.event-card'));
+        }
+
+        function typeLabel(type) {
+            if (type === 'webinar') return 'Webinar';
+            if (type === 'hackathon') return 'Hackathon';
+            return 'Meetup';
+        }
+
+        function activeSavedSet() {
+            const hasStoredState = localStorage.getItem(EVENT_SAVED_KEY) !== null;
+            const saved = readSet(EVENT_SAVED_KEY);
+            if (!hasStoredState) {
+                document.querySelectorAll('.like-btn.liked').forEach((button) => {
+                    const card = button.closest('.event-card');
+                    if (card?.dataset.id) saved.add(card.dataset.id);
+                });
+            }
+            writeSet(EVENT_SAVED_KEY, saved);
+            return saved;
+        }
+
+        function updateCounters() {
+            const savedCount = document.getElementById('savedCount');
+            const ticketCount = document.getElementById('ticketCount');
+            if (savedCount) savedCount.textContent = readSet(EVENT_SAVED_KEY).size;
+            if (ticketCount) ticketCount.textContent = readSet(EVENT_TICKETS_KEY).size;
+        }
+
+        function applySavedAndTicketState() {
+            const saved = activeSavedSet();
+            const tickets = readSet(EVENT_TICKETS_KEY);
+            eventCards().forEach((card) => {
+                const id = card.dataset.id;
+                const saveButton = card.querySelector('[data-action="save"]');
+                const rsvpButton = card.querySelector('[data-action="rsvp"]');
+                if (saveButton) {
+                    saveButton.classList.toggle('liked', saved.has(id));
+                    saveButton.setAttribute('aria-label', saved.has(id) ? 'Remove from saved events' : 'Save this event');
+                }
+                if (rsvpButton && tickets.has(id)) {
+                    rsvpButton.textContent = 'Confirmed';
+                    rsvpButton.classList.add('is-done');
+                    rsvpButton.disabled = true;
+                    card.dataset.status = 'ticketed';
+                }
+            });
+            updateCounters();
+        }
+
+        function setActiveFilter(filter) {
+            document.querySelectorAll('.filter-btn').forEach((button) => {
+                button.classList.toggle('active', button.dataset.filter === filter);
+            });
+        }
+
+        function setActiveView(view) {
+            document.querySelectorAll('.side-nav a[data-view]').forEach((link) => {
+                link.classList.toggle('active', link.dataset.view === view);
+            });
+        }
+
+        function applyEventFilters() {
+            const saved = readSet(EVENT_SAVED_KEY);
+            const tickets = readSet(EVENT_TICKETS_KEY);
+            const empty = document.getElementById('emptyState');
+            let visibleCount = 0;
+            eventCards().forEach((card) => {
+                const id = card.dataset.id;
+                const text = card.textContent.toLowerCase();
+                const typeMatch = currentFilter === 'all' || card.dataset.type === currentFilter;
+                const searchMatch = !currentSearch || text.includes(currentSearch);
+                const viewMatch =
+                    currentView === 'explore' ||
+                    (currentView === 'tickets' && tickets.has(id)) ||
+                    (currentView === 'saved' && saved.has(id)) ||
+                    (currentView === 'hosted' && card.dataset.hosted === 'true') ||
+                    (currentView === 'past' && card.dataset.past === 'true');
+                const visible = typeMatch && searchMatch && viewMatch;
+                card.hidden = !visible;
+                if (visible) visibleCount += 1;
+            });
+            if (empty) empty.hidden = visibleCount > 0;
+            return visibleCount;
+        }
+
+        function showInfo(message) {
+            const panel = document.getElementById('eventInfoPanel');
+            if (!panel) return;
+            panel.innerHTML = message;
+            panel.hidden = false;
+            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function toggleCreatePanel() {
+            const panel = document.getElementById('createEventPanel');
+            if (!panel) return;
+            panel.hidden = !panel.hidden;
+            if (!panel.hidden) document.getElementById('eventTitle')?.focus();
+        }
+
+        function saveEvent(button) {
+            const card = button.closest('.event-card');
+            if (!card?.dataset.id) return;
+            const saved = readSet(EVENT_SAVED_KEY);
+            if (saved.has(card.dataset.id)) {
+                saved.delete(card.dataset.id);
+                button.classList.remove('liked');
+                showToast('Event removed from saved.');
+            } else {
+                saved.add(card.dataset.id);
+                button.classList.add('liked');
+                showToast('Event saved.');
+            }
+            writeSet(EVENT_SAVED_KEY, saved);
+            updateCounters();
+            applyEventFilters();
+        }
+
+        function rsvpEvent(button) {
+            const card = button.closest('.event-card');
+            if (!card?.dataset.id) return;
+            const tickets = readSet(EVENT_TICKETS_KEY);
+            tickets.add(card.dataset.id);
+            writeSet(EVENT_TICKETS_KEY, tickets);
+            button.textContent = 'Confirmed';
+            button.classList.add('is-done');
+            button.disabled = true;
+            card.dataset.status = 'ticketed';
+            updateCounters();
+            showInfo(`<strong>${escapeHTML(card.dataset.title || 'Event')} confirmed.</strong><br>Your spot is reserved. Paid events use escrow protection until the host and attendee checks are complete.`);
+            showToast('Registration confirmed.');
+        }
+
+        function shareEvent(button) {
+            const card = button.closest('.event-card');
+            if (!card) return;
+            const title = card.dataset.title || card.querySelector('h3')?.textContent || 'this event';
+            const date = card.querySelector('.event-date')?.textContent.trim() || '';
+            copyText(`Join me at ${title} on SyncUp. ${date}`, 'Event share text copied.');
+        }
+
+        function eventCardTemplate(event) {
+            const color = event.type === 'webinar' ? 'var(--accent)' : event.type === 'hackathon' ? 'var(--green)' : 'var(--orange)';
+            return `
+                <article class="event-card" data-id="${escapeHTML(event.id)}" data-type="${escapeHTML(event.type)}" data-title="${escapeHTML(event.title)}" data-status="available" data-hosted="true">
+                    <div class="event-banner" style="height: 120px;">
+                        <div class="event-type-badge" style="background: ${color}; color: white;">${escapeHTML(typeLabel(event.type))}</div>
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--accent),var(--accent-s));display:grid;place-items:center;color:white;">
+                            <strong style="font-size:1.35rem;text-align:center;padding:20px;">${escapeHTML(event.title)}</strong>
+                        </div>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-date">${escapeHTML(event.date)}</div>
+                        <h3>${escapeHTML(event.title)}</h3>
+                        <p>${escapeHTML(event.description)}</p>
+                        <div class="event-meta">
+                            <span>${escapeHTML(event.location)}</span>
+                            <span>Hosted by you</span>
+                            <div class="attendee-stack" style="margin-left:auto;"><span class="count">0 Going</span></div>
+                        </div>
+                        <div class="event-actions">
+                            <button class="btn btn-p is-done" disabled>Hosted</button>
+                            <button class="btn btn-outline" data-action="share">Share</button>
+                            <button class="like-btn" aria-label="Save this event" data-action="save"><span class="heart-icon">&hearts;</span></button>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        function createEvent(event) {
+            event.preventDefault();
+            const title = document.getElementById('eventTitle')?.value.trim();
+            const type = document.getElementById('eventType')?.value || 'meetup';
+            const date = document.getElementById('eventDate')?.value.trim();
+            const location = document.getElementById('eventLocation')?.value.trim();
+            const description = document.getElementById('eventDescription')?.value.trim();
+            if (!title || !date || !location || !description) {
+                showToast('Complete all event fields first.');
+                return;
+            }
+            const hosted = readHostedEvents();
+            const newEvent = {
+                id: `hosted-${Date.now()}`,
+                title,
+                type,
+                date,
+                location,
+                description
+            };
+            hosted.unshift(newEvent);
+            writeHostedEvents(hosted);
+            const list = document.getElementById('eventList');
+            const empty = document.getElementById('emptyState');
+            if (list) {
+                const temp = document.createElement('div');
+                temp.innerHTML = eventCardTemplate(newEvent).trim();
+                list.insertBefore(temp.firstElementChild, empty || list.firstChild);
+            }
+            event.target.reset();
+            document.getElementById('createEventPanel').hidden = true;
+            currentView = 'hosted';
+            currentFilter = 'all';
+            currentSearch = '';
+            document.getElementById('eventSearch').value = '';
+            setActiveView('hosted');
+            setActiveFilter('all');
+            applyEventFilters();
+            showToast('Event published.');
+        }
+
+        function loadHostedEvents() {
+            const list = document.getElementById('eventList');
+            const empty = document.getElementById('emptyState');
+            if (!list) return;
+            readHostedEvents().slice().reverse().forEach((event) => {
+                const temp = document.createElement('div');
+                temp.innerHTML = eventCardTemplate(event).trim();
+                list.insertBefore(temp.firstElementChild, empty || list.firstChild);
+            });
+        }
+
+        function resetExploreView() {
+            currentView = 'explore';
+            currentFilter = 'all';
+            currentSearch = '';
+            setActiveView('explore');
+            setActiveFilter('all');
+            const search = document.getElementById('eventSearch');
+            if (search) search.value = '';
+            applyEventFilters();
+        }
+
+        function handleClick(event) {
+            const actionTarget = event.target.closest('[data-action]');
+            if (actionTarget) {
+                event.preventDefault();
+                const action = actionTarget.dataset.action;
+                if (action === 'toggle-create') toggleCreatePanel();
+                if (action === 'clear-search') {
+                    const search = document.getElementById('eventSearch');
+                    if (search) search.value = '';
+                    currentSearch = '';
+                    applyEventFilters();
+                    showToast('Search cleared.');
+                }
+                if (action === 'rsvp') rsvpEvent(actionTarget);
+                if (action === 'save') saveEvent(actionTarget);
+                if (action === 'share') shareEvent(actionTarget);
+                if (action === 'mini-event') {
+                    const query = actionTarget.dataset.query || '';
+                    document.getElementById('eventSearch').value = query;
+                    currentSearch = query.toLowerCase();
+                    currentView = 'explore';
+                    currentFilter = 'all';
+                    setActiveView('explore');
+                    setActiveFilter('all');
+                    const matches = applyEventFilters();
+                    if (!matches) showInfo(`<strong>${escapeHTML(query)}</strong><br>This suggested event is not in your main list yet. We copied a reminder so you can search for it later.`);
+                    if (!matches) copyText(query, 'Suggested event title copied.');
+                }
+                if (action === 'explore-suggestions') {
+                    resetExploreView();
+                    showToast('Showing all upcoming events.');
+                }
+                if (action === 'escrow-info') {
+                    showInfo('<strong>Escrow protection</strong><br>Paid event funds are held until event completion and identity checks pass. If the host cancels or verification fails, the ticket is eligible for automatic refund.');
+                }
+            }
+
+            const viewTarget = event.target.closest('.side-nav a[data-view]');
+            if (viewTarget) {
+                event.preventDefault();
+                currentView = viewTarget.dataset.view || 'explore';
+                setActiveView(currentView);
+                applyEventFilters();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHostedEvents();
+            applySavedAndTicketState();
+            applyEventFilters();
+        });
+
+        document.querySelectorAll('.filter-btn').forEach((button) => {
+            button.addEventListener('click', () => {
+                currentFilter = button.dataset.filter || 'all';
+                setActiveFilter(currentFilter);
+                applyEventFilters();
+            });
+        });
+
+        document.getElementById('eventSearch')?.addEventListener('input', (event) => {
+            currentSearch = event.target.value.trim().toLowerCase();
+            applyEventFilters();
+        });
+
+        document.getElementById('createEventForm')?.addEventListener('submit', createEvent);
+        document.addEventListener('click', handleClick);
+    </script>
 </body>
 </html>
