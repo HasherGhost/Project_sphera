@@ -1328,6 +1328,7 @@
             </section>
 
             <section class="post-list" id="postList" aria-live="polite">
+                <div id="dynamicPostsContainer"></div>
                 <article class="card post" data-category="hiring">
                     <div class="post-header">
                         <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Marcus Johnson" class="author-avatar">
@@ -2038,7 +2039,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc, collection, addDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, collection, addDoc, query, orderBy, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBfF_Gfn_YaIHfHVCpaA6IdUjDVNlDQTjg",
@@ -2049,6 +2050,28 @@
             appId: "1:851527615297:web:9ea78e42c27b3585e5d7c0"
         };
 
+        function getProfilePhoto(uid) {
+            const photos = [
+                'https://randomuser.me/api/portraits/men/32.jpg',
+                'https://randomuser.me/api/portraits/men/44.jpg',
+                'https://randomuser.me/api/portraits/men/55.jpg',
+                'https://randomuser.me/api/portraits/men/67.jpg',
+                'https://randomuser.me/api/portraits/men/75.jpg',
+                'https://randomuser.me/api/portraits/men/22.jpg',
+                'https://randomuser.me/api/portraits/men/11.jpg',
+                'https://randomuser.me/api/portraits/men/88.jpg',
+            ];
+            if (!uid) return photos[0];
+            let hash = 0;
+            for (let i = 0; i < uid.length; i++) {
+                hash = uid.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return photos[Math.abs(hash) % photos.length];
+        }
+
+        let currentUserName = 'User';
+        let currentUserPhoto = '';
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -2057,94 +2080,118 @@
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // Fetch user data from Firestore
                 try {
                     const userDoc = await getDoc(doc(db, 'users', user.uid));
-                    if (userDoc.exists()) {
-                        const data = userDoc.data();
-                        
-                        // Store in global variable for publishPost
-                        window.currentUserProfile = {
-                            name: data.name || user.displayName || 'Sphera User',
-                            role: data.role || data.company || 'Verified Member'
-                        };
-
-                        // Update Profile Name
-                        const nameEl = document.getElementById('profileName');
-                        if (nameEl) nameEl.textContent = window.currentUserProfile.name;
-
-                        // Update Role
-                        const roleEl = document.getElementById('profileRole');
-                        if (roleEl) roleEl.textContent = window.currentUserProfile.role;
-
-                        // Generate Dynamic Avatar URL using UID hash
-                        const portraitNum = (user.uid.charCodeAt(0) % 50) + 1;
-                        const avatarUrl = `https://randomuser.me/api/portraits/men/${portraitNum}.jpg`;
-                        window.currentUserProfile.avatar = avatarUrl;
-
-                        // Update Avatar Images
-                        document.getElementById('navAvatar')?.setAttribute('src', avatarUrl);
-                        document.getElementById('profileAvatar')?.setAttribute('src', avatarUrl);
-                        document.getElementById('composerAvatar')?.setAttribute('src', avatarUrl);
-
-                        // Update Alt Texts
-                        const name = window.currentUserProfile.name;
-                        document.getElementById('navAvatar')?.setAttribute('alt', name);
-                        document.getElementById('profileAvatar')?.setAttribute('alt', name);
-                        document.getElementById('composerAvatar')?.setAttribute('alt', name);
-
-                        // Load posts from Firestore after user is identified
-                        loadFirestorePosts();
+                    const data = userDoc.exists() ? userDoc.data() : {};
+                    
+                    // 1. Resolve Name
+                    let resolvedName = data.name;
+                    if (!resolvedName) {
+                        if (user.email && user.email.toLowerCase().startsWith('test')) {
+                            resolvedName = 'James Wilson';
+                        } else {
+                            resolvedName = user.email ? user.email.split('@')[0] : 'Sphera User';
+                        }
                     }
+                    currentUserName = resolvedName;
+                    
+                    // 2. Resolve Role/Company
+                    let resolvedRole = "Professional";
+                    if (data.role && data.company) {
+                        resolvedRole = `${data.role} @ ${data.company}`;
+                    } else if (data.role || data.company) {
+                        resolvedRole = data.role || data.company;
+                    }
+                    
+                    // 3. Resolve Photo
+                    currentUserPhoto = getProfilePhoto(user.uid);
+                    
+                    // Update global profile object
+                    window.currentUserProfile = {
+                        name: currentUserName,
+                        role: resolvedRole,
+                        avatar: currentUserPhoto
+                    };
+
+                    // 4. Update UI Elements
+                    const nameEl = document.getElementById('profileName');
+                    if (nameEl) nameEl.textContent = currentUserName;
+                    
+                    const roleEl = document.getElementById('profileRole');
+                    if (roleEl) roleEl.textContent = resolvedRole;
+
+                    const avatarImages = ['navAvatar', 'profileAvatar', 'composerAvatar'];
+                    avatarImages.forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) {
+                            el.setAttribute('src', currentUserPhoto);
+                            el.setAttribute('alt', currentUserName);
+                        }
+                    });
+
                 } catch(e) {
-                    console.error('Error:', e.message);
-                    alert('Error: ' + e.message);
+                    console.error('Error fetching user data:', e.message);
                 }
 
-                // Robust standalone post button handler as requested
-                document.getElementById('postButton').addEventListener('click', async function() {
-                    const textarea = document.getElementById('composerInput');
-                    const text = textarea.value.trim();
-                    if (!text) { alert('Please write something first'); return; }
-                    
-                    try {
-                        const { initializeApp, getApps } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js");
-                        const { getAuth } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js");
-                        const { getFirestore, collection, addDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+                // Add click listener to the post button
+                const postBtn = document.getElementById('postButton');
+                if (postBtn) {
+                    // Use onclick to ensure only one listener is active
+                    postBtn.onclick = async function() {
+                        const textarea = document.getElementById('composerInput');
+                        const text = textarea.value.trim();
+                        if (!text) { alert('Please write something first'); return; }
                         
-                        const firebaseConfig = {
-                            apiKey: "AIzaSyBfF_Gfn_YaIHfHVCpaA6IdUjDVNlDQTjg",
-                            authDomain: "sphera-6778e.firebaseapp.com",
-                            projectId: "sphera-6778e",
-                            storageBucket: "sphera-6778e.firebasestorage.app",
-                            messagingSenderId: "851527615297",
-                            appId: "1:851527615297:web:9ea78e42c27b3585e5d7c0"
-                        };
-                        
-                        const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-                        const auth = getAuth(app);
-                        const db = getFirestore(app);
-                        const user = auth.currentUser;
-                        
-                        if (!user) { alert('Please login first'); return; }
-                        
-                        await addDoc(collection(db, 'posts'), {
-                            text: text,
-                            authorId: user.uid,
-                            authorName: user.displayName || 'User',
-                            createdAt: new Date().toISOString(),
-                            timestamp: Date.now()
-                        });
-                        
-                        textarea.value = '';
-                        alert('Post shared!');
-                    } catch(e) {
-                        console.error(e);
-                        alert('Error: ' + e.message);
-                    }
+                        try {
+                            const { collection, addDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+                            
+                            if (!auth.currentUser) { alert('Please login first'); return; }
+                            
+                            await addDoc(collection(db, 'posts'), {
+                                text: text,
+                                authorId: auth.currentUser.uid,
+                                authorName: currentUserName,
+                                authorPhoto: currentUserPhoto,
+                                createdAt: new Date().toISOString(),
+                                timestamp: Date.now()
+                            });
+                            
+                            textarea.value = '';
+                            alert('Post shared!');
+                        } catch(err) {
+                            console.error(err);
+                            alert('Error: ' + err.message);
+                        }
+                    };
+                }
+
+                // Real-time listener for posts
+                const qPosts = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+                onSnapshot(qPosts, (snapshot) => {
+                    const dynamicContainer = document.getElementById('dynamicPostsContainer');
+                    if (!dynamicContainer) return;
+
+                    dynamicContainer.innerHTML = '';
+
+                    snapshot.forEach((doc) => {
+                        const post = doc.data();
+                        const displayAuthor = (!post.authorName || post.authorName === "User") ? "Sphera Member" : post.authorName;
+                        const postHTML = `
+                        <div class="post-card" style="background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px;">
+                          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                            <img src="${getProfilePhoto(post.authorId)}" style="width:40px;height:40px;border-radius:50%;">
+                            <div>
+                              <strong>${displayAuthor}</strong>
+                              <div style="font-size:12px;color:var(--muted)">${new Date(post.timestamp).toLocaleString()}</div>
+                            </div>
+                          </div>
+                          <p>${post.text}</p>
+                        </div>`;
+                        dynamicContainer.innerHTML += postHTML;
+                    });
                 });
+
             } else {
-                // Redirect to login if not authenticated
                 window.location.href = 'index.html';
             }
         });
