@@ -39,6 +39,9 @@
 
         button {
             border: 0;
+            background: none;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         a {
@@ -46,6 +49,7 @@
             text-decoration: none;
         }
 
+        /* ── Glassmorphic Grid Foundation ── */
         .video-bg,
         .video-overlay {
             position: fixed;
@@ -67,11 +71,11 @@
         .video-overlay {
             z-index: -1;
             background:
-                radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 36%),
-                radial-gradient(circle at 88% 16%, rgba(139, 92, 246, 0.16), transparent 32%),
+                radial-gradient(circle at top left, rgba(124, 58, 237, 0.12), transparent 40%),
+                radial-gradient(circle at bottom right, rgba(167, 139, 250, 0.08), transparent 40%),
                 var(--bg);
-            opacity: 0.92;
-            backdrop-filter: blur(12px);
+            opacity: 0.95;
+            backdrop-filter: blur(8px);
         }
 
         .site-header {
@@ -79,241 +83,351 @@
             inset: 0 0 auto;
             z-index: 1000;
             border-bottom: 1px solid var(--line);
-            background: var(--bg-soft);
-            backdrop-filter: blur(18px);
+            background: var(--header-bg);
+            backdrop-filter: var(--glass-blur);
         }
 
         .header-content {
             width: min(1180px, calc(100% - 40px));
-            height: 68px;
+            height: 72px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 220px minmax(260px, 1fr) auto;
+            grid-template-columns: 200px 1fr auto;
             align-items: center;
-            gap: 18px;
+            gap: 24px;
         }
 
         .logo {
-            width: fit-content;
-            font-size: 21px;
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            background: linear-gradient(135deg, var(--accent), var(--accent));
-            background-clip: text;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            background: linear-gradient(to right, var(--accent), #C4B5FD);
             -webkit-background-clip: text;
-            color: transparent;
             -webkit-text-fill-color: transparent;
         }
 
-        .search-bar {
-            width: 100%;
-            max-width: 460px;
-            justify-self: center;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            color: var(--faint);
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 999px;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .search-bar:focus-within {
-            border-color: rgba(59, 130, 246, 0.6);
-            box-shadow: 0 0 0 4px var(--accent-f);
-        }
-
-        .search-bar input {
-            width: 100%;
-            min-width: 0;
-            color: var(--text);
-            background: transparent;
-            border: 0;
-            outline: 0;
-        }
-
-        .search-bar input::placeholder {
-            color: var(--faint);
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .icon-btn,
-        .profile-button {
-            display: grid;
-            place-items: center;
-            width: 38px;
-            height: 38px;
-            color: var(--muted);
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 999px;
-            cursor: pointer;
-            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-        }
-
-        .icon-btn:hover,
-        .profile-button:hover {
-            color: var(--text);
-            border-color: var(--line-s);
-            background: var(--surface-strong);
-        }
-
-        .profile-button img {
-            width: 100%;
-            height: 100%;
-            border-radius: inherit;
-            object-fit: cover;
-        }
-
-        .notification-dot {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 7px;
-            height: 7px;
-            background: var(--danger);
-            border: 2px solid var(--bg);
-            border-radius: 999px;
-        }
-
-        .credits-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            height: 38px;
-            padding: 0 12px;
-            color: var(--text);
-            background: linear-gradient(135deg, var(--accent-f), var(--accent-f));
-            border: 1px solid rgba(139, 92, 246, 0.28);
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .credits-amount {
-            color: var(--accent);
-            font-weight: 800;
-        }
-
+        /* ── Navigation ── */
         .container {
-            width: min(1180px, calc(100% - 40px));
+            width: min(1240px, calc(100% - 40px));
             margin: 0 auto;
-            padding: 92px 0 48px;
+            padding: 104px 0 64px;
             display: grid;
-            grid-template-columns: 236px minmax(0, 1fr) 282px;
-            gap: 20px;
+            grid-template-columns: 250px 1fr 280px;
+            gap: 24px;
             align-items: start;
         }
 
         .left-sidebar,
         .right-sidebar {
             position: sticky;
-            top: 88px;
-        }
-
-        .stack {
+            top: 104px;
             display: grid;
-            gap: 16px;
+            gap: 20px;
         }
 
         .card {
             background: var(--surface);
             border: 1px solid var(--line);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-soft);
-            backdrop-filter: blur(18px);
+            border-radius: 20px;
+            box-shadow: var(--shadow-f);
+            backdrop-filter: var(--glass-blur);
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--line-s);
+            box-shadow: var(--shadow);
         }
 
         .card.pad {
-            padding: 18px;
+            padding: 24px;
         }
 
+        /* ── Profile Snapshot ── */
         .profile-card {
             text-align: center;
+            background: linear-gradient(to bottom, var(--surface-f), var(--surface));
         }
 
         .profile-avatar {
-            width: 78px;
-            height: 78px;
-            margin: 0 auto 14px;
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 16px;
+            border-radius: 28px;
+            border: 2px solid var(--line);
+            padding: 4px;
+            background: var(--surface);
             object-fit: cover;
-            border: 1px solid rgba(59, 130, 246, 0.45);
-            border-radius: 24px;
-            background: var(--bg);
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.15);
         }
 
         .profile-name {
+            font-size: 19px;
+            font-weight: 850;
+            letter-spacing: -0.03em;
+        }
+
+        .profile-title {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .verified-line {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            padding: 6px 12px;
+            color: var(--green);
+            background: var(--green-f);
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .pulse::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: var(--green);
+            opacity: 0.4;
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.5); opacity: 0.8; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* ── Search & Filter ── */
+        .search-container {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .search-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            background: var(--surface-f);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            background: var(--surface);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-f);
+        }
+
+        .search-bar input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--faint);
+            font-weight: 400;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+
+        .filter-btn {
+            white-space: nowrap;
+            padding: 10px 18px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            box-shadow: 0 8px 20px var(--accent-f);
+        }
+
+        /* ── Content Area ── */
+        .page-intro {
+            padding: 40px;
+            background: linear-gradient(135deg, var(--surface), var(--surface-f));
+            margin-bottom: 24px;
+        }
+
+        .page-intro h1 {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -0.06em;
+            margin-bottom: 12px;
+        }
+
+        .page-intro p {
+            color: var(--muted);
+            font-size: 16px;
+            max-width: 600px;
+        }
+
+        .connection-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .connection-card {
+            display: grid;
+            grid-template-rows: auto auto 1fr auto;
+            padding: 24px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            position: relative;
+        }
+
+        .connection-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 80px; height: 80px;
+            background: radial-gradient(circle at top right, var(--accent-f), transparent);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .c-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .c-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            border: 2px solid var(--surface-f);
+            box-shadow: var(--shadow-f);
+        }
+
+        .c-info h3 {
             font-size: 17px;
             font-weight: 800;
             letter-spacing: -0.02em;
         }
 
-        .profile-title {
-            margin-top: 5px;
-            color: var(--muted);
+        .c-info p {
             font-size: 13px;
-            line-height: 1.45;
+            color: var(--faint);
+            margin-top: 2px;
         }
 
-        .verified-line {
-            width: fit-content;
-            margin: 14px auto 0;
-            display: inline-flex;
-            align-items: center;
+        .c-tags {
+            display: flex;
             gap: 6px;
-            padding: 6px 9px;
-            color: var(--success);
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 999px;
-            font-size: 11px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            background: var(--surface-f);
+            border-radius: 6px;
+            font-size: 10px;
             font-weight: 800;
-        }
-
-        .pulse {
-            width: 6px;
-            height: 6px;
-            background: var(--success);
-            border-radius: 999px;
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.14);
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid var(--line);
-        }
-
-        .stat-item {
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-        }
-
-        .stat-value {
-            display: block;
-            font-size: 16px;
-            font-weight: 800;
-        }
-
-        .stat-label {
-            display: block;
-            margin-top: 3px;
             color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .c-mutuals {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-top: auto;
+            margin-bottom: 20px;
+        }
+
+        .mutual-avatars {
+            display: flex;
+            margin-right: 4px;
+        }
+
+        .mutual-avatars img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--surface);
+            margin-left: -8px;
+        }
+
+        .mutual-avatars img:first-child { margin-left: 0; }
+
+        .mutual-text {
             font-size: 11px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .c-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .btn-message {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px var(--accent-f);
+        }
+
+        .btn-intro {
+            background: var(--surface-f);
+            color: var(--text);
+            border: 1px solid var(--line);
         }
 
         .nav-menu {
@@ -326,19 +440,19 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            min-height: 42px;
-            padding: 10px 11px;
+            min-height: 48px;
+            padding: 0 16px;
             color: var(--muted);
-            border-radius: 13px;
+            border-radius: 14px;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
-            transition: background 0.2s ease, color 0.2s ease;
+            transition: all 0.2s ease;
         }
 
         .nav-item:hover {
             color: var(--text);
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--surface-f);
         }
 
         .nav-item.active {
@@ -346,736 +460,198 @@
             background: var(--accent-f);
         }
 
-        .nav-count {
-            margin-left: auto;
-            min-width: 24px;
-            padding: 3px 7px;
-            color: var(--accent);
-            background: var(--accent-f);
-            border-radius: 999px;
-            font-size: 11px;
-            text-align: center;
-        }
-
-        .page-intro {
-            position: relative;
-            overflow: hidden;
-            padding: 17px;
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            gap: 20px;
-            align-items: end;
-        }
-
-        .page-intro::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(circle at 16% 0%, rgba(59, 130, 246, 0.22), transparent 34%),
-                radial-gradient(circle at 96% 16%, rgba(139, 92, 246, 0.2), transparent 38%);
-            pointer-events: none;
-        }
-
-        .intro-copy,
-        .invite-card {
-            position: relative;
-            z-index: 1;
-        }
-
-        .eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 11px;
-            color: var(--accent);
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .eyebrow::before {
-            content: "";
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            border-radius: 999px;
-        }
-
-        .page-intro h1 {
-            max-width: 560px;
-            font-size: 1.8rem;
-            line-height: 1.02;
-            letter-spacing: -0.055em;
-        }
-
-        .page-intro p {
-            max-width: 600px;
-            margin-top: 13px;
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.7;
-        }
-
-        .metric-row {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .metric {
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-        }
-
-        .metric strong {
-            display: block;
-            font-size: 18px;
-            letter-spacing: -0.03em;
-        }
-
-        .metric span {
-            display: block;
-            margin-top: 3px;
-            color: var(--muted);
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .invite-card {
-            width: 218px;
-            padding: 14px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--line-s);
-            border-radius: var(--radius);
-        }
-
-        .invite-card span {
-            display: block;
-            color: var(--muted);
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .invite-card code {
-            display: block;
-            margin: 9px 0 12px;
-            color: var(--text);
-            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-            font-size: 12px;
-            word-break: break-all;
-        }
-
-        .section-toolbar {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            gap: 16px;
-            align-items: end;
-            margin-top: 18px;
-        }
-
-        .section-kicker {
-            color: var(--faint);
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .section-toolbar h2 {
-            margin-top: 5px;
-            font-size: 20px;
-            letter-spacing: -0.035em;
-        }
-
-        .filter-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 14px;
-        }
-
-        .filter-btn {
-            padding: 8px 13px;
-            color: var(--muted);
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 999px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 800;
-            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            color: var(--text);
-            border-color: rgba(59, 130, 246, 0.4);
-            background: var(--accent-f);
-        }
-
-        .connection-list {
-            display: grid;
-            gap: 12px;
-            margin-top: 14px;
-        }
-
-        .connection-card {
-            display: grid;
-            grid-template-columns: 56px minmax(0, 1fr) auto;
-            gap: 14px;
-            align-items: center;
-            padding: 16px;
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            transition: background 0.2s ease, border-color 0.2s ease;
-        }
-
-        .connection-card[hidden],
-        .empty-state[hidden] {
-            display: none;
-        }
-
-        .connection-card:hover {
-            border-color: var(--line-s);
-            background: var(--surface-strong);
-        }
-
-        .connection-card.is-muted {
-            opacity: 0.68;
-            border-style: dashed;
-        }
-
-        .c-avatar {
-            width: 56px;
-            height: 56px;
-            object-fit: cover;
-            border: 1px solid var(--line);
-            border-radius: 16px;
-            background: var(--bg);
-        }
-
-        .c-info h3 {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px;
-            font-size: 15px;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .c-info p {
-            margin-top: 5px;
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .meta-line {
-            color: var(--faint);
-            font-size: 12px;
-        }
-
-        .c-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .connection-panel {
-            grid-column: 1 / -1;
-            display: grid;
-            gap: 10px;
-            margin-top: 2px;
-            padding: 12px;
-            color: var(--muted);
-            background: rgba(255, 255, 255, 0.035);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            font-size: 13px;
-            line-height: 1.55;
-        }
-
-        .message-form {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            gap: 8px;
-        }
-
-        .message-input {
-            min-width: 0;
-            padding: 10px 12px;
-            color: var(--text);
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--line);
-            border-radius: 999px;
-            outline: 0;
-        }
-
-        .message-input:focus {
-            border-color: rgba(59, 130, 246, 0.55);
-            box-shadow: 0 0 0 3px var(--accent-f);
-        }
-
-        .empty-state {
+        .sidebar-section {
             padding: 24px;
-            color: var(--muted);
-            text-align: center;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            min-height: 22px;
-            padding: 4px 8px;
-            color: var(--accent);
-            background: var(--accent-f);
-            border-radius: 999px;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-
-        .badge-amber {
-            color: var(--warning);
-            background: rgba(245, 158, 11, 0.14);
-        }
-
-        .badge-green {
-            color: var(--success);
-            background: rgba(16, 185, 129, 0.14);
-        }
-
-        .badge-red {
-            color: var(--danger);
-            background: rgba(239, 68, 68, 0.14);
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 36px;
-            padding: 8px 13px;
-            border-radius: 999px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 800;
-            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-        }
-
-        .btn-primary {
-            color: #fff;
-            background: linear-gradient(135deg, var(--accent), var(--accent));
-        }
-
-        .btn-ghost {
-            color: var(--muted);
-            background: transparent;
-            border: 1px solid var(--line);
-        }
-
-        .btn-ghost:hover {
-            color: var(--text);
-            border-color: var(--line-s);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .btn-subtle {
-            color: var(--accent);
-            background: var(--accent-f);
-        }
-
-        .btn.is-done,
-        .btn:disabled {
-            cursor: default;
-            transform: none;
-            opacity: 0.78;
-        }
-
-        .btn.is-done {
-            color: var(--success);
-            background: rgba(16, 185, 129, 0.12);
         }
 
         .sidebar-title {
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--faint);
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
+        }
+
+        .suggestion-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .suggestion-item {
+            display: flex;
             align-items: center;
-            margin-bottom: 14px;
+            gap: 12px;
+        }
+
+        .suggest-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+        }
+
+        .suggest-info h4 {
             font-size: 14px;
             font-weight: 800;
             letter-spacing: -0.01em;
         }
 
-        .sidebar-note {
-            color: var(--faint);
+        .suggest-info p {
             font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
+            color: var(--faint);
+            margin-top: 1px;
         }
 
-        .insight-list,
-        .intro-list {
-            display: grid;
-            gap: 10px;
+        .btn-connect {
+            margin-left: auto;
+            padding: 6px 12px;
+            font-size: 11px;
+            background: var(--accent-f);
+            color: var(--accent);
+            border-radius: 8px;
+            font-weight: 900;
         }
 
-        .insight-item {
-            display: grid;
-            grid-template-columns: 7px minmax(0, 1fr);
-            gap: 10px;
-            align-items: start;
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.55;
-        }
-
-        .insight-dot {
-            width: 7px;
-            height: 7px;
-            margin-top: 6px;
+        .btn-connect:hover {
             background: var(--accent);
-            border-radius: 999px;
+            color: white;
         }
 
-        .insight-item b {
-            color: var(--text);
-        }
-
-        .mini-profile {
-            display: grid;
-            grid-template-columns: 40px minmax(0, 1fr);
-            gap: 10px;
-            align-items: center;
-            padding: 9px;
-            border: 1px solid transparent;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: background 0.2s ease, border-color 0.2s ease;
-        }
-
-        .mini-profile:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: var(--line);
-        }
-
-        .mini-avatar {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-        }
-
-        .mini-info h5 {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 13px;
-            font-weight: 800;
-        }
-
-        .mini-info p {
-            overflow: hidden;
-            margin-top: 2px;
-            color: var(--muted);
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 12px;
-        }
-
-        .toast {
+        #toast {
             position: fixed;
-            right: 20px;
-            bottom: 20px;
-            z-index: 3000;
-            max-width: min(360px, calc(100% - 40px));
-            padding: 12px 14px;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--surface-s);
             color: var(--text);
-            background: var(--surface-strong);
-            border: 1px solid var(--line-s);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-soft);
-            opacity: 0;
-            transform: translateY(12px);
-            pointer-events: none;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--line-s);
+            padding: 16px 32px;
             border-radius: 999px;
-        }
-
-        @media (max-width: 1120px) {
-            .header-content {
-                grid-template-columns: 180px minmax(220px, 1fr) auto;
-            }
-
-            .container {
-                grid-template-columns: 220px minmax(0, 1fr);
-            }
-
-            .right-sidebar {
-                display: none;
-            }
-        }
-
-        @media (max-width: 820px) {
-            .header-content {
-                width: min(100% - 28px, 1180px);
-                grid-template-columns: auto 1fr auto;
-            }
-
-            .search-bar {
-                display: none;
-            }
-
-            .credits-pill span:last-child,
-            .icon-btn[title="Messages"] {
-                display: none;
-            }
-
-            .container {
-                width: min(100% - 28px, 1180px);
-                grid-template-columns: 1fr;
-                padding-top: 86px;
-            }
-
-            .left-sidebar {
-                position: static;
-            }
-
-            .profile-card {
-                display: none;
-            }
-
-            .page-intro,
-            .section-toolbar,
-            .connection-card {
-                grid-template-columns: 1fr;
-            }
-
-            .invite-card {
-                width: 100%;
-            }
-
-            .metric-row {
-                grid-template-columns: 1fr;
-            }
-
-            .c-actions {
-                justify-content: flex-start;
-            }
-        }
-
-        /* ═══ Invite Request Cards ═══ */
-        .invite-section {
-            display: none;
-        }
-
-        .invite-section.is-visible {
-            display: block;
-        }
-
-        .network-section.is-hidden {
-            display: none;
-        }
-
-        .invite-request-card {
-            display: grid;
-            grid-template-columns: 56px minmax(0, 1fr);
-            gap: 14px;
-            padding: 18px;
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            transition: background 0.2s ease, border-color 0.2s ease, opacity 0.4s ease, transform 0.4s ease;
-        }
-
-        .invite-request-card:hover {
-            border-color: var(--line-s);
-            background: var(--surface-strong);
-        }
-
-        .invite-request-card.is-accepted {
-            border-color: rgba(16, 185, 129, 0.35);
-            background: rgba(16, 185, 129, 0.06);
-        }
-
-        .invite-request-card.is-declined {
-            opacity: 0.4;
-            transform: scale(0.98);
-            pointer-events: none;
-        }
-
-        .invite-request-card .c-avatar {
-            width: 56px;
-            height: 56px;
-        }
-
-        .invite-meta {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px;
-            margin-top: 2px;
-        }
-
-        .invite-meta .meta-detail {
-            color: var(--faint);
-            font-size: 12px;
-        }
-
-        .invite-meta .meta-detail::before {
-            content: '·';
-            margin-right: 6px;
-        }
-
-        .invite-meta .meta-detail:first-child::before {
-            display: none;
-        }
-
-        .invite-message {
-            margin-top: 10px;
-            padding: 10px 12px;
-            color: var(--muted);
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            font-size: 13px;
-            line-height: 1.55;
-            font-style: italic;
-        }
-
-        .invite-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-        }
-
-        .invite-actions .btn {
-            gap: 6px;
-        }
-
-        .invite-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 12px;
-            padding: 6px 10px;
-            border-radius: 999px;
-            font-size: 12px;
             font-weight: 800;
+            font-size: 14px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 1px solid var(--line-s);
+            backdrop-filter: blur(20px);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 2000;
+            opacity: 0;
         }
 
-        .invite-status.accepted {
-            color: var(--success);
-            background: rgba(16, 185, 129, 0.12);
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
-        .invite-status.declined {
-            color: var(--faint);
-            background: rgba(255, 255, 255, 0.04);
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--line);
         }
 
-        .invite-time {
-            color: var(--faint);
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--text);
+        }
+
+        .stat-label {
             font-size: 11px;
             font-weight: 700;
+            color: var(--faint);
+            text-transform: uppercase;
         }
 
-        /* ═══ Notification Dropdown ═══ */
-        .dropdown-container {
-            position: relative;
-            display: inline-block;
+        .filter-bar::-webkit-scrollbar { display: none; }
+        
+        .notification-dot {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            border: 2px solid var(--header-bg);
         }
 
         .notification-dropdown {
             position: absolute;
-            top: calc(100% + 10px);
+            top: 110%;
             right: 0;
             width: 320px;
-            background: var(--Srface-strong);
-            border: 1px solid var(--border-strong);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg);
-            z-index: 1000;
+            background: var(--surface-s);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 12px;
             display: none;
-            overflow: hidden;
-            animation: slideDown 0.2s ease;
+            z-index: 1001;
         }
 
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-8px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .notification-dropdown.show {
-            display: block;
-        }
-
-        .dropdown-header {
-            padding: 12px 16px;
-            font-size: 13px;
+        .notification-dropdown.show { display: block; }
+        .dropdown-header { font-weight: 800; padding: 8px 12px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+        .notification-item { padding: 10px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; }
+        .notification-item:hover { background: var(--surface-f); }
+        
+        .credits-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-f);
+            padding: 6px 14px;
+            border-radius: 999px;
             font-weight: 800;
-            color: var(--text-main);
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .notification-item {
-            padding: 12px 16px;
             font-size: 13px;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-            transition: background 0.2s ease, color 0.2s ease;
+            color: var(--accent);
         }
 
-        .notification-item:last-child {
-            border-bottom: none;
+        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .icon-btn { 
+            width: 40px; height: 40px; border-radius: 50%; 
+            display: grid; place-items: center; 
+            background: var(--surface-f); color: var(--muted);
+            position: relative;
+        }
+        .icon-btn:hover { background: var(--line); color: var(--text); }
+        
+        .profile-button { width: 40px; height: 40px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+        .profile-button img { width: 100%; height: 100%; object-fit: cover; }
+
+        .connection-panel {
+            grid-column: 1 / -1;
+            margin-top: 16px;
+            padding: 16px;
+            background: var(--surface-f);
+            border-radius: 16px;
+            font-size: 13px;
+            border: 1px solid var(--line);
         }
 
-        .notification-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-main);
+        .message-form { display: flex; gap: 8px; margin-top: 12px; }
+        .message-input { 
+            flex: 1; background: var(--surface); border: 1px solid var(--line); 
+            border-radius: 10px; padding: 8px 12px; color: var(--text);
         }
+        
+        .insight-list { display: grid; gap: 12px; }
+        .insight-item { display: flex; gap: 12px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+        .insight-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex-shrink: 0; }
+        
+        .mini-profile { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: 12px; transition: background 0.2s; cursor: pointer; }
+        .mini-profile:hover { background: var(--surface-f); }
+        .mini-avatar { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); }
+        .mini-info h5 { font-size: 14px; font-weight: 800; }
+        .mini-info p { font-size: 12px; color: var(--faint); }
     </style>
     <script>
         const themeKey = 'su-theme';
@@ -1124,69 +700,49 @@
     <header class="site-header">
         <div class="header-content">
             <a href="index.html" class="logo">SPHERA</a>
-            <label class="search-bar" aria-label="Search verified professionals">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input id="networkSearch" type="text" placeholder="Search people, companies, intros...">
-            </label>
+            <div class="search-container" style="margin-bottom: 0;">
+                <label class="search-bar" style="padding: 8px 16px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input id="globalSearch" type="text" placeholder="Search verified network...">
+                </label>
+            </div>
             <div class="header-actions">
-                <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
-                    <svg id="theme-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
+                <button class="icon-btn" onclick="toggleTheme()">
+                    <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </button>
-                <div class="dropdown-container">
-                    <button class="icon-btn" title="Notifications" aria-label="Notifications" id="notifBtn"
-                        onclick="toggleNotifDropdown(event)">
-                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
+                <div style="position: relative;">
+                    <button class="icon-btn" onclick="toggleNotifDropdown(event)">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                         <span class="notification-dot"></span>
                     </button>
                     <div class="notification-dropdown" id="notifDropdown">
-                        <div class="dropdown-header">Recent Notifications</div>
-                        <div class="notification-item">Laura Martinez sent you a connection invite</div>
-                        <div class="notification-item">Emma Thompson wants to connect</div>
-                        <div class="notification-item">David Chen sent an intro request</div>
-                        <div class="notification-item">Neha Verma invited you to connect</div>
-                        <div class="notification-item">Rohan Kapoor wants to intro you to someone</div>
+                        <div class="dropdown-header">Verified Activity</div>
+                        <div class="notification-item">Laura Martinez accepted your intro request</div>
+                        <div class="notification-item">New hiring post from Nexus Labs</div>
                     </div>
                 </div>
-                <button class="icon-btn" title="Messages" aria-label="Messages" data-action="messages">
-                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                </button>
-                <div class="credits-pill" id="creditsPill" title="Your redeemed credits">
-                    <span id="creditsDisplay" class="credits-amount">0</span>
-                    <span>Credits</span>
+                <div class="credits-pill">
+                    <span id="creditsDisplay">1,240</span>
+                    <span style="font-size: 10px; opacity: 0.8; margin-top: 1px;">S-CR</span>
                 </div>
-                <a class="profile-button" href="#profile" aria-label="Open profile">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile" style="background: var(--surface-f); padding: 4px;">
+                <a class="profile-button" href="feed.html">
+                    <img id="navAvatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Me" style="background: var(--surface-f); padding: 4px;">
                 </a>
             </div>
         </div>
     </header>
 
     <div class="container">
-        <aside class="left-sidebar stack" aria-label="Network navigation">
-            <section class="card pad profile-card" id="profile">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile" class="profile-avatar" style="background: var(--surface-f); padding: 8px;">
+        <aside class="left-sidebar">
+            <section class="card pad profile-card">
+                <img class="profile-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="James Wilson" style="background: var(--surface-f); padding: 8px;">
                 <h2 class="profile-name">James Wilson</h2>
                 <p class="profile-title">Founder @ Synapse AI</p>
-                <div class="verified-line"><span class="pulse"></span> Liveness verified</div>
+                <div class="verified-line"><span class="pulse"></span> Liveness Verified</div>
                 <div class="stats">
                     <div class="stat-item">
                         <span class="stat-value">412</span>
-                        <span class="stat-label">Connections</span>
+                        <span class="stat-label">Signals</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-value">12.4k</span>
@@ -1195,668 +751,298 @@
                 </div>
             </section>
 
-            <nav class="card pad" aria-label="Primary">
+            <nav class="card pad" style="padding: 12px;">
                 <ul class="nav-menu">
                     <li class="nav-item" onclick="window.location.href='feed.html'">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <polyline points="3 9 12 2 21 9 21 21 15 21 15 12 9 12 9 21 3 21"></polyline>
-                        </svg>
-                        Feed
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 9 12 2 21 9 21 21 15 21 15 12 9 12 9 21 3 21"></polyline></svg>
+                        Ecosystem Feed
                     </li>
-                    <li class="nav-item active" onclick="window.location.href='network.html'">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                        Network
+                    <li class="nav-item active">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        Professional Network
                     </li>
                     <li class="nav-item" onclick="window.location.href='opportunity.html'">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                        </svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                         Opportunities
                     </li>
                     <li class="nav-item" onclick="window.location.href='event.html'">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        Events
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Global Events
                     </li>
                     <li class="nav-item" onclick="window.location.href='reward.html'">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path
-                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
-                            </path>
-                        </svg>
-                        Rewards
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                        Stake Rewards
                     </li>
                 </ul>
             </nav>
         </aside>
 
-        <main class="stack">
+        <main class="stack" style="display: grid; gap: 24px;">
             <section class="card page-intro">
                 <div class="intro-copy">
-                    <div class="eyebrow">Verified network</div>
-                    <h1>Discover your next partner, founder, or opportunity.</h1>
-                    <p>Sphera's discovery engine connects you with verified humans across the ecosystem. Skip the noise
-                        and find founders, recruiters, and companies you can trust.</p>
-                    <div class="metric-row" aria-label="Network summary">
+                    <div class="eyebrow">Verified Discovery</div>
+                    <h1>Expand your trusted circle.</h1>
+                    <p>Connect with verified humans across the ecosystem. Skip the algorithm noise and find founders, partners, and world-class engineers you can actually trust.</p>
+                    <div class="metric-row">
                         <div class="metric">
                             <strong>72%</strong>
-                            <span>Verified Connections</span>
+                            <span>Signal Weight</span>
                         </div>
                         <div class="metric">
                             <strong>18</strong>
-                            <span>Pending Requests</span>
+                            <span>New Requests</span>
                         </div>
                         <div class="metric">
                             <strong>4.8x</strong>
-                            <span>Profile Views</span>
+                            <span>Trust Delta</span>
                         </div>
                     </div>
                 </div>
                 <div class="invite-card">
-                    <span>Personal invite</span>
-                    <code>Sphera.link/james24</code>
-                    <button class="btn btn-Sbtle" data-action="copy-invite">Copy link</button>
+                    <span>Exclusive Invite Link</span>
+                    <code>sphera.link/j-wilson-2024</code>
+                    <button class="btn btn-message" style="width: 100%; margin-top: 10px; border-radius: 12px; font-size: 11px;" data-action="copy-invite">Copy verified link</button>
                 </div>
             </section>
 
-            <!-- ═══ NETWORK VIEW (default) ═══ -->
-            <section class="network-section" id="networkSection">
-                <div class="section-toolbar">
+            <section id="networkSection">
+                <div class="section-toolbar" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
                     <div>
-                        <div class="section-kicker">People</div>
-                        <h2>Your trust network</h2>
+                        <div class="section-kicker">Network</div>
+                        <h2 style="font-size: 24px; font-weight: 900; letter-spacing: -0.04em;">Your trusted connections</h2>
                     </div>
-                    <button class="btn btn-primary" data-action="focus-search">Search people</button>
+                    <div class="search-bar" style="max-width: 280px; padding: 10px 16px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input id="networkSearch" type="text" placeholder="Filter network...">
+                    </div>
                 </div>
 
-                <div class="filter-bar" aria-label="Network filters">
-                    <button class="filter-btn active" data-filter="all">All</button>
+                <div class="filter-bar" style="margin-bottom: 24px;">
+                    <button class="filter-btn active" data-filter="all">All Humans</button>
                     <button class="filter-btn" data-filter="founder">Founders</button>
-                    <button class="filter-btn" data-filter="recruiter">Recruiters</button>
-                    <button class="filter-btn" data-filter="company">Companies</button>
                     <button class="filter-btn" data-filter="investor">Investors</button>
+                    <button class="filter-btn" data-filter="recruiter">Talent</button>
+                    <button class="filter-btn" data-filter="engineer">Engineers</button>
                 </div>
 
                 <div class="connection-list">
-                    <article class="connection-card" data-tags="investor fintech partner verified"
-                        data-name="Laura Martinez" data-role="Partner at Nila Ventures" data-location="Bengaluru, KA"
-                        data-mutuals="4 shared mutuals" data-status="verified">
-                        <img class="c-avatar" src="https://randomuser.me/api/portraits/women/55.jpg"
-                            alt="Laura Martinez">
-                        <div class="c-info">
-                            <h3>Laura Martinez <span class="badge">Verified</span></h3>
-                            <p>Partner at Nila Ventures<br><span class="meta-line">Bengaluru, KA &middot; 4
-                                    shared mutuals</span></p>
+                    <article class="connection-card" data-tags="investor fintech partner verified" data-name="Laura Martinez">
+                        <div class="c-header">
+                            <img class="c-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" style="background: var(--surface-f); padding: 4px;">
+                            <div class="c-info">
+                                <h3>Laura Martinez</h3>
+                                <p>Partner @ Nila Ventures</p>
+                            </div>
+                        </div>
+                        <div class="c-tags">
+                            <span class="tag">Fintech</span>
+                            <span class="tag">VC</span>
+                            <span class="tag">Verified</span>
+                        </div>
+                        <div class="c-mutuals">
+                            <div class="mutual-avatars">
+                                <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="m1">
+                                <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="m2">
+                                <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="m3">
+                            </div>
+                            <span class="mutual-text">8 shared mutuals</span>
                         </div>
                         <div class="c-actions">
-                            <button class="btn btn-subtle" data-action="message">Message</button>
-                            <button class="btn btn-ghost" data-action="intro">Intro</button>
+                            <button class="btn btn-message" data-action="message">Message</button>
+                            <button class="btn btn-intro" data-action="intro">Ask Intro</button>
                         </div>
                     </article>
 
-                    <article class="connection-card" data-tags="investor product angel verified razorpay"
-                        data-name="Emma Thompson" data-role="Ex-VP Product at Razorpay · Angel Investor"
-                        data-location="Mumbai, MH" data-mutuals="Intro from Neha" data-status="verified">
-                        <img class="c-avatar" src="https://randomuser.me/api/portraits/women/68.jpg"
-                            alt="Emma Thompson">
-                        <div class="c-info">
-                            <h3>Emma Thompson <span class="badge">Verified</span> <span
-                                    class="badge badge-amber">Angel</span></h3>
-                            <p>Ex-VP Product at Razorpay &middot; Angel Investor<br><span class="meta-line">Mumbai, MH
-                                    &middot; Intro from Neha</span></p>
+                    <article class="connection-card" data-tags="investor product angel verified" data-name="Emma Thompson">
+                        <div class="c-header">
+                            <img class="c-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" style="background: var(--surface-f); padding: 4px;">
+                            <div class="c-info">
+                                <h3>Emma Thompson</h3>
+                                <p>Ex-VP Product @ Razorpay</p>
+                            </div>
+                        </div>
+                        <div class="c-tags">
+                            <span class="tag">Angel</span>
+                            <span class="tag">Product</span>
+                        </div>
+                        <div class="c-mutuals">
+                            <div class="mutual-avatars">
+                                <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="m1">
+                                <img src="https://randomuser.me/api/portraits/men/21.jpg" alt="m2">
+                            </div>
+                            <span class="mutual-text">Strong connection</span>
                         </div>
                         <div class="c-actions">
-                            <button class="btn btn-subtle" data-action="message">Message</button>
-                            <button class="btn btn-ghost" data-action="profile">Profile</button>
+                            <button class="btn btn-message" data-action="message">Message</button>
+                            <button class="btn btn-intro" data-action="profile">Profile</button>
                         </div>
                     </article>
 
-                    <article class="connection-card" data-tags="founder hiring cto cloud deep-tech verified"
-                        data-name="David Chen" data-role="CTO @ CloudScale · Deep-tech enthusiast"
-                        data-location="Hyderabad, TS" data-mutuals="7 shared mutuals" data-status="verified">
-                        <img class="c-avatar" src="https://randomuser.me/api/portraits/men/44.jpg" alt="David Chen">
-                        <div class="c-info">
-                            <h3>David Chen <span class="badge">Verified</span> <span
-                                    class="badge badge-green">Open</span></h3>
-                            <p>CTO @ CloudScale &middot; Deep-tech enthusiast<br><span class="meta-line">Hyderabad, TS
-                                    &middot; 7 shared mutuals</span></p>
+                    <article class="connection-card" data-tags="founder hiring cto verified" data-name="David Chen">
+                        <div class="c-header">
+                            <img class="c-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" style="background: var(--surface-f); padding: 4px;">
+                            <div class="c-info">
+                                <h3>David Chen</h3>
+                                <p>CTO @ CloudScale AI</p>
+                            </div>
+                        </div>
+                        <div class="c-tags">
+                            <span class="tag">Founder</span>
+                            <span class="tag">Hiring</span>
+                            <span class="tag">Verified</span>
+                        </div>
+                        <div class="c-mutuals">
+                            <div class="mutual-avatars">
+                                <img src="https://randomuser.me/api/portraits/men/15.jpg" alt="m1">
+                                <img src="https://randomuser.me/api/portraits/women/35.jpg" alt="m2">
+                            </div>
+                            <span class="mutual-text">12 mutual signals</span>
                         </div>
                         <div class="c-actions">
-                            <button class="btn btn-subtle" data-action="message">Message</button>
-                            <button class="btn btn-ghost" data-action="profile">Profile</button>
+                            <button class="btn btn-message" data-action="message">Message</button>
+                            <button class="btn btn-intro" data-action="profile">Profile</button>
                         </div>
                     </article>
 
-                    <article class="connection-card is-muted" data-tags="engineer unverified" data-name="Ryan Cooper"
-                        data-role="Software Engineer" data-location="Remote" data-mutuals="Identity check pending"
-                        data-status="unverified">
-                        <img class="c-avatar" src="https://randomuser.me/api/portraits/men/67.jpg" alt="Ryan Cooper"
-                            style="filter:grayscale(1);">
-                        <div class="c-info">
-                            <h3>Ryan Cooper <span class="badge badge-red">Unverified</span></h3>
-                            <p>Software Engineer<br><span class="meta-line">Identity check pending</span></p>
+                    <article class="connection-card" data-tags="engineer verified" data-name="Marcus Johnson" style="opacity: 0.8; border-style: dashed;">
+                        <div class="c-header">
+                            <img class="c-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" style="background: var(--surface-f); padding: 4px;" style="filter: grayscale(1);">
+                            <div class="c-info">
+                                <h3>Marcus Johnson</h3>
+                                <p>Full-stack Architect</p>
+                            </div>
                         </div>
-                        <div class="c-actions">
-                            <button class="btn btn-ghost" data-action="request-verify">Request verify</button>
+                        <div class="c-tags">
+                            <span class="tag">Engineer</span>
+                            <span class="tag" style="background: var(--danger-f); color: var(--danger);">Unverified</span>
+                        </div>
+                        <div class="c-mutuals">
+                            <span class="mutual-text" style="color: var(--danger);">Identity signal missing</span>
+                        </div>
+                        <div class="c-actions" style="grid-template-columns: 1fr;">
+                            <button class="btn btn-intro" data-action="request-verify">Request Verification</button>
                         </div>
                     </article>
-                    <div class="card empty-state" id="emptyState" hidden>No contacts match this view.</div>
+
+                    <div class="card empty-state" id="emptyState" hidden>
+                        <p>No connections match these parameters.</p>
+                    </div>
                 </div>
             </section>
 
-            <!-- ═══ INVITES VIEW (hidden by default) ═══ -->
-            <section class="invite-section" id="inviteSection">
+            <section id="inviteSection" style="display: none;">
                 <div class="section-toolbar">
                     <div>
                         <div class="section-kicker">Incoming</div>
-                        <h2>Connection requests</h2>
+                        <h2>Verification Requests</h2>
                     </div>
-                    <button class="btn btn-ghost" onclick="switchToNetwork()">← Back to Network</button>
                 </div>
-
-                <div class="connection-list" id="inviteList">
-                    <!-- Populated by JS -->
-                </div>
+                <div class="connection-list" id="inviteList"></div>
             </section>
         </main>
 
-        <aside class="right-sidebar stack" aria-label="Network insights">
+        <aside class="right-sidebar">
             <section class="card pad">
-                <div class="sidebar-title">
-                    Network insights
-                    <span class="sidebar-note">This week</span>
-                </div>
+                <div class="sidebar-title">Network Insights</div>
                 <div class="insight-list">
                     <div class="insight-item">
-                        <span class="insight-dot"></span>
-                        <div><b>72%</b> of your network is verified. Verified users are more likely to respond.</div>
+                        <div class="insight-dot"></div>
+                        <p><strong>72%</strong> verified ratio. Trusted profiles get 5x more responses.</p>
                     </div>
                     <div class="insight-item">
-                        <span class="insight-dot" style="background:var(--warning);"></span>
-                        <div>Strong ties in <b>Fintech</b> and <b>SaaS</b>. Laura can help with biotech intros.</div>
-                    </div>
-                    <div class="insight-item">
-                        <span class="insight-dot" style="background:var(--success);"></span>
-                        <div>Profile views are up <b>38%</b> after your latest trust signal.</div>
+                        <div class="insight-dot" style="background: var(--orange);"></div>
+                        <p>Strong cluster detected in <strong>SaaS</strong>. Consider connecting with Neha.</p>
                     </div>
                 </div>
             </section>
 
-            <section class="card pad">
-                <div class="sidebar-title">
-                    Recommended intros
-                    <span class="sidebar-note">3</span>
+            <section class="card pad sidebar-section" style="padding: 20px;">
+                <div class="sidebar-title">Suggested Intros</div>
+                <div class="suggestion-list">
+                    <div class="suggestion-item">
+                        <img class="suggest-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" style="background: var(--surface-f); padding: 4px;">
+                        <div class="suggest-info">
+                            <h4>Neha Verma</h4>
+                            <p>Product @ Orbit</p>
+                        </div>
+                        <button class="btn-connect" data-action="mini-profile" data-person="Neha Verma">Intro</button>
+                    </div>
+                    <div class="suggestion-item">
+                        <img class="suggest-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" style="background: var(--surface-f); padding: 4px;">
+                        <div class="suggest-info">
+                            <h4>Rohan Kapoor</h4>
+                            <p>Eng @ Nexus Labs</p>
+                        </div>
+                        <button class="btn-connect" data-action="mini-profile" data-person="Rohan Kapoor">Intro</button>
+                    </div>
                 </div>
-                <div class="intro-list">
-                    <div class="mini-profile" data-action="mini-profile" data-person="Neha Verma">
-                        <img class="mini-avatar" src="https://randomuser.me/api/portraits/women/44.jpg"
-                            alt="Neha Verma">
-                        <div class="mini-info">
-                            <h5>Neha Verma</h5>
-                            <p>Product Lead @ Orbit</p>
-                        </div>
-                    </div>
-                    <div class="mini-profile" data-action="mini-profile" data-person="Ishita Rao">
-                        <img class="mini-avatar" src="https://randomuser.me/api/portraits/women/33.jpg"
-                            alt="Ishita Rao">
-                        <div class="mini-info">
-                            <h5>Ishita Rao</h5>
-                            <p>Partner @ Altair Ventures</p>
-                        </div>
-                    </div>
-                    <div class="mini-profile" data-action="mini-profile" data-person="Rohan Kapoor">
-                        <img class="mini-avatar" src="https://randomuser.me/api/portraits/men/55.jpg"
-                            alt="Rohan Kapoor">
-                        <div class="mini-info">
-                            <h5>Rohan Kapoor</h5>
-                            <p>Lead Engineer @ Nexus Labs</p>
-                        </div>
-                    </div>
-                    <button class="btn btn-ghost" style="width:100%;" data-action="view-suggestions">View
-                        suggestions</button>
-                </div>
+                <button class="btn btn-intro" style="width: 100%; margin-top: 20px;" onclick="showToast('Loading more suggestions...')">See all suggestions</button>
             </section>
         </aside>
     </div>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div id="toast"></div>
 
     <script>
         const CREDIT_KEY = 'S-credits';
         let currentFilter = 'all';
         let currentSearch = '';
-        let currentView = 'network'; // 'network' or 'invites'
+        let currentView = 'network';
 
-        /* ═══════════════════════════════════════
-           INVITE REQUEST DATA
-           ═══════════════════════════════════════ */
-        const inviteRequests = [
-            {
-                id: 'inv-1',
-                name: 'Lisa Wong',
-                avatar: 'public/avatars/lisa-wong.png',
-                role: 'Founder @ DevFlow',
-                badge: 'Verified',
-                badgeClass: '',
-                mutuals: '3 shared mutuals',
-                location: 'Seattle, WA',
-                time: '2 hours ago',
-                message: 'Hi Sarah! I\'ve been following Sphera Ventures\' work on identity-first platforms. I\'m building developer collaboration tools at DevFlow and think there could be a great integration opportunity between our products. Would love to connect and explore.',
-                status: 'pending'
-            },
-            {
-                id: 'inv-2',
-                name: 'Michael Chang',
-                avatar: 'public/avatars/michael-chang.png',
-                role: 'Partner @ Y Combinator',
-                badge: 'Verified',
-                badgeClass: '',
-                mutuals: 'Referred by David Chen',
-                location: 'San Francisco, CA',
-                time: '5 hours ago',
-                message: 'Sarah — David from Greenfield mentioned your liveness verification tech. We\'re scouting for the next batch and your approach to trust-first networking is exactly the kind of infrastructure play we fund. Let\'s chat.',
-                status: 'pending'
-            },
-            {
-                id: 'inv-3',
-                name: 'Marcus Chen',
-                avatar: 'public/avatars/mozart.png',
-                role: 'Lead Engineer @ Nexus Labs',
-                badge: 'Verified',
-                badgeClass: '',
-                mutuals: '5 shared mutuals',
-                location: 'San Francisco, CA',
-                time: '1 day ago',
-                message: 'Hey! We\'re scaling our zero-trust architecture team and I noticed your background in distributed systems. I\'d like to exchange notes on how you handle identity verification at scale. Also exploring potential partnership opportunities.',
-                status: 'pending'
-            },
-            {
-                id: 'inv-4',
-                name: 'Ned Ramirez',
-                avatar: 'public/avatars/ned-ramirez.png',
-                role: 'Head of Product @ TrustLayer',
-                badge: 'Verified',
-                badgeClass: 'badge-green',
-                mutuals: '2 shared mutuals',
-                location: 'Austin, TX',
-                time: '2 days ago',
-                message: 'Sarah, I\'m leading product at TrustLayer where we\'re building B2B verification APIs. Your Sphera profile caught my eye — the liveness verification UX is really well done. Would love to connect and share learnings on trust-layer design patterns.',
-                status: 'pending'
-            },
-            {
-                id: 'inv-5',
-                name: 'Marsellus Coolidge',
-                avatar: 'public/avatars/marsellus-coolidge.png',
-                role: 'VP Engineering @ CyberShield',
-                badge: 'Verified',
-                badgeClass: 'badge-amber',
-                mutuals: 'Intro from Elena Rodriguez',
-                location: 'Remote (EU)',
-                time: '3 days ago',
-                message: 'Elena mentioned you\'re working on some impressive identity infrastructure. At CyberShield, we\'re hiring across engineering and I think your network could help us find the right distributed systems talent. Happy to reciprocate with intros to our security community.',
-                status: 'pending'
-            }
-        ];
+        function toggleNotifDropdown(e) { e.stopPropagation(); document.getElementById('notifDropdown').classList.toggle('show'); }
+        document.addEventListener('click', () => document.getElementById('notifDropdown').classList.remove('show'));
 
-        /* ═══ View Switching ═══ */
-        function switchToInvites() {
-            currentView = 'invites';
-            document.getElementById('networkSection')?.classList.add('is-hidden');
-            document.getElementById('inviteSection')?.classList.add('is-visible');
-            // Update nav active states
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            document.getElementById('navInvites')?.classList.add('active');
-            renderInvites();
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
         }
 
-        function switchToNetwork() {
-            currentView = 'network';
-            document.getElementById('networkSection')?.classList.remove('is-hidden');
-            document.getElementById('inviteSection')?.classList.remove('is-visible');
-            // Update nav active states
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            document.getElementById('navNetwork')?.classList.add('active');
+        function setActiveFilter(f) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === f));
         }
 
-        function updateInviteCount() {
-            const pending = inviteRequests.filter(r => r.status === 'pending').length;
-            const countEl = document.getElementById('inviteCount');
-            if (countEl) {
-                countEl.textContent = pending;
-                countEl.style.display = pending > 0 ? '' : 'none';
-            }
-        }
-
-        function renderInvites() {
-            const list = document.getElementById('inviteList');
-            if (!list) return;
-            list.innerHTML = inviteRequests.map(req => {
-                const badgeCls = req.badgeClass ? ` ${req.badgeClass}` : '';
-                if (req.status === 'accepted') {
-                    return `
-                        <article class="invite-request-card is-accepted" data-invite-id="${req.id}">
-                            <img class="c-avatar" src="${req.avatar}" alt="${req.name}">
-                            <div>
-                                <div class="c-info">
-                                    <h3>${req.name} <span class="badge${badgeCls}">${req.badge}</span></h3>
-                                    <p>${req.role}</p>
-                                </div>
-                                <div class="invite-status accepted">✓ Connected</div>
-                            </div>
-                        </article>`;
-                }
-                if (req.status === 'declined') {
-                    return `
-                        <article class="invite-request-card is-declined" data-invite-id="${req.id}">
-                            <img class="c-avatar" src="${req.avatar}" alt="${req.name}" style="filter:grayscale(1)">
-                            <div>
-                                <div class="c-info">
-                                    <h3>${req.name}</h3>
-                                    <p>${req.role}</p>
-                                </div>
-                                <div class="invite-status declined">Declined</div>
-                            </div>
-                        </article>`;
-                }
-                return `
-                    <article class="invite-request-card" data-invite-id="${req.id}">
-                        <img class="c-avatar" src="${req.avatar}" alt="${req.name}">
-                        <div>
-                            <div class="c-info">
-                                <h3>${req.name} <span class="badge${badgeCls}">${req.badge}</span></h3>
-                                <p>${req.role}</p>
-                                <div class="invite-meta">
-                                    <span class="meta-detail">${req.location}</span>
-                                    <span class="meta-detail">${req.mutuals}</span>
-                                    <span class="meta-detail invite-time">${req.time}</span>
-                                </div>
-                            </div>
-                            <div class="invite-message">"${req.message}"</div>
-                            <div class="invite-actions">
-                                <button class="btn btn-primary" onclick="acceptInvite('${req.id}')">Accept</button>
-                                <button class="btn btn-ghost" onclick="declineInvite('${req.id}')">Decline</button>
-                                <button class="btn btn-ghost" onclick="viewInviteProfile('${req.name}')">View profile</button>
-                            </div>
-                        </div>
-                    </article>`;
-            }).join('');
-        }
-
-        function toggleNotifDropdown(e) {
-            e.stopPropagation();
-            document.getElementById('notifDropdown')?.classList.toggle('show');
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', () => {
-            document.getElementById('notifDropdown')?.classList.remove('show');
-        });
-
-        function acceptInvite(id) {
-            const req = inviteRequests.find(r => r.id === id);
-            if (!req || req.status !== 'pending') return;
-            req.status = 'accepted';
-            updateInviteCount();
-            renderInvites();
-            showToast(`Connected with ${req.name}!`);
-        }
-
-        function declineInvite(id) {
-            const req = inviteRequests.find(r => r.id === id);
-            if (!req || req.status !== 'pending') return;
-            req.status = 'declined';
-            updateInviteCount();
-            renderInvites();
-            showToast(`Declined request from ${req.name}.`);
-        }
-
-        function viewInviteProfile(name) {
-            switchToNetwork();
-            const search = document.getElementById('networkSearch');
-            if (search) search.value = name;
-            currentSearch = name.toLowerCase();
-            currentFilter = 'all';
-            setActiveFilter('all');
-            const visibleCount = applyNetworkFilters();
-            if (visibleCount > 0) {
-                showToast(`Showing profile for ${name}.`);
-            } else {
-                if (search) search.value = '';
-                currentSearch = '';
-                applyNetworkFilters();
-                showToast(`${name} is not yet in your network. Accept their invite first.`);
-            }
-        }
-
-        function getCredits() {
-            return parseFloat(localStorage.getItem(CREDIT_KEY) || '0');
-        }
-
-        function updateCreditsDisplay() {
-            const el = document.getElementById('creditsDisplay');
-            if (el) el.textContent = getCredits().toFixed(2);
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            if (!toast) return;
-            toast.textContent = message;
-            toast.classList.add('show');
-            clearTimeout(showToast.timeoutId);
-            showToast.timeoutId = setTimeout(() => toast.classList.remove('show'), 2200);
-        }
-
-        function copyText(text, successMessage) {
-            const fallback = () => {
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                textarea.remove();
-                showToast(successMessage);
-            };
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => showToast(successMessage)).catch(fallback);
-            } else {
-                fallback();
-            }
-        }
-
-        function setActiveFilter(filter) {
-            document.querySelectorAll('.filter-btn').forEach((btn) => {
-                btn.classList.toggle('active', btn.dataset.filter === filter);
+        function applyFilters() {
+            const cards = document.querySelectorAll('.connection-card');
+            let count = 0;
+            cards.forEach(c => {
+                const tags = c.dataset.tags || '';
+                const name = c.dataset.name.toLowerCase();
+                const matchesFilter = currentFilter === 'all' || tags.includes(currentFilter);
+                const matchesSearch = !currentSearch || name.includes(currentSearch);
+                const visible = matchesFilter && matchesSearch;
+                c.style.display = visible ? 'grid' : 'none';
+                if (visible) count++;
             });
+            document.getElementById('emptyState').hidden = count > 0;
         }
 
-        function applyNetworkFilters() {
-            const cards = Array.from(document.querySelectorAll('.connection-card'));
-            const emptyState = document.getElementById('emptyState');
-            let visibleCount = 0;
-            cards.forEach((card) => {
-                const text = `${card.textContent} ${card.dataset.tags || ''}`.toLowerCase();
-                const filterMatch = currentFilter === 'all' || (card.dataset.tags || '').includes(currentFilter);
-                const searchMatch = !currentSearch || text.includes(currentSearch);
-                const visible = filterMatch && searchMatch;
-                card.hidden = !visible;
-                if (visible) visibleCount += 1;
-            });
-            if (emptyState) emptyState.hidden = visibleCount > 0;
-            return visibleCount;
-        }
-
-        function closeOtherPanels(card) {
-            document.querySelectorAll('.connection-panel').forEach((panel) => {
-                if (!card || !card.contains(panel)) panel.remove();
-            });
-        }
-
-        function escapeHTML(value) {
-            return value.replace(/[&<>"']/g, (char) => ({
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#39;'
-            }[char]));
-        }
-
-        function ensurePanel(card, type, html) {
-            const existing = card.querySelector(`.connection-panel[data-panel="${type}"]`);
-            closeOtherPanels(card);
-            if (existing) {
-                existing.remove();
-                return null;
-            }
-            card.querySelectorAll('.connection-panel').forEach((panel) => panel.remove());
-            const panel = document.createElement('div');
-            panel.className = 'connection-panel';
-            panel.dataset.panel = type;
-            panel.innerHTML = html;
-            card.appendChild(panel);
-            return panel;
-        }
-
-        function openMessage(card) {
-            const name = card.dataset.name || 'this contact';
-            const panel = ensurePanel(card, 'message', `
-        <strong>Message ${escapeHTML(name)}</strong>
-        <div class="message-form">
-          <input class="message-input" type="text" placeholder="Write a short message...">
-          <button class="btn btn-subtle" data-action="send-message">Send</button>
-        </div>
-      `);
-            if (panel) panel.querySelector('.message-input')?.focus();
-        }
-
-        function sendMessage(button) {
-            const panel = button.closest('.connection-panel');
-            const input = panel?.querySelector('.message-input');
-            const value = input ? input.value.trim() : '';
-            if (!value) {
-                showToast('Write a message first.');
-                input?.focus();
-                return;
-            }
-            input.value = '';
-            panel.insertAdjacentHTML('afterbegin', `<div><b>You:</b> ${escapeHTML(value)}</div>`);
-            showToast('Message sent.');
-        }
-
-        function openProfile(card) {
-            ensurePanel(card, 'profile', `
-        <strong>${escapeHTML(card.dataset.name || 'Profile')}</strong>
-        <div>${escapeHTML(card.dataset.role || '')}</div>
-        <div>${escapeHTML(card.dataset.location || '')} · ${escapeHTML(card.dataset.mutuals || '')}</div>
-        <div>Status: ${escapeHTML(card.dataset.status || 'verified')}</div>
-      `);
-        }
-
-        function copyIntro(card) {
-            const name = card.dataset.name || 'this contact';
-            const role = card.dataset.role || 'a verified professional';
-            copyText(`Intro request: I would like a warm introduction to ${name}, ${role}.`, 'Intro request copied.');
-        }
-
-        function requestVerify(button) {
-            button.textContent = 'Requested';
-            button.classList.add('is-done');
-            button.disabled = true;
-            showToast('Verification request sent.');
-        }
-
-        function focusSearch() {
-            const search = document.getElementById('networkSearch');
-            if (search) {
-                search.focus();
-                search.select();
-            }
-        }
-
-        function viewSuggestedPerson(person) {
-            const search = document.getElementById('networkSearch');
-            if (search) search.value = person;
-            currentSearch = person.toLowerCase();
-            currentFilter = 'all';
-            setActiveFilter('all');
-            const visibleCount = applyNetworkFilters();
-            if (visibleCount > 0) {
-                showToast(`Showing matches for ${person}.`);
-            } else {
-                if (search) search.value = '';
-                currentSearch = '';
-                applyNetworkFilters();
-                copyText(`Intro request: I would like a warm introduction to ${person}.`, `Intro request for ${person} copied.`);
-            }
-        }
-
-        function handleNetworkClick(event) {
-            const target = event.target.closest('[data-action]');
-            if (!target) return;
-            const action = target.dataset.action;
-            const card = target.closest('.connection-card');
-            if (action === 'notifications') {
-                target.querySelector('.notification-dot')?.remove();
-                showToast('Notifications are up to date.');
-            }
-            if (action === 'messages') showToast('Messages panel opened.');
-            if (action === 'copy-invite') {
-                copyText('Sphera.link/james24', 'Invite link copied.');
-                target.textContent = 'Copied';
-                setTimeout(() => { target.textContent = 'Copy link'; }, 1800);
-            }
-            if (action === 'focus-search') focusSearch();
-            if (action === 'message' && card) openMessage(card);
-            if (action === 'send-message') sendMessage(target);
-            if (action === 'profile' && card) openProfile(card);
-            if (action === 'intro' && card) copyIntro(card);
-            if (action === 'request-verify') requestVerify(target);
-            if (action === 'mini-profile') viewSuggestedPerson(target.dataset.person || '');
-            if (action === 'view-suggestions') {
-                currentFilter = 'all';
-                currentSearch = '';
-                setActiveFilter('all');
-                const search = document.getElementById('networkSearch');
-                if (search) search.value = '';
-                applyNetworkFilters();
-                showToast('All suggestions are visible.');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            updateCreditsDisplay();
-            applyNetworkFilters();
-            updateInviteCount();
-        });
-
-        document.querySelectorAll('.filter-btn').forEach((btn) => {
+        document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                currentFilter = btn.dataset.filter || 'all';
+                currentFilter = btn.dataset.filter;
                 setActiveFilter(currentFilter);
-                applyNetworkFilters();
+                applyFilters();
             });
         });
 
-        document.getElementById('networkSearch')?.addEventListener('input', (event) => {
-            currentSearch = event.target.value.trim().toLowerCase();
-            applyNetworkFilters();
+        document.getElementById('networkSearch').addEventListener('input', (e) => {
+            currentSearch = e.target.value.toLowerCase();
+            applyFilters();
         });
 
-        document.addEventListener('click', handleNetworkClick);
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-action]');
+            if (!btn) return;
+            const action = btn.dataset.action;
+            if (action === 'copy-invite') {
+                navigator.clipboard.writeText('sphera.link/j-wilson-2024');
+                showToast('Invite link copied to clipboard.');
+            }
+            if (action === 'message') showToast('Opening secure message channel...');
+            if (action === 'intro') showToast('Introduction request sent.');
+            if (action === 'request-verify') showToast('Verification signal sent to Marcus.');
+        });
     </script>
 </body>
-
 </html>
