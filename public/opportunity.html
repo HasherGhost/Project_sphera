@@ -1,156 +1,390 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opportunities — Sphera</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --bg: #f5f0ff;
-            --bg2: #ece4ff;
-            --Srface: rgba(255, 255, 255, .55);
-            --Srface-s: rgba(255, 255, 255, .45);
-            --Srface-f: rgba(255, 255, 255, .35);
-            --text: #1a0e33;
-            --muted: #5a5068;
-            --accent: #7C3AED;
-            --accent-s: #5B21B6;
-            --radius: 12px;
-            --line: rgba(255, 255, 255, .5);
-            --header-bg: rgba(255, 255, 255, .45);
-            --shadow-f: 0 4px 16px rgba(0, 0, 0, .03);
-            --glass-blur: blur(20px);
-            --overlay-op: 0.45;
-            --overlay-blur: blur(2px);
+            --bg: #09090b;
+            --bg-soft: rgba(9, 9, 11, 0.76);
+            --Srface: rgba(24, 24, 27, 0.74);
+            --Srface-strong: rgba(32, 32, 36, 0.9);
+            --border: rgba(255, 255, 255, 0.1);
+            --border-strong: rgba(255, 255, 255, 0.16);
+            --primary: #3b82f6;
+            --primary-soft: rgba(59, 130, 246, 0.14);
+            --accent: #8b5cf6;
+            --accent-soft: rgba(139, 92, 246, 0.14);
+            --Sccess: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --text-faint: #71717a;
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.22);
         }
 
-        html[data-theme="dark"] {
-            --bg: #0a0514;
-            --bg2: #110920;
-            --Srface: rgba(255, 255, 255, .08);
-            --Srface-s: rgba(255, 255, 255, .06);
-            --Srface-f: rgba(255, 255, 255, .04);
-            --text: #f3eeff;
-            --muted: #b0a4c8;
-            --accent: #A78BFA;
-            --accent-s: #C4B5FD;
-            --line: rgba(255, 255, 255, .12);
-            --header-bg: rgba(255, 255, 255, .06);
-            --overlay-op: 0.85;
-            --overlay-blur: blur(8px);
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --bg-soft: rgba(248, 250, 252, 0.82);
+            --Srface: rgba(255, 255, 255, 0.84);
+            --Srface-strong: rgba(255, 255, 255, 0.96);
+            --border: rgba(15, 23, 42, 0.08);
+            --border-strong: rgba(15, 23, 42, 0.12);
+            --primary: #2563eb;
+            --primary-soft: rgba(37, 99, 235, 0.1);
+            --accent: #7c3aed;
+            --accent-soft: rgba(124, 58, 237, 0.1);
+            --text-main: #172033;
+            --text-muted: #64748b;
+            --text-faint: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            margin: 0;
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: transparent;
-            color: var(--text);
             min-height: 100vh;
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
         }
 
-        /* ── Video Background ── */
-        .video-bg {
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .video-bg,
+        .video-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .video-bg {
             z-index: -2;
             overflow: hidden;
         }
+
         .video-bg video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
         .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            opacity: var(--overlay-op);
             z-index: -1;
-            backdrop-filter: var(--overlay-blur);
-            transition: background 0.3s ease, opacity 0.3s ease, backdrop-filter 0.3s ease;
+            background:
+                radial-gradient(circle at 15% 0%, rgba(59, 130, 246, 0.16), transparent 36%),
+                radial-gradient(circle at 88% 16%, rgba(139, 92, 246, 0.16), transparent 32%),
+                var(--bg);
+            opacity: 0.92;
+            backdrop-filter: blur(12px);
         }
 
-        .wrap {
-            width: min(1200px, calc(100% - 32px));
+        .site-header {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-soft);
+            backdrop-filter: blur(18px);
+        }
+
+        .header-content {
+            width: min(1180px, calc(100% - 40px));
+            height: 68px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: 220px minmax(260px, 1fr) auto;
+            align-items: center;
+            gap: 18px;
         }
 
-        .hdr {
-            position: sticky;
-            top: 0;
-            z-index: 30;
-            border-bottom: 1px solid var(--line);
-            background: var(--header-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
+        .logo {
+            width: fit-content;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
         }
 
-        .hdr-row {
+        .search-bar {
+            width: 100%;
+            max-width: 460px;
+            justify-self: center;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            min-height: 78px;
+            gap: 10px;
+            padding: 10px 14px;
+            color: var(--text-faint);
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .brand {
+        .search-bar:focus-within {
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 0 0 4px var(--primary-soft);
+        }
+
+        .search-bar input {
+            width: 100%;
+            min-width: 0;
+            color: var(--text-main);
+            background: transparent;
+            border: 0;
+            outline: 0;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-faint);
+        }
+
+        .header-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--text);
+            justify-content: flex-end;
+            gap: 10px;
         }
 
-        .brand-mark {
+        .icon-btn,
+        .profile-button {
+            position: relative;
             display: grid;
             place-items: center;
-            width: 42px;
-            height: 42px;
-            border-radius: var(--radius);
-            background: var(--text);
-            color: var(--bg);
-            font-weight: 900;
+            width: 38px;
+            height: 38px;
+            color: var(--text-muted);
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
         }
 
-        .hero {
-            padding: 80px 0;
+        .icon-btn:hover,
+        .profile-button:hover {
+            color: var(--text-main);
+            border-color: var(--border-strong);
+            background: var(--Srface-strong);
+        }
+
+        .profile-button img {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            object-fit: cover;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 7px;
+            height: 7px;
+            background: var(--danger);
+            border: 2px solid var(--bg);
+            border-radius: 999px;
+        }
+
+        .credits-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 38px;
+            padding: 0 12px;
+            color: var(--text-main);
+            background: linear-gradient(135deg, var(--primary-soft), var(--accent-soft));
+            border: 1px solid rgba(139, 92, 246, 0.28);
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .credits-amount {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 92px 0 48px;
+            display: grid;
+            grid-template-columns: 236px minmax(0, 1fr) 282px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .left-sidebar {
+            position: sticky;
+            top: 88px;
+        }
+
+        .stack {
+            display: grid;
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(18px);
+        }
+
+        .card.pad {
+            padding: 18px;
+        }
+
+        .profile-card {
             text-align: center;
         }
 
-        h1 {
-            font-size: clamp(2.8rem, 6vw, 4.5rem);
-            margin-bottom: 20px;
-            line-height: 1.1;
+        .profile-avatar {
+            width: 78px;
+            height: 78px;
+            margin: 0 auto 14px;
+            object-fit: cover;
+            border: 1px solid rgba(59, 130, 246, 0.45);
+            border-radius: 24px;
+            background: var(--bg);
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--muted);
-            max-width: 600px;
-            margin: 0 auto 40px;
+        .profile-name {
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
         }
 
+        .profile-title {
+            margin-top: 5px;
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .nav-menu {
+            display: grid;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 42px;
+            padding: 10px 11px;
+            color: var(--text-muted);
+            border-radius: 13px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: var(--primary-soft);
+        }
+
+        .feed-intro {
+            position: relative;
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .feed-intro::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 16% 0%, rgba(59, 130, 246, 0.22), transparent 34%),
+                radial-gradient(circle at 96% 12%, rgba(139, 92, 246, 0.2), transparent 36%);
+            pointer-events: none;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 11px;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: var(--Sccess);
+            border-radius: 999px;
+        }
+
+        .feed-intro h1 {
+            max-width: 640px;
+            font-size: clamp(28px, 4vw, 42px);
+            line-height: 1.02;
+            letter-spacing: -0.055em;
+        }
+
+        .feed-intro p {
+            max-width: 640px;
+            margin-top: 13px;
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* ── Opportunity Specific Styles ── */
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
         }
 
         .option-card {
-            border: 1px solid var(--line);
-            border-radius: 16px;
-            padding: 40px 30px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 34px 24px;
             background: var(--Srface);
-            box-shadow: var(--shadow-f);
+            box-shadow: var(--shadow-soft);
             text-align: center;
             text-decoration: none;
             color: inherit;
@@ -159,36 +393,37 @@
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: blur(18px);
         }
 
         .option-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(124, 58, 237, 0.15);
-            border-color: var(--accent);
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            background: var(--Srface-strong);
         }
 
         .icon-wrap {
-            width: 80px;
-            height: 80px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
-            background: var(--accent);
-            color: white;
+            background: var(--primary-soft);
+            color: var(--primary);
             display: grid;
             place-items: center;
-            font-size: 36px;
-            margin-bottom: 10px;
+            font-size: 28px;
+            margin-bottom: 5px;
         }
 
         .option-card h2 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin: 0;
+            letter-spacing: -0.02em;
         }
 
         .option-card p {
-            color: var(--muted);
-            font-size: 1rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
             margin: 0;
         }
 
@@ -196,112 +431,203 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 999px;
             font-weight: 800;
+            font-size: 12px;
             text-decoration: none;
-            background: var(--text);
-            color: var(--bg);
+            background: var(--primary);
+            color: #fff;
             margin-top: 15px;
-            transition: transform 0.2s;
+            transition: transform 0.2s, background 0.2s;
         }
 
         .option-card:hover .btn {
             background: var(--accent);
-            color: white;
-        }
-
-        .theme-tog {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            min-height: 42px;
-            padding: 0 14px;
-            border-radius: var(--radius);
-            background: var(--Srface);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--line);
-            color: var(--text);
-            font-weight: 800;
-            cursor: pointer;
-            transition: transform .18s, background .18s;
-        }
-        .theme-tog:hover {
-            transform: translateY(-1px);
+            transform: scale(1.05);
         }
     </style>
-
+    <script>
+        const themeKey = 'su-theme';
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            try { localStorage.setItem(themeKey, theme); } catch (e) { }
+            updateThemeUI(theme);
+        }
+        function updateThemeUI(theme) {
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                if (theme === 'dark') {
+                    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                } else {
+                    icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                }
+            }
+        }
+        window.toggleTheme = function () {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        };
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem(themeKey) || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) { }
+        })();
+        document.addEventListener('DOMContentLoaded', () => {
+            let savedTheme = 'dark';
+            try { savedTheme = localStorage.getItem(themeKey) || 'dark'; } catch (e) { }
+            updateThemeUI(savedTheme);
+        });
+    </script>
 </head>
 
 <body>
-    <div class="video-bg">
+    <div class="video-bg" aria-hidden="true">
         <video autoplay muted loop playsinline>
             <source src="assets/abstract-honeycomb.1920x1080.mp4" type="video/mp4">
         </video>
     </div>
-    <div class="video-overlay"></div>
-    <header class="hdr">
-        <div class="wrap hdr-row">
-            <a class="brand" href="index.html">
-                <span class="brand-mark">S</span>
-                <span><strong>Sphera.</strong><br><small>Verified professional ecosystem</small></span>
-            </a>
-            <nav style="display: flex; gap: 20px; align-items: center; font-weight: 600;">
-                <a href="index.html" style="color:var(--text); text-decoration: none;">Home</a>
-                <div class="dropdown" style="position:relative;display:inline-block;">
-                    <a href="opportunity.html"
-                        style="color:var(--text); display:flex;align-items:center;gap:4px;cursor:pointer; text-decoration: none;">Opportunities
-                        ▾</a>
-                    <div class="dropdown-content"
-                        style="display:none;position:absolute;background-color:var(--Srface);min-width:230px;box-shadow:var(--shadow-f);border-radius:var(--radius);border:1px solid var(--line);padding:8px;z-index:40;top:100%;left:0;flex-direction:column;gap:4px;margin-top:20px;">
-                        <a href="opportunity.html"
-                            style="padding:10px 12px;border-radius:6px;font-size:0.88rem;color:var(--text);text-decoration:none;">Opportunities
-                            Hub</a>
-                        <a href="business_opportunities.html"
-                            style="padding:10px 12px;border-radius:6px;font-size:0.88rem;color:var(--text);text-decoration:none;">Business
-                            Opportunities</a>
-                        <a href="job_opportunities.html"
-                            style="padding:10px 12px;border-radius:6px;font-size:0.88rem;color:var(--text);text-decoration:none;">Job
-                            Opportunities</a>
-                    </div>
-                    <style>
-                        .dropdown:hover .dropdown-content {
-                            display: flex !important;
-                        }
+    <div class="video-overlay" aria-hidden="true"></div>
 
-                        .dropdown-content a:hover {
-                            background-color: var(--Srface-f);
-                            color: var(--accent) !important;
-                        }
-                    </style>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">SPHERA</a>
+            <label class="search-bar" aria-label="Search feed">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input id="feedSearch" type="text" placeholder="Search insights, people, opportunities...">
+            </label>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
+                    <svg id="theme-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="icon-btn" title="Notifications" aria-label="Notifications" style="position:relative;"
+                    data-action="notifications">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-dot"></span>
+                </button>
+                <button class="icon-btn" title="Messages" aria-label="Messages" data-action="messages">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </button>
+                <div class="credits-pill" id="creditsPill" title="Your redeemed credits">
+                    <span id="creditsDisplay" class="credits-amount">0</span>
+                    <span>Credits</span>
                 </div>
-            </nav>
-            <button class="theme-tog" id="themeToggle" type="button">☼ / ☾</button>
+                <a class="profile-button" href="feed.html#profile" aria-label="Open profile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Avatar" id="navAvatar">
+                </a>
+            </div>
         </div>
     </header>
 
-    <main class="wrap hero">
-        <h1>Discover Your Next <span style="color: var(--accent);">Opportunity</span></h1>
-        <p>Choose the path that fits your goals. Whether you are looking to scale a business or find the perfect role.
-        </p>
+    <div class="container">
+        <aside class="left-sidebar stack">
+            <section class="card pad profile-card">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James Wilson" class="profile-avatar">
+                <h2 class="profile-name">James Wilson</h2>
+                <p class="profile-title">Founder @ Synapse AI</p>
+                <div class="verified-line"><span class="pulse"></span> Liveness verified</div>
+            </section>
 
-        <div class="options-grid">
-            <a href="business_opportunities.html" class="option-card">
-                <div class="icon-wrap">🏢</div>
-                <h2>Business Opportunities</h2>
-                <p>Find investors, partners, B2B clients, and scaling resources for your verified company.</p>
-                <div class="btn">Explore Business</div>
-            </a>
-            <a href="job_opportunities.html" class="option-card">
-                <div class="icon-wrap">💼</div>
-                <h2>Job Opportunities</h2>
-                <p>Discover roles at top-tier verified companies. Skip the noise and connect directly with hiring
-                    managers.</p>
-                <div class="btn">Explore Jobs</div>
-            </a>
-        </div>
-    </main>
+            <nav class="card pad" aria-label="Primary">
+                <ul class="nav-menu">
+                    <li class="nav-item" onclick="window.location.href='feed.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="3 9 12 2 21 9 21 21 15 21 15 12 9 12 9 21 3 21"></polyline>
+                        </svg>
+                        Feed
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='network.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Network
+                    </li>
+                    <li class="nav-item active" onclick="window.location.href='opportunity.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        Opportunities
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='event.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Events
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='reward.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                            </path>
+                        </svg>
+                        Rewards
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="stack">
+            <section class="card pad feed-intro">
+                <div class="eyebrow">Verified opportunities</div>
+                <h1>Discover Your Next <span style="color: var(--primary);">Opportunity</span></h1>
+                <p>Choose the path that fits your goals. Whether you are looking to scale a business or find the perfect role.
+                </p>
+            </section>
+
+            <div class="options-grid">
+                <a href="business_opportunities.html" class="option-card">
+                    <div class="icon-wrap">🏢</div>
+                    <h2>Business Opportunities</h2>
+                    <p>Find investors, partners, B2B clients, and scaling resources for your verified company.</p>
+                    <div class="btn">Explore Business</div>
+                </a>
+                <a href="job_opportunities.html" class="option-card">
+                    <div class="icon-wrap">💼</div>
+                    <h2>Job Opportunities</h2>
+                    <p>Discover roles at top-tier verified companies. Skip the noise and connect directly with hiring
+                        managers.</p>
+                    <div class="btn">Explore Jobs</div>
+                </a>
+            </div>
+        </main>
+
+        <aside class="right-sidebar stack">
+            <section class="card pad">
+                <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 12px;">Market Pulse</h3>
+                <p style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+                    Verified hiring is up <strong>12%</strong> this month in the AI sector. 
+                    Businesses are prioritizing <strong>vetted referrals</strong> over open job boards.
+                </p>
+            </section>
+        </aside>
+    </div>
 
     <script src="theme.js"></script>
 </body>

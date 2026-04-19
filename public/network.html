@@ -397,7 +397,7 @@
         .page-intro {
             position: relative;
             overflow: hidden;
-            padding: 24px;
+            padding: 17px;
             display: grid;
             grid-template-columns: minmax(0, 1fr) auto;
             gap: 20px;
@@ -442,7 +442,7 @@
 
         .page-intro h1 {
             max-width: 560px;
-            font-size: clamp(28px, 4vw, 42px);
+            font-size: 1.8rem;
             line-height: 1.02;
             letter-spacing: -0.055em;
         }
@@ -1049,8 +1049,97 @@
             font-size: 11px;
             font-weight: 700;
         }
+        /* ═══ Notification Dropdown ═══ */
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .notification-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 320px;
+            background: var(--Srface-strong);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            display: none;
+            overflow: hidden;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .notification-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .notification-item {
+            padding: 12px 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+        }
     </style>
-    <script src="theme.js"></script>
+    <script>
+        const themeKey = 'su-theme';
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            try { localStorage.setItem(themeKey, theme); } catch (e) { }
+            updateThemeUI(theme);
+        }
+        function updateThemeUI(theme) {
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                if (theme === 'dark') {
+                    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                } else {
+                    icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                }
+            }
+        }
+        window.toggleTheme = function () {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        };
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem(themeKey) || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) { }
+        })();
+        document.addEventListener('DOMContentLoaded', () => {
+            let savedTheme = 'dark';
+            try { savedTheme = localStorage.getItem(themeKey) || 'dark'; } catch (e) { }
+            updateThemeUI(savedTheme);
+        });
+    </script>
 </head>
 
 <body>
@@ -1079,15 +1168,25 @@
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
                 </button>
-                <button class="icon-btn" title="Notifications" aria-label="Notifications" style="position:relative;"
-                    data-action="notifications">
-                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <span class="notification-dot"></span>
-                </button>
+                <div class="dropdown-container">
+                    <button class="icon-btn" title="Notifications" aria-label="Notifications" id="notifBtn"
+                        onclick="toggleNotifDropdown(event)">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <div class="notification-dropdown" id="notifDropdown">
+                        <div class="dropdown-header">Recent Notifications</div>
+                        <div class="notification-item">Laura Martinez sent you a connection invite</div>
+                        <div class="notification-item">Emma Thompson wants to connect</div>
+                        <div class="notification-item">David Chen sent an intro request</div>
+                        <div class="notification-item">Neha Verma invited you to connect</div>
+                        <div class="notification-item">Rohan Kapoor wants to intro you to someone</div>
+                    </div>
+                </div>
                 <button class="icon-btn" title="Messages" aria-label="Messages" data-action="messages">
                     <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1100,7 +1199,7 @@
                     <span>Credits</span>
                 </div>
                 <a class="profile-button" href="#profile" aria-label="Open profile">
-                    <img src="public/avatars/maggot.png" alt="Sarah Jenkins">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James Wilson">
                 </a>
             </div>
         </div>
@@ -1109,9 +1208,9 @@
     <div class="container">
         <aside class="left-sidebar stack" aria-label="Network navigation">
             <section class="card pad profile-card" id="profile">
-                <img src="public/avatars/ned-ramirez.png" alt="Sarah Jenkins" class="profile-avatar">
-                <h2 class="profile-name">Sarah Jenkins</h2>
-                <p class="profile-title">Managing Director @ Sphera Ventures</p>
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James Wilson" class="profile-avatar">
+                <h2 class="profile-name">James Wilson</h2>
+                <p class="profile-title">Founder @ Synapse AI</p>
                 <div class="verified-line"><span class="pulse"></span> Liveness verified</div>
                 <div class="stats">
                     <div class="stat-item">
@@ -1127,16 +1226,6 @@
 
             <nav class="card pad" aria-label="Primary">
                 <ul class="nav-menu">
-                    <li class="nav-item active" id="navNetwork" onclick="switchToNetwork()">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                        My Network
-                    </li>
                     <li class="nav-item" onclick="window.location.href='feed.html'">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1144,16 +1233,31 @@
                         </svg>
                         Feed
                     </li>
-                    <li class="nav-item" id="navInvites" onclick="switchToInvites()">
+                    <li class="nav-item active" onclick="window.location.href='network.html'">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                             <circle cx="9" cy="7" r="4"></circle>
-                            <line x1="19" y1="8" x2="19" y2="14"></line>
-                            <line x1="22" y1="11" x2="16" y2="11"></line>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                         </svg>
-                        Invites
-                        <span class="nav-count" id="inviteCount">5</span>
+                        Network
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='opportunity.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        Opportunities
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='event.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Events
                     </li>
                     <li class="nav-item" onclick="window.location.href='reward.html'">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -1178,21 +1282,21 @@
                     <div class="metric-row" aria-label="Network Smmary">
                         <div class="metric">
                             <strong>72%</strong>
-                            <span>Verified graph</span>
+                            <span>Verified Connections</span>
                         </div>
                         <div class="metric">
                             <strong>18</strong>
-                            <span>Warm intros</span>
+                            <span>Pending Requests</span>
                         </div>
                         <div class="metric">
                             <strong>4.8x</strong>
-                            <span>Reply lift</span>
+                            <span>Profile Views</span>
                         </div>
                     </div>
                 </div>
                 <div class="invite-card">
                     <span>Personal invite</span>
-                    <code>Sphera.link/sarah24</code>
+                    <code>Sphera.link/james24</code>
                     <button class="btn btn-Sbtle" data-action="copy-invite">Copy link</button>
                 </div>
             </section>
@@ -1216,11 +1320,11 @@
 
                 <div class="connection-list">
                     <article class="connection-card" data-tags="investor fintech partner verified"
-                        data-name="Priya Nair" data-role="Partner at Nila Ventures" data-location="Bengaluru, KA"
+                        data-name="Laura Martinez" data-role="Partner at Nila Ventures" data-location="Bengaluru, KA"
                         data-mutuals="4 shared mutuals" data-status="verified">
-                        <img class="c-avatar" src="public/avatars/priya-nair.png" alt="Priya Nair">
+                        <img class="c-avatar" src="https://randomuser.me/api/portraits/women/55.jpg" alt="Laura Martinez">
                         <div class="c-info">
-                            <h3>Priya Nair <span class="badge">Verified</span></h3>
+                            <h3>Laura Martinez <span class="badge">Verified</span></h3>
                             <p>Partner at Nila Ventures<br><span class="meta-line">Bengaluru, KA &middot; 4
                                     shared mutuals</span></p>
                         </div>
@@ -1231,11 +1335,11 @@
                     </article>
 
                     <article class="connection-card" data-tags="investor product angel verified razorpay"
-                        data-name="Ananya Sharma" data-role="Ex-VP Product at Razorpay · Angel Investor"
+                        data-name="Emma Thompson" data-role="Ex-VP Product at Razorpay · Angel Investor"
                         data-location="Mumbai, MH" data-mutuals="Intro from Neha" data-status="verified">
-                        <img class="c-avatar" src="public/avatars/ananya-sharma.png" alt="Ananya Sharma">
+                        <img class="c-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Thompson">
                         <div class="c-info">
-                            <h3>Ananya Sharma <span class="badge">Verified</span> <span
+                            <h3>Emma Thompson <span class="badge">Verified</span> <span
                                     class="badge badge-amber">Angel</span></h3>
                             <p>Ex-VP Product at Razorpay &middot; Angel Investor<br><span class="meta-line">Mumbai, MH
                                     &middot; Intro from Neha</span></p>
@@ -1247,11 +1351,11 @@
                     </article>
 
                     <article class="connection-card" data-tags="founder hiring cto cloud deep-tech verified"
-                        data-name="Arjun Mehta" data-role="CTO @ CloudScale · Deep-tech enthusiast"
+                        data-name="David Chen" data-role="CTO @ CloudScale · Deep-tech enthusiast"
                         data-location="Hyderabad, TS" data-mutuals="7 shared mutuals" data-status="verified">
-                        <img class="c-avatar" src="public/avatars/arjun-mehta.png" alt="Arjun Mehta">
+                        <img class="c-avatar" src="https://randomuser.me/api/portraits/men/44.jpg" alt="David Chen">
                         <div class="c-info">
-                            <h3>Arjun Mehta <span class="badge">Verified</span> <span
+                            <h3>David Chen <span class="badge">Verified</span> <span
                                     class="badge badge-green">Open</span></h3>
                             <p>CTO @ CloudScale &middot; Deep-tech enthusiast<br><span class="meta-line">Hyderabad, TS
                                     &middot; 7 shared mutuals</span></p>
@@ -1262,13 +1366,13 @@
                         </div>
                     </article>
 
-                    <article class="connection-card is-muted" data-tags="engineer unverified" data-name="Kabir Sethi"
+                    <article class="connection-card is-muted" data-tags="engineer unverified" data-name="Ryan Cooper"
                         data-role="Software Engineer" data-location="Remote" data-mutuals="Identity check pending"
                         data-status="unverified">
-                        <img class="c-avatar" src="public/avatars/kabir-sethi.png" alt="Kabir Sethi"
+                        <img class="c-avatar" src="https://randomuser.me/api/portraits/men/67.jpg" alt="Ryan Cooper"
                             style="filter:grayscale(1);">
                         <div class="c-info">
-                            <h3>Kabir Sethi <span class="badge badge-red">Unverified</span></h3>
+                            <h3>Ryan Cooper <span class="badge badge-red">Unverified</span></h3>
                             <p>Software Engineer<br><span class="meta-line">Identity check pending</span></p>
                         </div>
                         <div class="c-actions">
@@ -1308,7 +1412,7 @@
                     </div>
                     <div class="insight-item">
                         <span class="insight-dot" style="background:var(--warning);"></span>
-                        <div>Strong ties in <b>Fintech</b> and <b>SaaS</b>. Priya can help with biotech intros.</div>
+                        <div>Strong ties in <b>Fintech</b> and <b>SaaS</b>. Laura can help with biotech intros.</div>
                     </div>
                     <div class="insight-item">
                         <span class="insight-dot" style="background:var(--Sccess);"></span>
@@ -1324,21 +1428,21 @@
                 </div>
                 <div class="intro-list">
                     <div class="mini-profile" data-action="mini-profile" data-person="Neha Verma">
-                        <img class="mini-avatar" src="public/avatars/neha-verma.png" alt="Neha Verma">
+                        <img class="mini-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Neha Verma">
                         <div class="mini-info">
                             <h5>Neha Verma</h5>
                             <p>Product Lead @ Orbit</p>
                         </div>
                     </div>
                     <div class="mini-profile" data-action="mini-profile" data-person="Ishita Rao">
-                        <img class="mini-avatar" src="public/avatars/ishita-rao.png" alt="Ishita Rao">
+                        <img class="mini-avatar" src="https://randomuser.me/api/portraits/women/33.jpg" alt="Ishita Rao">
                         <div class="mini-info">
                             <h5>Ishita Rao</h5>
                             <p>Partner @ Altair Ventures</p>
                         </div>
                     </div>
                     <div class="mini-profile" data-action="mini-profile" data-person="Rohan Kapoor">
-                        <img class="mini-avatar" src="public/avatars/rohan-kapoor.png" alt="Rohan Kapoor">
+                        <img class="mini-avatar" src="https://randomuser.me/api/portraits/men/55.jpg" alt="Rohan Kapoor">
                         <div class="mini-info">
                             <h5>Rohan Kapoor</h5>
                             <p>Lead Engineer @ Nexus Labs</p>
@@ -1513,6 +1617,16 @@
                     </article>`;
             }).join('');
         }
+
+        function toggleNotifDropdown(e) {
+            e.stopPropagation();
+            document.getElementById('notifDropdown')?.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
+            document.getElementById('notifDropdown')?.classList.remove('show');
+        });
 
         function acceptInvite(id) {
             const req = inviteRequests.find(r => r.id === id);
@@ -1723,7 +1837,7 @@
             }
             if (action === 'messages') showToast('Messages panel opened.');
             if (action === 'copy-invite') {
-                copyText('Sphera.link/sarah24', 'Invite link copied.');
+                copyText('Sphera.link/james24', 'Invite link copied.');
                 target.textContent = 'Copied';
                 setTimeout(() => { target.textContent = 'Copy link'; }, 1800);
             }

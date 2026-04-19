@@ -1,426 +1,481 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sphera — Rewards & Milestones</title>
+    <title>Rewards — Sphera</title>
     <meta name="description" content="Redeem coupons, unlock ecosystem milestones, and track your trusted growth.">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
-        /* ═══════════════════════════════════════════════════════
-           CSS — Sphera (Nexus-inspired Shared CSS)
-           ═══════════════════════════════════════════════════════ */
         :root {
-            color-scheme: light;
-            --bg: #f5f0ff;
-            --bg2: #ece4ff;
-            --Srface: rgba(255, 255, 255, .55);
-            --Srface-s: rgba(255, 255, 255, .45);
-            --Srface-f: rgba(255, 255, 255, .35);
-            --line: rgba(255, 255, 255, .5);
-            --line-s: rgba(255, 255, 255, .6);
-            --text: #1a0e33;
-            --muted: #5a5068;
-            --faint: #8a7ea0;
-            --accent: #7C3AED;
-            --accent-s: #5B21B6;
-            --accent-f: rgba(124, 58, 237, .15);
-            --orange: #F97316;
-            --orange-f: rgba(249, 115, 22, .1);
-            --green: #10B981;
-            --green-f: rgba(16, 185, 129, .12);
-            --danger: #EF4444;
-            --danger-f: rgba(239, 68, 68, .1);
-            --amber: #D97706;
-            --amber-f: rgba(217, 119, 6, .12);
-            --shadow: 0 8px 32px rgba(0, 0, 0, .06);
-            --shadow-f: 0 4px 16px rgba(0, 0, 0, .03);
-            --header-bg: rgba(255, 255, 255, .45);
-            --focus: rgba(124, 58, 237, .28);
-            --radius: 12px;
-            --glass-blur: blur(20px);
-            --overlay-op: 0.45;
-            --overlay-blur: blur(2px);
+            --bg: #09090b;
+            --bg-soft: rgba(9, 9, 11, 0.76);
+            --Srface: rgba(24, 24, 27, 0.74);
+            --Srface-strong: rgba(32, 32, 36, 0.9);
+            --border: rgba(255, 255, 255, 0.1);
+            --border-strong: rgba(255, 255, 255, 0.16);
+            --primary: #3b82f6;
+            --primary-soft: rgba(59, 130, 246, 0.14);
+            --accent: #8b5cf6;
+            --accent-soft: rgba(139, 92, 246, 0.14);
+            --Sccess: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --text-faint: #71717a;
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.22);
         }
 
-        html[data-theme="dark"] {
-            color-scheme: dark;
-            --bg: #0a0514;
-            --bg2: #110920;
-            --Srface: rgba(255, 255, 255, .08);
-            --Srface-s: rgba(255, 255, 255, .06);
-            --Srface-f: rgba(255, 255, 255, .04);
-            --line: rgba(255, 255, 255, .12);
-            --line-s: rgba(255, 255, 255, .18);
-            --text: #f3eeff;
-            --muted: #b0a4c8;
-            --faint: #7a6e94;
-            --accent: #A78BFA;
-            --accent-s: #C4B5FD;
-            --accent-f: rgba(167, 139, 250, .18);
-            --orange: #FB923C;
-            --orange-f: rgba(251, 146, 60, .12);
-            --green: #34D399;
-            --green-f: rgba(52, 211, 153, .14);
-            --danger: #F87171;
-            --danger-f: rgba(248, 113, 113, .12);
-            --amber: #FBBF24;
-            --amber-f: rgba(251, 191, 36, .14);
-            --shadow: 0 8px 32px rgba(0, 0, 0, .2);
-            --shadow-f: 0 4px 16px rgba(0, 0, 0, .12);
-            --header-bg: rgba(255, 255, 255, .06);
-            --focus: rgba(167, 139, 250, .32);
-            --overlay-op: 0.85;
-            --overlay-blur: blur(8px);
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --bg-soft: rgba(248, 250, 252, 0.82);
+            --Srface: rgba(255, 255, 255, 0.84);
+            --Srface-strong: rgba(255, 255, 255, 0.96);
+            --border: rgba(15, 23, 42, 0.08);
+            --border-strong: rgba(15, 23, 42, 0.12);
+            --primary: #2563eb;
+            --primary-soft: rgba(37, 99, 235, 0.1);
+            --accent: #7c3aed;
+            --accent-soft: rgba(124, 58, 237, 0.1);
+            --text-main: #172033;
+            --text-muted: #64748b;
+            --text-faint: #94a3b8;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
-            margin: 0; min-height: 100vh; overflow-x: hidden;
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: transparent;
-            color: var(--text);
-            transition: background .2s, color .2s;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
         }
 
-        /* ── Video Background ── */
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            overflow: hidden;
+        a { color: inherit; text-decoration: none; }
+        button { border: 0; background: none; cursor: pointer; color: inherit; }
+
+        .video-bg, .video-overlay {
+            position: fixed; inset: 0; pointer-events: none;
         }
-        .video-bg video {
+        .video-bg { z-index: -2; overflow: hidden; }
+        .video-bg video { width: 100%; height: 100%; object-fit: cover; }
+        .video-overlay {
+            z-index: -1;
+            background:
+                radial-gradient(circle at 15% 0%, rgba(59, 130, 246, 0.16), transparent 36%),
+                radial-gradient(circle at 88% 16%, rgba(139, 92, 246, 0.16), transparent 32%),
+                var(--bg);
+            opacity: 0.92;
+            backdrop-filter: blur(12px);
+        }
+
+        .site-header {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-soft);
+            backdrop-filter: blur(18px);
+        }
+
+        .header-content {
+            width: min(1180px, calc(100% - 40px));
+            height: 68px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 220px minmax(260px, 1fr) auto;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .logo {
+            width: fit-content;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 460px;
+            justify-self: center;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            color: var(--text-faint);
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search-bar:focus-within {
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 0 0 4px var(--primary-soft);
+        }
+
+        .search-bar input {
+            width: 100%;
+            min-width: 0;
+            color: var(--text-main);
+            background: transparent;
+            border: 0;
+            outline: 0;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-faint);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .icon-btn,
+        .profile-button {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            color: var(--text-muted);
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .icon-btn:hover,
+        .profile-button:hover {
+            color: var(--text-main);
+            border-color: var(--border-strong);
+            background: var(--Srface-strong);
+        }
+
+        .profile-button img {
             width: 100%;
             height: 100%;
+            border-radius: inherit;
             object-fit: cover;
         }
-        .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            opacity: var(--overlay-op);
-            z-index: -1;
-            backdrop-filter: var(--overlay-blur);
-            transition: background 0.3s ease, opacity 0.3s ease, backdrop-filter 0.3s ease;
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 7px;
+            height: 7px;
+            background: var(--danger);
+            border: 2px solid var(--bg);
+            border-radius: 999px;
         }
 
-        button, input { font: inherit; }
-        button { color: inherit; border: none; background: none; cursor: pointer; }
-        a { color: inherit; text-decoration: none; }
-        img { display: block; max-width: 100%; border-radius: inherit; }
-        h1, h2, h3, p { margin: 0; }
+        .credits-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 38px;
+            padding: 0 12px;
+            color: var(--text-main);
+            background: linear-gradient(135deg, var(--primary-soft), var(--accent-soft));
+            border: 1px solid rgba(139, 92, 246, 0.28);
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
 
-        .wrap { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
-        
-        .page-layout {
-            display: grid;
-            grid-template-columns: 260px 1fr 300px;
-            gap: 24px;
-            padding: 32px 0 64px;
+        .credits-amount {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 40px)); margin: 0 auto;
+            padding: 92px 0 48px; display: grid;
+            grid-template-columns: 236px minmax(0, 1fr) 282px; gap: 20px;
             align-items: start;
         }
 
-        /* ── Header ── */
-        .hdr {
-            position: sticky; top: 0; z-index: 30; border-bottom: 1px solid var(--line);
-            background: var(--header-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-        }
-        .hdr-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 78px; }
-        .brand { display: flex; align-items: center; gap: 12px; }
-        .brand-mark {
-            display: grid; place-items: center; width: 42px; height: 42px;
-            border-radius: var(--radius); background: var(--text); color: var(--bg);
-            font-size: .92rem; font-weight: 900;
-        }
-        .hdr-nav { display: flex; gap: 22px; font-weight: 700; font-size: .92rem; color: var(--text); }
-        .hdr-nav a { position: relative; color: var(--muted); }
-        .hdr-nav a.active { color: var(--text); }
-        .hdr-nav a::after {
-            content: ''; position: absolute; right: 0; bottom: -8px; left: 0; height: 2px;
-            border-radius: 2px; background: var(--accent); opacity: 0; transform: scaleX(.5);
-            transition: opacity .2s, transform .2s;
-        }
-        .hdr-nav a.active::after, .hdr-nav a:hover::after { opacity: 1; transform: scaleX(1); }
-        .hdr-acts { display: flex; gap: 10px; align-items: center; }
+        .left-sidebar { position: sticky; top: 88px; }
+        .stack { display: grid; gap: 16px; }
+        .card { background: var(--Srface); border: 1px solid var(--border); border-radius: var(--radius-lg); backdrop-filter: blur(18px); }
+        .card.pad { padding: 18px; }
 
-        .btn, .theme-tog {
-            border-radius: var(--radius); padding: 0 16px; min-height: 42px;
-            font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent;
-            transition: transform .18s, background .18s, box-shadow .18s, color .18s;
-        }
-        .btn-p { background: var(--accent); color: white; }
-        .btn-p:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--accent-f); }
-        
-        .btn-o { background: var(--orange); color: white; }
-        .btn-o:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--orange-f); }
+        .profile-card { text-align: center; }
+        .profile-avatar { width: 78px; height: 78px; margin: 0 auto 14px; border-radius: 24px; object-fit: cover; }
+        .profile-name { font-size: 17px; font-weight: 800; }
+        .profile-title { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+        .verified-line { display: inline-flex; align-items: center; gap: 6px; padding: 6px 9px; color: var(--Sccess); background: rgba(16, 185, 129, 0.1); border-radius: 999px; font-size: 11px; font-weight: 800; margin-top: 12px; }
+        .pulse { width: 6px; height: 6px; background: var(--Sccess); border-radius: 50%; }
 
-        .theme-tog {
-            background: var(--Srface); border-color: var(--line);
-            color: var(--text); padding: 0 12px;
-            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-        }
+        .nav-menu { display: grid; gap: 4px; list-style: none; }
+        .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 11px; color: var(--text-muted); border-radius: 13px; cursor: pointer; font-size: 13px; font-weight: 700; transition: background .2s; }
+        .nav-item:hover { color: var(--text-main); background: rgba(255,255,255,0.05); }
+        .nav-item.active { color: var(--primary); background: var(--primary-soft); }
 
-        .panel {
-            background: var(--Srface); border: 1px solid var(--line);
-            border-radius: var(--radius); box-shadow: var(--shadow-f);
-            padding: 24px; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+        .feed-intro { position: relative; overflow: hidden; padding: 24px; }
+        .feed-intro::before {
+            content: ""; position: absolute; inset: 0;
+            background: radial-gradient(circle at 16% 0%, rgba(59, 130, 246, 0.22), transparent 34%);
         }
+        .eyebrow { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 11px; color: var(--primary); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+        .eyebrow::before { content: ""; width: 8px; height: 8px; background: var(--Sccess); border-radius: 50%; }
+        .feed-intro h1 { font-size: clamp(28px, 4vw, 36px); line-height: 1.1; margin-bottom: 10px; }
+        .feed-intro p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
 
-        /* ── Nav ── */
-        .side-nav { display: grid; gap: 8px; margin-bottom: 24px; }
-        .side-nav a {
-            display: flex; align-items: center; justify-content: space-between; padding: 12px 16px;
-            border-radius: var(--radius); font-weight: 700; color: var(--muted);
-            transition: background .2s, color .2s;
-        }
-        .side-nav a.active { background: var(--accent-f); color: var(--accent); }
-        .side-nav a:hover:not(.active) { background: var(--Srface-f); color: var(--text); }
-        .count-pill { background: var(--orange); color: white; padding: 2px 8px; border-radius: 99px; font-size: .75rem; font-weight: 900; }
-
-        /* ── Milestones ── */
+        /* Reward Specific */
         .milestone-card {
-            padding: 20px; border-radius: var(--radius); border: 1px solid var(--line-s);
-            background: var(--Srface-s); margin-bottom: 16px; position: relative; overflow: hidden;
-            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.03); margin-bottom: 16px; position: relative; overflow: hidden;
         }
         .milestone-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .milestone-header h3 { font-size: 1.1rem; font-weight: 900; }
-        .milestone-badge { font-size: 0.75rem; background: var(--accent-f); color: var(--accent); padding: 4px 8px; border-radius: 4px; font-weight: 900; letter-spacing: .05em; }
+        .milestone-badge { font-size: 0.75rem; background: var(--accent-soft); color: var(--accent); padding: 4px 8px; border-radius: 4px; font-weight: 900; }
         
-        .progress-bar-bg { width: 100%; height: 8px; background: var(--line); border-radius: 4px; margin-top: 12px; overflow: hidden; }
+        .progress-bar-bg { width: 100%; height: 8px; background: var(--border); border-radius: 4px; margin-top: 12px; overflow: hidden; }
         .progress-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 1s ease-in-out; }
 
-        /* ── Toast ── */
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 20px; border-radius: 999px; font-weight: 800; font-size: 12px; text-decoration: none; transition: background .2s; }
+        .btn-p { background: var(--primary); color: #fff; }
+        .btn-p:hover { background: var(--accent); }
+        .btn-outline { border: 1px solid var(--border); color: var(--text-muted); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--text-main); }
+
         .toast {
-            position: fixed; right: 20px; bottom: 20px; background: var(--text); color: var(--bg);
-            padding: 14px 20px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px;
-            box-shadow: var(--shadow); z-index: 1000; opacity: 0; transform: translateY(18px); transition: opacity .4s, transform .4s; pointer-events: none;
+            position: fixed; right: 20px; bottom: 20px; background: var(--Srface-strong); color: var(--text-main);
+            padding: 14px 20px; border-radius: 12px; border: 1px solid var(--border-strong);
+            font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px;
+            box-shadow: var(--shadow-soft); z-index: 1000; opacity: 0; transform: translateY(18px); transition: opacity .4s, transform .4s; pointer-events: none;
+            backdrop-filter: blur(12px);
         }
         .toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-
-        @media(max-width: 980px) { .page-layout { grid-template-columns: 240px 1fr; } .hidden-md { display: none; } }
-        @media(max-width: 768px) { .page-layout { grid-template-columns: 1fr; padding-top: 16px; } .side-nav { display: flex; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; } .side-nav a { flex-shrink: 0; } }
     </style>
 </head>
 
 <body>
-    <div class="video-bg">
+    <div class="video-bg" aria-hidden="true">
         <video autoplay muted loop playsinline>
-            <source src="assets/vecteezy_white-gradient-background-with-scattered-white-dots-Sitable_53824243.mp4" type="video/mp4">
+            <source src="assets/abstract-honeycomb.1920x1080.mp4" type="video/mp4">
         </video>
     </div>
-    <div class="video-overlay"></div>
-    <!-- Header -->
-    <header class="hdr">
-        <div class="wrap hdr-row">
-            <a class="brand" href="index.html">
-                <span class="brand-mark">S</span>
-                <span style="display:grid;gap:2px"><strong>Sphera.</strong><small>Verified professional</small></span>
-            </a>
-            <nav class="hdr-nav">
-                <a href="feed.html">Feed</a>
-                <a href="network.html">Network</a>
-                <a href="event.html">Events</a>
-                <a href="reward.html" class="active">Rewards</a>
-            </nav>
-            <div class="hdr-acts">
-                 <button class="theme-tog" id="themeToggle" type="button">☼ / ☾</button>
-                 <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white; display: grid; place-items: center; font-weight: 900;">U</div>
+    <div class="video-overlay" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">SPHERA</a>
+            <label class="search-bar" aria-label="Search feed">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input id="feedSearch" type="text" placeholder="Search insights, people, opportunities...">
+            </label>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
+                    <svg id="theme-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="icon-btn" title="Notifications" aria-label="Notifications" style="position:relative;"
+                    data-action="notifications">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-dot"></span>
+                </button>
+                <button class="icon-btn" title="Messages" aria-label="Messages" data-action="messages">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </button>
+                <div class="credits-pill" id="creditsPill" title="Your redeemed credits">
+                    <span id="creditsDisplay" class="credits-amount">0</span>
+                    <span>Credits</span>
+                </div>
+                <a class="profile-button" href="feed.html#profile" aria-label="Open profile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Avatar" id="navAvatar">
+                </a>
             </div>
         </div>
     </header>
 
-    <main class="wrap page-layout">
-        
-        <!-- Left Sidebar -->
-        <aside>
-            <nav class="side-nav">
-                <a href="#" class="active"><span>🎁 My Rewards</span></a>
-                <a href="#"><span>🏆 Leaderboard</span></a>
-                <a href="#"><span>🤝 Referrals</span> <span class="count-pill">3</span></a>
-                <a href="#"><span>💳 Wallet Balance</span></a>
+    <div class="container">
+        <aside class="left-sidebar stack">
+            <section class="card pad profile-card">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James Wilson" class="profile-avatar">
+                <h2 class="profile-name">James Wilson</h2>
+                <p class="profile-title">Founder @ Synapse AI</p>
+                <div class="verified-line"><span class="pulse"></span> Liveness verified</div>
+            </section>
+
+            <nav class="card pad">
+                <ul class="nav-menu">
+                    <li class="nav-item" onclick="window.location.href='feed.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 9 12 2 21 9 21 21 15 21 15 12 9 12 9 21 3 21"></polyline></svg>
+                        Feed
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='network.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        Network
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='opportunity.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Opportunities
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='event.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        Events
+                    </li>
+                    <li class="nav-item active" onclick="window.location.href='reward.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                        Rewards
+                    </li>
+                </ul>
             </nav>
         </aside>
 
-        <!-- Center Feed -->
-        <section>
-            <!-- Hero Banner -->
-            <div class="panel" style="background: linear-gradient(135deg, var(--orange), #ef4444); color: white; margin-bottom: 24px; position: relative; overflow: hidden; border: none;">
-                <div style="position: relative; z-index: 2; display: flex; flex-direction: column; gap: 12px;">
-                    <h1 style="font-size: clamp(1.6rem, 2.5vw, 2rem); font-weight: 900; line-height: 1.1; letter-spacing: -.02em;">Redeem Coupons &amp; Unlock Milestones</h1>
-                    <p style="opacity: 0.95; max-width: 440px; line-height: 1.6; font-size: .95rem; margin-bottom: 4px; font-weight: 500;">Grow the ecosystem, bring in verified professionals, and get rewarded with premium items, platform credits, and exclusive networking access.</p>
-                </div>
-                <!-- Decorative background elements -->
-                <div style="position: absolute; right: -40px; top: -40px; width: 220px; height: 220px; border-radius: 50%; background: var(--amber); opacity: 0.3; filter: blur(40px);"></div>
-            </div>
+        <main class="stack">
+            <section class="card pad feed-intro">
+                <div class="eyebrow">Ecosystem Incentives</div>
+                <h1>Rewards & <span style="color: var(--primary);">Milestones</span></h1>
+                <p>Grow the ecosystem, bring in verified professionals, and unlock premium rewards.</p>
+            </section>
 
-            <!-- Coupon Redeem -->
-            <div class="panel" style="margin-bottom: 32px; background: var(--Srface-f); border: 2px dashed var(--accent-f);">
+            <div class="card pad" style="background: linear-gradient(135deg, var(--warning), var(--danger)); color: white; border: none;">
                 <h2 style="font-size: 1.25rem; font-weight: 900; margin-bottom: 8px;">🎉 Got a Coupon Code?</h2>
-                <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 16px; font-weight: 500;">Enter your code below to instantly unlock escrow credits or Srprise gift rewards.</p>
-                
-                <div style="display: flex; gap: 8px; align-items: center; max-width: 400px; background: var(--Srface); padding: 8px; border-radius: 12px; border: 1px solid var(--line); box-shadow: var(--shadow-f);">
-                    <input id="couponInput" type="text" placeholder="e.g. SYNC2026" maxlength="8" style="flex: 1; padding: 12px 14px; border: none; background: transparent; font-weight: 800; font-size: 1rem; color: var(--text); outline: none; text-transform: uppercase;" />
-                    <button id="redeemBtn" class="btn btn-p" type="button" style="min-height: 44px; padding: 0 24px;">Redeem</button>
+                <p style="opacity: 0.9; font-size: 0.95rem; margin-bottom: 16px;">Enter your code below to instantly unlock rewards.</p>
+                <div style="display: flex; gap: 8px; max-width: 400px;">
+                    <input id="couponInput" type="text" placeholder="SYNC2026" maxlength="8" style="flex: 1; padding: 12px; border-radius: 12px; border: none; background: rgba(0,0,0,0.2); color: white; font-weight: 800; text-transform: uppercase; outline: none;">
+                    <button id="redeemBtn" class="btn" style="background: white; color: var(--danger);">Redeem</button>
                 </div>
             </div>
 
-            <!-- Milestones Section -->
-            <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: flex-end;">
-                <div>
-                    <h2 style="font-size: 1.4rem; font-weight: 900;">Milestone Goals</h2>
-                    <p style="color: var(--muted); font-size: 0.9rem; font-weight: 500; margin-top: 4px;">Exclusive rewards locked behind ecosystem growth.</p>
+            <div class="stack">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="font-size: 1.1rem; font-weight: 900;">Milestone Goals</h2>
+                    <span style="font-size: 12px; font-weight: 800; color: var(--primary);">42 / 100 Joins</span>
                 </div>
-                <div style="font-weight: 800; color: var(--accent); font-size: 0.9rem;">Current: 42 Joins</div>
-            </div>
 
-            <!-- Milestone 1 -->
-            <div class="milestone-card">
-                <div class="milestone-header">
-                    <h3>100 Verified Joins</h3>
-                    <span class="milestone-badge">LOCKED</span>
-                </div>
-                <p style="color: var(--muted); font-size: 0.9rem; font-weight: 500;">Unlock a standard Gift Reward (e.g. Swag, $50 Escrow Credit).</p>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 42%;"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.8rem; font-weight: 700; color: var(--faint);">
-                    <span>42 / 100</span>
-                    <span>58 remaining</span>
-                </div>
-            </div>
-
-            <!-- Milestone 2 -->
-            <div class="milestone-card" style="opacity: 0.7;">
-                <div class="milestone-header">
-                    <h3>500 Verified Joins</h3>
-                    <span class="milestone-badge" style="background: var(--Srface-f); color: var(--muted);">LOCKED</span>
-                </div>
-                <p style="color: var(--muted); font-size: 0.9rem; font-weight: 500;">Unlock a Bigger Gift Reward (e.g. Premium Hardware, Event VIP Pass).</p>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 8.4%;"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.8rem; font-weight: 700; color: var(--faint);">
-                    <span>42 / 500</span>
-                </div>
-            </div>
-
-            <!-- Milestone 3 -->
-            <div class="milestone-card" style="opacity: 0.5;">
-                <div class="milestone-header">
-                    <h3 style="background: linear-gradient(90deg, var(--orange), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">First 1,000 Verified Leaderboard</h3>
-                    <span class="milestone-badge" style="background: var(--Srface-f); color: var(--muted);">LOCKED</span> //
-                </div>
-                <p style="color: var(--muted); font-size: 0.9rem; font-weight: 500;">Eligible for 3 Mega Gifts (Latest flagship smartphones or equivalent).</p>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 4.2%; background: var(--orange);"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.8rem; font-weight: 700; color: var(--faint);">
-                    <span>42 / 1,000</span>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- Right Sidebar -->
-        <aside class="hidden-md">
-            <!-- Active Balances -->
-            <div class="panel" style="margin-bottom: 24px; text-align: center; padding: 32px 24px;">
-                 <h3 style="font-size: .85rem; color: var(--muted); text-transform: uppercase; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px;">Escrow Credits</h3>
-                 <div style="font-size: 2.8rem; font-weight: 900; color: var(--text); line-height: 1;">$140</div>
-                 <p style="font-size: .8rem; color: var(--green); font-weight: 700; margin-top: 8px;">+ $20 from last referral</p>
-                 <button class="btn btn-outline" style="width: 100%; border: 1px solid var(--line); margin-top: 20px; font-weight: 800; background: var(--Srface-f);">Withdraw to Wallet</button>
-            </div>
-
-            <!-- Recent Winners Activity feed -->
-             <div class="panel">
-                <h3 style="font-size: 1.05rem; font-weight: 900; margin-bottom: 16px;">Recent Ecosystem Winners</h3>
-                
-                <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: center;">
-                    <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--amber-f); color: var(--amber); display: grid; place-items: center; font-weight: 900; font-size: .8rem;">EL</div>
-                    <div>
-                        <div style="font-weight: 800; font-size: .85rem;">Elena Rodriguez</div>
-                        <div style="font-size: .75rem; color: var(--muted); font-weight: 600;">Redeemed $50 Coupon</div>
+                <div class="milestone-card">
+                    <div class="milestone-header">
+                        <h3>100 Verified Joins</h3>
+                        <span class="milestone-badge">LOCKED</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 13px;">Unlock a standard Gift Reward (e.g. Swag, $50 Escrow Credit).</p>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 42%;"></div>
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 12px; margin-bottom: 16px; align-items: center;">
-                    <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--accent-f); color: var(--accent); display: grid; place-items: center; font-weight: 900; font-size: .8rem;">DC</div>
-                    <div>
-                        <div style="font-weight: 800; font-size: .85rem;">David Chen</div>
-                        <div style="font-size: .75rem; color: var(--orange); font-weight: 700;">Unlocked 100-Join Milestone!</div>
+                <div class="milestone-card" style="opacity: 0.6;">
+                    <div class="milestone-header">
+                        <h3>500 Verified Joins</h3>
+                        <span class="milestone-badge">LOCKED</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 13px;">Unlock a Bigger Gift Reward (e.g. Premium Hardware).</p>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 8.4%;"></div>
                     </div>
                 </div>
             </div>
+        </main>
+
+        <aside class="right-sidebar stack">
+            <section class="card pad" style="text-align: center;">
+                 <h3 style="font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Escrow Balance</h3>
+                 <div style="font-size: 32px; font-weight: 900;">$140</div>
+                 <p style="font-size: 11px; color: var(--Sccess); font-weight: 700; margin-top: 4px;">+ $20 recently earned</p>
+                 <button class="btn btn-outline" style="width: 100%; margin-top: 16px;">Withdraw</button>
+            </section>
         </aside>
-    </main>
+    </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="toast" role="status" aria-live="polite">
-        <span style="font-size: 1.2rem;">🎁</span>
+    <div id="toast" class="toast" role="status">
         <span id="toastMsg"></span>
     </div>
 
     <script>
-
-
-        // Toast logic
-        let toastTimer;
+        // Simple toast logic
         function showToast(m) {
             const t = document.getElementById('toast');
-            const msgNode = document.getElementById('toastMsg');
-            if (!t || !msgNode) return;
-            msgNode.textContent = m;
+            document.getElementById('toastMsg').textContent = m;
             t.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+            setTimeout(() => t.classList.remove('show'), 3000);
         }
 
-        // Redeem logic (matches index.html)
-        const couponInput = document.getElementById('couponInput');
-        if (couponInput) {
-            couponInput.addEventListener('input', function() {
-                let val = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-                let reSlt = '';
-                let lCount = 0;
-                let nCount = 0;
-                for(let char of val) {
-                    if(/[A-Z]/.test(char)) {
-                        if(lCount < 4) { reSlt += char; lCount++; }
-                    } else if(/[0-9]/.test(char)) {
-                        if(nCount < 4) { reSlt += char; nCount++; }
-                    }
-                }
-                this.value = reSlt;
-            });
-        }
+        // Coupon input formatting
+        document.getElementById('couponInput')?.addEventListener('input', function() {
+            this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        });
 
         document.getElementById('redeemBtn')?.addEventListener('click', () => {
             const input = document.getElementById('couponInput')?.value.trim();
-            if (!input) {
-                showToast('Please enter a coupon code first.');
-                return;
-            }
             if (input.length !== 8) {
-                showToast('Coupon must be exactly 8 characters (4 letters, 4 numbers).');
+                showToast('Enter a valid 8-char code.');
                 return;
             }
-            const rewardValue = Math.floor(Math.random() * 41) + 10;
-            showToast(`Redeemed Sccessfully! You won a $${rewardValue} item reward!`);
+            showToast('Reward Redeemed Successfully!');
             document.getElementById('couponInput').value = '';
         });
     </script>
-    <script src="theme.js"></script>
+    <script>
+        const themeKey = 'su-theme';
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            try { localStorage.setItem(themeKey, theme); } catch (e) { }
+            updateThemeUI(theme);
+        }
+        function updateThemeUI(theme) {
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                if (theme === 'dark') {
+                    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                } else {
+                    icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                }
+            }
+        }
+        window.toggleTheme = function () {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        };
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem(themeKey) || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) { }
+        })();
+        document.addEventListener('DOMContentLoaded', () => {
+            let savedTheme = 'dark';
+            try { savedTheme = localStorage.getItem(themeKey) || 'dark'; } catch (e) { }
+            updateThemeUI(savedTheme);
+        });
+    </script>
 </body>
 </html>

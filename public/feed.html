@@ -1101,7 +1101,40 @@
             }
         }
     </style>
-    <script src="theme.js"></script>
+    <script>
+        const themeKey = 'su-theme';
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            try { localStorage.setItem(themeKey, theme); } catch (e) { }
+            updateThemeUI(theme);
+        }
+        function updateThemeUI(theme) {
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                if (theme === 'dark') {
+                    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                } else {
+                    icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                }
+            }
+        }
+        window.toggleTheme = function () {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        };
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem(themeKey) || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) { }
+        })();
+        document.addEventListener('DOMContentLoaded', () => {
+            let savedTheme = 'dark';
+            try { savedTheme = localStorage.getItem(themeKey) || 'dark'; } catch (e) { }
+            updateThemeUI(savedTheme);
+        });
+    </script>
     <script src="media_handler.js" defer></script>
 </head>
 
@@ -1152,7 +1185,7 @@
                     <span>Credits</span>
                 </div>
                 <a class="profile-button" href="#profile" aria-label="Open profile">
-                    <img src="public/avatars/aarav-mehta.png" alt="Aarav Mehta">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Avatar" id="navAvatar">
                 </a>
             </div>
         </div>
@@ -1161,9 +1194,9 @@
     <div class="container">
         <aside class="left-sidebar stack" aria-label="Feed navigation">
             <section class="card pad profile-card" id="profile">
-                <img src="public/avatars/aarav-mehta.png" alt="Aarav Mehta" class="profile-avatar">
-                <h2 class="profile-name">Aarav Mehta</h2>
-                <p class="profile-title">Founder @ Synapse AI</p>
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Avatar" class="profile-avatar" id="profileAvatar">
+                <h2 class="profile-name" id="profileName">Loading...</h2>
+                <p class="profile-title" id="profileRole">Please wait...</p>
                 <div class="verified-line"><span class="pulse"></span> Liveness verified</div>
                 <div class="stats">
                     <div class="stat-item">
@@ -1250,7 +1283,7 @@
 
             <section class="card pad" aria-label="Create post">
                 <div class="composer">
-                    <img src="public/avatars/aarav-mehta.png" alt="Aarav Mehta" class="avatar">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Avatar" class="avatar" id="composerAvatar">
                     <div>
                         <textarea id="composerInput" class="composer-input"
                             placeholder="Share an insight, opportunity, referral ask, or trust signal..."></textarea>
@@ -1297,9 +1330,9 @@
             <section class="post-list" id="postList" aria-live="polite">
                 <article class="card post" data-category="hiring">
                     <div class="post-header">
-                        <img src="public/avatars/rohan-kapoor.png" alt="Rohan Kapoor" class="author-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Marcus Johnson" class="author-avatar">
                         <div class="author-info">
-                            <h3>Rohan Kapoor <span class="badge">Hiring</span></h3>
+                            <h3>Marcus Johnson <span class="badge">Hiring</span></h3>
                             <p>Lead Engineer @ Nexus Labs &middot; 2h ago</p>
                         </div>
                         <button class="btn btn-ghost post-menu" aria-label="More options" data-action="menu">
@@ -1317,7 +1350,7 @@
                         about high availability and zero-trust architecture. Stack: Go, Rust, and Kubernetes. San
                         Francisco hybrid.
                     </div>
-                    <img src="assets/office.png" alt="Verified team collaboration illustration" class="post-image">
+
                     <div class="post-actions" aria-label="Post actions">
                         <button class="post-action" data-action="trust" data-count="42">
                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -1351,7 +1384,7 @@
 
                 <article class="card post" data-category="insight">
                     <div class="post-header">
-                        <img src="public/avatars/neha-verma.png" alt="Neha Verma" class="author-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Neha Verma" class="author-avatar">
                         <div class="author-info">
                             <h3>Neha Verma <span class="badge badge-green">Insight</span></h3>
                             <p>Product Lead @ Orbit &middot; 5h ago</p>
@@ -1397,17 +1430,17 @@
                 </div>
                 <ul class="Sggestion-list">
                     <li class="Sggestion-item">
-                        <img src="public/avatars/arjun-mehta.png" alt="Arjun Mehta" class="mini-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Chris Anderson" class="mini-avatar">
                         <div class="Sggestion-info">
-                            <h3>Arjun Mehta</h3>
+                            <h3>Chris Anderson</h3>
                             <p>Product Lead @ Orbit</p>
                         </div>
                         <button class="btn btn-Sbtle" data-action="connect">Connect</button>
                     </li>
                     <li class="Sggestion-item">
-                        <img src="public/avatars/ishita-rao.png" alt="Ishita Rao" class="mini-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Mitchell" class="mini-avatar">
                         <div class="Sggestion-info">
-                            <h3>Ishita Rao</h3>
+                            <h3>Sarah Mitchell</h3>
                             <p>Partner @ Altair Ventures</p>
                         </div>
                         <button class="btn btn-Sbtle" data-action="connect">Connect</button>
@@ -1818,37 +1851,7 @@
             if (emptyState) emptyState.hidden = visibleCount > 0;
         }
 
-        function publishPost() {
-            const input = document.getElementById('composerInput');
-            const postList = document.getElementById('postList');
-            if (!input || !postList) return;
-            const content = input.value.trim();
-            if (!content) {
-                showToast('Write something before posting.');
-                input.focus();
-                return;
-            }
-            const category = inferCategory(content);
-            const post = {
-                id: Date.now(),
-                author: 'Aarav Mehta',
-                role: 'Founder @ Synapse AI',
-                time: 'Just now',
-                avatar: 'public/avatars/aarav-mehta.png',
-                category,
-                content
-            };
-            saveStoredPost(post);
-            postList.insertBefore(createPostElement(post), postList.firstElementChild);
-            input.value = '';
-            const search = document.getElementById('feedSearch');
-            if (search) search.value = '';
-            currentFilter = 'all';
-            currentSearch = '';
-            setActiveTab('all');
-            applyFeedFilters();
-            showToast('Post published.');
-        }
+        // publishPost is now defined in the module script below
 
         function updateActionCount(button, label, nextCount) {
             button.dataset.count = String(nextCount);
@@ -2029,6 +2032,189 @@
             applyFeedFilters();
         });
         document.addEventListener('click', handleDelegatedClick);
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, collection, addDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBfF_Gfn_YaIHfHVCpaA6IdUjDVNlDQTjg",
+            authDomain: "sphera-6778e.firebaseapp.com",
+            projectId: "sphera-6778e",
+            storageBucket: "sphera-6778e.firebasestorage.app",
+            messagingSenderId: "851527615297",
+            appId: "1:851527615297:web:9ea78e42c27b3585e5d7c0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.currentUserProfile = { name: 'Sphera User', role: 'Verified Member' };
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Fetch user data from Firestore
+                try {
+                    const userDoc = await getDoc(doc(db, 'users', user.uid));
+                    if (userDoc.exists()) {
+                        const data = userDoc.data();
+                        
+                        // Store in global variable for publishPost
+                        window.currentUserProfile = {
+                            name: data.name || user.displayName || 'Sphera User',
+                            role: data.role || data.company || 'Verified Member'
+                        };
+
+                        // Update Profile Name
+                        const nameEl = document.getElementById('profileName');
+                        if (nameEl) nameEl.textContent = window.currentUserProfile.name;
+
+                        // Update Role
+                        const roleEl = document.getElementById('profileRole');
+                        if (roleEl) roleEl.textContent = window.currentUserProfile.role;
+
+                        // Generate Dynamic Avatar URL using UID hash
+                        const portraitNum = (user.uid.charCodeAt(0) % 50) + 1;
+                        const avatarUrl = `https://randomuser.me/api/portraits/men/${portraitNum}.jpg`;
+                        window.currentUserProfile.avatar = avatarUrl;
+
+                        // Update Avatar Images
+                        document.getElementById('navAvatar')?.setAttribute('src', avatarUrl);
+                        document.getElementById('profileAvatar')?.setAttribute('src', avatarUrl);
+                        document.getElementById('composerAvatar')?.setAttribute('src', avatarUrl);
+
+                        // Update Alt Texts
+                        const name = window.currentUserProfile.name;
+                        document.getElementById('navAvatar')?.setAttribute('alt', name);
+                        document.getElementById('profileAvatar')?.setAttribute('alt', name);
+                        document.getElementById('composerAvatar')?.setAttribute('alt', name);
+
+                        // Load posts from Firestore after user is identified
+                        loadFirestorePosts();
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                }
+            } else {
+                // Redirect to login if not authenticated
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Firebase-powered publishPost
+        window.publishPost = async function() {
+            const input = document.getElementById('composerInput');
+            const postList = document.getElementById('postList');
+            if (!input || !postList) return;
+            const content = input.value.trim();
+            if (!content) {
+                showToast('Write something before posting.');
+                input.focus();
+                return;
+            }
+
+            const user = auth.currentUser;
+            if (!user) {
+                showToast('You must be logged in to post.');
+                return;
+            }
+
+            const postData = {
+                text: content,
+                authorName: window.currentUserProfile?.name || user.displayName || 'Sphera User',
+                authorId: user.uid,
+                authorPhoto: window.currentUserProfile?.avatar || `https://randomuser.me/api/portraits/men/${(user.uid.charCodeAt(0) % 50) + 1}.jpg`,
+                createdAt: new Date().toISOString(),
+                timestamp: Date.now()
+            };
+
+            try {
+                // Save to Firestore
+                await addDoc(collection(db, 'posts'), postData);
+                
+                // Clear UI
+                input.value = '';
+                const search = document.getElementById('feedSearch');
+                if (search) search.value = '';
+                window.currentFilter = 'all';
+                window.currentSearch = '';
+                if (typeof setActiveTab === 'function') setActiveTab('all');
+                if (typeof applyFeedFilters === 'function') applyFeedFilters();
+
+                // Local UI Update (Snappy Feedback)
+                const category = typeof inferCategory === 'function' ? inferCategory(content) : 'all';
+                const localPost = {
+                    id: postData.timestamp,
+                    author: postData.authorName,
+                    role: window.currentUserProfile?.role || 'Verified Member',
+                    time: 'Just now',
+                    avatar: postData.authorPhoto,
+                    category,
+                    content: postData.text
+                };
+                if (typeof saveStoredPost === 'function') saveStoredPost(localPost);
+                if (typeof createPostElement === 'function') {
+                    postList.insertBefore(createPostElement(localPost), postList.firstElementChild);
+                }
+
+                showToast('Post shared!');
+            } catch (error) {
+                console.error("Error saving post:", error);
+                showToast('Failed to share post. Please try again.');
+            }
+        };
+
+        // Load posts from Firestore
+        async function loadFirestorePosts() {
+            const postList = document.getElementById('postList');
+            if (!postList) return;
+
+            try {
+                const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+                const querySnapshot = await getDocs(q);
+                
+                const posts = [];
+                querySnapshot.forEach(doc => {
+                    posts.push(doc.data());
+                });
+
+                // Insert oldest-of-fetched first to keep the newest at the top
+                posts.reverse().forEach(data => {
+                    const postObj = {
+                        author: data.authorName,
+                        avatar: data.authorPhoto || 'https://randomuser.me/api/portraits/men/32.jpg',
+                        role: 'Verified Member',
+                        time: timeAgo(data.timestamp),
+                        category: typeof window.inferCategory === 'function' ? window.inferCategory(data.text) : 'insight',
+                        content: data.text
+                    };
+                    if (typeof window.createPostElement === 'function') {
+                        const postEl = window.createPostElement(postObj);
+                        postList.insertBefore(postEl, postList.firstElementChild);
+                    }
+                });
+
+                // Apply filters after loading new posts
+                if (typeof window.applyFeedFilters === 'function') window.applyFeedFilters();
+            } catch (error) {
+                console.error("Error loading posts from Firestore:", error);
+            }
+        }
+
+        function timeAgo(timestamp) {
+            if (!timestamp) return 'Just now';
+            const seconds = Math.floor((Date.now() - timestamp) / 1000);
+            if (seconds < 60) return 'Just now';
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return `${minutes}m ago`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours}h ago`;
+            const days = Math.floor(hours / 24);
+            return `${days}d ago`;
+        }
     </script>
 </body>
 
