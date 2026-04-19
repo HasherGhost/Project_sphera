@@ -1,5 +1,6 @@
-﻿<!DOCTYPE html>
-<html lang="en" data-theme="light">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
 <head>
     <link rel='stylesheet' href='global.css'>
     <script src='theme.js'></script>
@@ -7,1076 +8,942 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Business Opportunities — Sphera</title>
-    <meta name="description" content="Discover verified business opportunities on Sphera. Connect with investors, partners, and enterprise clients in a trusted professional ecosystem.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="description"
+        content="Discover verified business opportunities on Sphera. Connect with investors, partners, and enterprise clients.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
-        /* ── Design Tokens ── */
         :root {
-            --bg: #f5f0ff; --bg2: #ece4ff; --surface: rgba(255, 255, 255, .88); --surface-s: #fff;
-            --text: #1a0e33; --muted: #6b5e82; --accent: #7C3AED; --accent-s: #5B21B6;
-            --orange: #F97316; --green: #10B981; --red: #EF4444; --blue: #3B82F6;
-            --radius: 8px; --line: rgba(88, 28, 235, .11); --header-bg: rgba(245, 240, 255, .86);
-            --shadow-f: 0 14px 40px rgba(60, 20, 140, .06);
-            --surface-f: rgba(124, 58, 237, .08);
-            --modal-bg: rgba(0,0,0,.45);
-        }
-        html[data-theme="dark"] {
-            --bg: #0a0514; --bg2: #110920; --surface: rgba(22, 12, 44, .9); --surface-s: #160c2c;
-            --text: #f3eeff; --muted: #b0a4c8; --accent: #A78BFA;
-            --line: rgba(200, 180, 255, .11); --header-bg: rgba(10, 5, 20, .88);
-            --surface-f: rgba(167, 139, 250, .12);
-            --modal-bg: rgba(0,0,0,.7);
+            --bg: #09090b;
+            --bg-soft: rgba(9, 9, 11, 0.76);
+            --Srface: rgba(24, 24, 27, 0.74);
+            --Srface-strong: rgba(32, 32, 36, 0.9);
+            --border: rgba(255, 255, 255, 0.1);
+            --border-strong: rgba(255, 255, 255, 0.16);
+            --primary: #3b82f6;
+            --primary-soft: rgba(59, 130, 246, 0.14);
+            --accent: #8b5cf6;
+            --accent-soft: rgba(139, 92, 246, 0.14);
+            --Sccess: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --text-faint: #71717a;
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.22);
+            --modal-bg: rgba(0, 0, 0, 0.82);
+            --orange: #f97316;
+            --green: #10b981;
+            --blue: #3b82f6;
         }
 
-        /* ── Reset & Base ── */
-        *, *::before, *::after { box-sizing: border-box; }
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --bg-soft: rgba(248, 250, 252, 0.82);
+            --Srface: rgba(255, 255, 255, 0.84);
+            --Srface-strong: rgba(255, 255, 255, 0.96);
+            --border: rgba(15, 23, 42, 0.08);
+            --border-strong: rgba(15, 23, 42, 0.12);
+            --primary: #2563eb;
+            --primary-soft: rgba(37, 99, 235, 0.1);
+            --accent: #7c3aed;
+            --accent-soft: rgba(124, 58, 237, 0.1);
+            --text-main: #172033;
+            --text-muted: #64748b;
+            --text-faint: #94a3b8;
+            --modal-bg: rgba(15, 23, 42, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            margin: 0; font-family: 'Inter', system-ui, sans-serif;
-            background: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px), linear-gradient(180deg, var(--bg), var(--bg2));
-            background-size: 72px 72px, 72px 72px, auto;
-            color: var(--text); min-height: 100vh;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
         }
-        .wrap { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
 
-        /* ── Header ── */
-        .hdr { position: sticky; top: 0; z-index: 30; border-bottom: 1px solid var(--line); background: var(--header-bg); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
-        .hdr-row { display: flex; align-items: center; justify-content: space-between; min-height: 78px; }
-        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
-        .brand-mark { display: grid; place-items: center; width: 42px; height: 42px; border-radius: var(--radius); background: var(--text); color: var(--bg); font-weight: 900; font-size: 0.9rem; }
-        .nav-group { display: flex; gap: 20px; align-items: center; font-weight: 600; }
-        .nav-link { color: var(--text); text-decoration: none; transition: color .2s; }
-        .nav-link:hover { color: var(--accent); }
-        .dropdown { position: relative; display: inline-block; }
-        .dropdown-content {
-            display: none; position: absolute; background: var(--surface-s); min-width: 230px;
-            box-shadow: var(--shadow-f); border-radius: var(--radius); border: 1px solid var(--line);
-            padding: 8px; z-index: 40; top: 100%; left: 0; flex-direction: column; gap: 4px; margin-top: 12px;
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            border: 0;
+            background: none;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        .video-bg,
+        .video-overlay {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .video-bg {
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            z-index: -1;
+            background:
+                radial-gradient(circle at 15% 0%, rgba(59, 130, 246, 0.16), transparent 36%),
+                radial-gradient(circle at 88% 16%, rgba(139, 92, 246, 0.16), transparent 32%),
+                var(--bg);
+            opacity: 0.92;
+            backdrop-filter: blur(12px);
+        }
+
+        .site-header {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-soft);
             backdrop-filter: blur(18px);
         }
-        .dropdown:hover .dropdown-content { display: flex !important; }
-        .dropdown-content a {
-            padding: 10px 12px; border-radius: 6px; font-size: 0.88rem; color: var(--text);
-            text-decoration: none; transition: background .2s, color .2s;
-        }
-        .dropdown-content a:hover { background: var(--surface-f); color: var(--accent) !important; }
-        .theme-tog {
-            display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 14px;
-            border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line);
-            color: var(--text); font-weight: 800; cursor: pointer; transition: transform .18s, background .18s;
-            backdrop-filter: blur(18px); font-size: 0.9rem;
-        }
-        .theme-tog:hover { transform: translateY(-1px); }
 
-        /* ── Hero ── */
-        .hero { padding: 60px 0 20px; text-align: center; }
-        h1 { font-size: clamp(2.4rem, 5vw, 4rem); margin: 0 0 16px; line-height: 1.1; }
-        .hero p { font-size: 1.1rem; color: var(--muted); max-width: 650px; margin: 0 auto 30px; }
+        .header-content {
+            width: min(1180px, calc(100% - 40px));
+            height: 68px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 220px minmax(260px, 1fr) auto;
+            align-items: center;
+            gap: 18px;
+        }
 
-        /* ── Search ── */
+        .logo {
+            width: fit-content;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
         .search-bar {
-            display: flex; align-items: center; gap: 12px; max-width: 520px; margin: 0 auto 24px;
-            background: var(--surface); border: 1px solid var(--line); border-radius: 40px;
-            padding: 6px 8px 6px 20px; transition: border-color .2s;
+            width: 100%;
+            max-width: 460px;
+            justify-self: center;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            color: var(--text-faint);
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .search-bar:focus-within { border-color: var(--accent); }
+
+        .search-bar:focus-within {
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 0 0 4px var(--primary-soft);
+        }
+
         .search-bar input {
-            flex: 1; border: none; background: transparent; color: var(--text); font-size: 0.95rem;
-            font-family: inherit; outline: none; padding: 8px 0;
+            width: 100%;
+            min-width: 0;
+            color: var(--text-main);
+            background: transparent;
+            border: 0;
+            outline: 0;
         }
-        .search-bar input::placeholder { color: var(--muted); }
-        .search-bar button {
-            background: var(--accent); color: #fff; border: none; border-radius: 50%; width: 38px; height: 38px;
-            cursor: pointer; font-size: 1.1rem; display: grid; place-items: center; transition: background .2s;
-        }
-        .search-bar button:hover { background: var(--accent-s); }
 
-        /* ── Stats Row ── */
-        .stats-row { display: flex; gap: 24px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
-        .stat-pill {
-            display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line);
-            border-radius: 20px; padding: 8px 16px; font-size: 0.85rem; font-weight: 600;
-            cursor: pointer; transition: all .25s; font-family: inherit; color: var(--text);
+        .search-bar input::placeholder {
+            color: var(--text-faint);
         }
-        .stat-pill:hover { border-color: var(--accent); transform: translateY(-1px); }
-        .stat-pill.active-green { border-color: var(--green); background: rgba(16, 185, 129, .12); }
-        .stat-pill.active-orange { border-color: var(--orange); background: rgba(249, 115, 22, .12); }
-        .stat-pill.active-blue { border-color: var(--blue); background: rgba(59, 130, 246, .12); }
-        .stat-dot { width: 8px; height: 8px; border-radius: 50%; }
-        .stat-dot.green { background: var(--green); }
-        .stat-dot.orange { background: var(--orange); }
-        .stat-dot.blue { background: var(--blue); }
 
-        /* ── Filters ── */
-        .filters { display: flex; gap: 12px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
-        .filter-btn {
-            padding: 8px 18px; border-radius: 20px; border: 1px solid var(--line); background: var(--surface);
-            color: var(--text); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all .2s;
-            font-family: inherit;
+        .header-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
         }
-        .filter-btn.active, .filter-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-        /* ── Cards Grid ── */
-        .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr); gap: 24px; padding-bottom: 80px; }
+        .icon-btn,
+        .profile-button {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            color: var(--text-muted);
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .icon-btn:hover,
+        .profile-button:hover {
+            color: var(--text-main);
+            border-color: var(--border-strong);
+            background: var(--Srface-strong);
+        }
+
+        .profile-button img {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            object-fit: cover;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 7px;
+            height: 7px;
+            background: var(--danger);
+            border: 2px solid var(--bg);
+            border-radius: 999px;
+        }
+
+        .credits-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 38px;
+            padding: 0 12px;
+            color: var(--text-main);
+            background: linear-gradient(135deg, var(--primary-soft), var(--accent-soft));
+            border: 1px solid rgba(139, 92, 246, 0.28);
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .credits-amount {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 92px 0 48px;
+            display: grid;
+            grid-template-columns: 236px minmax(0, 1fr) 282px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .left-sidebar {
+            position: sticky;
+            top: 88px;
+        }
+
+        .stack {
+            display: grid;
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(18px);
+        }
+
+        .card.pad {
+            padding: 18px;
+        }
+
+        .profile-card {
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 78px;
+            height: 78px;
+            margin: 0 auto 14px;
+            border-radius: 24px;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .profile-title {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .verified-line {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 9px;
+            color: var(--Sccess);
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-top: 12px;
+        }
+
+        .pulse {
+            width: 6px;
+            height: 6px;
+            background: var(--Sccess);
+            border-radius: 50%;
+        }
+
+        .nav-menu {
+            display: grid;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 11px;
+            color: var(--text-muted);
+            border-radius: 13px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            transition: background .2s;
+        }
+
+        .nav-item:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: var(--primary-soft);
+        }
+
+        .feed-intro {
+            position: relative;
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .feed-intro::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 16% 0%, rgba(59, 130, 246, 0.22), transparent 34%);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 11px;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: var(--Sccess);
+            border-radius: 50%;
+        }
+
+        .feed-intro h1 {
+            font-size: clamp(28px, 4vw, 36px);
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .feed-intro p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Business Opportunity Cards */
+        .feat-grid {
+            display: grid;
+            gap: 16px;
+        }
+
         .feat-card {
-            background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
-            padding: 28px; box-shadow: var(--shadow-f); transition: transform .25s, border-color .25s, opacity .3s;
-            position: relative; overflow: hidden;
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            transition: transform .25s, border-color .25s;
+            position: relative;
+            overflow: hidden;
         }
-        .feat-card:hover { transform: translateY(-4px); border-color: var(--accent); }
-        .feat-card.hidden { display: none; }
 
-        /* Card shimmer on hover */
-        .feat-card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle at center, rgba(124,58,237,.04) 0%, transparent 70%);
-            opacity: 0; transition: opacity .3s; pointer-events: none;
+        .feat-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
         }
-        .feat-card:hover::before { opacity: 1; }
 
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-        .icon { font-size: 2.5rem; display: block; }
-        .bookmark-btn {
-            background: none; border: 1px solid var(--line); border-radius: 8px; width: 36px; height: 36px;
-            cursor: pointer; display: grid; place-items: center; font-size: 1.1rem; color: var(--muted);
-            transition: all .2s; position: relative; z-index: 2;
+        .feat-card.hidden {
+            display: none;
         }
-        .bookmark-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .bookmark-btn.saved { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-        .card-tags { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .icon {
+            font-size: 2rem;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
         .tag {
-            font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 4px;
-            background: var(--surface-f); color: var(--accent); text-transform: uppercase; letter-spacing: .5px;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            text-transform: uppercase;
         }
 
-        h3 { font-size: 1.3rem; margin: 0 0 8px; color: var(--text); }
-        .desc { color: var(--muted); line-height: 1.6; font-size: 0.92rem; margin-bottom: 20px; }
+        .feat-card h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
 
-        .card-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .feat-card .desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .status-badge {
-            font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
+
         .status-badge::before {
-            content: ''; width: 7px; height: 7px; border-radius: 50%; display: inline-block;
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
         }
-        .status-badge.active { color: var(--green); }
-        .status-badge.active::before { background: var(--green); }
-        .status-badge.closing { color: var(--orange); }
-        .status-badge.closing::before { background: var(--orange); }
-        .status-badge.upcoming { color: var(--blue); }
-        .status-badge.upcoming::before { background: var(--blue); }
 
-        /* ── Buttons ── */
+        .status-badge.active {
+            color: var(--Sccess);
+        }
+
+        .status-badge.active::before {
+            background: var(--Sccess);
+        }
+
+        .status-badge.closing {
+            color: var(--warning);
+        }
+
+        .status-badge.closing::before {
+            background: var(--warning);
+        }
+
+        .status-badge.upcoming {
+            color: var(--primary);
+        }
+
+        .status-badge.upcoming::before {
+            background: var(--primary);
+        }
+
         .btn {
-            display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 8px;
-            font-weight: 700; text-decoration: none; background: var(--accent); color: white;
-            transition: all .2s; font-size: 0.88rem; border: none; cursor: pointer; font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 12px;
+            transition: background .2s;
         }
-        .btn:hover { background: var(--accent-s); transform: translateY(-1px); }
+
+        .btn-p {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-p:hover {
+            background: var(--accent);
+        }
+
         .btn-outline {
-            background: transparent; color: var(--text); border: 1px solid var(--line);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
         }
-        .btn-outline:hover { background: var(--surface-f); }
-        .btn-ghost { background: transparent; color: var(--muted); padding: 8px 12px; }
-        .btn-ghost:hover { color: var(--accent); background: var(--surface-f); }
 
-        /* ── Empty State ── */
-        .empty-state {
-            text-align: center; padding: 80px 20px; display: none; grid-column: 1 / -1;
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
         }
-        .empty-state.visible { display: block; }
-        .empty-state .empty-icon { font-size: 4rem; margin-bottom: 16px; opacity: .5; }
-        .empty-state h3 { font-size: 1.4rem; margin-bottom: 8px; }
-        .empty-state p { color: var(--muted); max-width: 400px; margin: 0 auto 20px; }
 
-        /* ── Modal Overlay ── */
+        .search-bar {
+            width: 100%;
+            height: 44px;
+            padding: 0 16px 0 44px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--Srface);
+            color: var(--text-main);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-faint);
+        }
+
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .filter-btn.active {
+            background: var(--text-main);
+            color: var(--bg);
+            border-color: transparent;
+        }
+
         .modal-overlay {
-            position: fixed; inset: 0; background: var(--modal-bg); z-index: 100;
-            display: flex; align-items: center; justify-content: center; padding: 24px;
-            opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s;
-            backdrop-filter: blur(4px);
+            position: fixed;
+            inset: 0;
+            background: var(--modal-bg);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .25s, visibility .25s;
+            backdrop-filter: blur(8px);
         }
-        .modal-overlay.open { opacity: 1; visibility: visible; }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .modal-box {
-            background: var(--surface-s); border: 1px solid var(--line); border-radius: 16px;
-            width: min(640px, 100%); max-height: 85vh; overflow-y: auto; padding: 0;
-            transform: translateY(20px) scale(.97); transition: transform .3s;
-            box-shadow: 0 32px 80px rgba(0,0,0,.2);
-        }
-        .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
-
-        .modal-header {
-            padding: 28px 28px 0; display: flex; justify-content: space-between; align-items: flex-start;
-        }
-        .modal-header .icon { font-size: 3rem; }
-        .modal-close {
-            background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
-            width: 40px; height: 40px; cursor: pointer; display: grid; place-items: center;
-            font-size: 1.2rem; color: var(--muted); transition: all .2s;
-        }
-        .modal-close:hover { background: var(--red); color: #fff; border-color: var(--red); }
-        .modal-body { padding: 20px 28px 28px; }
-        .modal-body h2 { margin: 0 0 6px; font-size: 1.6rem; }
-        .modal-body .modal-subtitle { color: var(--muted); margin-bottom: 20px; font-size: 0.95rem; }
-
-        .detail-section { margin-bottom: 24px; }
-        .detail-section h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin: 0 0 10px; }
-        .detail-section ul { margin: 0; padding-left: 20px; color: var(--text); line-height: 1.8; font-size: 0.92rem; }
-        .detail-section p { margin: 0; color: var(--text); line-height: 1.7; font-size: 0.92rem; }
-
-        .info-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;
-        }
-        .info-item {
-            background: var(--surface-f); border-radius: 10px; padding: 14px 16px;
-        }
-        .info-item .info-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); margin-bottom: 4px; }
-        .info-item .info-value { font-size: 1rem; font-weight: 700; color: var(--text); }
-
-        /* ── Application Form ── */
-        .apply-form { display: none; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); }
-        .apply-form.visible { display: block; }
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text); }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px;
-            background: var(--surface); color: var(--text); font-family: inherit; font-size: 0.9rem;
-            transition: border-color .2s; outline: none;
-        }
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
-        .form-group textarea { resize: vertical; min-height: 100px; }
-        .form-actions { display: flex; gap: 12px; margin-top: 20px; }
-
-        /* ── Toast ── */
-        .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 200; display: flex; flex-direction: column; gap: 10px; }
-        .toast {
-            background: var(--text); color: var(--bg); padding: 14px 20px; border-radius: 10px;
-            font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,.2); transform: translateX(120%); transition: transform .3s;
-            max-width: 360px;
-        }
-        .toast.show { transform: translateX(0); }
-        .toast .toast-icon { font-size: 1.2rem; }
-
-        /* ── Scroll to Top ── */
-        .scroll-top {
-            position: fixed; bottom: 24px; left: 24px; width: 48px; height: 48px; border-radius: 50%;
-            background: var(--accent); color: #fff; border: none; cursor: pointer; font-size: 1.3rem;
-            display: none; place-items: center; box-shadow: 0 6px 24px rgba(124,58,237,.3);
-            transition: transform .2s; z-index: 50;
-        }
-        .scroll-top.visible { display: grid; }
-        .scroll-top:hover { transform: scale(1.1); }
-
-        /* ── Responsive ── */
-        @media (max-width: 768px) {
-            .feat-grid { grid-template-columns: 1fr; }
-            .info-grid { grid-template-columns: 1fr; }
-            .nav-group { gap: 12px; }
-            .hdr-row { flex-wrap: wrap; gap: 12px; min-height: auto; padding: 12px 0; }
+            background: var(--Srface-strong);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            width: min(600px, 90vw);
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 32px;
         }
 
-        /* ── Animations ── */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .feat-card { animation: fadeInUp .4s ease both; }
-        .feat-card:nth-child(1) { animation-delay: .05s; }
-        .feat-card:nth-child(2) { animation-delay: .1s; }
-        .feat-card:nth-child(3) { animation-delay: .15s; }
-        .feat-card:nth-child(4) { animation-delay: .2s; }
-        .feat-card:nth-child(5) { animation-delay: .25s; }
-        .feat-card:nth-child(6) { animation-delay: .3s; }
+
+        .credits-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 38px;
+            padding: 0 12px;
+            color: var(--text-main);
+            background: linear-gradient(135deg, var(--primary-soft), var(--accent-soft));
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .profile-button img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border);
+        }
     </style>
-    <script src="theme.js"></script>
 </head>
+
 <body>
-    <div id='header-placeholder'></div>
-    <!-- ── Header ── -->
-    
+    <div class="video-bg" aria-hidden="true">
+        <video autoplay muted loop playsinline>
+            <source src="assets/abstract-honeycomb.1920x1080.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="video-overlay" aria-hidden="true"></div>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">SPHERA</a>
+            <label class="search-bar" aria-label="Search feed">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input id="feedSearch" type="text" placeholder="Search insights, people, opportunities...">
+            </label>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
+                    <svg id="theme-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="icon-btn" title="Notifications" aria-label="Notifications" style="position:relative;"
+                    data-action="notifications">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-dot"></span>
+                </button>
+                <button class="icon-btn" title="Messages" aria-label="Messages" data-action="messages">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </button>
+                <div class="credits-pill" id="creditsPill" title="Your redeemed credits">
+                    <span id="creditsDisplay" class="credits-amount">0</span>
+                    <span>Credits</span>
+                </div>
+                <a class="profile-button" href="feed.html#profile" aria-label="Open profile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Avatar" id="navAvatar">
+                </a>
+            </div>
+        </div>
+    </header>
 
-    <!-- ── Hero ── -->
-    <main class="wrap">
-        <section class="hero">
-            <h1>Scale Your <span style="color: var(--orange);">Business</span></h1>
-            <p>Connect with vetted investors, enterprise clients, and strategic partners. Every connection is verified for authenticity and intent.</p>
+    <div class="container">
+        <aside class="left-sidebar stack">
+            <section class="card pad profile-card">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James Wilson" class="profile-avatar">
+                <h2 class="profile-name">James Wilson</h2>
+                <p class="profile-title">Founder @ Synapse AI</p>
+                <div class="verified-line"><span class="pulse"></span> Liveness verified</div>
+            </section>
 
-            <!-- Search -->
-            <div class="search-bar" id="searchBar">
-                <input type="text" id="searchInput" placeholder="Search opportunities by name, keyword, or category…" autocomplete="off">
-                <button type="button" id="searchBtn" aria-label="Search">🔍</button>
+            <nav class="card pad">
+                <ul class="nav-menu">
+                    <li class="nav-item" onclick="window.location.href='feed.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 9 12 2 21 9 21 21 15 21 15 12 9 12 9 21 3 21"></polyline>
+                        </svg>
+                        Feed
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='network.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Network
+                    </li>
+                    <li class="nav-item active" onclick="window.location.href='opportunity.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        Opportunities
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='event.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Events
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='reward.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                            </path>
+                        </svg>
+                        Rewards
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="stack">
+            <section class="card pad feed-intro">
+                <div class="eyebrow">Enterprise & Growth</div>
+                <h1>Business <span style="color: var(--primary);">Opportunities</span></h1>
+                <p>Connect with vetted investors, enterprise clients, and strategic partners. Every connection is
+                    verified for authenticity and intent.</p>
+            </section>
+
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-bar" placeholder="Search opportunities…">
             </div>
 
-            <!-- Live Stats (clickable status filters) -->
-            <div class="stats-row" id="statsRow">
-                <button class="stat-pill" data-status-filter="active" id="statActive"><span class="stat-dot green"></span> <span id="activeCount">4</span> Active Opportunities</button>
-                <button class="stat-pill" data-status-filter="closing" id="statClosing"><span class="stat-dot orange"></span> <span id="closingCount">1</span> Closing Soon</button>
-                <button class="stat-pill" data-status-filter="upcoming" id="statUpcoming"><span class="stat-dot blue"></span> <span id="upcomingCount">1</span> Upcoming</button>
-            </div>
-
-            <!-- Filters -->
             <div class="filters" id="filterGroup">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="funding">Funding</button>
                 <button class="filter-btn" data-filter="partnerships">Partnerships</button>
                 <button class="filter-btn" data-filter="b2b">B2B Clients</button>
-                <button class="filter-btn" data-filter="talent">Talent & Co-Founders</button>
-                <button class="filter-btn" data-filter="grants">Grants</button>
             </div>
-        </section>
 
-        <!-- ── Opportunity Cards ── -->
-        <div class="feat-grid" id="cardGrid">
+            <div id="cardGrid" class="feat-grid">
+                <!-- Card 1: Seed Funding Pitch -->
+                <article class="feat-card" data-category="funding" data-id="seed-funding" data-status="active">
+                    <div class="card-header">
+                        <span class="icon">🚀</span>
+                        <button class="btn btn-outline" style="width: 32px; height: 32px; padding: 0;">♡</button>
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag">Funding</span>
+                        <span class="tag">SaaS</span>
+                    </div>
+                    <h3>Seed Funding Pitch</h3>
+                    <p class="desc">Connect directly with a syndicate of verified angel investors looking for SaaS and
+                        DeepTech startups.</p>
+                    <div class="card-footer">
+                        <span class="status-badge active">Active</span>
+                        <button class="btn btn-p" onclick="openModal('seed-funding')">Apply to Pitch</button>
+                    </div>
+                </article>
 
-            <!-- Card 1: Seed Funding Pitch -->
-            <article class="feat-card" data-category="funding" data-id="seed-funding" data-status="active">
-                <div class="card-header">
-                    <span class="icon">🚀</span>
-                    <button class="bookmark-btn" data-bookmark="seed-funding" title="Save this opportunity" aria-label="Bookmark Seed Funding Pitch">♡</button>
-                </div>
-                <div class="card-tags">
-                    <span class="tag">Funding</span>
-                    <span class="tag">SaaS</span>
-                    <span class="tag">DeepTech</span>
-                </div>
-                <h3>Seed Funding Pitch</h3>
-                <p class="desc">Connect directly with a syndicate of verified angel investors looking for SaaS and DeepTech startups. Live camera pitching required.</p>
-                <div class="card-footer">
-                    <span class="status-badge active">Active</span>
-                    <button class="btn" onclick="openModal('seed-funding')">Apply to Pitch</button>
-                </div>
-            </article>
+                <!-- Card 2: Enterprise Partnerships -->
+                <article class="feat-card" data-category="partnerships" data-id="enterprise-partnerships"
+                    data-status="active">
+                    <div class="card-header">
+                        <span class="icon">🤝</span>
+                        <button class="btn btn-outline" style="width: 32px; height: 32px; padding: 0;">♡</button>
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag">Partnerships</span>
+                        <span class="tag">Enterprise</span>
+                    </div>
+                    <h3>Enterprise Partnerships</h3>
+                    <p class="desc">Fortune 500 companies actively seeking innovative vendors for API integrations and
+                        AI tooling.</p>
+                    <div class="card-footer">
+                        <span class="status-badge active">Active</span>
+                        <button class="btn btn-p" onclick="openModal('enterprise-partnerships')">View Details</button>
+                    </div>
+                </article>
 
-            <!-- Card 2: Enterprise Partnerships -->
-            <article class="feat-card" data-category="partnerships" data-id="enterprise-partnerships" data-status="active">
-                <div class="card-header">
-                    <span class="icon">🤝</span>
-                    <button class="bookmark-btn" data-bookmark="enterprise-partnerships" title="Save this opportunity" aria-label="Bookmark Enterprise Partnerships">♡</button>
-                </div>
-                <div class="card-tags">
-                    <span class="tag">Partnerships</span>
-                    <span class="tag">Enterprise</span>
-                    <span class="tag">API</span>
-                </div>
-                <h3>Enterprise Partnerships</h3>
-                <p class="desc">Fortune 500 companies actively seeking innovative vendors for API integrations and AI tooling.</p>
-                <div class="card-footer">
-                    <span class="status-badge active">Active</span>
-                    <button class="btn" onclick="openModal('enterprise-partnerships')">View Details</button>
-                </div>
-            </article>
-
-            <!-- Card 3: B2B Lead Generation Pool -->
-            <article class="feat-card" data-category="b2b" data-id="b2b-leads" data-status="closing">
-                <div class="card-header">
-                    <span class="icon">📊</span>
-                    <button class="bookmark-btn" data-bookmark="b2b-leads" title="Save this opportunity" aria-label="Bookmark B2B Lead Generation">♡</button>
-                </div>
-                <div class="card-tags">
-                    <span class="tag">B2B</span>
-                    <span class="tag">Logistics</span>
-                    <span class="tag">supply Chain</span>
-                </div>
-                <h3>B2B Lead Generation Pool</h3>
-                <p class="desc">Access a verified pool of decision-makers in the logistics and supply chain sector. High-intent buyers only.</p>
-                <div class="card-footer">
-                    <span class="status-badge closing">Closing Soon</span>
-                    <button class="btn" onclick="openModal('b2b-leads')">Join Pool</button>
-                </div>
-            </article>
-
-            <!-- Card 4: Co-Founder Matching -->
-            <article class="feat-card" data-category="talent" data-id="cofounder-match" data-status="active">
-                <div class="card-header">
-                    <span class="icon">🏢</span>
-                    <button class="bookmark-btn" data-bookmark="cofounder-match" title="Save this opportunity" aria-label="Bookmark Co-Founder Matching">♡</button>
-                </div>
-                <div class="card-tags">
-                    <span class="tag">Talent</span>
-                    <span class="tag">Co-Founder</span>
-                    <span class="tag">Startup</span>
-                </div>
-                <h3>Co-Founder Matching</h3>
-                <p class="desc">Find a technical or business co-founder with a verified background and complementary skill set.</p>
-                <div class="card-footer">
-                    <span class="status-badge active">Always Open</span>
-                    <button class="btn" onclick="openModal('cofounder-match')">Find Match</button>
-                </div>
-            </article>
-
-            <!-- Card 5: Series A Syndicate -->
-            <article class="feat-card" data-category="funding" data-id="series-a" data-status="upcoming">
-                <div class="card-header">
-                    <span class="icon">💰</span>
-                    <button class="bookmark-btn" data-bookmark="series-a" title="Save this opportunity" aria-label="Bookmark Series A Syndicate">♡</button>
-                </div>
-                <div class="card-tags">
-                    <span class="tag">Funding</span>
-                    <span class="tag">Series A</span>
-                    <span class="tag">VC</span>
-                </div>
-                <h3>Series A Syndicate</h3>
-                <p class="desc">Top-tier VC firms are hosting a verified-only event to discover promising startups generating $1M+ ARR.</p>
-                <div class="card-footer">
-                    <span class="status-badge upcoming">Next Month</span>
-                    <button class="btn" onclick="openModal('series-a')">Register Intent</button>
-                </div>
-            </article>
-
-            <!-- Card 6: Government Grants Board -->
-            <article class="feat-card" data-category="grants" data-id="gov-grants" data-status="active">
-                <div class="card-header">
-                    <span class="icon">📈</span>
-                    <button class="bookmark-btn" data-bookmark="gov-grants" title="Save this opportunity" aria-label="Bookmark Government Grants">♡</button>
-                </div>
-                <div class="card-tags">
-                    <span class="tag">Grants</span>
-                    <span class="tag">Non-Dilutive</span>
-                    <span class="tag">Government</span>
-                </div>
-                <h3>Government Grants Board</h3>
-                <p class="desc">Curated list of verified government grants and non-dilutive funding opportunities for tech innovators.</p>
-                <div class="card-footer">
-                    <span class="status-badge active">Active</span>
-                    <button class="btn" onclick="openModal('gov-grants')">Browse Grants</button>
-                </div>
-            </article>
-
-            <!-- Empty State -->
-            <div class="empty-state" id="emptyState">
-                <div class="empty-icon">🔎</div>
-                <h3>No opportunities found</h3>
-                <p>Try adjusting your search or filter criteria to see more results.</p>
-                <button class="btn" onclick="resetFilters()">Clear All Filters</button>
+                <!-- Card 3: B2B Lead Generation Pool -->
+                <article class="feat-card" data-category="b2b" data-id="b2b-leads" data-status="closing">
+                    <div class="card-header">
+                        <span class="icon">📊</span>
+                        <button class="btn btn-outline" style="width: 32px; height: 32px; padding: 0;">♡</button>
+                    </div>
+                    <div class="card-tags">
+                        <span class="tag">B2B</span>
+                        <span class="tag">Logistics</span>
+                    </div>
+                    <h3>B2B Lead Generation Pool</h3>
+                    <p class="desc">Access a verified pool of decision-makers in the logistics and supply chain sector.
+                        High-intent buyers.</p>
+                    <div class="card-footer">
+                        <span class="status-badge closing">Closing Soon</span>
+                        <button class="btn btn-p" onclick="openModal('b2b-leads')">Join Pool</button>
+                    </div>
+                </article>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <!-- ── Detail Modal ── -->
+        <aside class="right-sidebar stack">
+            <section class="card pad">
+                <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 12px;">Market Pulse</h3>
+                <div class="stack" style="gap: 12px;">
+                    <div style="font-size: 13px; color: var(--text-muted);">
+                        <div style="color: var(--text-main); font-weight: 700;">$12.4M</div>
+                        Total funding available this week
+                    </div>
+                    <div style="font-size: 13px; color: var(--text-muted);">
+                        <div style="color: var(--text-main); font-weight: 700;">42</div>
+                        New enterprise partnerships
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+
+    <!-- Modal Overlay -->
     <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box" id="modalBox">
-            <div class="modal-header">
-                <span class="icon" id="modalIcon"></span>
-                <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="card-tags" id="modalTags"></div>
-                <h2 id="modalTitle"></h2>
-                <p class="modal-subtitle" id="modalSbtitle"></p>
-
-                <div class="info-grid" id="modalInfoGrid"></div>
-
-                <div class="detail-section" id="modalOverviewSection">
-                    <h4>Overview</h4>
-                    <p id="modalOverview"></p>
-                </div>
-
-                <div class="detail-section" id="modalRequirementsSection">
-                    <h4>Requirements</h4>
-                    <ul id="modalRequirements"></ul>
-                </div>
-
-                <div class="detail-section" id="modalBenefitsSection">
-                    <h4>What You Get</h4>
-                    <ul id="modalBenefits"></ul>
-                </div>
-
-                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn" id="modalApplyBtn" onclick="toggleApplyForm()">
-                        <span id="modalApplyLabel">Apply Now</span>
-                    </button>
-                    <button class="btn btn-outline" id="modalShareBtn" onclick="shareOpportunity()">📤 Share</button>
-                    <button class="btn btn-outline" id="modalBookmarkBtn" onclick="bookmarkFromModal()">♡ Save</button>
-                </div>
-
-                <!-- Application Form -->
-                <div class="apply-form" id="applyForm">
-                    <h4 style="margin: 0 0 16px; font-size: 1.1rem;">submit Your Application</h4>
-                    <div class="form-group">
-                        <label for="appName">Full Name *</label>
-                        <input type="text" id="appName" placeholder="e.g. Sarah Jenkins" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="appEmail">Business Email *</label>
-                        <input type="email" id="appEmail" placeholder="e.g. sarah@company.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="appCompany">Company Name *</label>
-                        <input type="text" id="appCompany" placeholder="e.g. Acme Technologies">
-                    </div>
-                    <div class="form-group">
-                        <label for="appRole">Your Role</label>
-                        <select id="appRole">
-                            <option value="">Select your role…</option>
-                            <option>Founder / CEO</option>
-                            <option>CTO / Technical Lead</option>
-                            <option>Head of Business Development</option>
-                            <option>VP of Partnerships</option>
-                            <option>Product Manager</option>
-                            <option>Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="appMessage">Why are you interested? *</label>
-                        <textarea id="appMessage" placeholder="Tell us about your company and what you hope to achieve through this opportunity…"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="appUrl">Website / LinkedIn (optional)</label>
-                        <input type="url" id="appUrl" placeholder="https://…">
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn" type="button" onclick="submitApplication()">submit Application</button>
-                        <button class="btn btn-ghost" type="button" onclick="toggleApplyForm()">Cancel</button>
-                    </div>
-                </div>
+        <div class="modal-box">
+            <h2 id="modalTitle" style="margin-bottom: 16px;"></h2>
+            <p id="modalOverview"
+                style="font-size: 14px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;"></p>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-p" onclick="closeModal()">Close Details</button>
             </div>
         </div>
     </div>
 
-    <!-- ── Toast ── -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- ── Scroll to Top ── -->
-    <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
-
     <script>
-    /* ═══════════════════════════════════════════════
-       OPPORTUNITY DATA — Rich detail for each card
-       ═══════════════════════════════════════════════ */
-    const opportunities = {
-        'seed-funding': {
-            icon: '🚀', title: 'Seed Funding Pitch',
-            Sbtitle: 'Pitch live to verified angel investors via face-authenticated video.',
-            tags: ['Funding', 'SaaS', 'DeepTech'],
-            info: [
-                { label: 'Funding Range', value: '$100K – $500K' },
-                { label: 'Format', value: 'Live Video Pitch' },
-                { label: 'Investors', value: '12 Verified Angels' },
-                { label: 'Deadline', value: 'Rolling Basis' }
-            ],
-            overview: 'This exclusive pitch event connects early-stage founders directly with a syndicate of 12 verified angel investors. Unlike traditional pitch platforms, Sphera requires live camera authentication—ensuring every participant is a real, verified professional. Investors in this syndicate have a combined portfolio value of $84M and specialize in SaaS, AI/ML, and DeepTech verticals.',
-            requirements: [
-                'Sphera-verified founder profile with face authentication',
-                'Pre-revenue to $500K ARR stage',
-                'Working product or functional prototype',
-                'Prepared 10-minute pitch deck',
-                'Available for live Q&A session within 48 hours of pitch'
-            ],
-            benefits: [
-                'Direct intros to 12 verified investors—no gatekeepers',
-                'Structured feedback from each investor within 7 days',
-                'Priority listing in Sphera\'s Investor Matching database',
-                'Access to follow-up networking events'
-            ],
-            btnLabel: 'Apply to Pitch'
-        },
-        'enterprise-partnerships': {
-            icon: '🤝', title: 'Enterprise Partnerships',
-            Sbtitle: 'Become a verified technology vendor for Fortune 500 enterprise programs.',
-            tags: ['Partnerships', 'Enterprise', 'API'],
-            info: [
-                { label: 'Contract Value', value: '$50K – $2M/yr' },
-                { label: 'Companies', value: '8 Fortune 500' },
-                { label: 'Sectors', value: 'FinTech, HealthTech, AI' },
-                { label: 'Response Time', value: '5 Business Days' }
-            ],
-            overview: 'Eight Fortune 500 enterprises have partnered with Sphera to source innovative technology vendors through our verified ecosystem. These companies are actively looking for API integration partners, AI tooling providers, and cybersecurity solutions. All vendor selections go through Sphera\'s trust verification—eliminating weeks of procurement due diligence.',
-            requirements: [
-                'Registered company with verifiable credentials',
-                'Sphera Trust Score of 80+ (or complete verification)',
-                'Proven enterprise-grade SLA track record',
-                'SOC 2 compliance or equivalent security certification',
-                'Ability to provide sandbox/demo environment within 14 days'
-            ],
-            benefits: [
-                'Skip traditional RFP queues—direct executive introductions',
-                'Pre-vetted status accelerates procurement by 60%',
-                'Multi-year contract potential ($50K–$2M annually)',
-                'Featured placement in Sphera\'s Enterprise Solutions directory'
-            ],
-            btnLabel: 'View & Apply'
-        },
-        'b2b-leads': {
-            icon: '📊', title: 'B2B Lead Generation Pool',
-            Sbtitle: 'Get matched with high-intent decision-makers in logistics and supply chain.',
-            tags: ['B2B', 'Logistics', 'supply Chain'],
-            info: [
-                { label: 'Pool Size', value: '340+ Verified Leads' },
-                { label: 'Avg. Deal Size', value: '$75K' },
-                { label: 'Sector', value: 'Logistics & supply Chain' },
-                { label: 'Closes In', value: '12 Days' }
-            ],
-            overview: 'This curated lead pool contains 340+ verified decision-makers (Director level and above) across the logistics and supply chain industry. Each contact has been identity-verified through Sphera and has expressed active buying intent for technology solutions. The pool is closing soon to maintain exclusivity—only 25 vendor spots remain.',
-            requirements: [
-                'Solution relevant to logistics, warehousing, or supply chain management',
-                'Verified company profile on Sphera',
-                'Minimum 2 customer case studies or references',
-                'Sales team capacity to handle 15+ qualified leads per month',
-                'Commitment to Sphera\'s ethical outreach standards'
-            ],
-            benefits: [
-                'Warm introductions to 340+ pre-qualified decision-makers',
-                'Average deal size of $75K with 22% close rate in pool',
-                'Sphera-facilitated initial introductions (no cold outreach)',
-                'Exclusive access—limited to 25 vendors total'
-            ],
-            btnLabel: 'Join Pool'
-        },
-        'cofounder-match': {
-            icon: '🏢', title: 'Co-Founder Matching',
-            Sbtitle: 'Find your perfect complement—verified technical or business co-founders.',
-            tags: ['Talent', 'Co-Founder', 'Startup'],
-            info: [
-                { label: 'Active Seekers', value: '1,200+ Profiles' },
-                { label: 'Avg. Match Time', value: '18 Days' },
-                { label: 'success Rate', value: '34% form teams' },
-                { label: 'Availability', value: 'Always Open' }
-            ],
-            overview: 'Finding the right co-founder is the most critical decision in a startup\'s journey. Sphera\'s Co-Founder Matching uses verified identity, skills assessment, and compatibility algorithms to pair founders with complementary skill sets. Every participant has undergone face authentication, background verification, and skills validation—so you can skip the trust-building phase and focus on building together.',
-            requirements: [
-                'Completed Sphera profile with verified identity',
-                'Clear description of your startup idea or domain expertise',
-                'Defined role you\'re seeking (Technical, Business, Design, etc.)',
-                'Availability for at least 3 verified video conversations',
-                'Willingness to sign mutual NDA through Sphera\'s legal templates'
-            ],
-            benefits: [
-                'Algorithm-matched candidates based on skills, values, and goals',
-                'All candidates are fully verified—no catfishing or fakes',
-                'Built-in NDA and equity discussion frameworks',
-                'Ongoing mentorship pairing from successful Sphera founders'
-            ],
-            btnLabel: 'Start Matching'
-        },
-        'series-a': {
-            icon: '💰', title: 'Series A Syndicate',
-            Sbtitle: 'A verified-only investment event for startups with proven traction.',
-            tags: ['Funding', 'Series A', 'VC'],
-            info: [
-                { label: 'Round Size', value: '$2M – $15M' },
-                { label: 'VC Partners', value: '6 Top-Tier Firms' },
-                { label: 'Event Date', value: 'May 22, 2026' },
-                { label: 'Spots Left', value: '8 of 20' }
-            ],
-            overview: 'Six top-tier VC firms—including partners from Sequoia Scout, Andreessen Horowitz, and Lightspeed—are co-hosting a verified-only Series A matching event through Sphera. This is not a demo day. It\'s a structured, high-touch event where each selected startup receives 30 minutes of private, face-authenticated time with each investor. Only 20 startups will be selected.',
-            requirements: [
-                '$1M+ ARR or clear path to $1M within 6 months',
-                'Sphera-verified founding team (all founders verified)',
-                'Completed data room with financials, cap table, and pitch deck',
-                'Available May 22, 2026 for the full-day event (virtual)',
-                'Post-seed or bridge round previously raised'
-            ],
-            benefits: [
-                '30-minute private sessions with each of 6 VC partners',
-                'Term sheet potential within 2 weeks of event',
-                'Access to shared due diligence—one process for all firms',
-                'Featured in Sphera\'s annual "Verified Startups to Watch" report'
-            ],
-            btnLabel: 'Register Intent'
-        },
-        'gov-grants': {
-            icon: '📈', title: 'Government Grants Board',
-            Sbtitle: 'Browse verified, curated government grants and non-dilutive funding.',
-            tags: ['Grants', 'Non-Dilutive', 'Government'],
-            info: [
-                { label: 'Grants Listed', value: '47 Active' },
-                { label: 'Total Available', value: '$12M+' },
-                { label: 'Regions', value: 'USA, EU, India' },
-                { label: 'Updated', value: 'Weekly' }
-            ],
-            overview: 'Sphera curates and verifies government grants from across the US, EU, and India specifically relevant to technology companies. Every grant listing has been validated for authenticity, current availability, and eligibility criteria. Our team updates the board weekly and removes expired or fraudulent listings—so you can focus on applying, not researching.',
-            requirements: [
-                'Registered technology company (any stage)',
-                'Sphera-verified company profile',
-                'Operations in eligible region (USA, EU, or India)',
-                'Willingness to share grant outcome data with Sphera (anonymized)'
-            ],
-            benefits: [
-                'Pre-verified grants—no scams, no expired listings',
-                'Eligibility auto-matching based on your company profile',
-                'Application tracking dashboard within Sphera',
-                'Grant writing tips and template library included'
-            ],
-            btnLabel: 'Browse Grants'
+        const opportunities = {
+            'seed-funding': {
+                title: 'Seed Funding Pitch',
+                overview: 'This exclusive pitch event connects early-stage founders directly with a syndicate of 12 verified angel investors specializing in SaaS and DeepTech.'
+            },
+            'enterprise-partnerships': {
+                title: 'Enterprise Partnerships',
+                overview: 'Eight Fortune 500 enterprises are sourcing innovative technology vendors through Sphera. Skip traditional RFP queues with direct introductions.'
+            },
+            'b2b-leads': {
+                title: 'B2B Lead Generation Pool',
+                overview: 'Get matched with high-intent decision-makers in logistics and supply chain. Verified buyers with expressed intent for technology solutions.'
+            }
+        };
+
+        function openModal(id) {
+            const op = opportunities[id];
+            if (!op) return;
+            document.getElementById('modalTitle').textContent = op.title;
+            document.getElementById('modalOverview').textContent = op.overview;
+            document.getElementById('modalOverlay').classList.add('open');
         }
-    };
 
-    /* ═══════════════════
-       STATE
-       ═══════════════════ */
-    let currentFilter = 'all';
-    let currentStatusFilter = 'all';
-    let currentSearch = '';
-    let currentModalId = null;
-    const savedBookmarks = new Set(JSON.parse(localStorage.getItem('S-biz-bookmarks') || '[]');
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('open');
+        }
 
-    /* ═══════════════════
-       INIT
-       ═══════════════════ */
-    document.addEventListener('DOMContentLoaded', () => {
-        initFilters();
-        initStatusFilters();
-        initSearch();
-        initBookmarks();
-        initScrollTop();
-        initModalClose();
-        updateStatCounts();
-    });
+        // Simple search logic
+        document.getElementById('searchInput')?.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('.feat-card').forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.classList.toggle('hidden', !text.includes(query));
+            });
+        });
 
-    /* ═══════════════════
-       FILTERS
-       ═══════════════════ */
-    function initFilters() {
+        // Filter logic
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active');
                 btn.classList.add('active');
-                currentFilter = btn.dataset.filter;
-                applyFilters();
+                const filter = btn.dataset.filter;
+                document.querySelectorAll('.feat-card').forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
             });
         });
-    }
-
-    function applyFilters() {
-        const cards = document.querySelectorAll('.feat-card');
-        let visibleCount = 0;
-
-        cards.forEach(card => {
-            const category = card.dataset.category;
-            const status = card.dataset.status;
-            const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
-            const desc = card.querySelector('.desc')?.textContent.toLowerCase() || '';
-            const tags = card.querySelector('.card-tags')?.textContent.toLowerCase() || '';
-
-            const matchesFilter = currentFilter === 'all' || category === currentFilter;
-            const matchesStatus = currentStatusFilter === 'all' || status === currentStatusFilter;
-            const matchesSearch = !currentSearch ||
-                title.includes(currentSearch) ||
-                desc.includes(currentSearch) ||
-                tags.includes(currentSearch);
-
-            if (matchesFilter && matchesStatus && matchesSearch) {
-                card.classList.remove('hidden');
-                card.style.animation = 'none';
-                card.offsetHeight; // trigger reflow
-                card.style.animation = 'fadeInUp .4s ease both';
-                visibleCount++;
-            } else {
-                card.classList.add('hidden');
-            }
-        });
-
-        const empty = document.getElementById('emptyState');
-        if (visibleCount === 0) {
-            empty.classList.add('visible');
-        } else {
-            empty.classList.remove('visible');
+    </script>
+    <script>
+        const themeKey = 'su-theme';
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            try { localStorage.setItem(themeKey, theme); } catch (e) { }
+            updateThemeUI(theme);
         }
-    }
-
-    function resetFilters() {
-        currentFilter = 'all';
-        currentStatusFilter = 'all';
-        currentSearch = '';
-        document.getElementById('searchInput').value = '';
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active');
-        document.querySelector('[data-filter="all"]').classList.add('active');
-        clearStatPillHighlights();
-        applyFilters();
-    }
-
-    /* ═══════════════════
-       STATUS FILTERS (stat pills)
-       ═══════════════════ */
-    const statusStyleMap = { active: 'active-green', closing: 'active-orange', upcoming: 'active-blue' };
-
-    function initStatusFilters() {
-        document.querySelectorAll('.stat-pill[data-status-filter]').forEach(pill => {
-            pill.addEventListener('click', () => {
-                const status = pill.dataset.statusFilter;
-
-                // Toggle: clicking the same pill again deselects it
-                if (currentStatusFilter === status) {
-                    currentStatusFilter = 'all';
-                    clearStatPillHighlights();
+        function updateThemeUI(theme) {
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                if (theme === 'dark') {
+                    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
                 } else {
-                    currentStatusFilter = status;
-                    clearStatPillHighlights();
-                    pill.classList.add(statusStyleMap[status]);
+                    icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
                 }
-                applyFilters();
-            });
-        });
-    }
-
-    function clearStatPillHighlights() {
-        document.querySelectorAll('.stat-pill').forEach(p => {
-            p.classList.remove('active-green', 'active-orange', 'active-blue');
-        });
-    }
-
-    /* ═══════════════════
-       SEARCH
-       ═══════════════════ */
-    function initSearch() {
-        const input = document.getElementById('searchInput');
-        let debounce;
-        input.addEventListener('input', () => {
-            clearTimeout(debounce);
-            debounce = setTimeout(() => {
-                currentSearch = input.value.trim().toLowerCase();
-                applyFilters();
-            }, 200);
-        });
-
-        document.getElementById('searchBtn').addEventListener('click', () => {
-            currentSearch = input.value.trim().toLowerCase();
-            applyFilters();
-        });
-
-        input.addEventListener('keydown', e => {
-            if (e.key === 'Enter') {
-                currentSearch = input.value.trim().toLowerCase();
-                applyFilters();
             }
-        });
-    }
-
-    /* ═══════════════════
-       BOOKMARKS
-       ═══════════════════ */
-    function initBookmarks() {
-        document.querySelectorAll('.bookmark-btn').forEach(btn => {
-            const id = btn.dataset.bookmark;
-            if (savedBookmarks.has(id) {
-                btn.classList.add('saved');
-                btn.textContent = '♥';
-            }
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggleBookmark(id, btn);
-            });
-        });
-    }
-
-    function toggleBookmark(id, btn) {
-        if (savedBookmarks.has(id) {
-            savedBookmarks.delete(id);
-            btn.classList.remove('saved');
-            btn.textContent = '♡';
-            showToast('🗑️', 'Removed from saved opportunities');
-        } else {
-            savedBookmarks.add(id);
-            btn.classList.add('saved');
-            btn.textContent = '♥';
-            showToast('💜', 'Saved to your opportunities list');
         }
-        localStorage.setItem('S-biz-bookmarks', JSON.stringify([...savedBookmarks]);
-    }
-
-    function bookmarkFromModal() {
-        if (!currentModalId) return;
-        const btn = document.querySelector(`.bookmark-btn[data-bookmark="${currentModalId}"]`);
-        if (btn) toggleBookmark(currentModalId, btn);
-
-        // Update modal bookmark button label
-        const modalBtn = document.getElementById('modalBookmarkBtn');
-        if (savedBookmarks.has(currentModalId) {
-            modalBtn.innerHTML = '♥ Saved';
-        } else {
-            modalBtn.innerHTML = '♡ Save';
-        }
-    }
-
-    /* ═══════════════════
-       MODAL
-       ═══════════════════ */
-    function openModal(id) {
-        const data = opportunities[id];
-        if (!data) return;
-        currentModalId = id;
-
-        document.getElementById('modalIcon').textContent = data.icon;
-        document.getElementById('modalTitle').textContent = data.title;
-        document.getElementById('modalSbtitle').textContent = data.Sbtitle;
-
-        // Tags
-        const tagsEl = document.getElementById('modalTags');
-        tagsEl.innerHTML = data.tags.map(t => `<span class="tag">${t}</span>`).join('');
-
-        // Info grid
-        const infoGrid = document.getElementById('modalInfoGrid');
-        infoGrid.innerHTML = data.info.map(i =>
-            `<div class="info-item"><div class="info-label">${i.label}</div><div class="info-value">${i.value}</div></div>`
-        ).join('');
-
-        // Content
-        document.getElementById('modalOverview').textContent = data.overview;
-        document.getElementById('modalRequirements').innerHTML = data.requirements.map(r => `<li>${r}</li>`).join('');
-        document.getElementById('modalBenefits').innerHTML = data.benefits.map(b => `<li>${b}</li>`).join('');
-
-        // Apply button label
-        document.getElementById('modalApplyLabel').textContent = data.btnLabel;
-
-        // Bookmark state
-        const modalBookmarkBtn = document.getElementById('modalBookmarkBtn');
-        if (savedBookmarks.has(id) {
-            modalBookmarkBtn.innerHTML = '♥ Saved';
-        } else {
-            modalBookmarkBtn.innerHTML = '♡ Save';
-        }
-
-        // Reset form
-        document.getElementById('applyForm').classList.remove('visible');
-
-        // Open
-        document.getElementById('modalOverlay').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        document.getElementById('modalOverlay').classList.remove('open');
-        document.body.style.overflow = '';
-        currentModalId = null;
-    }
-
-    function initModalClose() {
-        document.getElementById('modalClose').addEventListener('click', closeModal);
-        document.getElementById('modalOverlay').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('modalOverlay') closeModal();
+        window.toggleTheme = function () {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        };
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem(themeKey) || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) { }
+        })();
+        document.addEventListener('DOMContentLoaded', () => {
+            let savedTheme = 'dark';
+            try { savedTheme = localStorage.getItem(themeKey) || 'dark'; } catch (e) { }
+            updateThemeUI(savedTheme);
         });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-    }
-
-    /* ═══════════════════
-       APPLICATION FORM
-       ═══════════════════ */
-    function toggleApplyForm() {
-        const form = document.getElementById('applyForm');
-        form.classList.toggle('visible');
-        if (form.classList.contains('visible') {
-            form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-    }
-
-    function submitApplication() {
-        const name = document.getElementById('appName').value.trim();
-        const email = document.getElementById('appEmail').value.trim();
-        const company = document.getElementById('appCompany').value.trim();
-        const message = document.getElementById('appMessage').value.trim();
-
-        if (!name || !email || !company || !message) {
-            showToast('⚠️', 'Please fill in all required fields');
-            return;
-        }
-
-        if (!email.includes('@') || !email.includes('.') {
-            showToast('⚠️', 'Please enter a valid email address');
-            return;
-        }
-
-        // Simulate Sbmission
-        const btn = document.querySelector('.apply-form .btn');
-        const originalText = btn.textContent;
-        btn.textContent = 'submitting…';
-        btn.style.opacity = '0.6';
-        btn.style.pointerEvents = 'none';
-
-        setTimeout(() => {
-            btn.textContent = originalText;
-            btn.style.opacity = '';
-            btn.style.pointerEvents = '';
-
-            // Clear form
-            document.getElementById('appName').value = '';
-            document.getElementById('appEmail').value = '';
-            document.getElementById('appCompany').value = '';
-            document.getElementById('appRole').value = '';
-            document.getElementById('appMessage').value = '';
-            document.getElementById('appUrl').value = '';
-
-            document.getElementById('applyForm').classList.remove('visible');
-            showToast('✅', `Application submitted for "${opportunities[currentModalId]?.title}". We'll contact you within 48 hours.`);
-        }, 1500);
-    }
-
-    /* ═══════════════════
-       SHARE
-       ═══════════════════ */
-    function shareOpportunity() {
-        if (!currentModalId) return;
-        const data = opportunities[currentModalId];
-        const shareText = `Check out this opportunity on Sphera: ${data.title} — ${data.Sbtitle}`;
-
-        if (navigator.share) {
-            navigator.share({ title: data.title, text: shareText, url: window.location.href })
-                .catch(() => {});
-        } else if (navigator.clipboard) {
-            navigator.clipboard.writeText(shareText + '\n' + window.location.href).then(() => {
-                showToast('📋', 'Link copied to clipboard!');
-            });
-        } else {
-            showToast('📤', 'Share: ' + window.location.href);
-        }
-    }
-
-    /* ═══════════════════
-       TOASTS
-       ═══════════════════ */
-    function showToast(icon, message) {
-        const container = document.getElementById('toastContainer');
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${message}</span>`;
-        container.appendChild(toast);
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => toast.classList.add('show');
-        });
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 3500);
-    }
-
-    /* ═══════════════════
-       STAT COUNTS
-       ═══════════════════ */
-    function updateStatCounts() {
-        const cards = document.querySelectorAll('.feat-card');
-        let active = 0, closing = 0, upcoming = 0;
-        cards.forEach(c => {
-            const status = c.dataset.status;
-            if (status === 'active') active++;
-            else if (status === 'closing') closing++;
-            else if (status === 'upcoming') upcoming++;
-        });
-        document.getElementById('activeCount').textContent = active;
-        document.getElementById('closingCount').textContent = closing;
-        document.getElementById('upcomingCount').textContent = upcoming;
-    }
-
-    /* ═══════════════════
-       SCROLL TO TOP
-       ═══════════════════ */
-    function initScrollTop() {
-        const btn = document.getElementById('scrollTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 400) {
-                btn.classList.add('visible');
-            } else {
-                btn.classList.remove('visible');
-            }
-        });
-    }
     </script>
 </body>
+
 </html>
-
-
-
-

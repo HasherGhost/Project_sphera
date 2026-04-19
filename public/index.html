@@ -1819,20 +1819,7 @@
         function goStep(s) { [1, 2, 3].forEach(n => { document.getElementById('step' + n)?.classList.toggle('active', n === s); const d = document.getElementById('dot' + n); if (d) { d.classList.toggle('done', n < s); d.classList.toggle('active', n === s); } }); }
         function resetAuth() { camStop(); resetLive(); goStep(1); }
 
-        document.getElementById('continueBtn')?.addEventListener('click', () => {
-            const name = document.getElementById('authName')?.value.trim();
-            const email = document.getElementById('authEmail')?.value.trim();
-            const dob = document.getElementById('authDob')?.value;
-            const pass = document.getElementById('authPassword')?.value;
-            if (!name || !email) { showToast('Please fill in your name and email.'); return; }
-            if (!dob) { showToast('Please enter your date of birth.'); return; }
-            if (!pass || pass.length < 6) { showToast('Password must be at least 6 characters.'); return; }
-            goStep(2);
-        });
 
-        document.getElementById('enterBtn')?.addEventListener('click', () => {
-            window.location.href = 'feed.html';
-        });
 
         /* Sign Up modal logic */
         const signupModal = document.getElementById('signupModal');
@@ -2081,15 +2068,55 @@
             }
         });
 
-        // SAVE PROFILE on continueBtn
+        // STEP-BY-STEP AUTH (authModal continueBtn)
         document.getElementById('continueBtn')?.addEventListener('click', async () => {
             const name = document.getElementById('authName')?.value.trim();
             const email = document.getElementById('authEmail')?.value.trim();
+            const pass = document.getElementById('authPassword')?.value;
             const dob = document.getElementById('authDob')?.value;
             const company = document.getElementById('authCompany')?.value.trim();
             const role = document.getElementById('authRole')?.value;
-            if (!name || !email) return;
-            localStorage.setItem('pendingProfile', JSON.stringify({ name, email, dob, company, role }));
+
+            // 1. Basic Validation
+            if (!name || !email) { alert('Please fill in your name and email.'); return; }
+            if (!dob) { alert('Please enter your date of birth.'); return; }
+            if (!pass || pass.length < 6) { alert('Password must be at least 6 characters.'); return; }
+
+            try {
+                // 2. Try to Create User
+                try {
+                    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                    // 3. Save Profile to Firestore (Only for new users)
+                    await setDoc(doc(db, 'users', cred.user.uid), {
+                        name,
+                        email,
+                        dob,
+                        company,
+                        role,
+                        createdAt: new Date().toISOString()
+                    });
+                    console.log('✅ New account created and profile saved!');
+                } catch (createErr) {
+                    // 4. If account exists, just sign in
+                    if (createErr.code === 'auth/email-already-in-use') {
+                        await signInWithEmailAndPassword(auth, email, pass);
+                        console.log('✅ Existing account signed in!');
+                    } else {
+                        throw createErr;
+                    }
+                }
+
+                // 5. Proceed to Face Verification (Step 2)
+                goStep(2);
+                
+            } catch (error) {
+                console.error("Auth Error:", error);
+                if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                    alert("Incorrect password for this email.");
+                } else {
+                    alert(error.message);
+                }
+            }
         });
     </script>
 </body>

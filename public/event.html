@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="en" data-theme="light">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
 
 <head>
     <link rel='stylesheet' href='global.css'>
@@ -7,1106 +7,739 @@
     <script src='header-loader.js'></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sphera — Events & Webinars</title>
+    <title>Events — Sphera</title>
     <meta name="description" content="Discover, participate, and host professional events, webinars, and meetups.">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
-        /* ═══════════════════════════════════════════════════════
-           CSS — Sphera (Nexus-inspired Shared CSS)
-           ═══════════════════════════════════════════════════════ */
         :root {
-            color-scheme: light;
-            --bg: #f5f0ff;
-            --bg2: #ece4ff;
-            --surface: rgba(255, 255, 255, .55);
-            --surface-s: rgba(255, 255, 255, .45);
-            --surface-f: rgba(255, 255, 255, .35);
-            --line: rgba(255, 255, 255, .5);
-            --line-s: rgba(255, 255, 255, .6);
-            --text: #1a0e33;
-            --muted: #5a5068;
-            --faint: #8a7ea0;
-            --accent: #7C3AED;
-            --accent-s: #5B21B6;
-            --accent-f: rgba(124, 58, 237, .15);
-            --orange: #F97316;
-            --orange-f: rgba(249, 115, 22, .1);
-            --green: #10B981;
-            --green-f: rgba(16, 185, 129, .12);
-            --danger: #EF4444;
-            --danger-f: rgba(239, 68, 68, .1);
-            --amber: #D97706;
-            --amber-f: rgba(217, 119, 6, .12);
-            --shadow: 0 8px 32px rgba(0, 0, 0, .06);
-            --shadow-f: 0 4px 16px rgba(0, 0, 0, .03);
-            --header-bg: rgba(255, 255, 255, .45);
-            --focus: rgba(124, 58, 237, .28);
-            --radius: 12px;
-            --glass-blur: blur(20px);
-            --overlay-op: 0.45;
-            --overlay-blur: blur(2px);
+            --bg: #09090b;
+            --bg-soft: rgba(9, 9, 11, 0.76);
+            --Srface: rgba(24, 24, 27, 0.74);
+            --Srface-strong: rgba(32, 32, 36, 0.9);
+            --border: rgba(255, 255, 255, 0.1);
+            --border-strong: rgba(255, 255, 255, 0.16);
+            --primary: #3b82f6;
+            --primary-soft: rgba(59, 130, 246, 0.14);
+            --accent: #8b5cf6;
+            --accent-soft: rgba(139, 92, 246, 0.14);
+            --Sccess: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --text-faint: #71717a;
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.22);
         }
 
-        html[data-theme="dark"] {
-            color-scheme: dark;
-            --bg: #0a0514;
-            --bg2: #110920;
-            --surface: rgba(255, 255, 255, .08);
-            --surface-s: rgba(255, 255, 255, .06);
-            --surface-f: rgba(255, 255, 255, .04);
-            --line: rgba(255, 255, 255, .12);
-            --line-s: rgba(255, 255, 255, .18);
-            --text: #f3eeff;
-            --muted: #b0a4c8;
-            --faint: #7a6e94;
-            --accent: #A78BFA;
-            --accent-s: #C4B5FD;
-            --accent-f: rgba(167, 139, 250, .18);
-            --orange: #FB923C;
-            --orange-f: rgba(251, 146, 60, .12);
-            --green: #34D399;
-            --green-f: rgba(52, 211, 153, .14);
-            --danger: #F87171;
-            --danger-f: rgba(248, 113, 113, .12);
-            --amber: #FBBF24;
-            --amber-f: rgba(251, 191, 36, .14);
-            --shadow: 0 8px 32px rgba(0, 0, 0, .2);
-            --shadow-f: 0 4px 16px rgba(0, 0, 0, .12);
-            --header-bg: rgba(255, 255, 255, .06);
-            --focus: rgba(167, 139, 250, .32);
-            --overlay-op: 0.85;
-            --overlay-blur: blur(8px);
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --bg-soft: rgba(248, 250, 252, 0.82);
+            --Srface: rgba(255, 255, 255, 0.84);
+            --Srface-strong: rgba(255, 255, 255, 0.96);
+            --border: rgba(15, 23, 42, 0.08);
+            --border-strong: rgba(15, 23, 42, 0.12);
+            --primary: #2563eb;
+            --primary-soft: rgba(37, 99, 235, 0.1);
+            --accent: #7c3aed;
+            --accent-soft: rgba(124, 58, 237, 0.1);
+            --text-main: #172033;
+            --text-muted: #64748b;
+            --text-faint: #94a3b8;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            margin: 0; min-height: 100vh; overflow-x: hidden;
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: transparent;
-            color: var(--text);
-            transition: background .2s, color .2s;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
         }
 
-        /* ── Video Background ── */
-        .video-bg {
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            border: 0;
+            background: none;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        .video-bg,
+        .video-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .video-bg {
             z-index: -2;
             overflow: hidden;
         }
+
         .video-bg video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
         .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            opacity: var(--overlay-op);
             z-index: -1;
-            backdrop-filter: var(--overlay-blur);
-            transition: background 0.3s ease, opacity 0.3s ease, backdrop-filter 0.3s ease;
+            background:
+                radial-gradient(circle at 15% 0%, rgba(59, 130, 246, 0.16), transparent 36%),
+                radial-gradient(circle at 88% 16%, rgba(139, 92, 246, 0.16), transparent 32%),
+                var(--bg);
+            opacity: 0.92;
+            backdrop-filter: blur(12px);
         }
 
-        button, input { font: inherit; }
-        button { color: inherit; border: none; background: none; cursor: pointer; }
-        a { color: inherit; text-decoration: none; }
-        img { display: block; max-width: 100%; border-radius: inherit; }
-        h1, h2, h3, p { margin: 0; }
+        .site-header {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-soft);
+            backdrop-filter: blur(18px);
+        }
 
-        .wrap { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
-        
-        /* Layout Grid */
-        .page-layout {
+        .header-content {
+            width: min(1180px, calc(100% - 40px));
+            height: 68px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: 260px 1fr 300px;
-            gap: 24px;
-            padding: 32px 0 64px;
+            grid-template-columns: 220px minmax(260px, 1fr) auto;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .logo {
+            width: fit-content;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 460px;
+            justify-self: center;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            color: var(--text-faint);
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search-bar:focus-within {
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 0 0 4px var(--primary-soft);
+        }
+
+        .search-bar input {
+            width: 100%;
+            min-width: 0;
+            color: var(--text-main);
+            background: transparent;
+            border: 0;
+            outline: 0;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--text-faint);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .icon-btn,
+        .profile-button {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            color: var(--text-muted);
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .icon-btn:hover,
+        .profile-button:hover {
+            color: var(--text-main);
+            border-color: var(--border-strong);
+            background: var(--Srface-strong);
+        }
+
+        .profile-button img {
+            width: 100%;
+            height: 100%;
+            border-radius: inherit;
+            object-fit: cover;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 7px;
+            height: 7px;
+            background: var(--danger);
+            border: 2px solid var(--bg);
+            border-radius: 999px;
+        }
+
+        .credits-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            height: 38px;
+            padding: 0 12px;
+            color: var(--text-main);
+            background: linear-gradient(135deg, var(--primary-soft), var(--accent-soft));
+            border: 1px solid rgba(139, 92, 246, 0.28);
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .credits-amount {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 92px 0 48px;
+            display: grid;
+            grid-template-columns: 236px minmax(0, 1fr) 282px;
+            gap: 20px;
             align-items: start;
         }
 
-        /* ── Header ── */
-        .hdr {
-            position: sticky; top: 0; z-index: 30; border-bottom: 1px solid var(--line);
-            background: var(--header-bg); backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-        }
-        .hdr-row { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 78px; }
-        .brand { display: flex; align-items: center; gap: 12px; }
-        .brand-mark {
-            display: grid; place-items: center; width: 42px; height: 42px;
-            border-radius: var(--radius); background: var(--text); color: var(--bg);
-            font-size: .92rem; font-weight: 900;
-        }
-        .hdr-nav { display: flex; gap: 22px; font-weight: 700; font-size: .92rem; color: var(--text); }
-        .hdr-nav a { position: relative; color: var(--muted); }
-        .hdr-nav a.active { color: var(--text); }
-        .hdr-nav a::after {
-            content: ''; position: absolute; right: 0; bottom: -8px; left: 0; height: 2px;
-            border-radius: 2px; background: var(--accent); opacity: 0; transform: scaleX(.5);
-            transition: opacity .2s, transform .2s;
-        }
-        .hdr-nav a.active::after, .hdr-nav a:hover::after { opacity: 1; transform: scaleX(1); }
-        .hdr-acts { display: flex; gap: 10px; align-items: center; }
-
-        .btn, .theme-tog {
-            border-radius: var(--radius); padding: 0 16px; min-height: 42px;
-            font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent;
-            transition: transform .18s, background .18s, box-shadow .18s, color .18s;
-        }
-        .btn-p { background: var(--accent); color: white; }
-        .btn-p:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--accent-f); }
-        
-        .btn-o { background: var(--orange); color: white; }
-        .btn-o:hover { transform: translateY(-1px); box-shadow: 0 4px 12px var(--orange-f); }
-
-        .theme-tog {
-            background: var(--surface); border-color: var(--line);
-            color: var(--text); padding: 0 12px;
+        .left-sidebar {
+            position: sticky;
+            top: 88px;
         }
 
-        .panel {
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-f);
-            padding: 24px;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-        }
-
-        /* ── Left Nav ── */
-        .side-nav { display: grid; gap: 8px; margin-bottom: 24px; }
-        .side-nav a {
-            display: flex; align-items: center; justify-content: space-between; padding: 12px 16px;
-            border-radius: var(--radius); font-weight: 700; color: var(--muted);
-            transition: background .2s, color .2s;
-        }
-        .side-nav a.active { background: var(--surface-f); color: var(--accent); }
-        .side-nav a:hover:not(.active) { background: var(--surface-f); color: var(--text); }
-        .count-pill { background: var(--line-s); color: var(--text); padding: 2px 8px; border-radius: 99px; font-size: .75rem; font-weight: 800; }
-
-        /* ── Event Feed ── */
-        .feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .feed-header h1 { font-size: 1.8rem; font-weight: 900; }
-
-        .filters { display: flex; gap: 10px; margin-bottom: 24px; overflow-x: auto; padding-bottom: 4px; }
-        .filter-btn {
-            padding: 8px 16px; border-radius: 99px; border: 1px solid var(--line);
-            font-weight: 700; font-size: .85rem; color: var(--muted); background: var(--surface);
-            cursor: pointer; white-space: nowrap; transition: color .2s, background .2s;
-        }
-        .filter-btn.active { background: var(--text); color: var(--bg); border-color: transparent; }
-        .filter-btn:hover:not(.active) { border-color: var(--accent); color: var(--text); }
-
-        /* ── Event Cards ── */
-        .event-card {
-            display: flex; flex-direction: column; border: 1px solid var(--line);
-            border-radius: var(--radius); background: var(--surface); transition: transform .2s, box-shadow .2s;
-            margin-bottom: 20px; overflow: hidden;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-        }
-        .event-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--accent-f); }
-        
-        .event-banner {
-            width: 100%; height: 160px; background-color: var(--surface-f);
-            position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
-        }
-        .event-banner img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-        .event-type-badge {
-            position: absolute; top: 12px; left: 12px; padding: 4px 10px; border-radius: 6px;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); color: white;
-            font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
-        }
-        
-        .event-body { padding: 20px; }
-        .event-date { color: var(--accent); font-weight: 800; font-size: .85rem; margin-bottom: 6px; text-transform: uppercase; }
-        .event-body h3 { font-size: 1.3rem; font-weight: 900; margin-bottom: 8px; line-height: 1.2; }
-        .event-body p { font-size: .95rem; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
-        
-        .event-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; font-size: .85rem; color: var(--text); font-weight: 600; }
-        .event-meta span { display: flex; align-items: center; gap: 6px; }
-        
-        .event-actions { display: flex; gap: 10px; align-items: center; padding-top: 16px; border-top: 1px dashed var(--line); }
-        .btn-outline { border: 1px solid var(--line); padding: 8px 14px; border-radius: var(--radius); font-weight: 700; font-size: .85rem; background: var(--surface-s); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); transition: background .2s, border .2s; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-outline:hover { background: var(--surface-f); border-color: var(--accent); color: var(--accent);}
-        
-        .like-btn {
-            background: var(--surface-f); border: 1px solid var(--line); border-radius: var(--radius);
-            width: 40px; height: 40px; display: grid; place-items: center; font-size: 1.1rem;
-            transition: transform .2s, background .2s; margin-left: auto; cursor: pointer; color: var(--muted);
-        }
-        .like-btn.liked { background: var(--danger-f); color: var(--danger); border-color: var(--danger-f); }
-        .like-btn:hover { transform: scale(1.05); }
-        .like-btn.liked:hover { transform: scale(1.1); }
-
-        .attendee-stack { display: flex; align-items: center; }
-        .attendee-stack img { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--surface); margin-left: -10px; }
-        .attendee-stack img:first-child { margin-left: 0; }
-        .attendee-stack .count { font-size: .75rem; font-weight: 800; color: var(--muted); margin-left: 6px; }
-
-        /* ── Right Sidebar ── */
-        .insight-card { margin-bottom: 16px; }
-        .insight-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 16px; }
-        
-        .mini-event { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; cursor: pointer; }
-        .mini-event-date { 
-            background: var(--surface-f); border: 1px solid var(--line); border-radius: 8px; 
-            padding: 6px; text-align: center; min-width: 48px; border-bottom-width: 3px; border-bottom-color: var(--accent);
-        }
-        .mini-event-date strong { display: block; font-size: 1.1rem; font-weight: 900; line-height: 1; color: var(--text); }
-        .mini-event-date span { font-size: .65rem; font-weight: 800; color: var(--muted); text-transform: uppercase; }
-        .mini-event-info { flex: 1; }
-        .mini-event-info h4 { font-size: .9rem; font-weight: 800; margin-bottom: 4px; line-height: 1.3; }
-        .mini-event-info p { font-size: .75rem; color: var(--muted); font-weight: 600; }
-
-        /* Functional event prototype helpers */
-        .event-tools {
+        .stack {
             display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            gap: 12px;
-            align-items: center;
-            margin-bottom: 18px;
+            gap: 16px;
         }
-        .event-search {
-            min-height: 42px;
-            width: 100%;
-            padding: 0 14px;
-            color: var(--text);
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            outline: none;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
+
+        .card {
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            backdrop-filter: blur(18px);
         }
-        .event-search:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px var(--focus);
+
+        .card.pad {
+            padding: 18px;
         }
-        .event-panel {
-            display: grid;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .event-panel[hidden],
-        .event-card[hidden],
-        .empty-state[hidden] {
-            display: none;
-        }
-        .event-form {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr);
-            gap: 12px;
-        }
-        .event-form label {
-            display: grid;
-            gap: 6px;
-            color: var(--muted);
-            font-size: .78rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: .04em;
-        }
-        .event-form input,
-        .event-form select,
-        .event-form textarea {
-            width: 100%;
-            min-height: 42px;
-            padding: 10px 12px;
-            color: var(--text);
-            background: var(--surface-s);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            outline: none;
-        }
-        .event-form textarea {
-            min-height: 86px;
-            resize: vertical;
-        }
-        .event-form .full {
-            grid-column: 1 / -1;
-        }
-        .event-note {
-            padding: 12px;
-            color: var(--muted);
-            background: var(--surface-f);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            font-size: .86rem;
-            line-height: 1.55;
-        }
-        .empty-state {
-            padding: 28px;
-            color: var(--muted);
+
+        .profile-card {
             text-align: center;
         }
-        .btn.is-done,
-        .btn:disabled {
-            cursor: default;
-            transform: none;
-            opacity: .78;
-        }
-        .btn.is-done {
-            color: var(--green);
-            background: var(--green-f);
-            border-color: var(--green-f);
-        }
-        .toast {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            z-index: 3000;
-            max-width: min(360px, calc(100% - 40px));
-            padding: 12px 14px;
-            color: var(--text);
-            background: var(--surface);
-            border: 1px solid var(--line-s);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            opacity: 0;
-            transform: translateY(12px);
-            pointer-events: none;
-            transition: opacity .2s ease, transform .2s ease;
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
+
+        .profile-avatar {
+            width: 78px;
+            height: 78px;
+            margin: 0 auto 14px;
+            border-radius: 24px;
+            object-fit: cover;
         }
 
-        /* Responsive */
-        @media(max-width: 980px) {
-            .page-layout { grid-template-columns: 240px 1fr; }
-            .hidden-md { display: none; }
+        .profile-name {
+            font-size: 17px;
+            font-weight: 800;
         }
-        @media(max-width: 768px) {
-            .page-layout { grid-template-columns: 1fr; padding-top: 16px; }
-            .side-nav { display: flex; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
-            .side-nav a { flex-shrink: 0; }
-            .feed-header { flex-direction: column; align-items: flex-start; gap: 12px;}
-            .event-meta { flex-wrap: wrap; gap: 10px; }
-            .event-tools,
-            .event-form { grid-template-columns: 1fr; }
+
+        .profile-title {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .verified-line {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 9px;
+            color: var(--Sccess);
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-top: 12px;
+        }
+
+        .pulse {
+            width: 6px;
+            height: 6px;
+            background: var(--Sccess);
+            border-radius: 50%;
+        }
+
+        .nav-menu {
+            display: grid;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 11px;
+            color: var(--text-muted);
+            border-radius: 13px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            transition: background .2s;
+        }
+
+        .nav-item:hover {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: var(--primary-soft);
+        }
+
+        .feed-intro {
+            position: relative;
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .feed-intro::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 16% 0%, rgba(59, 130, 246, 0.22), transparent 34%);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 11px;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: var(--Sccess);
+            border-radius: 50%;
+        }
+
+        .feed-intro h1 {
+            font-size: clamp(28px, 4vw, 36px);
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .feed-intro p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Event Specific */
+        .event-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: var(--Srface);
+            overflow: hidden;
+            transition: transform .2s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-soft);
+        }
+
+        .event-banner {
+            height: 160px;
+            position: relative;
+        }
+
+        .event-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .event-type-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .event-body {
+            padding: 20px;
+        }
+
+        .event-date {
+            color: var(--primary);
+            font-weight: 800;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .event-body h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .event-body p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .event-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            transition: background .2s;
+        }
+
+        .btn-p {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-p:hover {
+            background: var(--accent);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--text-main);
+        }
+
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .filter-btn.active {
+            background: var(--text-main);
+            color: var(--bg);
+            border-color: transparent;
+        }
+
+        .icon-btn,
+        .profile-button {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            background: var(--Srface);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+        }
+
+        .profile-button img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
     </style>
-
 </head>
 
 <body>
-    <div id='header-placeholder'></div>
-    <div class="video-bg">
+    <div class="video-bg" aria-hidden="true">
         <video autoplay muted loop playsinline>
-            <source src="assets/vecteezy_abstract-gradient-white-wave-background-seamless-loop_21769172.mp4" type="video/mp4">
+            <source src="assets/abstract-honeycomb.1920x1080.mp4" type="video/mp4">
         </video>
     </div>
-    <div class="video-overlay"></div>
-    <!-- Header -->
-    
+    <div class="video-overlay" aria-hidden="true"></div>
 
-    <main class="wrap page-layout">
-        
-        <!-- Left Sidebar -->
-        <aside>
-            <nav class="side-nav">
-                <a href="#" class="active" data-view="explore"><span>Explore Events</span></a>
-                <a href="#" data-view="tickets"><span>My Tickets</span> <span class="count-pill" id="ticketCount">0</span></a>
-                <a href="#" data-view="hosted"><span>Hosted by Me</span></a>
-                <a href="#" data-view="saved"><span>Saved Events</span> <span class="count-pill" id="savedCount">0</span></a>
-                <a href="#" data-view="past"><span>Past Webinars</span></a>
-            </nav>
-
-            <div class="panel" style="padding: 20px; background: linear-gradient(135deg, var(--surface-s), var(--surface-f));">
-                <h3 style="font-size: 1rem; font-weight: 900; margin-bottom: 8px;">Host an Event</h3>
-                <p style="font-size: .85rem; color: var(--muted); margin-bottom: 16px; line-height: 1.5;">Tap into the trusted professional ecosystem. Sphera validates attendee identity automatically.</p>
-                <button class="btn btn-p" style="width: 100%;" data-action="toggle-create">Create Event</button>
-            </div>
-        </aside>
-
-        <!-- Center Feed -->
-        <section>
-            <!-- Hero Banner -->
-            <div class="panel" style="background: linear-gradient(135deg, var(--accent), var(--accent-s)); color: white; margin-bottom: 24px; position: relative; overflow: hidden; border: none;">
-                <div style="position: relative; z-index: 2; display: flex; flex-direction: column; gap: 12px;">
-                    <h1 style="font-size: clamp(1.6rem, 2.5vw, 2rem); font-weight: 900; line-height: 1.1; letter-spacing: -.02em;">Participate in events, webinars and meetups</h1>
-                    <p style="opacity: 0.9; max-width: 440px; line-height: 1.6; font-size: .95rem; margin-bottom: 4px;">Discover opportunities to grow your network. Save events you like and secure your spot with 1-click escrow protection.</p>
+    <header class="site-header">
+        <div class="header-content">
+            <a href="index.html" class="logo">SPHERA</a>
+            <label class="search-bar" aria-label="Search feed">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input id="feedSearch" type="text" placeholder="Search insights, people, opportunities...">
+            </label>
+            <div class="header-actions">
+                <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle theme">
+                    <svg id="theme-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="icon-btn" title="Notifications" aria-label="Notifications" style="position:relative;"
+                    data-action="notifications">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-dot"></span>
+                </button>
+                <button class="icon-btn" title="Messages" aria-label="Messages" data-action="messages">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                </button>
+                <div class="credits-pill" id="creditsPill" title="Your redeemed credits">
+                    <span id="creditsDisplay" class="credits-amount">0</span>
+                    <span>Credits</span>
                 </div>
-                <!-- Decorative background elements -->
-                <div style="position: absolute; right: -40px; top: -40px; width: 220px; height: 220px; border-radius: 50%; background: var(--orange); opacity: 0.15; filter: blur(40px);"></div>
+                <a class="profile-button" href="feed.html#profile" aria-label="Open profile">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Avatar" id="navAvatar">
+                </a>
             </div>
+        </div>
+    </header>
 
-            <div class="feed-header">
-                <h2>Upcoming Near You</h2>
-                <div class="filters" style="margin-bottom: 0;">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="meetup">Meetups</button>
-                    <button class="filter-btn" data-filter="webinar">Webinars</button>
-                    <button class="filter-btn" data-filter="hackathon">Hackathons</button>
-                </div>
-            </div>
-
-            <div class="event-tools">
-                <input id="eventSearch" class="event-search" type="text" placeholder="Search events, hosts, locations...">
-                <button class="btn btn-outline" data-action="clear-search">Clear</button>
-            </div>
-
-            <section class="panel event-panel" id="createEventPanel" hidden>
-                <h3 style="font-size: 1.1rem; font-weight: 900;">Create a verified event</h3>
-                <form class="event-form" id="createEventForm">
-                    <label>Title
-                        <input id="eventTitle" type="text" placeholder="AI Operators Breakfast" required>
-                    </label>
-                    <label>Type
-                        <select id="eventType">
-                            <option value="meetup">Meetup</option>
-                            <option value="webinar">Webinar</option>
-                            <option value="hackathon">Hackathon</option>
-                        </select>
-                    </label>
-                    <label>Date
-                        <input id="eventDate" type="text" placeholder="Friday, Nov 14 - 10:00 AM" required>
-                    </label>
-                    <label>Location
-                        <input id="eventLocation" type="text" placeholder="Bengaluru, KA" required>
-                    </label>
-                    <label class="full">Description
-                        <textarea id="eventDescription" placeholder="Describe who should attend and what they will get from it." required></textarea>
-                    </label>
-                    <div class="full" style="display:flex;gap:10px;flex-wrap:wrap;">
-                        <button class="btn btn-p" type="submit">Publish Event</button>
-                        <button class="btn btn-outline" type="button" data-action="toggle-create">Cancel</button>
-                    </div>
-                </form>
+    <div class="container">
+        <aside class="left-sidebar stack">
+            <section class="card pad profile-card">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="James Wilson" class="profile-avatar">
+                <h2 class="profile-name">James Wilson</h2>
+                <p class="profile-title">Founder @ Synapse AI</p>
+                <div class="verified-line"><span class="pulse"></span> Liveness verified</div>
             </section>
 
-            <section class="panel event-note" id="eventInfoPanel" hidden></section>
-
-            <div id="eventList">
-            <!-- Event Card 1 -->
-            <article class="event-card" data-id="fintech-mixer" data-type="meetup" data-title="Founders & Funders: Bengaluru Fintech Mixer" data-status="available" data-hosted="false">
-                <div class="event-banner">
-                    <div class="event-type-badge" style="background: var(--orange); color: white;">Meetup</div>
-                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80" alt="Event Banner">
-                </div>
-                <div class="event-body">
-                    <div class="event-date">Thursday, October 12 • 6:00 PM IST</div>
-                    <h3>Founders & Funders: Bengaluru Fintech Mixer</h3>
-                    <p>An exclusive evening bringing together pre-seed fintech founders and active angel investors across India's startup corridor. Escrow deposit required to secure RSVP.</p>
-                    
-                    <div class="event-meta">
-                        <span>📍 Bengaluru, KA</span>
-                        <span>🎟️ $15 (Escrow)</span>
-                        <div class="attendee-stack" style="margin-left: auto;">
-                            <img src="avatars/priya-nair.png" alt="Priya Nair">
-                            <img src="avatars/ishita-rao.png" alt="Ishita Rao">
-                            <span class="count">+124 Going</span>
-                        </div>
-                    </div>
-                    
-                    <div class="event-actions">
-                        <button class="btn btn-p" data-action="rsvp">Secure Spot</button>
-                        <button class="btn btn-outline" data-action="share">Share</button>
-                        <!-- 'Add to likes' feature -->
-                        <button class="like-btn tooltip" aria-label="Save this event" data-action="save">
-                            <span class="heart-icon">♥</span>
-                        </button>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Event Card 2 -->
-            <article class="event-card" data-id="deep-tech-webinar" data-type="webinar" data-title="Scaling Deep Tech Systems from India" data-status="available" data-hosted="false">
-                <div class="event-banner">
-                    <div class="event-type-badge" style="background: var(--accent); color: white;">Webinar</div>
-                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80" alt="Event Banner" style="object-position: center 30%;">
-                </div>
-                <div class="event-body">
-                    <div class="event-date">Friday, October 13 • 1:00 PM IST</div>
-                    <h3>Scaling Deep Tech Systems from India</h3>
-                    <p>Join Arjun Mehta (CTO @ CloudScale) as he walks through the exact architecture used to scale infrastructure across 5 regions seamlessly.</p>
-                    
-                    <div class="event-meta">
-                        <span>💻 Online (Zoom via Sphera)</span>
-                        <span>🎟️ Free</span>
-                        <div class="attendee-stack" style="margin-left: auto;">
-                            <img src="avatars/arjun-mehta.png" alt="Arjun Mehta">
-                            <span class="count">+892 Registered</span>
-                        </div>
-                    </div>
-                    
-                    <div class="event-actions">
-                        <button class="btn btn-o" style="background: var(--text); color: var(--bg);" data-action="rsvp">Register Now</button>
-                        <button class="like-btn liked" aria-label="Remove from saved events" data-action="save">
-                            <span class="heart-icon">♥</span>
-                        </button>
-                    </div>
-                </div>
-            </article>
-            
-             <!-- Event Card 3 -->
-             <article class="event-card" data-id="devkraft-hackathon" data-type="hackathon" data-title="DevKraft India 48-Hour AI Hackathon" data-status="available" data-hosted="false">
-                <div class="event-banner" style="height: 120px;">
-                    <div class="event-type-badge" style="background: var(--green); color: white;">Hackathon</div>
-                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #111827, #374151); display: grid; place-items: center; color: white; opacity: .9;">
-                         <strong style="font-size: 1.5rem; letter-spacing: 2px;">DEVKRAFT INDIA '26</strong>
-                    </div>
-                </div>
-                <div class="event-body">
-                    <div class="event-date">Weekend of Oct 24 • 48 Hours</div>
-                    <h3>DevKraft India 48-Hour AI Hackathon</h3>
-                    <p>Build the future of agentic coding in 48 hours. Connect with engineers across India and win from a pool of $50k in escrow-backed prizes.</p>
-                    
-                    <div class="event-meta">
-                        <span>📍 Virtual + Bengaluru and Pune Hubs</span>
-                        <div class="attendee-stack" style="margin-left: auto;">
-                            <span class="count">2,410 Hackers</span>
-                        </div>
-                    </div>
-                    
-                    <div class="event-actions">
-                        <button class="btn btn-p" data-action="rsvp">Join Hackathon</button>
-                        <button class="like-btn" aria-label="Save this event" data-action="save">
-                            <span class="heart-icon">♥</span>
-                        </button>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Event Card 4 -->
-            <article class="event-card" data-id="founder-revenue-dinner" data-type="meetup" data-title="Founder Revenue Dinner: Mumbai" data-status="available" data-hosted="false">
-                <div class="event-banner">
-                    <div class="event-type-badge" style="background: var(--orange); color: white;">Meetup</div>
-                    <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Event Banner">
-                </div>
-                <div class="event-body">
-                    <div class="event-date">Tuesday, October 31 • 7:30 PM IST</div>
-                    <h3>Founder Revenue Dinner: Mumbai</h3>
-                    <p>A small, verified dinner for founders and operators discussing pricing, retention, and the subtle art of scaling without shipping chaos.</p>
-
-                    <div class="event-meta">
-                        <span>📍 Mumbai, MH</span>
-                        <span>🎟️ $40 (Escrow)</span>
-                        <div class="attendee-stack" style="margin-left: auto;">
-                            <img src="avatars/ananya-sharma.png" alt="Ananya Sharma">
-                            <span class="count">+42 Going</span>
-                        </div>
-                    </div>
-
-                    <div class="event-actions">
-                        <button class="btn btn-p" data-action="rsvp">Secure Spot</button>
-                        <button class="btn btn-outline" data-action="share">Share</button>
-                        <button class="like-btn" aria-label="Save this event" data-action="save">
-                            <span class="heart-icon">&hearts;</span>
-                        </button>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Event Card 5 -->
-            <article class="event-card" data-id="ai-product-ops-webinar" data-type="webinar" data-title="AI Product Ops Webinar" data-status="available" data-hosted="false">
-                <div class="event-banner">
-                    <div class="event-type-badge" style="background: var(--accent); color: white;">Webinar</div>
-                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Event Banner" style="object-position: center 35%;">
-                </div>
-                <div class="event-body">
-                    <div class="event-date">Wednesday, November 1 • 12:00 PM IST</div>
-                    <h3>AI Product Ops Webinar</h3>
-                    <p>Learn how Indian product teams are using verified workflows, faster feedback loops, and practical automation to keep product velocity high.</p>
-
-                    <div class="event-meta">
-                        <span>💻 Online (Zoom via Sphera)</span>
-                        <span>🎟️ Free</span>
-                        <div class="attendee-stack" style="margin-left: auto;">
-                            <img src="avatars/neha-verma.png" alt="Neha Verma">
-                            <span class="count">+621 Registered</span>
-                        </div>
-                    </div>
-
-                    <div class="event-actions">
-                        <button class="btn btn-o" style="background: var(--text); color: var(--bg);" data-action="rsvp">Register Now</button>
-                        <button class="like-btn" aria-label="Save this event" data-action="save">
-                            <span class="heart-icon">&hearts;</span>
-                        </button>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Event Card 6 -->
-            <article class="event-card" data-id="cyber-sprint-hackathon" data-type="hackathon" data-title="Cyber Sprint Hackathon" data-status="available" data-hosted="false">
-                <div class="event-banner" style="height: 120px;">
-                    <div class="event-type-badge" style="background: var(--green); color: white;">Hackathon</div>
-                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1f2937, #0f172a); display: grid; place-items: center; color: white; opacity: .95;">
-                         <strong style="font-size: 1.35rem; letter-spacing: 1.5px;">CYBER SPRINT</strong>
-                    </div>
-                </div>
-                <div class="event-body">
-                    <div class="event-date">Saturday, November 4 • 36 Hours</div>
-                    <h3>Cyber Sprint Hackathon</h3>
-                    <p>Ship defensive tooling, meet security builders, and compete for escrow-backed prizes with verified teams only.</p>
-
-                    <div class="event-meta">
-                        <span>📍 Virtual + Bengaluru Hub</span>
-                        <div class="attendee-stack" style="margin-left: auto;">
-                            <span class="count">1,120 Hackers</span>
-                        </div>
-                    </div>
-
-                    <div class="event-actions">
-                        <button class="btn btn-p" data-action="rsvp">Join Hackathon</button>
-                        <button class="like-btn" aria-label="Save this event" data-action="save">
-                            <span class="heart-icon">&hearts;</span>
-                        </button>
-                    </div>
-                </div>
-            </article>
-            <div class="panel empty-state" id="emptyState" hidden>No events match this view.</div>
-            </div>
-
-        </section>
-
-        <!-- Right Sidebar -->
-        <aside class="hidden-md stack" style="display: grid; gap: 24px;">
-            <div class="panel" style="border-left: 4px solid var(--accent); padding: 20px;">
-                <h3 style="font-size: 1rem; font-weight: 900; margin-bottom: 8px;">AI Event Scout</h3>
-                <p style="font-size: .85rem; color: var(--muted); line-height: 1.5; margin-bottom: 12px;">"You recently showed interest in <b>Distributed Systems</b>. The <b>CloudScale Webinar</b> tomorrow is a highly relevant match for your skill profile."</p>
-                <button class="btn btn-p" style="width: 100%; font-size: 11px;">Join Recommended</button>
-            </div>
-            <div class="panel insight-card">
-                <h3>Top Events in Network</h3>
-                
-                <div class="mini-event" data-action="mini-event" data-query="SaaS Pricing Workshop">
-                    <div class="mini-event-date">
-                        <strong>18</strong>
-                        <span>Oct</span>
-                    </div>
-                    <div class="mini-event-info">
-                        <h4>SaaS Pricing Workshop</h4>
-                        <p>12 mutual connections attending</p>
-                    </div>
-                </div>
-
-                <div class="mini-event" data-action="mini-event" data-query="India GTM Masterclass">
-                    <div class="mini-event-date" style="border-bottom-color: var(--orange);">
-                        <strong>22</strong>
-                        <span>Oct</span>
-                    </div>
-                    <div class="mini-event-info">
-                        <h4>India GTM Masterclass</h4>
-                        <p>Hosted by HyperScale India</p>
-                    </div>
-                </div>
-
-                <div class="mini-event" data-action="mini-event" data-query="India Open Source Security Smmit">
-                    <div class="mini-event-date" style="border-bottom-color: var(--green);">
-                        <strong>05</strong>
-                        <span>Nov</span>
-                    </div>
-                    <div class="mini-event-info">
-                        <h4>India Open Source Security Smmit</h4>
-                        <p>Virtual Meetup</p>
-                    </div>
-                </div>
-
-                <button class="btn-outline" style="width: 100%; justify-content: center; margin-top: 8px;" data-action="explore-suggestions">Explore All suggestions</button>
-            </div>
-            
-            <div class="panel insight-card" style="background: var(--accent-f); border-color: var(--accent);">
-                <h3 style="color: var(--accent-s);">Event Escrow Protection</h3>
-                <p style="font-size: .85rem; color: var(--muted); line-height: 1.5; margin-bottom: 12px;">Sphera uses smart escrow for paid events. If the event is cancelled or fails Liveness tests, your ticket is auto-refunded.</p>
-                <a href="#" data-action="escrow-info" style="font-size: .85rem; font-weight: 800; color: var(--accent);">Learn about Escrow -></a>
-            </div>
+            <nav class="card pad">
+                <ul class="nav-menu">
+                    <li class="nav-item" onclick="window.location.href='feed.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 9 12 2 21 9 21 21 15 21 15 12 9 12 9 21 3 21"></polyline>
+                        </svg>
+                        Feed
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='network.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Network
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='opportunity.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                        Opportunities
+                    </li>
+                    <li class="nav-item active" onclick="window.location.href='event.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        Events
+                    </li>
+                    <li class="nav-item" onclick="window.location.href='reward.html'">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                            </path>
+                        </svg>
+                        Rewards
+                    </li>
+                </ul>
+            </nav>
         </aside>
-    </main>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <main class="stack">
+            <section class="card pad feed-intro">
+                <div class="eyebrow">Professional Network Events</div>
+                <h1>Events & <span style="color: var(--primary);">Webinars</span></h1>
+                <p>Discover opportunities to grow your network. Participate in exclusive verified meetups and
+                    hackathons.</p>
+            </section>
 
-    <script src="theme.js"></script>
-    <script>
-        const EVENT_TICKETS_KEY = 'sphera-event-tickets';
-        const EVENT_SAVED_KEY = 'sphera-event-saved';
-        const EVENT_HOSTED_KEY = 'sphera-event-hosted';
-        let currentFilter = 'all';
-        let currentView = 'explore';
-        let currentSearch = '';
+            <div class="filters">
+                <button class="filter-btn active">All Events</button>
+                <button class="filter-btn">Meetups</button>
+                <button class="filter-btn">Webinars</button>
+            </div>
 
-        function readSet(key) {
-            try {
-                return new Set(JSON.parse(localStorage.getItem(key) || '[]');
-            } catch (error) {
-                return new Set();
-            }
-        }
-
-        function writeSet(key, set) {
-            localStorage.setItem(key, JSON.stringify([...set]);
-        }
-
-        function readHostedEvents() {
-            try {
-                return JSON.parse(localStorage.getItem(EVENT_HOSTED_KEY) || '[]');
-            } catch (error) {
-                return [];
-            }
-        }
-
-        function writeHostedEvents(events) {
-            localStorage.setItem(EVENT_HOSTED_KEY, JSON.stringify(events.slice(0, 20));
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            if (!toast) return;
-            toast.textContent = message;
-            toast.classList.add('show');
-            clearTimeout(showToast.timeoutId);
-            showToast.timeoutId = setTimeout(() => toast.classList.remove('show'), 2200);
-        }
-
-        function escapeHTML(value) {
-            return value.replace(/[&<>"']/g, (char) => ({
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#39;'
-            }[char]);
-        }
-
-        function copyText(text, successMessage) {
-            const fallback = () => {
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                textarea.remove();
-                showToast(successMessage);
-            };
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => showToast(successMessage).catch(fallback);
-            } else {
-                fallback();
-            }
-        }
-
-        function eventCards() {
-            return Array.from(document.querySelectorAll('.event-card');
-        }
-
-        function typeLabel(type) {
-            if (type === 'webinar') return 'Webinar';
-            if (type === 'hackathon') return 'Hackathon';
-            return 'Meetup';
-        }
-
-        function activeSavedSet() {
-            const hasStoredState = localStorage.getItem(EVENT_SAVED_KEY) !== null;
-            const saved = readSet(EVENT_SAVED_KEY);
-            if (!hasStoredState) {
-                document.querySelectorAll('.like-btn.liked').forEach((button) => {
-                    const card = button.closest('.event-card');
-                    if (card?.dataset.id) saved.add(card.dataset.id);
-                });
-            }
-            writeSet(EVENT_SAVED_KEY, saved);
-            return saved;
-        }
-
-        function updateCounters() {
-            const savedCount = document.getElementById('savedCount');
-            const ticketCount = document.getElementById('ticketCount');
-            if (savedCount) savedCount.textContent = readSet(EVENT_SAVED_KEY).size;
-            if (ticketCount) ticketCount.textContent = readSet(EVENT_TICKETS_KEY).size;
-        }
-
-        function applySavedAndTicketState() {
-            const saved = activeSavedSet();
-            const tickets = readSet(EVENT_TICKETS_KEY);
-            eventCards().forEach((card) => {
-                const id = card.dataset.id;
-                const saveButton = card.querySelector('[data-action="save"]');
-                const rsvpButton = card.querySelector('[data-action="rsvp"]');
-                if (saveButton) {
-                    saveButton.classList.toggle('liked', saved.has(id);
-                    saveButton.setAttribute('aria-label', saved.has(id) ? 'Remove from saved events' : 'Save this event');
-                }
-                if (rsvpButton && tickets.has(id) {
-                    rsvpButton.textContent = 'Confirmed';
-                    rsvpButton.classList.add('is-done');
-                    rsvpButton.disabled = true;
-                    card.dataset.status = 'ticketed';
-                }
-            });
-            updateCounters();
-        }
-
-        function setActiveFilter(filter) {
-            document.querySelectorAll('.filter-btn').forEach((button) => {
-                button.classList.toggle('active', button.dataset.filter === filter);
-            });
-        }
-
-        function setActiveView(view) {
-            document.querySelectorAll('.side-nav a[data-view]').forEach((link) => {
-                link.classList.toggle('active', link.dataset.view === view);
-            });
-        }
-
-        function applyEventFilters() {
-            const saved = readSet(EVENT_SAVED_KEY);
-            const tickets = readSet(EVENT_TICKETS_KEY);
-            const empty = document.getElementById('emptyState');
-            let visibleCount = 0;
-            eventCards().forEach((card) => {
-                const id = card.dataset.id;
-                const text = card.textContent.toLowerCase();
-                const typeMatch = currentFilter === 'all' || card.dataset.type === currentFilter;
-                const searchMatch = !currentSearch || text.includes(currentSearch);
-                const viewMatch =
-                    currentView === 'explore' ||
-                    (currentView === 'tickets' && tickets.has(id) ||
-                    (currentView === 'saved' && saved.has(id) ||
-                    (currentView === 'hosted' && card.dataset.hosted === 'true') ||
-                    (currentView === 'past' && card.dataset.past === 'true');
-                const visible = typeMatch && searchMatch && viewMatch;
-                card.hidden = !visible;
-                if (visible) visibleCount += 1;
-            });
-            if (empty) empty.hidden = visibleCount > 0;
-            return visibleCount;
-        }
-
-        function showInfo(message) {
-            const panel = document.getElementById('eventInfoPanel');
-            if (!panel) return;
-            panel.innerHTML = message;
-            panel.hidden = false;
-            panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        function toggleCreatePanel() {
-            const panel = document.getElementById('createEventPanel');
-            if (!panel) return;
-            panel.hidden = !panel.hidden;
-            if (!panel.hidden) document.getElementById('eventTitle')?.focus();
-        }
-
-        function saveEvent(button) {
-            const card = button.closest('.event-card');
-            if (!card?.dataset.id) return;
-            const saved = readSet(EVENT_SAVED_KEY);
-            if (saved.has(card.dataset.id) {
-                saved.delete(card.dataset.id);
-                button.classList.remove('liked');
-                showToast('Event removed from saved.');
-            } else {
-                saved.add(card.dataset.id);
-                button.classList.add('liked');
-                showToast('Event saved.');
-            }
-            writeSet(EVENT_SAVED_KEY, saved);
-            updateCounters();
-            applyEventFilters();
-        }
-
-        function rsvpEvent(button) {
-            const card = button.closest('.event-card');
-            if (!card?.dataset.id) return;
-            const tickets = readSet(EVENT_TICKETS_KEY);
-            tickets.add(card.dataset.id);
-            writeSet(EVENT_TICKETS_KEY, tickets);
-            button.textContent = 'Confirmed';
-            button.classList.add('is-done');
-            button.disabled = true;
-            card.dataset.status = 'ticketed';
-            updateCounters();
-            showInfo(`<strong>${escapeHTML(card.dataset.title || 'Event')} confirmed.</strong><br>Your spot is reserved. Paid events use escrow protection until the host and attendee checks are complete.`);
-            showToast('Registration confirmed.');
-        }
-
-        function shareEvent(button) {
-            const card = button.closest('.event-card');
-            if (!card) return;
-            const title = card.dataset.title || card.querySelector('h3')?.textContent || 'this event';
-            const date = card.querySelector('.event-date')?.textContent.trim() || '';
-            copyText(`Join me at ${title} on Sphera. ${date}`, 'Event share text copied.');
-        }
-
-        function eventCardTemplate(event) {
-            const color = event.type === 'webinar' ? 'var(--accent)' : event.type === 'hackathon' ? 'var(--green)' : 'var(--orange)';
-            return `
-                <article class="event-card" data-id="${escapeHTML(event.id)}" data-type="${escapeHTML(event.type)}" data-title="${escapeHTML(event.title)}" data-status="available" data-hosted="true">
-                    <div class="event-banner" style="height: 120px;">
-                        <div class="event-type-badge" style="background: ${color}; color: white;">${escapeHTML(typeLabel(event.type)}</div>
-                        <div style="width:100%;height:100%;background:linear-gradient(135deg, var(--accent), var(--accent-s));display:grid;place-items:center;color:white;">
-                            <strong style="font-size:1.35rem;text-align:center;padding:20px;">${escapeHTML(event.title)}</strong>
-                        </div>
+            <div id="eventList" class="stack">
+                <!-- Event Card 1 -->
+                <article class="event-card">
+                    <div class="event-banner">
+                        <div class="event-type-badge" style="background: var(--warning);">Meetup</div>
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80"
+                            alt="Event Banner">
                     </div>
                     <div class="event-body">
-                        <div class="event-date">${escapeHTML(event.date)}</div>
-                        <h3>${escapeHTML(event.title)}</h3>
-                        <p>${escapeHTML(event.description)}</p>
+                        <div class="event-date">Oct 12 • 6:00 PM</div>
+                        <h3>Bengaluru Fintech Mixer</h3>
+                        <p>An exclusive evening bringing together pre-seed fintech founders and active angel investors.
+                        </p>
                         <div class="event-meta">
-                            <span>${escapeHTML(event.location)}</span>
-                            <span>Hosted by you</span>
-                            <div class="attendee-stack" style="margin-left:auto;"><span class="count">0 Going</span></div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn btn-p is-done" disabled>Hosted</button>
-                            <button class="btn btn-outline" data-action="share">Share</button>
-                            <button class="like-btn" aria-label="Save this event" data-action="save"><span class="heart-icon">&hearts;</span></button>
+                            <span>📍 Bengaluru, KA</span>
+                            <button class="btn btn-p">Secure Spot</button>
                         </div>
                     </div>
                 </article>
-            `;
-        }
 
-        function createEvent(event) {
-            event.preventDefault();
-            const title = document.getElementById('eventTitle')?.value.trim();
-            const type = document.getElementById('eventType')?.value || 'meetup';
-            const date = document.getElementById('eventDate')?.value.trim();
-            const location = document.getElementById('eventLocation')?.value.trim();
-            const description = document.getElementById('eventDescription')?.value.trim();
-            if (!title || !date || !location || !description) {
-                showToast('Complete all event fields first.');
-                return;
-            }
-            const hosted = readHostedEvents();
-            const newEvent = {
-                id: `hosted-${Date.now()}`,
-                title,
-                type,
-                date,
-                location,
-                description
-            };
-            hosted.unshift(newEvent);
-            writeHostedEvents(hosted);
-            const list = document.getElementById('eventList');
-            const empty = document.getElementById('emptyState');
-            if (list) {
-                const temp = document.createElement('div');
-                temp.innerHTML = eventCardTemplate(newEvent).trim();
-                list.insertBefore(temp.firstElementChild, empty || list.firstChild);
-            }
-            event.target.reset();
-            document.getElementById('createEventPanel').hidden = true;
-            currentView = 'hosted';
-            currentFilter = 'all';
-            currentSearch = '';
-            document.getElementById('eventSearch').value = '';
-            setActiveView('hosted');
-            setActiveFilter('all');
-            applyEventFilters();
-            showToast('Event published.');
-        }
+                <!-- Event Card 2 -->
+                <article class="event-card">
+                    <div class="event-banner">
+                        <div class="event-type-badge" style="background: var(--primary);">Webinar</div>
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80"
+                            alt="Event Banner">
+                    </div>
+                    <div class="event-body">
+                        <div class="event-date">Oct 13 • 1:00 PM</div>
+                        <h3>Scaling Deep Tech Systems</h3>
+                        <p>Join Arjun Mehta (CTO @ CloudScale) as he walks through infrastructure scaling across 5
+                            regions.</p>
+                        <div class="event-meta">
+                            <span>💻 Online</span>
+                            <button class="btn btn-outline">Register Free</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </main>
 
-        function loadHostedEvents() {
-            const list = document.getElementById('eventList');
-            const empty = document.getElementById('emptyState');
-            if (!list) return;
-            readHostedEvents().slice().reverse().forEach((event) => {
-                const temp = document.createElement('div');
-                temp.innerHTML = eventCardTemplate(event).trim();
-                list.insertBefore(temp.firstElementChild, empty || list.firstChild);
-            });
-        }
+        <aside class="right-sidebar stack">
+            <section class="card pad">
+                <h3 style="font-size: 14px; font-weight: 800; margin-bottom: 12px;">Upcoming Benefits</h3>
+                <p style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+                    Verified attendees earn double <strong>Rewards</strong> for participating in local meetups this
+                    week.
+                </p>
+        </aside>
+    </div>
+    </div>
 
-        function resetExploreView() {
-            currentView = 'explore';
-            currentFilter = 'all';
-            currentSearch = '';
-            setActiveView('explore');
-            setActiveFilter('all');
-            const search = document.getElementById('eventSearch');
-            if (search) search.value = '';
-            applyEventFilters();
+    <script>
+        const themeKey = 'su-theme';
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            try { localStorage.setItem(themeKey, theme); } catch (e) { }
+            updateThemeUI(theme);
         }
-
-        function handleClick(event) {
-            const actionTarget = event.target.closest('[data-action]');
-            if (actionTarget) {
-                event.preventDefault();
-                const action = actionTarget.dataset.action;
-                if (action === 'toggle-create') toggleCreatePanel();
-                if (action === 'clear-search') {
-                    const search = document.getElementById('eventSearch');
-                    if (search) search.value = '';
-                    currentSearch = '';
-                    applyEventFilters();
-                    showToast('Search cleared.');
-                }
-                if (action === 'rsvp') rsvpEvent(actionTarget);
-                if (action === 'save') saveEvent(actionTarget);
-                if (action === 'share') shareEvent(actionTarget);
-                if (action === 'mini-event') {
-                    const query = actionTarget.dataset.query || '';
-                    document.getElementById('eventSearch').value = query;
-                    currentSearch = query.toLowerCase();
-                    currentView = 'explore';
-                    currentFilter = 'all';
-                    setActiveView('explore');
-                    setActiveFilter('all');
-                    const matches = applyEventFilters();
-                    if (!matches) showInfo(`<strong>${escapeHTML(query)}</strong><br>This Suggested event is not in your main list yet. We copied a reminder so you can search for it later.`);
-                    if (!matches) copyText(query, 'Suggested event title copied.');
-                }
-                if (action === 'explore-suggestions') {
-                    resetExploreView();
-                    showToast('Showing all upcoming events.');
-                }
-                if (action === 'escrow-info') {
-                    showInfo('<strong>Escrow protection</strong><br>Paid event funds are held until event completion and identity checks pass. If the host cancels or verification fails, the ticket is eligible for automatic refund.');
+        function updateThemeUI(theme) {
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                if (theme === 'dark') {
+                    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                } else {
+                    icon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
                 }
             }
-
-            const viewTarget = event.target.closest('.side-nav a[data-view]');
-            if (viewTarget) {
-                event.preventDefault();
-                currentView = viewTarget.dataset.view || 'explore';
-                setActiveView(currentView);
-                applyEventFilters();
-            }
         }
-
+        window.toggleTheme = function () {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme);
+        };
+        (function () {
+            try {
+                const savedTheme = localStorage.getItem(themeKey) || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) { }
+        })();
         document.addEventListener('DOMContentLoaded', () => {
-            loadHostedEvents();
-            applySavedAndTicketState();
-            applyEventFilters();
+            let savedTheme = 'dark';
+            try { savedTheme = localStorage.getItem(themeKey) || 'dark'; } catch (e) { }
+            updateThemeUI(savedTheme);
         });
-
-        document.querySelectorAll('.filter-btn').forEach((button) => {
-            button.addEventListener('click', () => {
-                currentFilter = button.dataset.filter || 'all';
-                setActiveFilter(currentFilter);
-                applyEventFilters();
-            });
-        });
-
-        document.getElementById('eventSearch')?.addEventListener('input', (event) => {
-            currentSearch = event.target.value.trim().toLowerCase();
-            applyEventFilters();
-        });
-
-        document.getElementById('createEventForm')?.addEventListener('submit', createEvent);
-        document.addEventListener('click', handleClick);
     </script>
 </body>
+
 </html>
-
-
-
-
