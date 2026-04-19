@@ -1018,6 +1018,19 @@
             document.getElementById('emptyState').hidden = count > 0;
         }
 
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const initialSearch = params.get('search');
+            if (initialSearch) {
+                const searchInput = document.getElementById('networkSearch');
+                if (searchInput) {
+                    searchInput.value = initialSearch;
+                    currentSearch = initialSearch.toLowerCase();
+                    applyFilters();
+                }
+            }
+        });
+
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 currentFilter = btn.dataset.filter;
@@ -1044,5 +1057,6 @@
             if (action === 'request-verify') showToast('Verification signal sent to Marcus.');
         });
     </script>
+    <script type="module" src="search-manager.js"></script>
 </body>
 </html>

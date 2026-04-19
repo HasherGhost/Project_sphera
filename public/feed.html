@@ -2111,6 +2111,17 @@
                 updateCreditsDisplay();
             }
             applyFeedFilters();
+
+            const params = new URLSearchParams(window.location.search);
+            const initialSearch = params.get('search');
+            if (initialSearch) {
+                const searchInput = document.getElementById('feedSearch');
+                if (searchInput) {
+                    searchInput.value = initialSearch;
+                    currentSearch = initialSearch.trim().toLowerCase();
+                    applyFeedFilters();
+                }
+            }
         });
 
         document.querySelectorAll('.tab-btn').forEach((btn) => {
@@ -2342,7 +2353,9 @@
             const days = Math.floor(hours / 24);
             return `${days}d ago`;
         }
+        loadFirestorePosts();
     </script>
+    <script type="module" src="search-manager.js"></script>
 </body>
 
 </html>
