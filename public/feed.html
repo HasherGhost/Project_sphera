@@ -1411,8 +1411,8 @@
                 <div id="dynamicPostsContainer"></div>
                 <article class="card post" data-category="hiring">
                     <div class="post-header">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile"
-                            class="author-avatar" style="background: var(--surface-f); padding: 4px;">
+                        <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Marcus Johnson"
+                            class="author-avatar">
                         <div class="author-info">
                             <h3>Marcus Johnson <span class="badge">Hiring</span></h3>
                             <p>Lead Engineer @ Nexus Labs &middot; 2h ago</p>
@@ -1466,8 +1466,8 @@
 
                 <article class="card post" data-category="insight">
                     <div class="post-header">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile"
-                            class="author-avatar" style="background: var(--surface-f); padding: 4px;">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Neha Verma"
+                            class="author-avatar">
                         <div class="author-info">
                             <h3>Neha Verma <span class="badge badge-green">Insight</span></h3>
                             <p>Product Lead @ Orbit &middot; 5h ago</p>
@@ -1526,8 +1526,8 @@
                 </div>
                 <ul class="suggestion-list">
                     <li class="suggestion-item">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile"
-                            class="mini-avatar" style="background: var(--surface-f); padding: 4px;">
+                        <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Chris Anderson"
+                            class="mini-avatar">
                         <div class="suggestion-info">
                             <h3>Chris Anderson</h3>
                             <p>Product Lead @ Orbit</p>
@@ -1535,8 +1535,8 @@
                         <button class="btn btn-subtle" data-action="connect">Connect</button>
                     </li>
                     <li class="suggestion-item">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile"
-                            class="mini-avatar" style="background: var(--surface-f); padding: 4px;">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Mitchell"
+                            class="mini-avatar">
                         <div class="suggestion-info">
                             <h3>Sarah Mitchell</h3>
                             <p>Partner @ Altair Ventures</p>
@@ -2148,7 +2148,22 @@
         };
 
         function getProfilePhoto(uid) {
-            return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
+            const photos = [
+                'https://randomuser.me/api/portraits/men/32.jpg',
+                'https://randomuser.me/api/portraits/men/44.jpg',
+                'https://randomuser.me/api/portraits/men/55.jpg',
+                'https://randomuser.me/api/portraits/men/67.jpg',
+                'https://randomuser.me/api/portraits/men/75.jpg',
+                'https://randomuser.me/api/portraits/men/22.jpg',
+                'https://randomuser.me/api/portraits/men/11.jpg',
+                'https://randomuser.me/api/portraits/men/88.jpg',
+            ];
+            if (!uid) return photos[0];
+            let hash = 0;
+            for (let i = 0; i < uid.length; i++) {
+                hash = uid.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return photos[Math.abs(hash) % photos.length];
         }
 
         let currentUserName = 'User';
@@ -2261,7 +2276,7 @@
                         const postHTML = `
                         <div class="post-card" style="background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px;">
                           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-                            <img src="${getProfilePhoto(post.authorId)}" style="width:40px;height:40px;border-radius:50%;background:var(--surface-f);padding:4px;">
+                            <img src="${getProfilePhoto(post.authorId)}" style="width:40px;height:40px;border-radius:50%;">
                             <div>
                               <strong>${displayAuthor}</strong>
                               <div style="font-size:12px;color:var(--muted)">${new Date(post.timestamp).toLocaleString()}</div>
