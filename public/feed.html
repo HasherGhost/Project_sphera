@@ -14,6 +14,13 @@
     <script src="theme.js"></script>
 
     <style>
+        :root {
+            --bg-soft: var(--bg2);
+            --shadow-soft: var(--shadow-f);
+            --success: var(--green);
+            --surface-strong: var(--surface-s);
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -28,7 +35,7 @@
             min-height: 100vh;
             background: var(--bg);
             color: var(--text);
-            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             overflow-x: hidden;
         }
 
@@ -406,10 +413,10 @@
 
         .feed-metrics {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr);
-                    gap: 10px;
-                    margin-top: 20px;
-            }
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
 
             .metric {
                 padding: 12px;
@@ -432,12 +439,17 @@
                 font-weight: 700;
             }
 
-            .composer {
-                display: grid;
-                grid-template-columns: 46px minmax(0, 1fr);
-                gap: 14px;
-                align-items: start;
-            }
+        .composer {
+            display: grid;
+            grid-template-columns: 46px minmax(0, 1fr);
+            gap: 14px;
+            align-items: start;
+        }
+
+        .composer .avatar {
+            margin-top: 4px; /* Align with the first line of text */
+        }
+
 
             .avatar {
                 width: 46px;
@@ -1504,20 +1516,20 @@
                     Suggested connections
                     <span class="sidebar-note">2</span>
                 </div>
-                <ul class="Sggestion-list">
-                    <li class="Sggestion-item">
+                <ul class="suggestion-list">
+                    <li class="suggestion-item">
                         <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Chris Anderson"
                             class="mini-avatar">
-                        <div class="Sggestion-info">
+                        <div class="suggestion-info">
                             <h3>Chris Anderson</h3>
                             <p>Product Lead @ Orbit</p>
                         </div>
                         <button class="btn btn-subtle" data-action="connect">Connect</button>
                     </li>
-                    <li class="Sggestion-item">
+                    <li class="suggestion-item">
                         <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Mitchell"
                             class="mini-avatar">
-                        <div class="Sggestion-info">
+                        <div class="suggestion-info">
                             <h3>Sarah Mitchell</h3>
                             <p>Partner @ Altair Ventures</p>
                         </div>
@@ -1537,9 +1549,9 @@
                         <div class="trend-title">Series A startup seeking CTO <span class="trend-arrow">→</span></div>
                         <div class="trend-count">14 referrals</div>
                     </div>
-                    <div class="trend-item" data-trend="identity-Smmit" onclick="openTrendModal('identity-Smmit')">
+                    <div class="trend-item" data-trend="identity-summit" onclick="openTrendModal('identity-summit')">
                         <div class="trend-tag">Identity</div>
-                        <div class="trend-title">Bengaluru Trust Smmit <span class="trend-arrow">→</span></div>
+                        <div class="trend-title">Bengaluru Trust Summit <span class="trend-arrow">→</span></div>
                         <div class="trend-count">248 professionals going</div>
                     </div>
                     <div class="trend-item" data-trend="ux-designer" onclick="openTrendModal('ux-designer')">
