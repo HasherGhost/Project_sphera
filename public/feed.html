@@ -1058,6 +1058,90 @@
                 justify-self: start;
             }
         }
+
+        /* ── UI/UX Enhancements ── */
+        .avatar-initials {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: var(--avatar-size, 46px);
+            height: var(--avatar-size, 46px);
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent), #c084fc);
+            color: #fff;
+            font-weight: 800;
+            font-size: var(--avatar-font-size, 17px);
+            letter-spacing: -0.02em;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 4px 12px rgba(139, 92, 246, 0.25);
+            flex-shrink: 0;
+            text-transform: uppercase;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .mini .avatar-initials {
+            --avatar-size: 40px;
+            --avatar-font-size: 14px;
+            border-radius: 12px;
+        }
+
+        .profile-card .avatar-initials {
+            --avatar-size: 78px;
+            --avatar-font-size: 28px;
+            border-radius: 24px;
+            margin: 0 auto 14px;
+        }
+
+        .post-header .avatar-initials {
+            --avatar-size: 48px;
+        }
+
+        /* Enhancing Post Hover Effects and Glassmorphism */
+        .card.post {
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.2s;
+            transform-origin: center bottom;
+        }
+        
+        .card.post:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .trend-item {
+            transition: background 0.25s ease, border-color 0.2s ease, transform 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .trend-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(139, 92, 246, 0.4);
+            transform: translateX(2px);
+        }
+
+        .trend-arrow {
+            display: inline-block;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .trend-item:hover .trend-arrow {
+            transform: translateX(4px);
+            color: var(--accent);
+        }
+
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--accent), #c084fc);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-primary:after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 40%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.2), transparent);
+            pointer-events: none;
+        }
     </style>
     <script src="theme.js"></script>
     <script src="media_handler.js" defer></script>
@@ -1077,7 +1161,7 @@
     <div class="container">
         <aside class="left-sidebar stack" aria-label="Feed navigation">
             <section class="card pad profile-card" id="profile">
-                <img src="avatars/aarav-mehta.png" alt="Aarav Mehta" class="profile-avatar">
+                <div class="avatar-initials" data-name="Aarav Mehta"></div>
                 <h2 class="profile-name">Aarav Mehta</h2>
                 <p class="profile-title">Founder @ Synapse AI</p>
                 <div class="verified-line"><span class="pulse"></span> Liveness verified</div>
@@ -1181,7 +1265,7 @@
 
             <section class="card pad" aria-label="Create post">
                 <div class="composer">
-                    <img src="avatars/aarav-mehta.png" alt="Aarav Mehta" class="avatar">
+                    <div class="avatar-initials" data-name="Aarav Mehta"></div>
                     <div>
                         <textarea id="composerInput" class="composer-input"
                             placeholder="Share an insight, opportunity, referral ask, or trust signal..."></textarea>
@@ -1228,7 +1312,7 @@
             <section class="post-list" id="postList" aria-live="polite">
                 <article class="card post" data-category="hiring">
                     <div class="post-header">
-                        <img src="avatars/rohan-kapoor.png" alt="Rohan Kapoor" class="author-avatar">
+                        <div class="avatar-initials" data-name="Rohan Kapoor"></div>
                         <div class="author-info">
                             <h3>Rohan Kapoor <span class="badge">Hiring</span></h3>
                             <p>Lead Engineer @ Nexus Labs &middot; 2h ago</p>
@@ -1248,7 +1332,7 @@
                         about high availability and zero-trust architecture. Stack: Go, Rust, and Kubernetes. San
                         Francisco hybrid.
                     </div>
-                    <img src="assets/office.png" alt="Verified team collaboration illustration" class="post-image">
+
                     <div class="post-actions" aria-label="Post actions">
                         <button class="post-action" data-action="trust" data-count="42">
                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -1282,7 +1366,7 @@
 
                 <article class="card post" data-category="insight">
                     <div class="post-header">
-                        <img src="avatars/neha-verma.png" alt="Neha Verma" class="author-avatar">
+                        <div class="avatar-initials" data-name="Neha Verma"></div>
                         <div class="author-info">
                             <h3>Neha Verma <span class="badge badge-green">Insight</span></h3>
                             <p>Product Lead @ Orbit &middot; 5h ago</p>
@@ -1338,16 +1422,16 @@
                     <span class="sidebar-note">2</span>
                 </div>
                 <ul class="suggestion-list">
-                    <li class="suggestion-item">
-                        <img src="avatars/arjun-mehta.png" alt="Arjun Mehta" class="mini-avatar">
+                    <li class="suggestion-item mini">
+                        <div class="avatar-initials" data-name="Arjun Mehta"></div>
                         <div class="suggestion-info">
                             <h3>Arjun Mehta</h3>
                             <p>Product Lead @ Orbit</p>
                         </div>
                         <button class="btn btn-subtle" data-action="connect">Connect</button>
                     </li>
-                    <li class="suggestion-item">
-                        <img src="avatars/ishita-rao.png" alt="Ishita Rao" class="mini-avatar">
+                    <li class="suggestion-item mini">
+                        <div class="avatar-initials" data-name="Ishita Rao"></div>
                         <div class="suggestion-info">
                             <h3>Ishita Rao</h3>
                             <p>Partner @ Altair Ventures</p>
@@ -1682,7 +1766,7 @@
             const badgeClass = category === 'insight' ? ' badge-green' : '';
             return `
         <div class="post-header">
-          <img src="${escapeHTML(post.avatar)}" alt="${escapeHTML(post.author)}" class="author-avatar">
+          <div class="avatar-initials" data-name="${escapeHTML(post.author)}"></div>
           <div class="author-info">
             <h3>${escapeHTML(post.author)} <span class="badge${badgeClass}">${escapeHTML(categoryLabel(category))}</span></h3>
             <p>${escapeHTML(post.role)} &middot; ${escapeHTML(post.time)}</p>
@@ -1971,6 +2055,33 @@
             applyFeedFilters();
         });
         document.addEventListener('click', handleDelegatedClick);
+
+        // --- Avatar Initials Generator ---
+        function generateInitials() {
+            document.querySelectorAll('.avatar-initials:not([data-initialized])').forEach(el => {
+                const name = el.getAttribute('data-name');
+                if (name) {
+                    const parts = name.trim().split(/\s+/);
+                    let initials = '';
+                    if (parts.length >= 2) {
+                        initials = parts[0][0] + parts[parts.length-1][0];
+                    } else if (parts.length === 1 && parts[0].length >= 1) {
+                        initials = parts[0].substring(0, 2);
+                    }
+                    el.textContent = initials.toUpperCase();
+                }
+                el.setAttribute('data-initialized', 'true');
+            });
+        }
+        
+        generateInitials();
+        
+        new MutationObserver((mutations) => {
+            if (mutations.some(m => m.addedNodes.length > 0)) {
+                generateInitials();
+            }
+        }).observe(document.body, { childList: true, subtree: true });
+        // ---------------------------------
     </script>
 </body>
 
