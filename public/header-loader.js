@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="hdr-acts">
                 <button class="theme-tog" id="themeToggle" title="Toggle Mode">☼ / ☾</button>
                 <a href="profile.html" class="user-pill ${currentPage === 'profile.html' ? 'active' : ''}">
-                    <img src="avatars/aarav-mehta.png" alt="Profile" class="user-pill-img">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile" class="user-pill-img" style="background: var(--surface-f); padding: 4px;">
                     <span class="user-pill-name">Aarav</span>
                 </a>
             </div>
