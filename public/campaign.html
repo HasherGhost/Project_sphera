@@ -1,221 +1,167 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-    <link rel='stylesheet' href='global.css'>
-    <script src='theme.js'></script>
-    <script src='header-loader.js'></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campaigns — Sphera</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Campaigns | Sphera AI-Powered Growth</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="global.css">
     <style>
-        :root {
-            --bg: #09090b;
-            --surface: rgba(24, 24, 27, 0.74);
-            --line: rgba(255, 255, 255, 0.1);
-            --accent: #3b82f6;
-            --accent: #8b5cf6;
-            --text: #f4f4f5;
-            --muted: #a1a1aa;
-            --radius: 24px;
-        }
-
-        body {
-            margin: 0;
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: 100vh;
-        }
-
-        .video-bg { position: fixed; inset: 0; z-index: -2; overflow: hidden; }
-        .video-bg video { width: 100%; height: 100%; object-fit: cover; }
-        .video-overlay { position: fixed; inset: 0; z-index: -1; background: var(--bg); opacity: 0.92; backdrop-filter: blur(12px); }
-
-        .container { width: min(1000px, calc(100% - 40px)); margin: 80px auto; }
-
-        .header { margin-bottom: 40px; }
-        .header h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; }
-        .header p { color: var(--muted); margin-top: 10px; }
-
-        .dashboard-grid {
+        .campaign-card {
+            padding: 24px;
             display: grid;
-            grid-template-columns: 1fr 340px;
-            gap: 30px;
-        }
-
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            padding: 30px;
-            backdrop-filter: blur(18px);
-        }
-
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            padding: 12px;
-            color: var(--text);
-            font-family: inherit;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 0;
-        }
-
-        .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent)); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3); }
-
-        .campaign-item {
-            display: grid;
-            grid-template-columns: 60px 1fr auto;
+            grid-template-columns: 56px 1fr auto;
             gap: 20px;
             align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid var(--line);
         }
 
-        .campaign-item:last-child { border-bottom: 0; }
+        .campaign-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--surface-f);
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+        }
 
-        .status-badge {
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 11px;
+        .status-tag {
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.65rem;
             font-weight: 800;
             text-transform: uppercase;
         }
 
-        .status-active { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-        .status-paused { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+        .status-active { background: var(--green-f); color: var(--green); }
+        .status-paused { background: var(--orange-f); color: var(--orange); }
 
-        .back-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 999px;
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 700;
-            z-index: 100;
+        .ai-insight {
+            background: linear-gradient(135deg, var(--accent-f), transparent);
+            border-left: 4px solid var(--accent);
+            padding: 24px;
         }
     </style>
 </head>
 <body>
-    <div id='header-placeholder'></div>
-    <a href="feed.html" class="back-btn">← Back to Feed</a>
-    
-    <div class="video-bg">
-        <video autoplay muted loop playsinline>
-            <source src="4779866-hd_1920_1080_30fps.mp4" type="video/mp4">
-        </video>
+    <div class="bg-stage">
+        <div class="mesh-gradient"></div>
     </div>
-    <div class="video-overlay"></div>
 
-    <div class="container">
-        
+    <header class="global-hdr">
+        <div class="hdr-content">
+            <a href="feed.html" class="flex gap-16" style="text-decoration: none; color: inherit;">
+                <div class="brand-symbol" style="width: 38px; height: 38px; font-size: 1.1rem; border-radius: 10px;">S</div>
+                <h2 style="font-size: 1.25rem;">Sphera.</h2>
+            </a>
 
-        <div class="dashboard-grid">
-            <div class="stack" style="display: grid; gap: 30px;">
-                <section class="card">
-                    <h2 style="font-size: 20px; margin-bottom: 20px;">Create New Campaign</h2>
-                    <form id="campaignForm">
-                        <div class="form-group">
-                            <label>Campaign Objective</label>
-                            <select>
-                                <option>Promote a Business Venture</option>
-                                <option>Hire Top Talent</option>
-                                <option>Attract Investors</option>
-                                <option>Promote Professional Event</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Campaign Message</label>
-                            <textarea rows="4" placeholder="What are you promoting? Our AI will help refine this..."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Target Audience</label>
-                            <input type="text" placeholder="e.g., Founders, VCs, Senior Engineers">
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Launch Campaign</button>
-                    </form>
-                </section>
-
-                <section class="card">
-                    <h2 style="font-size: 20px; margin-bottom: 20px;">Active Campaigns</h2>
-                    <div class="campaign-list">
-                        <div class="campaign-item">
-                            <div style="font-size: 24px;">🚀</div>
-                            <div>
-                                <div style="font-weight: 700;">Synapse AI Seed Round</div>
-                                <p style="font-size: 13px; color: var(--muted);">Targeting: FinTech Investors</p>
-                            </div>
-                            <span class="status-badge status-active">Active</span>
-                        </div>
-                        <div class="campaign-item">
-                            <div style="font-size: 24px;">🤝</div>
-                            <div>
-                                <div style="font-weight: 700;">Hiring Lead Architect</div>
-                                <p style="font-size: 13px; color: var(--muted);">Targeting: Dist. Systems Engineers</p>
-                            </div>
-                            <span class="status-badge status-paused">Paused</span>
-                        </div>
+            <div class="flex gap-16">
+                <!-- Global Search -->
+                <div style="position: relative; width: 320px;" class="flex gap-8">
+                    <input type="text" id="feedSearch" class="input-field w-full" style="padding: 8px 16px; font-size: 0.85rem;" placeholder="Search campaigns...">
+                </div>
+                
+                <div class="flex gap-16">
+                    <div class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.75rem;">
+                        <span id="creditsDisplay">1,240</span> Credits
                     </div>
-                </section>
+                    <button class="btn btn-secondary" id="themeToggle" style="padding: 8px; font-size: 1rem;">☼</button>
+                    <a href="profile.html"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239b90b0'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" class="avatar" alt="Me"></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="stack-layout">
+        <aside class="left-sidebar">
+            <div class="glass-panel side-nav" style="padding: 12px; position: sticky; top: 104px;">
+                <a href="feed.html" class="nav-card"><span>🏠</span> Feed</a>
+                <a href="network.html" class="nav-card"><span>👥</span> Network</a>
+                <a href="opportunity.html" class="nav-card"><span>💼</span> Opportunities</a>
+                <a href="event.html" class="nav-card"><span>📅</span> Events</a>
+                <a href="reward.html" class="nav-card"><span>🎁</span> Rewards</a>
+                <a href="campaign.html" class="nav-card active"><span>🚀</span> Campaigns</a>
+            </div>
+        </aside>
+
+        <main class="main-content stack">
+            <section class="reveal reveal-1">
+                <div style="margin-bottom: 40px;">
+                    <span class="stat-badge">AMPLIFIED SIGNAL</span>
+                    <h1 style="margin-top: 12px;">Growth & <span style="color: var(--accent);">Campaigns</span></h1>
+                    <p style="margin-top: 12px; max-width: 600px;">Leverage the Sphera trust graph to amplify your business objectives with AI-guided targeting.</p>
+                </div>
+
+                <div class="glass-panel reveal reveal-2" style="padding: 32px;">
+                    <h3 class="mb-12">New Campaign Objective</h3>
+                    <div class="flex gap-16" style="flex-wrap: wrap;">
+                        <button class="btn btn-secondary" style="flex: 1; min-width: 140px;">🚀 Fundraise</button>
+                        <button class="btn btn-secondary" style="flex: 1; min-width: 140px;">🤝 Hire Talent</button>
+                        <button class="btn btn-secondary" style="flex: 1; min-width: 140px;">🏢 B2B Growth</button>
+                    </div>
+
+                    <div class="mt-24">
+                        <div class="input-group">
+                            <label style="font-size: 0.75rem; font-weight: 800; color: var(--muted);">DESCRIBE YOUR GOAL</label>
+                            <textarea class="input-field" rows="4" placeholder="e.g., We are closing our seed round and looking for fintech-focussed angel investors..."></textarea>
+                        </div>
+                        <button class="btn btn-primary w-full">Generate AI Campaign</button>
+                    </div>
+                </div>
+
+                <div class="mt-24 reveal reveal-3">
+                    <h3 class="mb-12">Ongoing Campaigns</h3>
+                    <div class="glass-panel campaign-card mb-12">
+                        <div class="campaign-icon">⚡</div>
+                        <div>
+                            <h4 style="font-size: 1rem;">Nexus Infrastructure Hiring</h4>
+                            <p style="font-size: 0.8rem;">Targeting: Senior Go/Rust Engineers</p>
+                        </div>
+                        <span class="status-tag status-active">Active</span>
+                    </div>
+
+                    <div class="glass-panel campaign-card">
+                        <div class="campaign-icon">💎</div>
+                        <div>
+                            <h4 style="font-size: 1rem;">Fundraising Series A</h4>
+                            <p style="font-size: 0.8rem;">Targeting: Accredited Identity Investors</p>
+                        </div>
+                        <span class="status-tag status-paused">Paused</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <aside class="right-sidebar stack reveal reveal-2">
+            <div class="glass-panel ai-insight">
+                <h3 style="font-size: 0.9rem; color: var(--accent);">AI CAMPAIGN INSIGHT</h3>
+                <p style="font-size: 0.85rem; margin-top: 12px; line-height: 1.6;">
+                    Your <strong>Nexus Labs</strong> campaign is seeing high engagement from the Bengaluru tech node. 
+                    Consider allocating more signal weight to 2nd-degree connections in that region.
+                </p>
             </div>
 
-            <aside class="stack" style="display: grid; gap: 30px;">
-                <section class="card">
-                    <h2 style="font-size: 18px; margin-bottom: 15px;">AI Guidance</h2>
-                    <div style="background: rgba(139, 92, 246, 0.1); padding: 15px; border-radius: 12px; border-left: 4px solid var(--accent);">
-                        <p style="font-size: 13px; line-height: 1.5;">
-                            <b>Tip:</b> Your "Seed Round" campaign is performing 40% better among 2nd-degree connections. Consider narrowing your target to founders of series-A startups for higher trust conversion.
-                        </p>
-                    </div>
-                </section>
-
-                <section class="card">
-                    <h2 style="font-size: 18px; margin-bottom: 15px;">Stats</h2>
-                    <div style="display: grid; gap: 10px;">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span style="font-size: 13px; color: var(--muted);">Total Impressions</span>
-                            <span style="font-weight: 700;">12,405</span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span style="font-size: 13px; color: var(--muted);">Trust Conversions</span>
-                            <span style="font-weight: 700;">382</span>
-                        </div>
-                    </div>
-                </section>
-            </aside>
-        </div>
+            <div class="glass-panel mt-24" style="text-align: center;">
+                <div class="stat-badge mb-12">MONTHLY REACH</div>
+                <h2 style="font-size: 2.5rem;">12.4K</h2>
+                <p style="font-size: 0.8rem; margin-top: 8px;">Trust-verified impressions</p>
+            </div>
+        </aside>
     </div>
 
     <script src="theme.js"></script>
+    <script src="search-manager.js" type="module"></script>
     <script>
-        document.getElementById('campaignForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Campaign submitted for AI review! It will launch once liveness verification is confirmed for this action.');
+        const themeBtn = document.getElementById('themeToggle');
+        themeBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('S-theme', next);
+            themeBtn.textContent = next === 'dark' ? '☼' : '☾';
         });
     </script>
 </body>
 </html>
-
-
-
-
